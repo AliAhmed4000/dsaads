@@ -23,3 +23,7 @@ test:
 production:
   adapter: postgresql
   encoding: Unicode
+  database: fiverrclone_dev
+  pool: 5
+  username: postgres
+  password:

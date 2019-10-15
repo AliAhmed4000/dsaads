@@ -74,7 +74,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry'
   gem 'letter_opener'
-  gem 'dotenv-rails'
 end
 
 group :test do
@@ -95,3 +94,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'will_paginate', '~> 3.0.5'
 gem 'bootstrap-will_paginate', '~> 0.0.10'
 gem 'activeadmin'
+gem 'dotenv-rails'
