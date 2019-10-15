@@ -19,14 +19,14 @@ class ConversationsController < ApplicationController
 
 	private
 	def set_query
-    if current_user.buyer?
+    if current_user.buyers?
       query = "true"
       query << " AND users.name ILIKE '%#{params[:name].gsub("'", "''")}%'" unless params[:name].blank?
-      @conversations = Conversation.joins(:seller).where(buyer_id: current_user.id).where(query).order("updated_at DESC")
-    elsif current_user.seller?
+      @conversations = Conversation.joins(:sellers).where(buyer_id: current_user.id).where(query).order("updated_at DESC")
+    elsif current_user.sellers?
       query = "true"
       query << " AND users.name ILIKE '%#{params[:name].gsub("'", "''")}%'" unless params[:name].blank?
-      @conversations = Conversation.joins(:buyer).where(seller_id: current_user.id).where(query).order("updated_at DESC")
+      @conversations = Conversation.joins(:buyers).where(seller_id: current_user.id).where(query).order("updated_at DESC")
     end
     unless params[:id].blank?
       @conversation = Conversation.find(params[:id])

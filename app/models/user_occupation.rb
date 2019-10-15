@@ -1,4 +1,5 @@
 class UserOccupation < ApplicationRecord
  	belongs_to :user
- 	enum occupation: ['digital_marketing','graphics_design','writing_translation','programming_tech','music_audio','video_animation']
+ 	enum occupation: ['Digital Marketing','Graphics Design','Writing Translation','Programming Tech','Music Audio','Video Animation']
+ 	Occupation = ['Digital Marketing','Graphics Design','Writing Translation','Programming Tech','Music Audio','Video Animation']
 end

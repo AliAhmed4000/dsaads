@@ -11,7 +11,7 @@
         <%= f.input :category_id, label: 'Category', collection: Category.all, prompt: 'Select Category' %>
       </div>
       <div class="col-md-6 col-sm-12">
-        <%= f.input :sub_category_id, label: 'Sub Category', collection: Category.all, prompt: 'Select Sub Category' %>
+        <%= f.input :sub_category_id, label: 'Sub Category',collection: [],prompt: 'Select Sub Category',include_blank: true %>
       </div>
     </div>    
     <div>

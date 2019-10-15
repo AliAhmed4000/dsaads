@@ -25,6 +25,7 @@
         <div class="col-sm-3"><button class="btn btn-light" disabled="">Add Phone</button></div>
       </div>
     </div>
+    <%= f.input :wizard, :as => :hidden, :input_html => {:value => "seller_finish_info"} %> 
     <div class="form-group row mb-0">
       <div class="col-sm-9 offset-sm-3">
         <%= f.button :submit, class: "btn-success pull-right", value: 'Finish' %>

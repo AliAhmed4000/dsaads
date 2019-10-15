@@ -8,12 +8,22 @@ class UsersController < ApplicationController
 
   def update
     if seller_params
-      @user.update!(seller_params)
-      flash[:notice] = "Seller Profile Created Successfully !"
+      if current_user.update!(seller_params)
+        if params[:user][:wizard] == "seller_personal_info"
+          redirect_to seller_professional_info_path
+        elsif params[:user][:wizard] == "seller_professional_info"
+          redirect_to seller_linked_accounts_path
+        elsif params[:user][:wizard] == "seller_account_info"
+          redirect_to seller_account_security_path
+        elsif params[:user][:wizard] == "seller_finish_info"
+          redirect_to new_service_path
+        end   
+        flash[:notice] = "Seller Profile Created Successfully !"
+      end  
     else
       flash[:notice] = "Something Went Wrong...Pls Try Again.."
+      redirect_back(fallback_location: root_path)
     end
-    redirect_back(fallback_location: root_path)
   end
 
   def show
@@ -29,10 +39,10 @@ class UsersController < ApplicationController
 
   def seller_professional_info
     @user = current_user 
-    @user.user_occupations.build
-    @user.user_skills.build
-    @user.user_educations.build
-    @user.user_certificates.build
+    @user.user_occupations.build if @user.user_occupations.blank?  
+    @user.user_skills.build if @user.user_skills.blank?
+    @user.user_educations.build if @user.user_educations.blank?
+    @user.user_certificates.build if @user.user_certificates.blank?
   end 
 
   def seller_linked_accounts
@@ -44,17 +54,29 @@ class UsersController < ApplicationController
   end
 
   def role
-    if current_user.seller?
+    if current_user.sellers?
       current_user.update_column('role',0)
     else
       current_user.update_column('role',1)
     end
-    redirect_back(fallback_location: root_path) 
+    redirect_to root_path 
   end 
     
   private
   def seller_params
-    params.require(:user).permit(:name, :avatar, :description, :email, :country, :language)
+    params.require(:user).permit(
+      :name, 
+      :avatar, 
+      :description, 
+      :email, 
+      :country, 
+      :language,
+      :personal_web_link,
+      :wizard,
+      user_skills_attributes: [:id,:name,:level,:_destroy],
+      user_educations_attributes: [:id,:country,:institution_name,:title,:major,:passing_year,:_destroy], 
+      user_certificates_attributes: [:id,:title,:institution_name,:passing_year],
+    )
   end
 
   def find_user

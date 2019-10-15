@@ -39,7 +39,7 @@ class User < ApplicationRecord
   has_many :user_skills
   has_many :user_educations
   has_many :user_certificates
-  enum role: [:buyer,:seller]
+  enum role: [:buyers,:sellers]
 
   validates :email, uniqueness: true, presence: true
   accepts_nested_attributes_for :user_occupations
@@ -47,6 +47,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_educations
   accepts_nested_attributes_for :user_certificates
   
+  attr_accessor :wizard
   def check_avatar
     if self.avatar.blank?
       self.avatar = "https://via.placeholder.com/150"
