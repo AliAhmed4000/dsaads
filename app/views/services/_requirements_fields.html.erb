@@ -1,0 +1,10 @@
+<div class="container font-weight-bold">  
+	<%= simple_form_for service do |f|  %>
+		<%= f.input :requirements,label: 'Service Requirement', required: true, hint: 'Minimum 50 words required', placeholder: ' Structure your Buyer Instructions as free text, a multiple choice question or file upload.', input_html: {rows: "3"}  %>
+		<div>
+        <span class="inline-block float-right">
+          <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
+        </span> 
+      </div>
+	<% end %>
+</div>

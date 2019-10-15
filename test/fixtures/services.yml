@@ -1,0 +1,31 @@
+# == Schema Information
+#
+# Table name: services
+#
+#  id              :integer          not null, primary key
+#  user_id         :integer
+#  category_id     :integer
+#  title           :string
+#  description     :text
+#  favorites_count :integer          default(0)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  category: one
+  title: MyString
+  description: MyText
+  favorites_count: MyString
+  integer: MyString
+
+two:
+  user: two
+  category: two
+  title: MyString
+  description: MyText
+  favorites_count: MyString
+  integer: MyString

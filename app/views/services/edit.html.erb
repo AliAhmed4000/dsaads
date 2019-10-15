@@ -1,0 +1,13 @@
+<% if params[:type] == "pricing" %>
+	<%= render 'package_fields', service: @service %>
+<% elsif params[:type] == "description" %>
+	<%= render 'description_fields', service: @service %>
+<% elsif params[:type] == "requirement" %>
+	<%= render 'requirements_fields', service: @service %>
+<% elsif params[:type] == "gallery" %>
+	<%= render 'requirements_fields', service: @service %>
+<% elsif params[:type] == "publish" %>
+	<%= render 'requirements_fields', service: @service %>
+<% end %>
+
+  

@@ -1,0 +1,120 @@
+<div class="container">
+<h3 class=" text-center">Messaging</h3>
+<div class="messaging">
+<div class="inbox_msg">
+  <div class="inbox_people">
+    <div class="headind_srch">
+      <div class="recent_heading">
+        <h4>Recent</h4>
+      </div>
+      <div class="srch_bar">
+        <div class="stylish-input-group">
+          <input type="text" class="search-bar"  placeholder="Search" >
+          <span class="input-group-addon">
+          <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+          </span> </div>
+      </div>
+    </div>
+     <% if @conversations.blank? %>
+        <div class="heading-holder">
+        <h4>No conversation found</h4>
+        </div>  
+    <% else %>
+      <div class="inbox_chat">
+        <% if current_user.buyer? %>
+          <% @conversations.each do |conversation| %> 
+            <div class="chat_list active_chat">
+              <div class="chat_people">
+                <div class="chat_img"> 
+                  <%= image_tag(conversation.seller.check_avatar.present? ? conversation.seller.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.seller.name) %>
+                </div>
+                <div class="chat_ib">
+                  <h5><%= conversation.seller.name %><span class="chat_date">Dec 25</span></h5>
+                  <p>Test, which is a new approach to have all solutions 
+                    astrology under one roof.</p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% elsif current_user.seller? %>
+          <% @conversations.each do |conversation| %>
+           <div class="chat_list active_chat">
+              <div class="chat_people">
+                <div class="chat_img"> 
+                  <%= image_tag(conversation.buyer.check_avatar.present? ? conversation.buyer.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.buyer.name) %>
+                </div>
+                <div class="chat_ib">
+                  <h5><%= conversation.buyer.name %><span class="chat_date">Dec 25</span></h5>
+                  <p>Test, which is a new approach to have all solutions 
+                    astrology under one roof.</p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="mesgs">
+    <% unless @conversation.blank? %>
+      <div class="msg_history" id="messages" data-conversation-id="<%= @conversation.id %>">
+      </div>
+    <% end %>
+    <div class="type_msg">
+      <div class="input_msg_write">
+        <% if !@conversation.blank? %>
+          <%= form_for @chat,url: "#" do |f| %>
+            <%= hidden_field_tag :user_id, current_user.id %> 
+            <%= f.text_field  :message, class: 'message-input write_msg', data: {emojiable: true } %>
+            <%= button_tag(type: "submit", class: "msg_send_btn") do %>
+              <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if @conversation.present? %>
+  <script type="text/javascript">
+    var current_conversation_id = <%= @conversation.id %>;
+    var current_user_id = <%= current_user.id %>;
+    var conversation_url = '<%= conversation_url(@conversation) %>';
+    var chats_recipients = new Object();
+
+    chats_recipients[<%= @conversation.seller_id %>] = {
+      "name": "<%= (@conversation.seller_id == current_user.id) ? @conversation.seller.name : @conversation.seller.name %>",
+      "image": "<%= image_path(@conversation.seller.check_avatar.blank? ? 'avatar-placeholder-extra-small.png' : @conversation.seller.check_avatar) %>"
+    };
+    chats_recipients[<%= @conversation.buyer_id %>] = {
+      "name": "<%= (@conversation.buyer_id == current_user.id) ? @conversation.buyer.name : @conversation.buyer.name %>",
+      "image": "<%= image_path(@conversation.buyer.check_avatar.blank? ? 'avatar-placeholder-extra-small.png' : @conversation.buyer.check_avatar) %>"
+    };
+
+  // $(function(){           
+  //   $('.ratings .stars-rating').rating({ 
+  //     callback: function(value){ 
+  //       $.ajax({
+  //         method: "POST",
+  //         url: "/rating",
+  //         data: {"rate": value,"seller_id": '<%= @conversation.seller_id %>'}
+  //       }).done(function(response) {
+  //         if(response.status){
+  //           location.reload();
+  //         }
+  //       });
+  //     } 
+  //   });
+  //   $('.rating-cancel').remove()
+  // });
+  // $(function() {
+  //   $('#fileupload').fileupload({
+  //       dataType: 'json',
+  //       done: function (e, data) {
+  //         $(".conversation-file-container").html('<div class="file-container"><img class= "thumb" src="'+data.result.file_path+'" /><a href="javascript:;" onclick="$(\'.conversation-file-container\').html(\'\')">X</a></div>');
+  //       }
+  //   });
+  // });
+</script>
+<% end %>

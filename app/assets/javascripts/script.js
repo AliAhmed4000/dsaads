@@ -1,0 +1,494 @@
+$(function(){
+  if ($("#messages").length > 0) {
+    setTimeout(function() {
+      get_messages($("#messages").data("conversation-id"));
+    }, 2000);
+    $("#messages").on("scroll", function() {
+      if (preventRefire) return;
+      if ($("#messages").scrollTop() == 0) {
+        preventRefire = true;
+        get_messages($("#messages").data("conversation-id"), $("#messages li").first().data('chat-id'));
+      }
+    });
+    $(".message-input").click(function() {
+      $(".conversation-error").hide();
+    });
+    $("#send_file_holder").click(function() {
+      $(".conversation-error").hide();
+      $("#send_file").trigger("click");
+    })
+
+    // $("#s3-uploader").S3Uploader({
+    //   progress_bar_target: $('#property_images_progress_bar .js-progress-bars'),
+    //   allow_multiple_files: false,
+    //   before_add: function(file) {
+    //     return validate_attachement(file, ["jpg", "jpeg", "gif", "png"])
+    //   },
+    //   remove_completed_progress_bar: false
+    // });
+    // $('#s3-uploader').bind('s3_uploads_start', function(e) {
+    //   // disable_upload_fields();
+    //   $("#property_images_progress_bar").show();
+    //   $("#property_images_progress_bar .progress .bar").css("width","0");
+    // });
+
+    // $('#s3-uploader').bind('s3_upload_complete', function(e) {
+    //   // enable_upload_fields();
+    //   $("#property_images_progress_bar").hide();
+    //   $("#property_images_progress_bar .progress .bar").css("width","0");
+    // });
+  }
+
+  $('#user_country').change(function () {
+    var input_state = $(this);
+    var states = [];
+    $.getJSON('/state/' + $(this).val(), function (data) {
+      $.each(data, function (key,value) {
+        var opt = '<option value='+ key +'>' + value + '</option>';
+        states.push(opt)
+      });
+      $('#user_state').html(states);
+    });
+  });
+
+  $('#user_date_of_birth_3i').removeClass('date');
+  $('#user_date_of_birth_1i').removeClass('date');
+  $('#user_date_of_birth_2i').removeClass('date');
+
+  $('#alert-notice').fadeOut( 10000, function() {
+    $('#alert-notice').remove()
+  });
+  jQuery.extend(jQuery.validator.messages, {
+    required:"can't be blank"
+  });
+  jQuery.validator.setDefaults({
+    errorPlacement: function(error, element) {
+      if (element.attr("name")== "user[image]") {
+        $("#image-preview").addClass("has-error")
+        error.appendTo("#image_error");
+      }else if(element.attr("name") == "user[term_and_condition]") {
+        $('.user_term_and_condition').addClass('has-error')
+        error.appendTo('#term_id');
+      }else if(element.attr("name") == "user[adult]") {
+        $('.user_adult').addClass('has-error')
+        error.appendTo('#adult_id');
+      }else{
+        error.insertAfter(element);
+      }
+    }
+  });
+  jQuery.validator.addMethod("mobile", function(value, element) {
+      var pattern1 =  /^\d+(\d+)*$/.test(value);
+      var pattern2 =  /^[+]{1}\d+(\d+)*$/.test(value);
+      if(pattern1 == true){
+        return true;
+      }else if(pattern2 == true){
+        return true;
+      }else{
+        return this.optional(element); 
+      } 
+  }, "valid format +0123456789");
+
+  if ($('#new_user').length == 1) { 
+    $('#new_user').validate({
+      rules:{
+        'user[password]':{
+          required: true,
+          minlength: 6,
+        },
+        'user[password_confirmation]':{
+          required: true,
+          minlength: 6,
+          equalTo:"#user_password"
+        },
+        'user[card_number]':{
+          required: {
+            depends: function(element) {
+              return $("#user_type").val() == "model"
+            }
+          },
+          number: true
+        },
+        'user[security_code]':{
+          required:  {
+            depends: function(element) {
+              return $("#user_type").val() == "model"
+            }
+          },
+          number: true,
+        },
+        'user[mobile]':{
+          required:  {
+            depends: function(element) {
+              return $("#user_type").val() == "model"
+            }
+          },
+          mobile: true
+        },
+      },
+      messages: {
+        "user[card_number]": {
+          number: "invalid credit card number"
+        },
+        "user[security_code]": {
+          number: "invalid CVV number"
+        }
+      } 
+    });
+  } else if ($('#edit_user').length == 1) {
+    $('#edit_user').validate({
+      rules:{
+        'user[card_number]':{
+          required: true,
+          number:true
+        },
+        'user[security_code]':{
+          required: true,
+          number:true,
+        },
+        'user[mobile]':{
+          required: true,
+          mobile: true
+        },
+      },
+      messages: {
+        "user[card_number]": {
+          number: "invalid credit card number"
+        },
+        "user[security_code]": {
+          number: "invalid CVV number"
+        }
+      } 
+    });
+  } else {
+    $('form').validate();
+  } 
+ 
+  $('#user_term_and_condition').on('change', function() { 
+    if (this.checked) {
+      $('.user_term_and_condition').removeClass('has-error')
+    }
+  });
+
+  $('#user_adult').on('change', function() { 
+      if (this.checked) {
+        $('.user_adult').removeClass('has-error')
+      }
+  });
+
+  // $("#s3-uploader-user-image").S3Uploader({
+  //   progress_bar_target: $('#user_image_progress_bar .js-progress-bars'),
+  //   allow_multiple_files: false,
+  //   before_add: function(file) {
+  //     return validate_attachement(file, ["jpg", "jpeg", "gif", "png"])
+  //   },
+  //   remove_completed_progress_bar: false
+  // });
+  // $('#s3-uploader-user-image').bind('s3_uploads_start', function(e) {
+  //     // disable_upload_fields();
+  //     $("#user_image_progress_bar").show();
+  //     $("#user_image_progress_bar .progress .bar").css("width","0");
+  // });
+  // $('#s3-uploader-user-image').bind('s3_upload_complete', function(e) {
+  //     // enable_upload_fields();
+  //     $("#user_image_progress_bar").hide();
+  //     $("#user_image_progress_bar .progress .bar").css("width","0");
+  // });
+  $('#alert-notice').fadeOut( 5000, function() {
+    $('#alert-notice').remove()
+  });
+});
+
+$(function() {
+  $(window).bind('rails:flash', function(e, params) {
+    new PNotify({
+      title: params.type,
+      text: params.message,
+      type: params.type
+    });
+  });
+});
+
+var preventRefire = false;
+function get_messages(conversation_id, chat_id) {
+  $.ajax({
+    url: "/conversations/" + conversation_id + "/chats",
+    data: {conversation_id: conversation_id, chat_id: chat_id},
+    success: function (messages) {
+      // alert("here");
+      if (messages.length > 0) {
+        $('.conversation-holder').show();
+        $('.vid-rating').hide();
+        preventRefire = false;
+        // var chat_ids = [];
+        for (i=0; i<messages.length; i++) {
+          // chat_ids.push(messages[i]['id']);
+          $("#messages").prepend(show_message(messages[i]));
+        }
+        // chat_ids.join(",");
+        // console.log('conversation_id', conversation_id, current_user_id, chat_ids);
+        // setTimeout(function() {
+        //   App.global_conversation.update_read(conversation_id, current_user_id, chat_ids);
+        // }, 1000);
+      }else{
+        if(chat_id == null){
+          $('.conversation-holder').hide();
+          $('.vid-rating').show();
+        }
+      }
+      if (!chat_id) {
+        messages_to_bottom();
+      }
+    }
+  })
+}
+
+function show_messages(messages) {
+  if (messages.length > 0) {
+    preventRefire = false;
+  }
+  $.tmpl("messageTemplate", messages).prependTo("#messages");
+  if (messages_page == 1) {
+    messages_to_bottom();
+  }
+  messages_page++;
+}
+
+function show_message(message) {
+  console.log(message)
+  $('.conversation-holder').show();
+  $('.vid-rating').hide();
+  var url = message['message'].split("<<image>>");
+  if (url.length == 1) {
+    message_body = message['message'];
+  } else {
+    message_body = url[0] + '<br><a target="_blank" href="' + url[1] + '"><img class= "thumb" src="' + url[1]  + '" /></a>';
+  }
+  var message_date = new Date(message['created_at']);
+  var html = "";  
+  if(message.user_id == current_user_id){
+    html += '<div class="outgoing_msg">';
+    html += '<div class="sent_msg">';
+    html += '<p>' + message_body + '</p>';
+    html += '<span class="time_date">' + message_date.toLocaleString() + '</span> </div>';
+    html += '</div>';
+  }else{
+    html = '<div class="incoming_msg">';
+    html += '<div class="incoming_msg_img">';
+    html += '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>';
+    html += '<div class="received_msg">';
+    html += '<div class="received_withd_msg">';
+    html += '<p>' + message_body + '</p>';
+    html += '<span class="time_date">' + message_date.toLocaleString() + '</span></div>';
+    html += '</div>';
+    html += '</div>';
+  }
+  return html;
+}
+
+messages_to_bottom = function() {
+  return $("#messages").scrollTop($("#messages").prop("scrollHeight"));
+};
+
+function validate_attachement(file, allowed_extentions){
+  ext = file.name.split('.').pop().toLowerCase();
+  if ($.inArray(ext, allowed_extentions) != -1) {
+    if (file.size > 2000000) {
+      $(".conversation-error").html("The maximum image upload size is 2MB. Please upload a smaller image file.").show();
+      // alert('The maximum image upload size is 2MB. Please upload a smaller image file.');
+      return false;
+    }
+    return true;
+  } else {
+    $(".conversation-error").html("Allowed extensions are " + allowed_extentions.join(", ")).show();
+    // alert("Allowed extensions are " + allowed_extentions.join(", "));
+    return false;
+  }
+}
+
+function show_notification(message) {
+  console.log(message);
+  if (message.notification_counter == 0) {
+    $(".req .notify").remove();
+  } else {
+    if ($('.notify').length == 1) {
+      $('.notify').html(message.notification_counter)
+    } else {
+      var html = "";
+      html += "<span class='notify'>";
+      html += message.notification_counter;
+      html += "</span>";
+      $('.req').html(html)
+    }
+  }
+}
+
+
+function show_notification_visitor(message) {
+  new PNotify({
+      title: 'Notification',
+      text: message.visitor_notification
+  });
+}
+
+// function GetTodayDate() {
+//    var tdate = new Date();
+//    var dd = tdate.getDate(); 
+//    var MM = tdate.getMonth(); 
+//    var yyyy = tdate.getFullYear(); 
+//    var hours = tdate.getHours();  
+//    var min   =  tdate.getMinutes(); 
+//    var sec  =  tdate.getSeconds();
+//    var xxx = dd + "-" +( MM+1) + "-" + yyyy + " " + hours + ":" + min + ":" + sec ;
+//    return xxx;
+// }
+
+var session;
+function set_video(apiKey,sessionId,token){
+  // Enable console logs for debugging
+  TB.setLogLevel(TB.DEBUG);
+  // Initialize session, set up event listeners, and connect
+  session = OT.initSession(apiKey, sessionId);
+  session.connect(token, function(error){
+    if(error){
+      end(sessionId);
+      console.log( error );
+      console.log(session.connection.creationTime)
+    }else{
+      // Create publisher and start streaming into the session  
+      var publisher = OT.initPublisher('myPublisherDiv',{insertMode: 'append',maxResolution: '1920*1920',width: 0,height: 0,facingMode: "user"});
+      session.publish(publisher);
+      $(".endcall").hide();
+      var session_timestamp = session.connection.creationTime
+      var myVar = setInterval(timer, 1000)
+      // navigator.mediaDevices.getUserMedia({video: {facingMode: "user"}});
+      console.log(myVar + "session")
+    }
+  });
+  session.on({ 
+    streamCreated: function(event){
+      session.subscribe(event.stream,"videos",{width: '100%', height: 550 ,insertMode: 'append',facingMode: "user"}); 
+      // navigator.mediaDevices.getUserMedia({video: {facingMode: "user"}});
+      $('#myPublisherDiv').hide(); 
+      $(".endcall").show();
+      $('.wait').hide();
+    } 
+  });
+}
+
+
+function timer() {    
+  var d = new Date();
+  var t = d.toLocaleTimeString();
+  var id = $("#hidden_video_id").val();
+  $.ajax({
+    url: "/video_timing/"+id,
+    type: "GET",
+    success: function(response){
+      if (response.starting_at != null && response.ending_at !=null) {
+        App.global_conversation.video_conversation(response);
+      }      
+    },
+    faliure: function(){
+      console.log("Errrrrrrrrror")
+    }
+  });
+}
+
+function video_conversation_end(data){
+  var d = new Date();
+  var a = new Date(data['ending_at']);
+  var i = "system"
+  if (a <= d) {
+    end(data.id,i);
+  } else {
+    console.log("Continue.............");
+  }
+}
+
+
+function end(id,i) {
+  session.disconnect();
+  $(".endcall").hide();
+  $.post("/video_end_time", {"id": id, "i" : i}, function(response) {
+    if (response.status) {
+      window.location = "/models/" + response.slug;
+      // new PNotify({
+      //   title: 'Notification',
+      //   text: "Call Ended"
+      // });      
+    }
+  });
+}
+
+function video_chat(msg) {
+  $("#videotext").html(msg.link + " wanted to video call with you.");
+  $("#accept").attr("href", "/visitors/videos/" + msg.link);
+  $("#accept").attr("value", msg.link)
+  $('#videoModal').modal('show');
+}
+
+function show_loader() {
+  $(".loader-gif").show();
+  $("#button-payment").hide();
+  $("#button-subscription").hide();
+}
+
+function end_video_chat(msg,model_slug, visitor_slug) {
+  session.disconnect();
+  $(".endcall").hide();
+  if (msg.ended_by == "system") {
+    window.location = "/purchase/" + visitor_slug;  
+  } else {
+    window.location = "/models/" + model_slug;
+  }
+  new PNotify({
+    title: 'Notification',
+    text: "Call Ended"
+  });
+}
+
+function tip_message_show(message){
+  console.log(message)
+  new PNotify({
+    title: 'Success!',
+    text: 'Memeber gives you tip!.'
+  });
+}
+function tip_message_show_for_member(message){
+ console.log(message)
+  new PNotify({
+    title: 'Success!',
+    text: 'Your tip has successfully given.'
+  }); 
+}
+
+$(document).ready(function() {
+  $.uploadPreview({
+    input_field: "#image-upload",
+    preview_box: "#image-preview",
+    label_field: "#image-label"
+  });
+});
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+$(document).on('hidden.bs.modal', '#videoModal', function (event) {
+  var id = $("#accept").attr("value");
+  if(id != "" || id != null){
+    end(id,"end")
+  }
+});
+
+$(function(){
+  var hash = window.location.hash;
+  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+  $('.nav-tabs a').click(function (e) {
+    $(this).tab('show');
+    var scrollmem = $('body').scrollTop();
+    window.location.hash = this.hash;
+    $('html,body').scrollTop(scrollmem);
+  });
+});

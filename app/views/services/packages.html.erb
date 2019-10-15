@@ -1,0 +1,9 @@
+<%= f.input :description,label: 'Service Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Give some impressive description for your valuable service', input_html: {rows: "3"}  %>
+  <div id="packages">
+    <%= f.simple_fields_for :packages do |package| %>
+      <%= render 'package_fields', f: package %>
+   	<% end %>   
+    <div class="links">
+      <%= link_to_add_association 'Add Package', f, :packages , class: 'btn btn-outline-primary'%>
+    </div>
+  </div>

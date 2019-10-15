@@ -1,0 +1,25 @@
+<div class="container font-weight-bold">  
+  <%= simple_form_for @service do |f|  %> 
+    <%= f.error_notification %>   
+    <div class="row mb-3">
+      <div class="col-md-6 col-sm-12">
+        <%= f.input :title, label: 'Title', placeholder: 'Put a Headline for Your Service'  %>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6 col-sm-12">
+        <%= f.input :category_id, label: 'Category', collection: Category.all, prompt: 'Select Category' %>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <%= f.input :sub_category_id, label: 'Sub Category', collection: Category.all, prompt: 'Select Sub Category' %>
+      </div>
+    </div>    
+    <div>
+      <span class="inline-block float-right">
+        <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
+      </span> 
+    </div>
+  <% end %>
+</div>
+
+

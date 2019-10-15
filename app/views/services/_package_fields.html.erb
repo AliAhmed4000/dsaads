@@ -1,0 +1,51 @@
+<div class="container font-weight-bold">  
+  <%= simple_form_for service do |f|  %>
+    <div id="packages">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Basic</th>
+            <th scope="col">Standard</th>
+            <th scope="col">Permium</th>
+          </tr>
+        </thead>
+        <tbody>
+      <%= f.simple_fields_for :packages do |package| %>
+        <%#= render 'package_fields', f: package %>
+          <tr>
+            <th scope="row"></th>
+            <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+            <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+            <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+            <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+            <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td><%= package.input :delivery_time, label: 'Delivery Time (Day)', required: true, input_html: {min: 1}  %></td>
+            <td><%= package.input :delivery_time, label: 'Delivery Time (Day)', required: true, input_html: {min: 1}  %></td>
+            <td><%= package.input :delivery_time, label: 'Delivery Time (Day)', required: true, input_html: {min: 1}  %></td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td><%= package.input :price, label: 'Set Price', required: true, input_html: {min: "10", max: "1000", step: "10"} %></td>
+            <td><%= package.input :price, label: 'Set Price', required: true, input_html: {min: "10", max: "1000", step: "10"} %></td>
+            <td><%= package.input :price, label: 'Set Price', required: true, input_html: {min: "10", max: "1000", step: "10"} %></td>
+          </tr>
+      <% end %>
+        </tbody>
+      </table>   
+      <div>
+        <span class="inline-block float-right">
+          <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
+        </span> 
+      </div>
+    </div>
+  <% end %>
+</div>
+  
