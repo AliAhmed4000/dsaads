@@ -5,7 +5,15 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Choose what kind of storage to use for this uploader:
 
-  storage :file
+  include CarrierWave::MiniMagick
+  # include CarrierWave::MimeTypes
+  # process :set_content_type
+  # Choose what kind of storage to use for this uploader:
+  if Rails.env.production?
+    storage :fog
+  else
+    storage :file
+  end
 
   # storage :fog
 

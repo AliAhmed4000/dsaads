@@ -43,6 +43,7 @@ class UsersController < ApplicationController
     @user.user_skills.build if @user.user_skills.blank?
     @user.user_educations.build if @user.user_educations.blank?
     @user.user_certificates.build if @user.user_certificates.blank?
+    @user.user_languages.build if @user.user_languages.blank?
   end 
 
   def seller_linked_accounts
@@ -75,7 +76,8 @@ class UsersController < ApplicationController
       :wizard,
       user_skills_attributes: [:id,:name,:level,:_destroy],
       user_educations_attributes: [:id,:country,:institution_name,:title,:major,:passing_year,:_destroy], 
-      user_certificates_attributes: [:id,:title,:institution_name,:passing_year],
+      user_certificates_attributes: [:id,:title,:institution_name,:passing_year,:_destroy],
+      user_languages_attributes: [:id,:language,:level,:_destroy]
     )
   end
 

@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   end
 
   def get_category_list
-    @categories = Category.all
+  	if current_admin_user.blank?
+    	@categories = Category.all
+  	end 
   end
 end

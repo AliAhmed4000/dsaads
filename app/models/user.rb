@@ -39,6 +39,7 @@ class User < ApplicationRecord
   has_many :user_skills
   has_many :user_educations
   has_many :user_certificates
+  has_many :user_languages
   enum role: [:buyers,:sellers]
 
   validates :email, uniqueness: true, presence: true
@@ -46,6 +47,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_skills
   accepts_nested_attributes_for :user_educations
   accepts_nested_attributes_for :user_certificates
+  accepts_nested_attributes_for :user_languages
   
   attr_accessor :wizard
   def check_avatar

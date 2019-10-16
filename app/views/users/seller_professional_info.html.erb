@@ -16,11 +16,17 @@
       <%= occup.input :occuption,label: "Name",collection: UserOccupation::Occupation, prompt: 'Select level' %>
       <%#= occup.input :sub_occuption %>
     <% end %>
-    <h4>Skill</h4><hr>
+    <h4>Professional Skill</h4><hr>
     <%= f.simple_fields_for :user_skills do |skill| %>
-      <%= skill.input :name, collection: UserSkill::Name, prompt: 'Select Skill' %>
-      <%= skill.input :level, collection: UserSkill::Level, prompt: 'Select level' %>
+      <%= skill.input :name, collection: UserSkill::Name, required: true, prompt: 'Select Skill' %>
+      <%= skill.input :level, collection: UserSkill::Level, required: true, prompt: 'Select level' %>
     <% end %>
+    <h4>Language Skill</h4><hr>
+    <%= f.simple_fields_for :user_languages do |lang| %>
+      <%= lang.input :language, collection: LanguageList::COMMON_LANGUAGES, required: true ,prompt: true %>
+      <%= lang.input :level, collection: UserLanguage::Level,required: true, prompt: 'Select level' %>
+    <% end %>
+    <p><%= link_to_add_association 'Add More', f, :user_languages , class: 'btn btn-outline-primary pull-right'%></p>
     <h4>Education</h4><hr>
     <%= f.simple_fields_for :user_educations do |edu| %>
       <%= edu.input :country %>
