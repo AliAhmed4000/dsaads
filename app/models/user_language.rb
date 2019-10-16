@@ -3,5 +3,5 @@ class UserLanguage < ApplicationRecord
  	enum level: ["Beginner","Intermedidate","Expert"]
  	Level = ['Beginner', 'Intermedidate', 'Expert']
 
- 	validates :language,presence: true, :if => lambda {binding.pry}
+ 	validates :language, presence: true
 end
