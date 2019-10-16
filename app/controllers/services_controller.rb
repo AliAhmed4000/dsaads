@@ -45,8 +45,7 @@ class ServicesController < ApplicationController
     else
       render :new 
       flash[:notice] = @service.errors.full_messages
-    end   
-    binding.pry 
+    end 
   end
 
   def show

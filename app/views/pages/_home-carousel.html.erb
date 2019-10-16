@@ -1,4 +1,11 @@
 <!--SHOWCASE SLIDER -->
+<script type="text/javascript">
+  const choices = new Choices('[data-trigger]',
+  {
+    searchEnabled: false,
+    itemSelectText: '',
+  });
+</script>
 <section id="showcase">
   <div class="s003">
     <%= form_tag services_path, method: :get do %>
@@ -27,6 +34,16 @@
     <% end %>
   </div>
 </section>
+
+<script type="text/javascript">
+$(function(){
+  const choices = new Choices('[data-trigger]',
+  {
+    searchEnabled: false,
+    itemSelectText: '',
+  });
+});
+</script>
 <style type="text/css">
 .s003 {
   min-height: 100vh;
@@ -43,10 +60,3 @@
   padding: 15px;
 }  
 </style>
-<script type="text/javascript">
-     const choices = new Choices('[data-trigger]',
-      {
-        searchEnabled: false,
-        itemSelectText: '',
-      });
-</script>

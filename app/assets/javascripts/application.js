@@ -19,10 +19,10 @@
 //= require jquery.raty.js
 //= require cocoon
 //= require rangeslider.js
+//= require choices.js
 //= require cable.js
 //= require_tree ./channels
 //= require script
-//= require choices
 
 
 
