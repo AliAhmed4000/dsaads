@@ -52,7 +52,8 @@ class User < ApplicationRecord
   attr_accessor :wizard
   def check_avatar
     if self.avatar.blank?
-      self.avatar = "https://via.placeholder.com/150"
+      gravatar_id = Digest::MD5::hexdigest(email).downcase
+      "https://gravatar.com/avatar/#{gravatar_id}.png"
     else
       avatar_url
     end

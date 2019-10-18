@@ -13,4 +13,9 @@ class CategoriesController < ApplicationController
       redirect_back(fallback_location: root_path) 
   	end 
   end
+
+  def search
+    category = Category.find_by_id(params[:id])
+    render json: {data: category.sub_categories}      
+  end 
 end

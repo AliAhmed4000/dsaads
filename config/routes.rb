@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root to: "pages#index"
 
   resources :reviews
+  get '/categories/search', to: 'categories#search', as: "search_category"
   resources :categories do
     member do
       get :services
@@ -13,7 +14,6 @@ Rails.application.routes.draw do
   end
   resources :services
   get '/services/:id/edit/:type', to: 'services#edit', as: "services_pricing"
-  
   resources :favorites, only: [:create, :destroy]
   resources :users, only: [:new, :create, :update], as: "onboarding", path: "seller_onboarding"
   get 'seller_onboarding/personal_info', to: 'users#seller_personal_info', as: "seller_personal_info"

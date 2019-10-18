@@ -25,5 +25,10 @@ class Category < ApplicationRecord
 
   def self.get_categories
     Category.where(:sub_category_id => nil)
+  end
+
+  def self.search_category(category,keyword)
+    Service.joins(:category).where('services.description LIKE ? OR services.title LIKE ?',keyword,keyword).where('categories.sub_category_id=?',category).order(created_at: :desc)
+    # services.where('description LIKE ? OR title LIKE ?', keyword, keyword).order(created_at: :desc)
   end  
 end

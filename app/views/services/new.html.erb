@@ -3,15 +3,15 @@
     <%= f.error_notification %>   
     <div class="row mb-3">
       <div class="col-md-6 col-sm-12">
-        <%= f.input :title, label: 'Title', placeholder: 'Put a Headline for Your Service'  %>
+        <%= f.input :title, label: 'Gig Tile', placeholder: "do something I'm really good at"  %>
       </div>
     </div>
     <div class="row mb-3">
       <div class="col-md-6 col-sm-12">
-        <%= f.input :category_id, label: 'Category', collection: Category.get_categories, prompt: 'Select Category' %>
+        <%= f.input :category_id, label: 'Category', collection: Category.get_categories, prompt: 'Select Category', :input_html => {:onchange => "get_sub_category(this)"} %>
       </div>
       <div class="col-md-6 col-sm-12">
-        <%= f.input :category_id, label: 'Sub Category',collection: [],prompt: 'Select Sub Category',include_blank: true %>
+        <%= f.input :sub_category, label: 'Sub Category',collection: [],prompt: 'Select Sub Category',include_blank: true, :input_html => {:id => "sub1"} %>
       </div>
     </div>    
     <div>
@@ -21,5 +21,30 @@
     </div>
   <% end %>
 </div>
-
+<script type="text/javascript">
+  var html = "";
+  function get_sub_category(category){
+    $.ajax({
+      url:  "/categories/search/",
+      type: "get",
+      data: {id: category.value},
+      success: function(response){
+        $('#sub1').html("")
+        if(response.data == 0){
+          $('#sub1').append("<option>Select Sub Category</option>");
+        }else{
+          html = "<option>Select Sub Category</option>";
+          var sub_data = new Array();    
+          for(var i in response.data){
+            html  = '<option value='+response.data[i].id+'>';
+            html +=  response.data[i].title;
+            html += '</option>';
+            sub_data.push(html)
+          }
+          $('#sub1').append(sub_data);
+        }
+      },
+    })
+  }
+</script>
 

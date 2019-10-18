@@ -1,7 +1,18 @@
 class ServicesController < ApplicationController
 
   def index
-    if params[:search].present?
+    params["choices-single-default"] = nil if params["choices-single-default"] == "Category"
+    if params[:search].present? && params["choices-single-default"].present?
+      category = Category.find_by_id(params["choices-single-default"])
+      search = "%#{params[:search]}%"
+      @services = Category.search_category(category,search).page(params[:page]).per(6)
+      @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
+    elsif params["choices-single-default"].present?
+      search = "%#{params["choices-single-default"]}%"
+      category= Category.find_by_id(params["choices-single-default"])
+      @services = category.services.page(params[:page]).per(6)
+      @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
+    elsif params[:search].present?
       search = "%#{params[:search]}%"
       @services = Service.search(search).page(params[:page]).per(6)
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
@@ -60,7 +71,8 @@ class ServicesController < ApplicationController
       :title, 
       :description, 
       :category_id, 
-      :favorites_count, 
+      :favorites_count,
+      :sub_category, 
       packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time]
     )
   end
