@@ -8,10 +8,10 @@
     </div>
     <div class="row mb-3">
       <div class="col-md-6 col-sm-12">
-        <%= f.input :category_id, label: 'Category', collection: Category.all, prompt: 'Select Category' %>
+        <%= f.input :category_id, label: 'Category', collection: Category.get_categories, prompt: 'Select Category' %>
       </div>
       <div class="col-md-6 col-sm-12">
-        <%= f.input :sub_category_id, label: 'Sub Category',collection: [],prompt: 'Select Sub Category',include_blank: true %>
+        <%= f.input :category_id, label: 'Sub Category',collection: [],prompt: 'Select Sub Category',include_blank: true %>
       </div>
     </div>    
     <div>

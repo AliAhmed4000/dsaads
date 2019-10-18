@@ -4,7 +4,7 @@ ActiveAdmin.register Category do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :title, :services_count, :image
+  permit_params :title, :services_count, :image, :sub_category_id
   #
   # or
   #
@@ -13,7 +13,7 @@ ActiveAdmin.register Category do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-
+  scope :get_categories, default: true
   index do
     column :title
     actions
@@ -35,7 +35,7 @@ ActiveAdmin.register Category do
       f.input :title
       f.input :image, :as => :file,:hint => (!f.object.image_url.blank?) ? image_tag(f.object.image_url(:extra_small)) : ''
       # f.input :country, as: :select, collection: CS.countries.invert, include_blank: false, :selected => country
-      # f.input :state, as: :select, collection: states, include_blank: false, :selected => state
+      # f.input :sub
     end
     f.actions
   end

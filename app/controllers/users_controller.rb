@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     find_user
     @services = @seller.services
     @favorited_services = @seller.favorited_services
-    @categories = Category.all 
+    @categories = Category.get_categories 
   end
 
   def seller_personal_info
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
       :language,
       :personal_web_link,
       :wizard,
-      user_skills_attributes: [:id,:name,:level,:_destroy],
+      user_skills_attributes: [:id,:skill_id,:level,:_destroy],
       user_educations_attributes: [:id,:country,:institution_name,:title,:major,:passing_year,:_destroy], 
       user_certificates_attributes: [:id,:title,:institution_name,:passing_year,:_destroy],
       user_languages_attributes: [:id,:language,:level,:_destroy]

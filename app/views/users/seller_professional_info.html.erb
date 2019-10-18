@@ -18,7 +18,7 @@
     <% end %>
     <h4>Professional Skill</h4><hr>
     <%= f.simple_fields_for :user_skills do |skill| %>
-      <%= skill.input :name, collection: UserSkill::Name, required: true, prompt: 'Select Skill' %>
+      <%= skill.input :skill_id, collection: Skill.all, required: true, prompt: 'Select Skill' %>
       <%= skill.input :level, collection: UserSkill::Level, required: true, prompt: 'Select level' %>
     <% end %>
     <p><%= link_to_add_association 'Add More', f, :user_skills , class: 'btn btn-outline-primary pull-right'%></p>

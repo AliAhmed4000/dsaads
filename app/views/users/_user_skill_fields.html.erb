@@ -1,2 +1,2 @@
-<%= f.input :name, collection: UserSkill::Name, required: true, prompt: 'Select Skill' %>
+<%= f.input :skill_id, collection: Skill.all, required: true, prompt: 'Select Skill' %>
 <%= f.input :level, collection: UserSkill::Level, required: true, prompt: 'Select level' %>
