@@ -5,7 +5,7 @@
     <% @categories.each do |category| %>
       <div class="col-md-4 mb-4 text-center">
         <div class="thumbnail">
-          <a href="<% link_to category.title,services_category_path(category) %>">
+          <a href="<%= services_category_path(category)%>">
             <img src="<%= category.image_url %>" style="width: 200px; height: 200px; object-fit: cover;">
             <div class="caption">
               <p><%= category.title %></p>

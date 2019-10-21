@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_16_055113) do
+ActiveRecord::Schema.define(version: 2019_10_17_083224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,8 @@ ActiveRecord::Schema.define(version: 2019_10_16_055113) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
+    t.bigint "sub_category_id"
+    t.index ["sub_category_id"], name: "index_categories_on_sub_category_id"
   end
 
   create_table "chats", force: :cascade do |t|
@@ -188,20 +190,17 @@ ActiveRecord::Schema.define(version: 2019_10_16_055113) do
     t.integer "favorites_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "sub_category_id"
     t.string "requirements"
     t.index ["category_id"], name: "index_services_on_category_id"
-    t.index ["sub_category_id"], name: "index_services_on_sub_category_id"
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
-  create_table "sub_categories", force: :cascade do |t|
-    t.bigint "category_id"
-    t.string "title"
-    t.string "description"
+  create_table "skills", force: :cascade do |t|
+    t.string "name"
+    t.bigint "admin_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_sub_categories_on_category_id"
+    t.index ["admin_user_id"], name: "index_skills_on_admin_user_id"
   end
 
   create_table "user_certificates", force: :cascade do |t|
@@ -246,7 +245,7 @@ ActiveRecord::Schema.define(version: 2019_10_16_055113) do
 
   create_table "user_skills", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "name"
+    t.integer "skill_id"
     t.integer "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -270,9 +269,13 @@ ActiveRecord::Schema.define(version: 2019_10_16_055113) do
     t.string "country"
     t.integer "role", default: 0
     t.string "personal_web_link"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "services", "sub_categories"
 end

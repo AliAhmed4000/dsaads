@@ -52,6 +52,7 @@ gem 'cocoon', '~> 1.2', '>= 1.2.12'
 gem 'carrierwave'
 gem 'mini_magick'
 gem "rmagick"
+gem 'pg'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -62,7 +63,6 @@ group :development, :test do
   gem 'pry'
   gem 'pry-rails'
   # Use sqlite3 as the database for Active Record
-  gem 'pg'
 end
 
 group :development do
@@ -85,14 +85,13 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'ffaker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'will_paginate', '~> 3.0.5'
-gem 'bootstrap-will_paginate', '~> 0.0.10'
+# gem 'will_paginate', '~> 3.0.5'
+# gem 'bootstrap-will_paginate', '~> 0.0.10'
 gem 'activeadmin'
 gem 'dotenv-rails'
 gem 'aws-sdk', '~> 3'

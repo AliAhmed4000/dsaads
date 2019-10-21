@@ -1,3 +1,12 @@
+// window.jsFunctions = {
+//   initializeChoices: function () {
+//     const controls = document.querySelectorAll('select');
+//     new Choices(controls, {
+//       searchEnabled: false,
+//       shouldSort: false
+//     });
+//   }
+// }
 $(function(){
   if ($("#messages").length > 0) {
     setTimeout(function() {
@@ -492,3 +501,6 @@ $(function(){
     $('html,body').scrollTop(scrollmem);
   });
 });
+// $(function(){
+  
+// });

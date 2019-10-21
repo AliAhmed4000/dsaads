@@ -21,11 +21,17 @@ class Service < ApplicationRecord
   has_many :favorited_users, through: :favorites, source: :user
   accepts_nested_attributes_for :packages, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :photos, reject_if: :all_blank, allow_destroy: true
-  validates :title, :category_id, presence: true
+  validates :title, :category_id, :sub_category, presence: true
   # validates :description, length: {minimum: 50, maximum: 1000}
+  attr_accessor :sub_category
+  after_create :set_sub_categoty
+
+  def set_sub_categoty
+    self.update_column('category_id',sub_category)
+  end
 
   def self.search(keyword)
-    where('description LIKE ? OR title LIKE ?', keyword, keyword).order(created_at: :desc)
+    where('description LIKE ? OR title LIKE ?',keyword,keyword).order(created_at: :desc)
   end
 
 
@@ -59,5 +65,5 @@ class Service < ApplicationRecord
     else
       false
     end
-  end
+  end 
 end

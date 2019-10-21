@@ -24,7 +24,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :confirmable
 
   mount_uploader :avatar, AvatarUploader
   has_many :services, dependent: :destroy
@@ -52,7 +52,8 @@ class User < ApplicationRecord
   attr_accessor :wizard
   def check_avatar
     if self.avatar.blank?
-      self.avatar = "https://via.placeholder.com/150"
+      gravatar_id = Digest::MD5::hexdigest(email).downcase
+      "https://gravatar.com/avatar/#{gravatar_id}.png"
     else
       avatar_url
     end
