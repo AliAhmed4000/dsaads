@@ -41,6 +41,8 @@ gem 'kaminari', '~> 1.1'
 gem 'mini_racer', '~> 0.2.0'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.4'
 gem 'omniauth-github', '~> 1.3'
+gem 'omniauth-facebook', '~> 5.0'
+gem 'omniauth-google-oauth2', '~> 0.8.0'
 gem 'figaro', '~> 1.1', '>= 1.1.1'
 gem 'redis'
 gem 'ransack', '~> 2.1'
@@ -53,7 +55,7 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem "rmagick"
 gem 'pg'
-
+gem 'panda', '~> 1.6.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
