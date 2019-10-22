@@ -1210,7 +1210,6 @@ DEPENDENCIES
   owlcarousel-rails (~> 2.2, >= 2.2.3.5)
   panda (~> 1.6.0)
   pg
-  pry
   pry-rails
   puma (~> 3.11)
   rails (~> 5.2.1)
@@ -1232,4 +1231,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   2.0.1
+   1.17.3
