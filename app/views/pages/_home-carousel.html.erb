@@ -11,12 +11,12 @@
     <%= form_tag services_path,:id => 'elm_id', method: :get do %>
     <div class="inner-form">
       <div class="input-field first-wrap">
-        <div class="input-select">
-          <select data-trigger="" name="choices-single-default">
+        <div class="input-select" style="padding: 10px;">
+          <select data-trigger="" name="choices-single-default" >
             <option placeholder="">Category</option>
-            <%= @categories.each do |category| %> 
+            <%= @categories.each do |category| %>
               <option value="<%= category.id %>"><%= category.title %></option>
-            <% end %>  
+            <% end %>
           </select>
         </div>
       </div>
@@ -56,7 +56,7 @@ $(function(){
   background-size: cover;
   background-position: center center;
   padding: 15px;
-}  
+}
 </style>
 <script type="text/javascript">
   $("#search-button").click(function() {
