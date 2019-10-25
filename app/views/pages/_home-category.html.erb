@@ -3,12 +3,12 @@
   <div class="container">
     <div class="row">
     <% @categories.each do |category| %>
-      <div class="col-md-4 mb-4 text-center">
+      <div class="col-md-2 mb-2 text-center">
         <div class="thumbnail">
           <a href="<%= services_category_path(category)%>">
             <img src="<%= category.image_url %>" style="width: 200px; height: 200px; object-fit: cover;">
             <div class="caption">
-              <p><%= category.title %></p>
+              <p><%= category.title.upcase %></p>
             </div>
           </a>
         </div>
