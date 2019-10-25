@@ -13,7 +13,7 @@
       <div class="input-field first-wrap">
         <div class="input-select" style="padding: 10px;">
           <select data-trigger="" name="choices-single-default" >
-            <option placeholder="">Category</option>
+            <option placeholder="">All Categories</option>
             <%= @categories.each do |category| %>
               <option value="<%= category.id %>"><%= category.title %></option>
             <% end %>
@@ -44,7 +44,7 @@ $(function(){
 </script>
 <style type="text/css">
 .s003 {
-  min-height: 100vh;
+  min-height: 75vh;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
