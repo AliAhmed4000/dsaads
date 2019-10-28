@@ -20,7 +20,7 @@
 #
 
 class User < ApplicationRecord
-  
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -89,6 +89,10 @@ class User < ApplicationRecord
     end
   end
 
+  def professional_complete?
+    user_occupations.any? && user_skills.any? && user_educations.any? && user_certificates.any? && user_languages.any?
+  end
+
   def unread_conversations_count
     self.chats_recipients.where('read = ?', false).select(:conversation_id).distinct(:conversation_id).count
   end
@@ -96,7 +100,7 @@ class User < ApplicationRecord
   def unread_conversation_count(conversation_id)
     self.chats_recipients.where('read = ? AND conversation_id = ?', false, conversation_id).count
   end
-  
+
   def user_online?
     !$redis.get("user_#{self.id}_online").nil?
   end
@@ -108,15 +112,15 @@ class User < ApplicationRecord
   def extra_small_url
     (image.blank?) ? file_url : image_url(:extra_small)
   end
-  
+
   def small_url
     (image.blank?) ? file_url : image_url(:small)
   end
-  
+
   def thumb_url
     (image.blank?) ? file_url : image_url(:thumb)
   end
-  
+
   def circle_url
     (image.blank?) ? file_url : image_url(:circle)
   end

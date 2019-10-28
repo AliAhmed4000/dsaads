@@ -29,7 +29,7 @@ Rails.application.configure do
 
   # Devise setup
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-  
+
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
 
@@ -63,4 +63,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
+
+   ENV['PANDASTREAM_URL'] = "https://669fbbb7cf79501d85c1:9bb2c6f03dbf259ae546@api.pandastream.com/ta01721a52a8d5d6532ccc04f3fe6a7d"
 end
