@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row bs-wizard" style="border-bottom:0;">
+    
+    <% if current_user.check_seller_personal_info.all? %>
+      <div class="col-xs-3 bs-wizard-step complete">
+    <% else %>
+      <div class="col-xs-3 bs-wizard-step disabled">
+    <% end %>
+    <div class="text-center bs-wizard-stepnum">Step 1</div>
+    <div class="progress"><div class="progress-bar"></div></div>
+    <% if current_user.check_seller_personal_info.all? %>
+      <%= link_to "",seller_personal_info_path, class: 'bs-wizard-dot' %>
+    <% end %>
+      <div class="bs-wizard-info text-center">Personal Info</div>
+    </div>
+    
+    <% if current_user.user_skills.select{|s| s.id!=nil}.blank? && current_user.user_languages.select{|l| l.id!=nil}.blank? %>
+      <div class="col-xs-3 bs-wizard-step disabled">
+    <% else %>
+      <div class="col-xs-3 bs-wizard-step complete">
+    <% end %>
+      <div class="text-center bs-wizard-stepnum">Step 2</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <% if !current_user.user_skills.select{|s| s.id!=nil}.blank? && !current_user.user_languages.select{|l| l.id!=nil}.blank? %>
+        <%= link_to "",seller_professional_info_path, class: 'bs-wizard-dot' %>
+      <% else %>
+        <a href="#" class="bs-wizard-dot"></a>
+      <% end %>
+      <div class="bs-wizard-info text-center">Professional Info</div>
+    </div>
+
+    <% if current_user.uid.blank? %>
+      <div class="col-xs-3 bs-wizard-step disabled">
+    <% else %>
+      <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
+    <% end %>
+      <div class="text-center bs-wizard-stepnum">Step 3</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center">Linked Account</div>
+    </div>
+
+    <% if current_user.uid.blank? %>
+      <div class="col-xs-3 bs-wizard-step disabled">
+    <% else %>
+      <div class="col-xs-3 bs-wizard-step complete"><!-- complete -->
+    <% end %>
+      <div class="text-center bs-wizard-stepnum">Step 4</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <a href="#" class="bs-wizard-dot"></a>
+      <div class="bs-wizard-info text-center">Account Security</div>
+    </div>
+  </div>
+</div>

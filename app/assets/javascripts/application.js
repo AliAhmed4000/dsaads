@@ -23,6 +23,7 @@
 //= require cable.js
 //= require_tree ./channels
 //= require script
+//= require dropzone
 
 
 

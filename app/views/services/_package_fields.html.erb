@@ -1,10 +1,9 @@
-<div class="container font-weight-bold">  
+<div class="container font-weight-bold" style="height: 700px;">  
   <%= simple_form_for service do |f|  %>
     <div id="packages">
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th scope="col"></th>
             <th scope="col">Basic</th>
             <th scope="col">Standard</th>
             <th scope="col">Permium</th>
@@ -13,35 +12,51 @@
         <tbody>
       <%= f.simple_fields_for :packages do |package| %>
         <%#= render 'package_fields', f: package %>
+        <% if package.object.blank? %>
           <tr>
-            <th scope="row"></th>
-            <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
-            <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
-            <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+            <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,:name => "service[packages_attributes][0][name]"} %></td>
+            <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,:name => "service[packages_attributes][1][name]"} %></td>
+            <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,:name => "service[packages_attributes][2][name]"} %></td>
           </tr>
           <tr>
-            <th scope="row"></th>
-            <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
-            <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
-            <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+            <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,:name => "service[packages_attributes][0][description]"} %></td>
+            <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,:name => "service[packages_attributes][1][description]"} %></td>
+            <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,:name => "service[packages_attributes][2][description]"} %></td>
           </tr>
           <tr>
-            <th scope="row"></th>
-            <td><%= package.input :delivery_time, label: 'Delivery Time (Day)', required: true, input_html: {min: 1}  %></td>
-            <td><%= package.input :delivery_time, label: 'Delivery Time (Day)', required: true, input_html: {min: 1}  %></td>
-            <td><%= package.input :delivery_time, label: 'Delivery Time (Day)', required: true, input_html: {min: 1}  %></td>
+            <td><%= package.input :delivery_time, label: 'Delivery Time (Day)', required: true, input_html: {min: 1,:name => "service[packages_attributes][0][delivery_time]"}  %></td>
+            <td><%= package.input :delivery_time, label: 'Delivery Time (Day)', required: true, input_html: {min: 1,:name => "service[packages_attributes][1][delivery_time]"}  %></td>
+            <td><%= package.input :delivery_time, label: 'Delivery Time (Day)', required: true, input_html: {min: 1,:name => "service[packages_attributes][2][delivery_time]"}  %></td>
           </tr>
           <tr>
-            <th scope="row"></th>
-            <td><%= package.input :price, label: 'Set Price', required: true, input_html: {min: "10", max: "1000", step: "10"} %></td>
-            <td><%= package.input :price, label: 'Set Price', required: true, input_html: {min: "10", max: "1000", step: "10"} %></td>
-            <td><%= package.input :price, label: 'Set Price', required: true, input_html: {min: "10", max: "1000", step: "10"} %></td>
+            <td><%= package.input :price, label: 'Set Price', required: true, input_html: {min: "10", max: "1000", step: "10",:name => "service[packages_attributes][0][price]"} %></td>
+            <td><%= package.input :price, label: 'Set Price', required: true, input_html: {min: "10", max: "1000", step: "10",:name => "service[packages_attributes][1][price]"} %></td>
+            <td><%= package.input :price, label: 'Set Price', required: true, input_html: {min: "10", max: "1000", step: "10",:name => "service[packages_attributes][2][price]"} %></td>
           </tr>
+        <% else %>            
+          <td>
+            <table class="table table-bordered">
+              <tr>
+                <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+              </tr>
+              <tr>
+                <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100 }%></td>
+              </tr>
+              <tr> 
+                <td><%= package.input :delivery_time, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
+              </tr>
+              <tr> 
+                <td><%= package.input :price, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100}%></td>
+              </tr>
+            </table>
+          </td>
+        <% end %>
       <% end %>
-        </tbody>
+      </tbody>
       </table>   
       <div>
         <span class="inline-block float-right">
+          <%= f.input :wizard,as: :hidden, :input_html => { :value => "description" } %>
           <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
         </span> 
       </div>

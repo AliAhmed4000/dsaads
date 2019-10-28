@@ -24,8 +24,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable
-
+         :recoverable, :rememberable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :twitter, :gplus]
   mount_uploader :avatar, AvatarUploader
   has_many :services, dependent: :destroy
   has_many :favorites, dependent: :destroy
@@ -35,21 +34,29 @@ class User < ApplicationRecord
   has_many :order_items, through: :orders
   has_many :conversations, dependent: :destroy
   has_many :chats_recipients
-  has_many :user_occupations
-  has_many :user_skills
-  has_many :user_educations
-  has_many :user_certificates
-  has_many :user_languages
+  has_many :user_occupations, dependent: :destroy
+  has_many :user_skills, dependent: :destroy
+  has_many :user_educations, dependent: :destroy
+  has_many :user_certificates, dependent: :destroy
+  has_many :user_languages, dependent: :destroy
+  has_many :identities, class_name: "Identity", dependent: :destroy
   enum role: [:buyers,:sellers]
 
-  validates :email, uniqueness: true, presence: true
   accepts_nested_attributes_for :user_occupations
-  accepts_nested_attributes_for :user_skills
+  accepts_nested_attributes_for :user_skills,allow_destroy: true
   accepts_nested_attributes_for :user_educations
   accepts_nested_attributes_for :user_certificates
   accepts_nested_attributes_for :user_languages
-  
+  validates :email, uniqueness: true, presence: true
+  validate :check_user_skill, on: :update
   attr_accessor :wizard
+
+  def check_user_skill
+    if self.user_skill_ids.blank? || self.user_language_ids.blank?
+      errors.add(:base, 'Select Atleast One Professional Body Type')
+    end  
+  end
+  
   def check_avatar
     if self.avatar.blank?
       gravatar_id = Digest::MD5::hexdigest(email).downcase
@@ -112,5 +119,31 @@ class User < ApplicationRecord
   
   def circle_url
     (image.blank?) ? file_url : image_url(:circle)
+  end
+
+  def check_seller_personal_info
+    [self.name,self.country,self.language,self.description]
+  end
+
+  def self.from_omniauth(auth)
+    user =  joins(:identities).where("(identities.provider=? AND identities.uid=?)", auth.provider,auth.uid).first
+    if user.blank?
+      user = User.find_by_email(auth.info.email)
+      if user.blank?
+        joins(:identities).where("identities.provider"=>auth.provider,"identities.uid"=>auth.uid).first_or_create do |user|
+          user.email = auth.info.email
+          user.password = Devise.friendly_token[0,20]
+          user.first_name, user.last_name = auth.info.name.split # assuming the user model has a name
+          user.rawtoken = "rawtoken"
+          user.skip_confirmation!
+          #user.image = auth.info.image # assuming the user model has an image
+        end
+      else
+        user.identities.create(provider: auth.provider, uid: auth.uid)
+        user
+      end
+    else
+      user
+    end
   end
 end

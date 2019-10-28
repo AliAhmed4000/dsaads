@@ -1,0 +1,92 @@
+<div class="container font-weight-bold">
+  <h2>Image Upload</h2><hr> 
+  <%= simple_form_for service,url: file_upload_path(service),method: 'post',html: {class: "dropzone",id: "myDropzoneImage"} do |f|  %>
+  <% end %>
+  <h2>Video Upload</h2><hr>
+  <% unless service.video.blank? %>
+    <div id="my-video">
+      <video height="300" controls>
+        <source src="<%= service.video.video_url %>">
+      </video>
+      <div><%= link_to "Remove Video",video_path(service.video), method: 'delete' %></div>
+    </div>
+  <% else %>
+    <%= simple_form_for service,url: video_upload_path(service),method: 'post',html: {class: "dropzone",id: "myDropzoneVideo" } do |f|  %>
+    <% end %>
+  <% end %>
+  <div>
+    <span class="inline-block float-right">
+      <%= link_to "Save & Continue", services_pricing_path(service,'publish'), class: 'btn btn-outline-success' %>
+    </span> 
+  </div>
+</div>
+<script type="text/javascript">  
+  Dropzone.options.myDropzoneVideo = {
+    acceptedFiles: 'video/*',
+    addRemoveLinks: true,
+    init: function(){
+      thisDropzone = this;
+      this.on("success",function(file,response){
+        location.reload();
+        file.previewElement.remove();    
+      });    
+    }   
+  };
+  Dropzone.options.myDropzoneImage = {
+    acceptedFiles: 'image/*',
+    addRemoveLinks: true,
+    init: function(){
+      thisDropzone = this;
+      '<% service.photos.each do |p| %>'
+        '<% unless p.id.blank? %>'  
+          var mockFile = {id: "<%= p.id %>"};
+          thisDropzone.options.addedfile.call(thisDropzone,mockFile);
+          thisDropzone.options.thumbnail.call(thisDropzone,mockFile, "<%= p.image_url(:small) %>");
+          $('.dz-progress').hide();
+          $('.dz-size').hide();
+        '<% end %>' 
+      '<% end %>'
+      this.on("success",function(file,response){
+        var obj = response;
+        var fn = obj.id;
+        var mockFile = {id: fn};
+        thisDropzone.options.addedfile.call(this,mockFile);
+        thisDropzone.options.thumbnail.call(this,mockFile,obj.path);
+        file.previewElement.remove();
+        $('.dz-progress').hide();
+        $('.dz-size').hide();    
+      });
+      this.on("removedfile", function(file) {
+        $.ajax({
+          url:  '/photos/' + file.id,
+          type: "DELETE",
+          success: function(response){
+            file.previewElement.remove(); 
+          },
+        })
+      });    
+    }
+  };
+  $("#myDropzoneImage").dropzone();
+  $("#myDropzoneVideo").dropzone(); 
+</script>
+<style type="text/css">
+.dz-image { border: 1px solid #000 }
+.dz-default {
+  border: 2px dashed #0087F7;
+  /*min-height: 360px;*/
+  /*height:70px;*/
+  /*width:70px;*/
+  height: 200px;
+  -webkit-border-radius: 3px;
+  border-radius: 5px;
+  /*background: blue;*/
+  background: white;
+  padding: 0px;
+  margin:0px;
+}
+.dz-default{
+  text-align: center;
+  padding-top: 6%
+}
+</style>

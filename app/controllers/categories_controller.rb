@@ -2,8 +2,8 @@ class CategoriesController < ApplicationController
   def services
   	@category = Category.find_by_id(params[:id])
   	unless @category.blank?
-  		unless @category.services.blank?
-    		@services = @category.services.page(params[:page]).per(6)
+      unless @category.get_services(@category).blank?
+    		@services = @category.get_services(@category).page(params[:page]).per(6)
   		else
 				flash[:notice] = "Something Went Wrong...Pls Try Again.."
       	redirect_back(fallback_location: root_path)

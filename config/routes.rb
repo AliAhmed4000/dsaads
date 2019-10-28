@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   get 'home', to: 'pages#index'
-  devise_for :users
+  devise_for :users,:controllers => {:omniauth_callbacks => "omniauth_callbacks" }
   root to: "pages#index"
 
   resources :reviews
@@ -13,6 +13,13 @@ Rails.application.routes.draw do
     end
   end
   resources :services
+  resources :skills, only: [:destroy]
+  resources :languages, only: [:destroy]
+  resources :photos, only: [:destroy]
+  resources :videos, only: [:destroy]
+  post '/services/:id/image', to: 'services#file_upload', as: "file_upload"
+  post '/services/:id/video', to: 'services#video_upload', as: "video_upload"
+  get  '/services/:id/image/show', to: 'services#show_files', as: "show_files"
   get '/services/:id/edit/:type', to: 'services#edit', as: "services_pricing"
   resources :favorites, only: [:create, :destroy]
   resources :users, only: [:new, :create, :update], as: "onboarding", path: "seller_onboarding"

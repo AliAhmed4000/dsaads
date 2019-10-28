@@ -287,4 +287,25 @@ Devise.setup do |config|
   # ActiveSupport.on_load(:devise_failure_app) do
   #   include Turbolinks::Controller
   # end
+
+  config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"],
+    scope: 'email',
+    secure_image_url: true,
+    auth_type: 'https',
+    info_fields: 'email,name,first_name,last_name',
+    client_options: {
+        site: "https://graph.facebook.com/v2.6",
+        authorize_url: "https://www.facebook.com/v2.6/dialog/oauth"
+    },
+    token_params: {
+        parse: :json
+    }
+  config.omniauth :twitter, ENV["TWITTER_CLIENT_ID"], ENV["TWITTER_CLIENT_SECRET"]
+  config.omniauth :gplus, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], {
+    :scope => "email, profile",
+    :prompt => "select_account",
+    :image_aspect_ratio => "square",
+    :image_size => 50
+  }
+
 end

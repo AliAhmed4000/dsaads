@@ -10,42 +10,103 @@
     radio_buttons: :horizontal_collection,
     range:         :horizontal_range,
     time:          :horizontal_multi_select} do |f|  %>
-    <%= f.error_notification %>
+    <% unless @user.errors[:base].blank? %>
+      <div class="alert alert-danger" %>
+        <%= @user.errors[:base].first %>
+      </div>
+    <% else %> 
+      <%= f.error_notification %>
+    <% end %>
     <h4>Occupation</h4><hr>
     <%= f.simple_fields_for :user_occupations do |occup| %>
-      <%= occup.input :occuption,label: "Name",collection: UserOccupation::Occupation, prompt: 'Select level' %>
+      <div class="row mb-3">
+        <div class="col-md-6 col-sm-12">
+          <%= occup.input :occuption,label: "Name",collection: UserOccupation::Occupation, required: true,prompt: 'Select level' %>
+        </div>
+      </div>
       <%#= occup.input :sub_occuption %>
     <% end %>
     <h4>Professional Skill</h4><hr>
+    <%= render partial: 'users/skill' %>
     <%= f.simple_fields_for :user_skills do |skill| %>
-      <%= skill.input :skill_id, collection: Skill.all, required: true, prompt: 'Select Skill' %>
-      <%= skill.input :level, collection: UserSkill::Level, required: true, prompt: 'Select level' %>
+      <% if skill.object.id.blank? %>
+        <div class="row mb-3">
+          <div class="col-md-6 col-sm-12">
+            <%= skill.input :skill_id, collection: Skill.all,required: true, prompt: 'Select Skill' %>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <%= skill.input :level, collection: UserSkill::Level,required: true, prompt: 'Select level' %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
-    <p><%= link_to_add_association 'Add More', f, :user_skills , class: 'btn btn-outline-primary pull-right'%></p>
+    <!-- <button type="button" class="btn btn-primary pull-right" id="skill-add">Add</button>
+     -->
+     <p><%= link_to_add_association 'Add More', f, :user_skills , class: 'btn btn-outline-primary pull-right'%></p>
     <h4>Language Skill</h4><hr>
+    <%= render partial: 'users/language' %>
     <%= f.simple_fields_for :user_languages do |lang| %>
-      <%= lang.input :language, collection: LanguageList::COMMON_LANGUAGES, required: true ,prompt: true %>
-      <%= lang.input :level, collection: UserLanguage::Level,required: true, prompt: 'Select level' %>
+      <% if lang.object.id.blank? %>
+        <div class="row mb-3">
+          <div class="col-md-6 col-sm-12">
+            <%= lang.input :language, collection: LanguageList::COMMON_LANGUAGES,required: true,prompt: true %>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <%= lang.input :level, collection: UserLanguage::Level,required: true,prompt: 'Select level' %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
+    <!-- <button type="button" class="btn btn-primary pull-right">Add</button> -->
     <p><%= link_to_add_association 'Add More', f, :user_languages , class: 'btn btn-outline-primary pull-right'%></p>
     <h4>Education</h4><hr>
     <%= f.simple_fields_for :user_educations do |edu| %>
-      <%= edu.input :country %>
-      <%= edu.input :institution_name %>
-      <%= edu.input :title, collection: UserEducation::Title, prompt: 'Select Title' %>
-      <%= edu.input :major %>
-      <%= edu.input :passing_year %>
+      <div class="row mb-3">
+        <div class="col-md-6 col-sm-12">
+          <%= edu.input :country %>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <%= edu.input :institution_name %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6 col-sm-12">
+          <%= edu.input :title, collection: UserEducation::Title, prompt: 'Select Title' %>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <%= edu.input :major %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6 col-sm-12">
+          <%= edu.input :passing_year %>
+        </div>
+      </div>
     <% end %>
-    <p><%= link_to_add_association 'Add More', f, :user_educations , class: 'btn btn-outline-primary pull-right'%></p>
+    <!-- <p> --><%#= link_to_add_association 'Add More', f, :user_educations , class: 'btn btn-outline-primary pull-right'%><!-- </p> -->
     <h4>Certificate</h4><hr>
     <%= f.simple_fields_for :user_certificates do |edu| %>
-      <%= edu.input :title %>
-      <%= edu.input :institution_name %>
-      <%= edu.input :passing_year %>
+      <div class="row mb-3">
+        <div class="col-md-6 col-sm-12">
+          <%= edu.input :title %>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <%= edu.input :institution_name %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6 col-sm-12">
+          <%= edu.input :passing_year %>
+        </div>
+      </div>
     <% end %>
-    <p><%= link_to_add_association 'Add More', f, :user_certificates , class: 'btn btn-outline-primary pull-right'%></p>
+    <!-- <p> --><%#= link_to_add_association 'Add More', f, :user_certificates , class: 'btn btn-outline-primary pull-right'%><!-- </p> -->
     <h4>Web Link</h4><hr>
-    <%= f.input :personal_web_link %>
+    <div class="row mb-3">
+      <div class="col-md-6 col-sm-12">
+        <%= f.input :personal_web_link,label: "Link" %>
+      </div>
+    </div>
     <%= f.input :wizard, :as => :hidden, :input_html => {:value => "seller_professional_info"} %>
     <div class="form-group row mb-0">
       <div class="col-sm-9 offset-sm-3">
@@ -54,3 +115,29 @@
     </div>
   <% end %>
 </div>
+<script type="text/javascript">
+  var html = "";
+  $("#skill-add").click(function(){
+    $.ajax({
+      url:  "/categories/search/",
+      type: "get",
+      data: {id: category.value},
+      success: function(response){
+        $('#sub1').html("")
+        if(response.data == 0){
+          $('#sub1').append("<option>Select Sub Category</option>");
+        }else{
+          html = "<option>Select Sub Category</option>";
+          var sub_data = new Array();    
+          for(var i in response.data){
+            html  = '<option value='+response.data[i].id+'>';
+            html +=  response.data[i].title;
+            html += '</option>';
+            sub_data.push(html)
+          }
+          $('#sub1').append(sub_data);
+        }
+      },
+    })
+  }); 
+</script>

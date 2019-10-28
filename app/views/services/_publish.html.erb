@@ -1,0 +1,16 @@
+<div class="container font-weight-bold">
+  <div class="container">  
+    <%= simple_form_for service do |f|  %>
+      <%= f.input :publish, as: :hidden,:input_html => { :value => true } %>
+      Almost there...
+      Let's publish your Gig and get
+      some buyers rolling in.
+      <div>
+        <span class="inline-block float-right">
+          <%= f.input :wizard,as: :hidden, :input_html => { :value => "published" } %>
+          <%= f.submit "Publish", class: "btn btn-outline-success" %>
+        </span> 
+      </div>
+    <% end %>
+  </div>
+</div>

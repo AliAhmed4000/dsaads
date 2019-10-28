@@ -1,10 +1,11 @@
 <div class="container font-weight-bold">  
-	<%= simple_form_for service do |f|  %>
-		<%= f.input :description,label: 'Service Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Give some impressive description for your valuable service', input_html: {rows: "3"}  %>
-		<div>
-        <span class="inline-block float-right">
-          <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
-        </span> 
-      </div>
-	<% end %>
+  <%= simple_form_for service do |f|  %>
+    <%= f.input :description,label: 'Gig Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Give some impressive description for your valuable service', input_html: {rows: "3"}  %>
+    <div>
+      <span class="inline-block float-right">
+      	<%= f.input :wizard,as: :hidden, :input_html => { :value => "requirement" } %>
+        <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
+      </span> 
+    </div>
+  <% end %>
 </div>

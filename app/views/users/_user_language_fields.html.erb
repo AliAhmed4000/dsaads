@@ -1,2 +1,11 @@
-<%= f.input :language, collection: LanguageList::COMMON_LANGUAGES, required: true ,prompt: true %>
-<%= f.input :level, collection: UserLanguage::Level, required: true, prompt: 'Select level' %>
+<%#= f.input :language, collection: LanguageList::COMMON_LANGUAGES, required: true ,prompt: true %>
+<%#= f.input :level, collection: UserLanguage::Level, required: true, prompt: 'Select level' %>
+
+<div class="row mb-3">
+  <div class="col-md-6 col-sm-12">
+  	<%= f.input :language, collection: LanguageList::COMMON_LANGUAGES,required: true,prompt: true %>
+	</div>
+	<div class="col-md-6 col-sm-12">
+  	<%= f.input :level, collection: UserLanguage::Level,required: true,prompt: 'Select level' %>
+	</div>
+</div>

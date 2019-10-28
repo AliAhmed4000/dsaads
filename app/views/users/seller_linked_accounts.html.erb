@@ -17,19 +17,39 @@
     <div class="form-group">
       <div class="row">
         <div class="col-sm-9"><h5>Google</h5></div>
-        <div class="col-sm-3"><button class="btn btn-light" disabled="">Connect</button></div>
+        <div class="col-sm-3">
+          <% if @user.identities.find_by_provider('gplus').blank? %> 
+            <%= link_to "Connect", user_gplus_omniauth_authorize_path,class: "btn btn-light" %>
+          <% else %>
+            <%= link_to "Connected", user_gplus_omniauth_authorize_path,class: "btn btn-light" %>
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="form-group">
       <div class="row">
-        <div class="col-sm-9"><h5>FaceBook</h5></div>
-        <div class="col-sm-3"><button class="btn btn-light" disabled="">Connect</button></div>
+        <div class="col-sm-9">
+          <h5>FaceBook</h5>
+          <% if @user.identities.find_by_provider('facebook').blank? %>
+            <span>Verified</span>
+          </div>
+          <% end %>
+        </div>
+        <div class="col-sm-3">
+          <% if @user.identities.find_by_provider('facebook').blank? %> 
+            <%= link_to "Connect", user_facebook_omniauth_authorize_path,class: "btn btn-light" %>
+          <% else %>
+            <%= link_to "Connected", user_facebook_omniauth_authorize_path,class: "btn btn-light" %>
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="form-group">
       <div class="row">
         <div class="col-sm-9"><h5>Twitter</h5></div>
-        <div class="col-sm-3"><button class="btn btn-light" disabled="">Connect</button></div>
+        <div class="col-sm-3">
+          <%= link_to "Connect", user_twitter_omniauth_authorize_path,class: "btn btn-light" %>
+        </div>
       </div>
     </div>
     <%= f.input :wizard, :as => :hidden, :input_html => {:value => "seller_account_info"} %> 

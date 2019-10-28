@@ -7,12 +7,9 @@
         <div class="owl-carousel owl-theme owl-loaded">
           <div class="owl-stage-outer">
             <div class="owl-stage">
-              <div class="owl-item" ><%= image_tag 'image1.jpg' %></div>
-              <div class="owl-item" ><%= image_tag 'image2.jpg' %></div>
-              <div class="owl-item" ><%= image_tag 'image3.jpg' %></div>
-              <div class="owl-item" ><%= image_tag 'image1.jpg' %></div>
-              <div class="owl-item" ><%= image_tag 'image2.jpg' %></div>
-              <div class="owl-item" ><%= image_tag 'image3.jpg' %></div>
+              <% @service.photos.each do |photo| %>
+                <div class="owl-item" ><%= image_tag photo.image_url(:thumb) %></div>
+              <% end %>
             </div>
           </div>
         </div>

@@ -26,10 +26,11 @@ class Package < ApplicationRecord
   has_many :buyer_reviews, through: :buyers
   has_many :cart_items
 
-  validates :delivery_time, :revision_number, :description, :name, :price, presence: true
-  validates :is_commercial, presence: true
+  # validates :delivery_time, :revision_number, :description, :name, :price, presence: true
+  validates :delivery_time, :description, :name, :price, presence: true
+  # validates :is_commercial, presence: true
   validates :price, numericality: { only_integer: true, greater_than: 1, less_than: 10000 }
-  validates :revision_number,  inclusion: { in: Package::REVISION_NUMBER }
+  # validates :revision_number,  inclusion: { in: Package::REVISION_NUMBER }
 
 
   def seller_reviews

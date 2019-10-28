@@ -53,6 +53,11 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem "rmagick"
 gem 'pg'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'omniauth-google-oauth2', '~> 0.2.2'
+gem 'omniauth-gplus'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -96,3 +101,5 @@ gem 'activeadmin'
 gem 'dotenv-rails'
 gem 'aws-sdk', '~> 3'
 gem 'fog-aws'
+gem 'dropzonejs-rails'
+gem 'carrierwave-video-thumbnailer'

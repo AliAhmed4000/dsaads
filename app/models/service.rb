@@ -15,15 +15,18 @@
 class Service < ApplicationRecord
   belongs_to :category, counter_cache: true
   belongs_to :seller, class_name: "User", foreign_key: :user_id
-  has_many :photos 
+  has_many   :photos
+  has_one  :video 
   has_many :packages 
   has_many :favorites, dependent: :destroy
   has_many :favorited_users, through: :favorites, source: :user
   accepts_nested_attributes_for :packages, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :photos, reject_if: :all_blank, allow_destroy: true
-  validates :title, :category_id, :sub_category, presence: true
-  # validates :description, length: {minimum: 50, maximum: 1000}
-  attr_accessor :sub_category
+  # validates :title, :category_id, presence: true
+  # validates :title, length: {minimum: 50, maximum: 700}
+  # validates :description, length: {minimum: 50, maximum: 700}
+  # validates :requirements, length: {minimum: 50, maximum: 700}
+  attr_accessor :sub_category, :wizard
   after_create :set_sub_categoty
 
   def set_sub_categoty

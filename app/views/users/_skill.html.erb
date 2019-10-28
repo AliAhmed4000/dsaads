@@ -1,0 +1,22 @@
+<% user_skill = @user.user_skills.select{|s| s.id != nil} %>
+<% unless user_skill.blank? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">skill</th>
+        <th scope="col">Level</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% user_skill.each do |s| %>
+        <tr>
+          <td><%= s.skill.name %></td>
+          <td><%= s.level %></td>
+          <td><%= link_to "Delete", skill_path(s.id), class: "btn btn-green", data: {confirm: "Are you sure you delete?"}, method: 'delete' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

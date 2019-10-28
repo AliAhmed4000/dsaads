@@ -26,6 +26,8 @@
           </div>
           <br/><br/>
           <div class="actions">
+            <%= link_to "Connect", user_facebook_omniauth_authorize_path,class: "btn btn-facebook" %>
+            
             <%= f.submit "Log in", class: "btn btn-info btn-block" %>
           </div>
         <% end %>

@@ -1,0 +1,22 @@
+<% user_language = @user.user_languages.select{|s| s.id != nil} %>
+<% unless user_language.blank? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Language</th>
+        <th scope="col">Level</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% user_language.each do |l| %>
+        <tr>
+          <td><%= l.language %></td>
+          <td><%= l.level %></td>
+          <td><%= link_to "Delete", language_path(l.id), class: "btn btn-green", data: {confirm: "Are you sure you delete?"}, method: 'delete' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

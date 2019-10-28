@@ -10,5 +10,7 @@
 #
 
 class Photo < ApplicationRecord
+  mount_uploader :image, ImageUploader
   belongs_to :service
+  validates :image, presence: true
 end

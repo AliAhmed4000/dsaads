@@ -14,10 +14,11 @@
  *= require owl.theme
  *= require raty
  *= require rangeslider
- *= require_self
  *= require main
  *= require chat
  *= require mains
+ *= require dropzone/basic
+ *= require snip
  */
 
 @import "bootstrap";

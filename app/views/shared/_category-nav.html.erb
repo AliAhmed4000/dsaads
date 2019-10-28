@@ -1,67 +1,12 @@
 <% if ["seller_personal_info","seller_professional_info","seller_linked_accounts","seller_account_security"].include?(params[:action]) %>
 	<div class="cat-bar">
-  <div class="container-fluid">
-    <ul class="nav nav-fill">
-      <li class="nav-item">
-        <%= link_to "Personal Info", seller_personal_info_path, class: 'nav-link' %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Professional Info", seller_professional_info_path, class: 'nav-link' %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Linked Account", seller_linked_accounts_path, class: 'nav-link' %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Account Security", seller_account_security_path, class: 'nav-link' %>
-      </li>
-    </ul>  
+    <%= render partial: "/layouts/user_steps" %>  
   </div> 
 </div>
 <% elsif !@set_bar.blank? %>
   <div class="cat-bar">
-  <div class="container-fluid">
-    <ul class="nav nav-fill">
-      <li class="nav-item">
-        <%= link_to "Overview", new_service_path, class: 'nav-link' %>
-      </li>
-      <li class="nav-item">
-        <% unless @service.new_record? %>
-          <%= link_to "Pricing", services_pricing_path(@service,'pricing'), class: 'nav-link' %>
-        <% else %>
-          <%= link_to "Pricing","#",class: 'nav-link' %>
-        <% end %>
-      </li>
-      <li class="nav-item">
-        <% unless @service.new_record? %>
-          <%= link_to "Description & FAQ",services_pricing_path(@service,'description'), class: 'nav-link' %>
-        <% else %>
-          <%= link_to "Description & FAQ", "#", class: 'nav-link' %>
-        <% end %>
-      </li>
-      <li class="nav-item">
-        <% unless @service.new_record? %>
-          <%= link_to "Requirments",services_pricing_path(@service,'requirement'), class: 'nav-link' %>
-        <% else %>
-          <%= link_to "Requirments", "#", class: 'nav-link' %>
-        <% end %>
-      </li>
-      <li class="nav-item">
-        <% unless @service.new_record? %>
-          <%= link_to "Gallery", seller_account_security_path, class: 'nav-link' %>
-        <% else %>
-          <%= link_to "Gallery", "#", class: 'nav-link' %>
-        <% end %>
-      </li>
-      <li class="nav-item">
-        <% unless @service.new_record? %>
-          <%= link_to "Publish", seller_account_security_path, class: 'nav-link' %>
-        <% else %>
-          <%= link_to "Publish","#", class: 'nav-link' %>
-        <% end %>
-      </li>
-    </ul>  
-  </div> 
-</div>
+    <%= render partial: "/layouts/services_steps" %>
+  </div>
 <% else %>
 	<div class="cat-bar">
 	  <div class="container-fluid">

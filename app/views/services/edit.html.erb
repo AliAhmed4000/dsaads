@@ -5,9 +5,9 @@
 <% elsif params[:type] == "requirement" %>
 	<%= render 'requirements_fields', service: @service %>
 <% elsif params[:type] == "gallery" %>
-	<%= render 'requirements_fields', service: @service %>
+	<%= render 'gallery', service: @service %>
 <% elsif params[:type] == "publish" %>
-	<%= render 'requirements_fields', service: @service %>
+	<%= render 'publish', service: @service %>
 <% end %>
 
   
