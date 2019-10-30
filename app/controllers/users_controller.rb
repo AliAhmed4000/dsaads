@@ -20,7 +20,7 @@ class UsersController < ApplicationController
           redirect_to new_service_path
         end   
         flash[:notice] = "Seller Profile Created Successfully !"
-      end 
+      end
       unless @user.valid?
         if params[:user][:wizard] == "seller_personal_info"
           render "seller_personal_info"
@@ -93,7 +93,8 @@ class UsersController < ApplicationController
   private
   def seller_params
     params.require(:user).permit(
-      :name, 
+      :first_name,
+      :last_name, 
       :avatar, 
       :description, 
       :email, 
