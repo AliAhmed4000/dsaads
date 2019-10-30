@@ -30,16 +30,12 @@
       <div class="row">
         <div class="col-sm-9">
           <h5>FaceBook</h5>
-          <% if @user.identities.find_by_provider('facebook').blank? %>
-            <span>Verified</span>
-          </div>
-          <% end %>
         </div>
         <div class="col-sm-3">
           <% if @user.identities.find_by_provider('facebook').blank? %> 
             <%= link_to "Connect", user_facebook_omniauth_authorize_path,class: "btn btn-light" %>
           <% else %>
-            <%= link_to "Connected", user_facebook_omniauth_authorize_path,class: "btn btn-light" %>
+            <%= link_to "Connected","#",class: "btn btn-light" %>
           <% end %>
         </div>
       </div>

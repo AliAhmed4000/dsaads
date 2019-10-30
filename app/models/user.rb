@@ -48,14 +48,14 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_certificates
   accepts_nested_attributes_for :user_languages
   validates :email, uniqueness: true, presence: true
-  validate :check_user_skill, on: :update
+  # validate :check_user_skill, on: :update
   attr_accessor :wizard
 
-  def check_user_skill
-    if self.user_skill_ids.blank? || self.user_language_ids.blank?
-      errors.add(:base, 'Select Atleast One Professional Body Type')
-    end  
-  end
+  # def check_user_skill
+  #   if self.user_skill_ids.blank? || self.user_language_ids.blank?
+  #     errors.add(:base, 'Select Atleast One Professional Body Type')
+  #   end  
+  # end
   
   def check_avatar
     if self.avatar.blank?
@@ -67,7 +67,7 @@ class User < ApplicationRecord
   end
 
   def seller?
-    self[:language].present? && self[:name].present? && self[:country].present? && self[:description].present?
+    self[:language].present? && self[:first_name].present? && self[:last_name].present? && self[:country].present? && self[:description].present?
   end
 
   def buyer_review_star
@@ -126,7 +126,7 @@ class User < ApplicationRecord
   end
 
   def check_seller_personal_info
-    [self.name,self.country,self.language,self.description]
+    [self.first_name,self.last_name,self.country,self.language,self.description]
   end
 
   def self.from_omniauth(auth)
@@ -138,7 +138,7 @@ class User < ApplicationRecord
           user.email = auth.info.email
           user.password = Devise.friendly_token[0,20]
           user.first_name, user.last_name = auth.info.name.split # assuming the user model has a name
-          user.rawtoken = "rawtoken"
+          # user.rawtoken = "rawtoken"
           user.skip_confirmation!
           #user.image = auth.info.image # assuming the user model has an image
         end
@@ -149,5 +149,9 @@ class User < ApplicationRecord
     else
       user
     end
+  end
+
+  def full_name
+    first_name.to_s.capitalize + " " + last_name.to_s.capitalize
   end
 end

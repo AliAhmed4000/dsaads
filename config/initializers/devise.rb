@@ -301,11 +301,5 @@ Devise.setup do |config|
         parse: :json
     }
   config.omniauth :twitter, ENV["TWITTER_CLIENT_ID"], ENV["TWITTER_CLIENT_SECRET"]
-  config.omniauth :gplus, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], {
-    :scope => "email, profile",
-    :prompt => "select_account",
-    :image_aspect_ratio => "square",
-    :image_size => 50
-  }
-
+  config.omniauth :gplus, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"],access_type: "online"
 end
