@@ -49,15 +49,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
   
   version :thumb do
-    process resize_to_fill: [633,633]
-  end
-
-  version :category_small_thumb, from_version: :thumb do
-    process resize_to_fill: [350, 170]
-  end
-  
-  version :service_small_thumb, from_version: :thumb do
-    process resize_to_fill: [320, 170]
+    process resize_to_fill: [107,107]
   end
 
   version :circle do
