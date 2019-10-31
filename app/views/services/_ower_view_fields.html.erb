@@ -16,6 +16,7 @@
     </div>    
     <div>
       <span class="inline-block float-right">
+        <%= f.input :wizard,as: :hidden, :input_html => { :value => "pricing" } %>
         <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
       </span> 
     </div>

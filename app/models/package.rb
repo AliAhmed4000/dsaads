@@ -17,6 +17,13 @@
 class Package < ApplicationRecord
   REVISION_NUMBER = [1,2,3,4,5]
   PACK_LIST = ['Standard', 'Silver', 'Golden']
+  BASIC_DELIVERY = ['1','2','3','7','10']
+  STANDARD_DELIVERY = ['11','12','13','17','20'] 
+  PREMIMUM_DELIVERY = ['21','22','23','27','30']
+
+  BASIC_PRICE = ['5','10','20','50','100']
+  STANDARD_PRICE = ['5','10','20','50','100'] 
+  PREMIMUM_PRICE = ['5','10','20','50','100'] 
 
   belongs_to :service
   has_many :package_metrics

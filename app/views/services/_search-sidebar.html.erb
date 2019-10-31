@@ -1,10 +1,24 @@
-<%= search_form_for @q, url: services_path do |f| %> 
+<%= search_form_for @q, url: services_path do |f| %>
+	<%# binding.pry %> 
+  <p class="h4 pb-2 underline">Budget</p>
   <span>
-    <%= f.label "$" %>
-    <%= f.number_field :packages_price_gteq %>
+    <%= f.label "Min $" %>
+    <%= f.number_field :packages_price_gteq, value: @packages_price_gteq %>
     to
-    <%= f.label "$" %>
-    <%= f.number_field :packages_price_lteq %>
-    <%= f.button :submit, 'Check', class: 'btn-outline-success pl-2' %>
+    <%= f.label "Max $" %>
+    <%= f.number_field :packages_price_lteq, value: @packages_price_lteq %>
   </span>
+  <p class="h4 pb-2 underline">Delivery Time</p>
+  <span>
+  	<%= f.select :packages_delivery_time_eq,['','1','3','7','any'],:selected => @packages_delivery_time %>
+    <% unless @category.blank? %>
+    	<%= f.hidden_field :id, value: @category.id %>
+  	<% end %>
+  </span>
+  <%#= f.button :submit, 'Check', class: 'btn-outline-success pl-2' %>
 <% end %>
+<script type="text/javascript">
+	$("#q_packages_delivery_time_eq,#q_packages_price_gteq,#q_packages_price_lteq").change(function() {
+  	$("#service_search" ).submit();
+	});
+</script>

@@ -20,7 +20,7 @@ class ServicesController < ApplicationController
       @services = Service.search(search).page(params[:page]).per(6)
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params[:q].present? && params[:q].values != ["",""]
-      @services = @q.result.page(params[:page]).per(6)
+      @services = @q.result(:distinct=>true).page(params[:page]).per(6)
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     else
       flash[:notice] = "Please input valid keywords"
@@ -37,7 +37,7 @@ class ServicesController < ApplicationController
   def create   
     @service = current_user.services.build(service_params)
     if @service.save
-      redirect_to edit_service_path(@service)
+      redirect_to services_pricing_path(@service,'pricing')
       flash[:notice] = "Service Created Successfully"
     else
       render :new 

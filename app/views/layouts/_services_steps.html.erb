@@ -2,16 +2,22 @@
   <div class="row bs-wizard" style="border-bottom:0;">
     <% if @service.new_record? %> 
       <div class="col-xs-3 bs-wizard-step active">
+    <% elsif !@service.blank?%>
+      <div class="col-xs-3 bs-wizard-step complete">
     <% else %>
       <div class="col-xs-3 bs-wizard-step disabled">
     <% end %>
       <div class="text-center bs-wizard-stepnum">Step 1</div>
       <div class="progress"><div class="progress-bar"></div></div>
-      <%= link_to "", new_service_path, class: 'bs-wizard-dot' %>
+      <% unless @service.new_record? %>
+        <%= link_to "",services_pricing_path(@service,'overview'), class: 'bs-wizard-dot' %>
+      <% else %>
+        <%= link_to "","#",class: 'bs-wizard-dot' %>
+      <% end %>
       <div class="bs-wizard-info text-center">Overview</div>
     </div>
 
-    <% if @service.packages.blank? %>
+    <% if @service.packages.select{|p| p.id!=nil}.blank? %>
       <div class="col-xs-3 bs-wizard-step disabled">
     <% else %>
       <div class="col-xs-3 bs-wizard-step complete">
@@ -56,7 +62,7 @@
       <div class="bs-wizard-info text-center">Requirments</div>
     </div>
 
-    <% if @service.photos.blank? %>
+    <% if @service.photos.select{|p| p.id!=nil}.blank? %>
       <div class="col-xs-3 bs-wizard-step disabled">
     <% else %>
       <div class="col-xs-3 bs-wizard-step complete">
