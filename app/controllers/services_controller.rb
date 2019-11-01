@@ -6,14 +6,14 @@ class ServicesController < ApplicationController
   def index
     params["choices-single-default"] = nil if params["choices-single-default"] == "Category"
     if params[:search].present? && params["choices-single-default"].present?
-      category = Category.find_by_id(params["choices-single-default"])
+      @category = Category.find_by_id(params["choices-single-default"])
       search = "%#{params[:search]}%"
-      @services = Category.search_category(category,search).page(params[:page]).per(6)
+      @services = Category.search_category(@category,search).page(params[:page]).per(6)
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params["choices-single-default"].present?
       search = "%#{params["choices-single-default"]}%"
-      category= Category.find_by_id(params["choices-single-default"])
-      @services = category.services.page(params[:page]).per(6)
+      @category= Category.find_by_id(params["choices-single-default"])
+      @services = @category.get_services(@category).page(params[:page]).per(6)
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params[:search].present?
       search = "%#{params[:search]}%"
@@ -21,7 +21,11 @@ class ServicesController < ApplicationController
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params[:q].present? && params[:q].values != ["",""]
       @services = @q.result(:distinct=>true).page(params[:page]).per(6)
-      @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
+      respond_to do |format|
+        format.html
+        format.js
+      end
+      # @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     else
       flash[:notice] = "Please input valid keywords"
       redirect_back fallback_location: root_path
