@@ -1,4 +1,4 @@
-<% if params[:type] == "overview" %>
+<% if params[:type] == "overview" || params[:type].blank?%>
 	<%= render 'ower_view_fields', service: @service %>
 <% elsif params[:type] == "pricing" %>
 	<%= render 'package_fields', service: @service %>

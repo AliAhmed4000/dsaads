@@ -6,7 +6,13 @@
     <% end %>
     <p class="h3 bold py-3"><%= @seller.full_name %></p>
     <div class="mb-3" id="all-stars-<%= @seller.id %>"></div>
-    <%= link_to "Contact Me",conversations_path(seller_id: @seller.id),class: "btn btn-outline-success",method: :post %>
+    <% if user_signed_in? %>
+      <% if current_user.id != @seller.id %>  
+        <%= link_to "Contact Me",conversations_path(seller_id: @seller.id),class: "btn btn-outline-success",method: :post %>
+      <% end %>
+    <% else %>
+      <%= link_to "Contact Me",conversations_path(seller_id: @seller.id),class: "btn btn-outline-success",method: :post %>
+    <% end %>
     <hr>
     <div class="row">
       <div class="col-sm-6 text-left">
