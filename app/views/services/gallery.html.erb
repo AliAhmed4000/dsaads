@@ -1,22 +1,22 @@
 <div class="container font-weight-bold">
   <h2>Image Upload</h2><hr> 
-  <%= simple_form_for service,url: file_upload_path(service),method: 'post',html: {class: "dropzone",id: "myDropzoneImage"} do |f|  %>
+  <%= simple_form_for @service,url: file_upload_path(@service),method: 'post',html: {class: "dropzone",id: "myDropzoneImage"} do |f|  %>
   <% end %>
   <h2>Video Upload</h2><hr>
-  <% unless service.video.blank? %>
+  <% unless @service.video.blank? %>
     <div id="my-video">
       <video height="300" controls>
         <source src="<%= service.video.video_url %>">
       </video>
-      <div><%= link_to "Remove Video",video_path(service.video), method: 'delete' %></div>
+      <div><%= link_to "Remove Video",video_path(@service.video), method: 'delete' %></div>
     </div>
   <% else %>
-    <%= simple_form_for service,url: video_upload_path(service),method: 'post',html: {class: "dropzone",id: "myDropzoneVideo" } do |f|  %>
+    <%= simple_form_for @service,url: video_upload_path(@service),method: 'post',html: {class: "dropzone",id: "myDropzoneVideo" } do |f|  %>
     <% end %>
   <% end %>
   <div>
     <span class="inline-block float-right">
-      <%= link_to "Save & Continue", services_pricing_path(service,'publish'), class: 'btn btn-outline-success' %>
+      <%= link_to "Save & Continue", services_pricing_path(@service,'publish'), class: 'btn btn-outline-success' %>
     </span> 
   </div>
 </div>
@@ -37,7 +37,7 @@
     addRemoveLinks: true,
     init: function(){
       thisDropzone = this;
-      '<% service.photos.each do |p| %>'
+      '<% @service.photos.each do |p| %>'
         '<% unless p.id.blank? %>'  
           var mockFile = {id: "<%= p.id %>"};
           thisDropzone.options.addedfile.call(thisDropzone,mockFile);

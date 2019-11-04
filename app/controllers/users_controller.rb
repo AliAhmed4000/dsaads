@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   def seller_professional_info
     @user = current_user
     unless @user.check_seller_personal_info.all?
-      flash[:notice] = "Please First Complete Yout Personal Info."
+      flash[:alert] = "Please First Complete Yout Personal Info."
       redirect_to seller_personal_info_path
     end 
     @user.user_languages.build
@@ -65,10 +65,10 @@ class UsersController < ApplicationController
   def seller_linked_accounts
     @user = current_user
     if !@user.check_seller_personal_info.all?
-      flash[:notice] = "Please First Complete Yout Personal Info."
+      flash[:alert] = "Please First Complete Yout Personal Info."
       redirect_to seller_personal_info_path
     elsif current_user.user_skills.blank? && current_user.user_skills.blank?
-      flash[:notice] = "Please First Complete Your Professional Info."
+      flash[:alert] = "Please First Complete Your Professional Info."
       redirect_to seller_professional_info_path
     end 
   end
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   def seller_account_security
     @user = current_user
     unless @user.check_seller_personal_info.all?
-      flash[:notice] = "Please First Complete Yout Personal Info."
+      flash[:alert] = "Please First Complete Yout Personal Info."
       redirect_to seller_personal_info_path
     end
   end

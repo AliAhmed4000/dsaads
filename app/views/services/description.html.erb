@@ -1,5 +1,5 @@
 <div class="container font-weight-bold">  
-  <%= simple_form_for service do |f|  %>
+  <%= simple_form_for @service do |f|  %>
     <%= f.input :description,label: 'Gig Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Give some impressive description for your valuable service', input_html: {rows: "3"}  %>
     <div>
       <span class="inline-block float-right">

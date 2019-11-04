@@ -20,7 +20,12 @@ Rails.application.routes.draw do
   post '/services/:id/image', to: 'services#file_upload', as: "file_upload"
   post '/services/:id/video', to: 'services#video_upload', as: "video_upload"
   get  '/services/:id/image/show', to: 'services#show_files', as: "show_files"
-  get '/services/:id/edit/:type', to: 'services#edit', as: "services_pricing"
+  get  '/services/:id/edit/pricing', to: 'services#pricing', as: "services_pricing"
+  get  '/services/:id/edit/description', to: 'services#description', as: "services_description"
+  get  '/services/:id/edit/requirement', to: 'services#requirement', as: "services_requirement"
+  get  '/services/:id/edit/gallery', to: 'services#gallery', as: "services_gallery"
+  get  '/services/:id/edit/publish', to: 'services#publish', as: "services_publish"
+
   resources :favorites, only: [:create, :destroy]
   resources :users, only: [:new, :create, :update], as: "onboarding", path: "seller_onboarding"
   get 'seller_onboarding/personal_info', to: 'users#seller_personal_info', as: "seller_personal_info"

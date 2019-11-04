@@ -41,7 +41,7 @@ class ServicesController < ApplicationController
   def create   
     @service = current_user.services.build(service_params)
     if @service.save
-      redirect_to services_pricing_path(@service,'pricing')
+      redirect_to services_pricing_path(@service)
       flash[:notice] = "Service Created Successfully"
     else
       render :new 
@@ -52,8 +52,71 @@ class ServicesController < ApplicationController
   def edit
     @service = Service.find params[:id]
     @set_bar = "ok"
+  end
+
+  def pricing
+    @service = Service.find params[:id]
+    @set_bar = "ok"
     @service.packages.build if @service.packages.blank?
-    @service.photos.build if @service.photos.blank? 
+    if @service.title.blank?
+      flash[:alert] = "First Complete Your Service OwerView"
+      redirect_to edit_services_path(@service)
+    end
+  end 
+
+  def description
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    if @service.packages.blank?
+      flash[:alert] = "First Complete Your Service Packages"
+      redirect_to services_pricing_path(@service)
+    end 
+  end
+
+  def requirement
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    if @service.packages.blank?
+      flash[:alert] = "First Complete Your Service Packages"
+      redirect_to services_pricing_path(@service)
+    elsif @service.description.blank?
+      flash[:alert] = "First Complete Your Service Description"
+      redirect_to services_pricing_path(@service)
+    end 
+  end
+
+  def gallery
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    @service.photos.build if @service.photos.blank?
+    if @service.packages.blank?
+      flash[:alert] = "First Complete Your Service Packages"
+      redirect_to services_pricing_path(@service)
+    elsif @service.description.blank?
+      flash[:alert] = "First Complete Your Service Description"
+      redirect_to services_description_path(@service)
+    elsif @service.requirements.blank?
+      flash[:alert] = "First Complete Your Service Requirement"
+      redirect_to services_requirement_path(@service)
+    end
+  end 
+  
+  def publish
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    if @service.packages.blank?
+      flash[:alert] = "First Complete Your Service Packages"
+      redirect_to services_pricing_path(@service)
+    elsif @service.description.blank?
+      flash[:alert] = "First Complete Your Service Description"
+      redirect_to services_description_path(@service)
+    elsif @service.requirements.blank?
+      flash[:alert] = "First Complete Your Service Requirement"
+      redirect_to services_requirement_path(@service)
+    elsif @service.photos.blank?
+      flash[:alert] = "First Complete Your Service Gallery"
+      redirect_to services_gallery_path(@service)
+    end
   end
 
   def update
@@ -62,10 +125,16 @@ class ServicesController < ApplicationController
       if params["service"]["wizard"] == "published"
         redirect_to root_path
         flash[:notice] = "Service Created Successfully"
-      else
-        redirect_to services_pricing_path(@service,params["service"]["wizard"])
-        flash[:notice] = "Service Created Successfully"
-      end
+      elsif params["service"]["wizard"] == "description" 
+        redirect_to services_description_path(@service)
+        flash[:notice] = "Service Packages Successfully Added."
+      elsif params["service"]["wizard"] == "requirement"
+        redirect_to services_requirement_path(@service)
+        flash[:notice] = "Service Description Successfully Added."
+      elsif params["service"]["wizard"] == "gallery"
+        redirect_to services_gallery_path(@service)
+        flash[:notice] = "Service Requirement Successfully Added."
+      end 
     else
       render :new 
       flash[:notice] = @service.errors.full_messages
@@ -128,10 +197,10 @@ class ServicesController < ApplicationController
   end
 
   def check_servie_owner
-    service = Service.find_by_id(params[:id])
-    if service.blank? || service.user_id != current_user.id
-      flash[:notice] = "Record Not Found"
+    @service = Service.find_by_id(params[:id])
+    if @service.blank? || @service.user_id != current_user.id
+      flash[:alert] = "Record Not Found"
       redirect_back fallback_location: root_path
-    end    
-  end  
+    end      
+  end   
 end

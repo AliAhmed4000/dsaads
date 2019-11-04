@@ -1,6 +1,5 @@
 <div class="container">
   <div class="row bs-wizard" style="border-bottom:0;">
-    
     <% if current_user.check_seller_personal_info.all? %>
       <div class="col-xs-3 bs-wizard-step complete">
     <% else %>
@@ -8,9 +7,9 @@
     <% end %>
     <div class="text-center bs-wizard-stepnum">Step 1</div>
     <div class="progress"><div class="progress-bar"></div></div>
-    <% if current_user.check_seller_personal_info.all? %>
+    <%# if current_user.check_seller_personal_info.all? %>
       <%= link_to "",seller_personal_info_path, class: 'bs-wizard-dot' %>
-    <% end %>
+    <%# end %>
       <div class="bs-wizard-info text-center">Personal Info</div>
     </div>
     
