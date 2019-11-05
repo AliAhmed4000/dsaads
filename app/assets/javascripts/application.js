@@ -24,6 +24,7 @@
 //= require_tree ./channels
 //= require script
 //= require dropzone
+//= require jquery.form
 
 
 

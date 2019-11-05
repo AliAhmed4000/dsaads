@@ -1,0 +1,11 @@
+<div class="underline">
+  <p class="h4 pb-2">Seller Speaks</p>
+  <% @services.group_by{|s| s.seller}.each do |seller,service| %>
+    <label class="Checkbox-form">
+    <%= f.check_box :seller_language_in,{multiple: true,:onclick => 'my_submit(this)'},seller.language,"" %><%= seller.language %>
+      <span class="checkmark"></span>
+    </label>
+    <span class="OnlineCheckBoxNum">(<%= service.count %>)</span>
+  <% end %>
+  <a href="#" class="ServicesInclude">+ Show more</a>
+</div>

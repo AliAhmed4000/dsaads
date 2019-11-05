@@ -967,6 +967,8 @@ GEM
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
     jmespath (1.4.0)
+    jquery-form-rails (1.0.1)
+      jquery-rails
     jquery-rails (4.3.5)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -1211,6 +1213,7 @@ DEPENDENCIES
   fog-aws
   font-awesome-rails (~> 4.7, >= 4.7.0.4)
   jbuilder (~> 2.5)
+  jquery-form-rails
   jquery-rails (~> 4.3)
   kaminari (~> 1.1)
   language_list (~> 1.2, >= 1.2.1)

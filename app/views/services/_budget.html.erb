@@ -1,0 +1,12 @@
+<div class="underline">
+  <div id="PaymentSection">
+  <p class="h4 pb-2">Budget</p>
+  <label class="payment" for="MinAmount">Rs</label>
+  <%= f.number_field :packages_price_gteq, value: @packages_price_gteq, class: "inputPayment" %>
+  <label class="payment" for="MaxAmount">to Rs</label>
+  <%= f.number_field :packages_price_lteq, value: @packages_price_lteq, class: "inputPayment" %>
+  <%= link_to('javascript:void(my_submit(this))',:class => "btn btn-default btn-payment") do  %>
+    <i class="fa fa-chevron-right btnColor"></i>
+  <% end %>
+  </div>
+</div>

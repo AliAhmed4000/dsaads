@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     @category = Category.find_by_id(id)
     unless @category.blank?
       unless params[:q].blank?
-        @q = Service.joins(:category).where('categories.sub_category_id=? and service.publish=?',@category.id,true).ransack(params[:q])
+        @q = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',@category.id,true).ransack(params[:q])
         @packages_delivery_time = params[:q][:packages_delivery_time_eq]
         @packages_price_gteq = params[:q][:packages_price_gteq]
         @packages_price_lteq = params[:q][:packages_price_lteq]

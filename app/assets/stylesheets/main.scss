@@ -1,90 +1,96 @@
-$nav-link-font-size: 14px;
-$fa-icon-size: 20px;
-$category-icon-size: 55px;
-$grey: #8D8E8D;
-$border-grey: #E0E1E0;
-$star-yellow: #EB9F2F;
-$profile-icon-size: 18px;
-$background-light: #E0E1E0;
-
-
+/* line 11, app/assets/stylesheets/main.scss */
 body {
   overflow-x: hidden;
   min-height: 100vh;
-  
 }
 
+/* line 17, app/assets/stylesheets/main.scss */
 .wrapper {
   min-height: 100vh;
 }
 
+/* line 21, app/assets/stylesheets/main.scss */
 .background-light {
-  background-color: $background-light;
+  background-color: #E0E1E0;
 }
+
+/* line 24, app/assets/stylesheets/main.scss */
 .show-container {
   width: 80%;
   margin: 0 auto;
 }
+
+/* line 28, app/assets/stylesheets/main.scss */
 .border-light {
-  border-color: $border-grey !important;
+  border-color: #E0E1E0 !important;
 }
 
-a{
+/* line 32, app/assets/stylesheets/main.scss */
+a {
   text-decoration: none;
   color: #000;
 }
+
+/* line 36, app/assets/stylesheets/main.scss */
 a:hover {
   text-decoration: none;
-  color: $grey;
-}
-.navbar{
-  .nav-item.active{
-    border-left: #444 3px solid;
-  }
-  .nav-link{
-    font-size: $nav-link-font-size;
-    text-transform: uppercase;
-    padding-left: 1em !important;
-    padding-right: 1em !important;
-  }
+  color: #8D8E8D;
 }
 
-//CAROUSEL
-
-
-.carousel-item{
-  height:450px;
+/* line 41, app/assets/stylesheets/main.scss */
+.navbar .nav-item.active {
+  border-left: #444 3px solid;
 }
-.carousel-image-1{
-  background:url('image1.jpg');
+
+/* line 44, app/assets/stylesheets/main.scss */
+.navbar .nav-link {
+  font-size: 14px;
+  text-transform: uppercase;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+}
+
+/* line 55, app/assets/stylesheets/main.scss */
+.carousel-item {
+  height: 450px;
+}
+
+/* line 58, app/assets/stylesheets/main.scss */
+.carousel-image-1 {
+  background: url("image1.jpg");
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
-
 }
-.carousel-image-2{
-  background:url('image2.jpg');
+
+/* line 65, app/assets/stylesheets/main.scss */
+.carousel-image-2 {
+  background: url("image2.jpg");
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  
 }
-.carousel-image-3{
-  background:url('image3.jpg');
+
+/* line 72, app/assets/stylesheets/main.scss */
+.carousel-image-3 {
+  background: url("image3.jpg");
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  
 }
 
-section#home-category i{
-  font-size: $category-icon-size; 
+/* line 80, app/assets/stylesheets/main.scss */
+section#home-category i {
+  font-size: 55px;
   padding: 1rem;
 }
 
+/* line 85, app/assets/stylesheets/main.scss */
 .card.fa {
-  font-size: $fa-icon-size;
+  font-size: 20px;
 }
+
+/* line 88, app/assets/stylesheets/main.scss */
 #home-heading {
   position: relative;
   min-height: 200px;
@@ -92,131 +98,330 @@ section#home-category i{
   background-attachment: fixed;
   background-repeat: no-repeat;
   text-align: center;
-  color: #fff; }
+  color: #fff;
+}
 
+/* line 97, app/assets/stylesheets/main.scss */
 .dark-overlay {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; }
+  height: 100%;
+}
 
+/* line 105, app/assets/stylesheets/main.scss */
 .home-service-wrapper {
   width: 80%;
   margin: 0 auto;
 }
 
+/* line 110, app/assets/stylesheets/main.scss */
 #search_bar input[type=number] {
   width: 4rem;
-  border-radius: 2px; 
+  border-radius: 2px;
   margin: 0 2px;
+
 }
 
+/* line 116, app/assets/stylesheets/main.scss */
 .underline {
   border-bottom: solid 1px;
-  border-bottom-color: $border-grey;
+  border-bottom-color: #E0E1E0;
+  margin: 16px 0px 20px 0px;
 }
 
+/* line 121, app/assets/stylesheets/main.scss */
 .cat-bar {
-  border-top: 1px solid $border-grey;
-  border-bottom: 1px solid $border-grey;
+  border-top: 1px solid #E0E1E0;
+  border-bottom: 1px solid #E0E1E0;
 }
-.nav-link{
-  color: $grey;
-  &:hover {
-    color: green;
-    border-bottom: solid 2px;
-    border-bottom-color: green;
-  }
-}
-.nav-link:active {
-    color: green;
-    border-bottom: solid 2px;
-    border-bottom-color: pink;
-  }
 
+/* line 125, app/assets/stylesheets/main.scss */
+.nav-link {
+  color: #8D8E8D;
+}
+
+/* line 127, app/assets/stylesheets/main.scss */
+.nav-link:hover {
+  color: green;
+  border-bottom: solid 2px;
+  border-bottom-color: green;
+}
+
+/* line 133, app/assets/stylesheets/main.scss */
+.nav-link:active {
+  color: green;
+  border-bottom: solid 2px;
+  border-bottom-color: pink;
+}
+
+/* line 139, app/assets/stylesheets/main.scss */
 .text-left .text-right {
   display: inline-block;
 }
 
+/* line 143, app/assets/stylesheets/main.scss */
 .yellow {
-  color: $star-yellow;
+  color: #EB9F2F;
 }
 
+/* line 147, app/assets/stylesheets/main.scss */
 .profile-icon-size {
-  font-size: $profile-icon-size;
+  font-size: 18px;
 }
 
+/* line 151, app/assets/stylesheets/main.scss */
 .inline-block {
   display: inline-block;
   padding: 5px;
 }
 
-
+/* line 157, app/assets/stylesheets/main.scss */
 .rangeslider__handle {
   border-radius: 22px;
   min-width: 62px;
   line-height: 42px;
   text-align: center;
-  
-  &:after {
-    background: 0;
-  }
 }
 
+/* line 163, app/assets/stylesheets/main.scss */
+.rangeslider__handle:after {
+  background: 0;
+}
+
+/* line 168, app/assets/stylesheets/main.scss */
 #footer {
-    background: #007b5e !important;
-    width: 100%;
-    height: 200px;
-    left: 0;
-    bottom: 0;
+  background: #007b5e !important;
+  width: 100%;
+  height: 200px;
+  left: 0;
+  bottom: 0;
 }
-#footer h5{
+
+/* line 175, app/assets/stylesheets/main.scss */
+#footer h5 {
   padding-left: 10px;
-    border-left: 3px solid #eeeeee;
-    padding-bottom: 6px;
-    margin-bottom: 20px;
-    color:#ffffff;
+  border-left: 3px solid #eeeeee;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+  color: #ffffff;
 }
+
+/* line 182, app/assets/stylesheets/main.scss */
 #footer a {
-    color: #ffffff;
-    text-decoration: none !important;
-    background-color: transparent;
-    -webkit-text-decoration-skip: objects;
+  color: #ffffff;
+  text-decoration: none !important;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
 }
-#footer ul.social li{
+
+/* line 188, app/assets/stylesheets/main.scss */
+#footer ul.social li {
   padding: 3px 0;
 }
+
+/* line 191, app/assets/stylesheets/main.scss */
 #footer ul.social li a i {
-    margin-right: 5px;
-  font-size:25px;
-  -webkit-transition: .5s all ease;
-  -moz-transition: .5s all ease;
+  margin-right: 5px;
+  font-size: 25px;
   transition: .5s all ease;
 }
+
+/* line 198, app/assets/stylesheets/main.scss */
 #footer ul.social li:hover a i {
-  font-size:30px;
-  margin-top:-10px;
+  font-size: 30px;
+  margin-top: -10px;
 }
+
+/* line 202, app/assets/stylesheets/main.scss */
 #footer ul.social li a,
-#footer ul.quick-links li a{
-  color:#ffffff;
+#footer ul.quick-links li a {
+  color: #ffffff;
 }
-#footer ul.social li a:hover{
-  color:#eeeeee;
+
+/* line 206, app/assets/stylesheets/main.scss */
+#footer ul.social li a:hover {
+  color: #eeeeee;
 }
-.devise-container{
+
+/* line 209, app/assets/stylesheets/main.scss */
+.devise-container {
   max-width: 500px;
   margin: auto;
 }
 
+/* line 214, app/assets/stylesheets/main.scss */
 .btn-facebook i {
   color: #3b5998;
 }
 
+/* line 218, app/assets/stylesheets/main.scss */
 .btn-facebook .bg {
   background: #3b5998;
   color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.08);
+}
+/*line 112*/
+.title-results{
+  color: #b5b6ba;
+  font-size: 14px;
+  line-height: 22px;
+}
+/*line 113*/
+.item{
+  line-height: 22px;
+  margin: 10px 0px 13px 24px;
+}
+/*line 113*/
+.itemNumber{
+  margin: 0px 0px 0px 79px;
+  color:#b5b6ba;
+}
+/*line 120*/
+.underline .form-check .radio{
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  padding: 6px 0;
+  margin: 4px 0;
+  line-height: 22px;
+  color: #404145;
+}
+/*line 121*/
+.underline .form-check .radio .radio-input{
+  margin: 2px 0px 0px -25px;
+  cursor: pointer;
+  font-size: 14px;
+}
+/*line 141 & line 143*/
+.underline .payment{
+  color: #b2b2b2;
+}
+/*line 142 & line 144*/
+.inputPayment{
+  border-radius: 4px !important;
+  padding: 12px 0px;
+  border: 2px solid #e7e7e7;
+}
+/*line 153*/
+a button.btn-payment{
+  border: 2px solid #e7e7e7;
+  text-decoration: none;
+  padding: 5px 14px;
+  margin: 0px 12px;
+}
+/*line 152*/
+.fa-angle-right{
+  font-size: 20px;
+  color: #d5d4d2;
+}
+/*line 153*/
+a button.btn-payment:hover{
+  background-color: #28a745;
+  border-color: #28a745;
+}
+/*line 152*/
+a button.btn-payment:hover .fa-angle-right{
+  color: #fff;
+}
+/*line 144*/
+#PaymentSection{
+  margin: 20px 0px;
+}
+/*line 157*/
+.online{
+  height: 16px;
+  width: 16px;
+  background-color: #fff;
+}
+/*Customize Checkbox starts*/
+.Checkbox-form {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #b2b2b2;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+.Checkbox-form:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+.Checkbox-form input:checked ~ .checkmark {
+  background-color: #fff;
+  border: 2px solid #28a745;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  border: 2px solid #28a745;
+}
+.Checkbox-form input:checked ~ .checkmark:after {
+  display: block;
+}
+.Checkbox-form .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid #28a745;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+input[type=checkbox]{
+  display: none;
+  visibility: hidden;
+}
+/*Customize Checkbox Ends*/
+/*line 161*/
+.OnlineCheckBoxNum{
+  color: #b2b2b2;
+  float: right;
+  margin: -33px 13px 4px 0px;
+}
+/*line 222*/
+.ServicesInclude{
+  text-decoration: none;
+  color: #28a745;
+  font-size: 19px;
+}
+/*line 227*/
+.SellerCitySearch{
+  background-color: #fff;
+  width: 271px;
+  height: 41px;
+  border: 1px solid #b2b2b2;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+/*line 229*/
+.SellerCitySearch option:first-child{
+  color: #b2b2b2;
+}
+/*line 227*/
+.SellerCityButton{
+  text-decoration: none;
+  color: #b2b2b2;
+  float: right;
+  margin: -40px 5px 0px 0px; 
 }

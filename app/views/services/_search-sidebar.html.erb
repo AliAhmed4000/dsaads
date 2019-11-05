@@ -1,47 +1,18 @@
 <%= search_form_for @q, url: services_path,remote: true do |f| %>
-	<%# binding.pry %>
-  <% unless @category.blank? %>
+	<% unless @category.blank? %>
     <%= f.hidden_field :id, value: @category.id %>
   <% end %> 
-  <p class="h4 pb-2 underline">Budget</p>
-  <span>
-    <%= f.label "Min $" %>
-    <%= f.number_field :packages_price_gteq, value: @packages_price_gteq %>
-    to
-    <%= f.label "Max $" %>
-    <%= f.number_field :packages_price_lteq, value: @packages_price_lteq %>
-  </span>
-  <p class="h4 pb-2 underline">Delivery Time</p>
-  <span>
-  	<%= f.select :packages_delivery_time_eq,['','1','3','7','any'],:selected => @packages_delivery_time %>
-  </span>
-  <% unless @services.blank? %>
-    <p class="h4 pb-2 underline">Seller Details</p>
-    <span>
-      <p>Seller Level</p>
-      <% @services.group_by{|s| s.seller}.each do |seller,service| %>
-        <%= f.check_box :seller_language_in,{multiple: true,:onclick => 'my_submit(this)'},seller.language,"" %><%= seller.language %> <%= service.count %>
-      <% end %>
-      <p>Seller Speak</p>
-      <% @services.group_by{|s| s.seller}.each do |seller,service| %>
-        <%= f.check_box :seller_language_in,{multiple: true,:onclick => 'my_submit(this)'},seller.language,"" %><%= seller.language %> <%= service.count %>
-      <% end %>
-      <p>Seller Lives In</p>
-      <% @services.group_by{|s| s.seller}.each do |seller,service| %>
-        <%= f.check_box :seller_country_in,{multiple: true,:onclick => 'my_submit(this)'},seller.country,""%><%= seller.country %> <%= service.count %>
-      <% end %>
-    </span>
-  <% end %>
-  <span>
-    <p><%= f.button :submit, 'Filter', class: 'btn-outline-success pl-2 pull-right'%></p>
-  </span>
+  <%= render partial: '/services/delivery_time', locals: {f: f} %>
+  <%= render partial: '/services/budget', locals: {f: f} %>
+  <%= render partial: '/services/seller_avail', locals: {f: f} %>
+  <%= render partial: '/services/seller_level', locals: {f: f} %>
+  <%= render partial: '/services/seller_speak', locals: {f: f} %>
+  <%= render partial: '/services/seller_live', locals: {f: f} %>
 <% end %>
 <script type="text/javascript">
-	// $("#q_packages_delivery_time_eq,#q_packages_price_gteq,#q_packages_price_lteq").change(function() {
- //  	$("#service_search" ).submit();
-	// });
-
- //  function my_submit(x){
- //    $("#service_search" ).submit();
- //  }
+  function my_submit(x){
+    $("#service_search").ajaxSubmit({
+        dataType: 'script'
+    })
+  }
 </script>

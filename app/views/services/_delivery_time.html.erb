@@ -1,0 +1,23 @@
+<div class="underline">
+  <p class="h4 pb-2">Delivery Time</p>
+  <div class="form-check">
+    <label class="form-check-label radio" for="radio1">
+      <%= f.radio_button :packages_delivery_time_eq, "1", :value => "1" ,:class => "form-check-input radio-input",:onclick => 'my_submit(this)' %>Express 24H
+    </label>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label radio" for="radio2">
+      <%= f.radio_button :packages_delivery_time_eq, "3", :value => "3" ,:class => "form-check-input radio-input", :onclick => 'my_submit(this)'%>Up to 3 days
+    </label>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label radio" for="radio3">
+      <%= f.radio_button :packages_delivery_time_eq, "7", :value => "7" ,:class => "form-check-input radio-input", :onclick => 'my_submit(this)'%>Up to 7 days
+    </label>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label radio" for="radio4">
+      <%= f.radio_button :packages_delivery_time_eq, "", :value => "" ,:class => "form-check-input radio-input", :onclick => 'my_submit(this)'%>Anytime
+    </label>
+  </div>
+</div>
