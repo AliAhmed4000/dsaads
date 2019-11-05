@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get  '/services/:id/edit/requirement', to: 'services#requirement', as: "services_requirement"
   get  '/services/:id/edit/gallery', to: 'services#gallery', as: "services_gallery"
   get  '/services/:id/edit/publish', to: 'services#publish', as: "services_publish"
+  get  '/services/:id/edit/gallery_publish', to: 'services#gallery_publish', as: "services_gallery_publish"
 
   resources :favorites, only: [:create, :destroy]
   resources :users, only: [:new, :create, :update], as: "onboarding", path: "seller_onboarding"

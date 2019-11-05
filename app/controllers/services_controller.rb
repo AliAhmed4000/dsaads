@@ -116,16 +116,25 @@ class ServicesController < ApplicationController
     elsif @service.photos.blank?
       flash[:alert] = "First Complete Your Service Gallery"
       redirect_to services_gallery_path(@service)
-    end
+    end 
+  end
+
+  def gallery_publish
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    if @service.photos.blank?
+      flash[:alert] = "First Complete Your Service Gallery"
+      redirect_to services_gallery_path(@service)
+    else
+      flash[:notice] = "Service Gallery Successfully Added."
+      redirect_to services_publish_path(@service) 
+    end 
   end
 
   def update
     @service = Service.find params[:id] 
     if @service.update_attributes(service_params)
-      if params["service"]["wizard"] == "published"
-        redirect_to root_path
-        flash[:notice] = "Service Created Successfully"
-      elsif params["service"]["wizard"] == "description" 
+      if params["service"]["wizard"] == "description" 
         redirect_to services_description_path(@service)
         flash[:notice] = "Service Packages Successfully Added."
       elsif params["service"]["wizard"] == "requirement"
@@ -134,6 +143,9 @@ class ServicesController < ApplicationController
       elsif params["service"]["wizard"] == "gallery"
         redirect_to services_gallery_path(@service)
         flash[:notice] = "Service Requirement Successfully Added."
+      elsif params["service"]["wizard"] == "published"
+        redirect_to root_path
+        flash[:notice] = "Service Created Successfully"
       end 
     else
       render :new 

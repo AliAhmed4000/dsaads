@@ -2,12 +2,12 @@
 	<% unless @category.blank? %>
     <%= f.hidden_field :id, value: @category.id %>
   <% end %> 
-  <%= render partial: '/services/delivery_time', locals: {f: f} %>
-  <%= render partial: '/services/budget', locals: {f: f} %>
-  <%= render partial: '/services/seller_avail', locals: {f: f} %>
-  <%= render partial: '/services/seller_level', locals: {f: f} %>
-  <%= render partial: '/services/seller_speak', locals: {f: f} %>
-  <%= render partial: '/services/seller_live', locals: {f: f} %>
+  <%= render partial: '/filter/services/delivery_time', locals: {f: f} %>
+  <%= render partial: '/filter/services/budget', locals: {f: f} %>
+  <%= render partial: '/filter/services/seller_avail', locals: {f: f} %>
+  <%= render partial: '/filter/services/seller_level', locals: {f: f} %>
+  <%= render partial: '/filter/services/seller_speak', locals: {f: f} %>
+  <%= render partial: '/filter/services/seller_live', locals: {f: f} %>
 <% end %>
 <script type="text/javascript">
   function my_submit(x){
