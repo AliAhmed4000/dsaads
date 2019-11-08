@@ -17,7 +17,8 @@ class Category < ApplicationRecord
  	belongs_to :sub_category, class_name: "Category", optional: true
   # CAT_LIST = ["Graphic & Design", "Digital Marketing", "Music & Audio", "Programming & Tech", "Fun & Lifestyle", "Writing & Translation"]
   
-  validates :title,:description,presence: true 
+  validates :title,presence: true
+  validates :description,presence: true, if: lambda{|c| c.sub_category_id.blank?} 
 
   def self.get_sub_categories
   	Category.joins(:sub_category)

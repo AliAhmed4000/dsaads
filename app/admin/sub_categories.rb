@@ -12,7 +12,7 @@ ActiveAdmin.register Category, as: "SubCategory" do
 
   form do |f|
     f.inputs "New" do
-      f.input :sub_category,  as: :select, collection: Category.get_categories, include_blank: false
+      f.input :sub_category,as: :select, collection: Category.get_categories, include_blank: false
       f.input :title
     end
     f.actions
