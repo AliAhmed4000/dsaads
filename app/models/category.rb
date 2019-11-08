@@ -17,7 +17,7 @@ class Category < ApplicationRecord
  	belongs_to :sub_category, class_name: "Category", optional: true
   # CAT_LIST = ["Graphic & Design", "Digital Marketing", "Music & Audio", "Programming & Tech", "Fun & Lifestyle", "Writing & Translation"]
   
-  validates :title,presence: true 
+  validates :title,:description,presence: true 
 
   def self.get_sub_categories
   	Category.joins(:sub_category)
@@ -34,5 +34,28 @@ class Category < ApplicationRecord
 
   def get_services(category)
     Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category,true).order(created_at: :desc)
+  end
+
+  def user_category_online
+    services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',self.id,true).order(created_at: :desc)
+    online = []
+    services.each do |service|
+      user = $redis.get("user_#{service.seller.id}_online")
+      unless user.blank? 
+        online.push(service.seller.id)
+      end 
+    end
+    return online.uniq 
+  end
+
+  def new_seller_services
+    services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',self.id,true).order(created_at: :desc)
+    new_service = []
+    services.each do |service|
+      if service.seller.orders.blank? 
+        new_service.push(service.seller.id)
+      end 
+    end
+    return new_service.uniq 
   end   
 end

@@ -316,9 +316,10 @@ a button.btn-payment{
   margin: 0px 12px;
 }
 /*line 152*/
-.fa-angle-right{
+.budgetButtonIcon{
+  margin: 0px 0px -3px 0px;
+  color: #ccc;
   font-size: 20px;
-  color: #d5d4d2;
 }
 /*line 153*/
 a button.btn-payment:hover{
@@ -424,4 +425,64 @@ input[type=checkbox]{
   color: #b2b2b2;
   float: right;
   margin: -40px 5px 0px 0px; 
+}
+/*line 111*/
+.SortBlufLink{
+  margin:0px 0px 20px 0px;
+}
+/*line 112*/
+.SortBlufLink a{
+  color: #8D8E8D;
+  line-height: 18px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+/*line 112 & 113*/
+.SortBlufLinkIcon{
+  color: #8D8E8D;
+  margin: 0px 0px 0px 3px;
+  font-size: 11px;
+}
+/*line 112*/
+.SortBlufLink a:hover{
+  text-decoration: underline;
+  color: #28a745;
+}
+/*line 119*/
+.SortBlufHead h1{
+  font-size: 32px;
+  font-weight: 700;
+}
+/*line 121*/
+.SortBlufDescription{
+    font-size: 14px;
+    line-height: 34px;
+    color: #999;
+}
+/*line 123*/
+a.SortBlufDescriptionLink{
+    font-size: 12px;
+    color: #00698c;
+    margin: 0px 0px 0px 7px;
+    line-height: 20px;
+}
+/*line 123*/
+a.SortBlufDescriptionLink:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+/*line 202*/
+.SortParagraph p{
+  color: #8D8E8D;
+}
+/*line 166*/
+.dropdownHead{
+  float: right;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 52px;
+  margin: -13px 8px 0px 0px;
+}
+.dropDownSect{
+  margin: 14px 0px 0px 1000px;
 }

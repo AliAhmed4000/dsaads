@@ -1,4 +1,4 @@
-<div class="underline">
+<div class="underline seller-live">
   <p class="h4 pb-2">Seller Lives In</p>
   <% @services.group_by{|s| s.seller}.each do |seller,service| %>
     <label class="Checkbox-form">
@@ -7,5 +7,33 @@
     </label>
     <span class="OnlineCheckBoxNum">(<%= service.count %>)</span>
   <% end %>
-  <a href="#" class="ServicesInclude">+ Show more</a>
+  <a href="javascript:void(0)" class="ServicesInclude" id="show-more-live">+ Show more</a>
+  <a href="javascript:void(0)" class="ServicesInclude" id="show-less-live">- Show Less</a>
 </div>
+<script type="text/javascript">
+  $(function(){
+    var label = $('.seller-live').find('.Checkbox-form').length;
+    if(label > 2){
+      jQuery(".seller-live").children(":gt(4)").hide();
+      $('.seller-live:lt(2)').show();
+      jQuery(".seller-live").slice(2,3)
+      $('#show-more-live').show()
+      $('#show-less-live').hide()
+    }else{
+      $('#show-more-live').hide()
+      $('#show-less-live').hide()
+    }
+  });
+  $('#show-more-live').click(function() {
+    jQuery(".seller-live").children().show();
+    $('#show-more-live').hide();
+    $('#show-less-live').show();
+  })
+  $('#show-less-live').click(function() {
+    jQuery(".seller-live").children(":gt(4)").hide();
+    $('#show-more-live').show();
+    $('#show-less-live').hide();
+  })
+</script>
+
+

@@ -1,0 +1,53 @@
+ <section id="SortBluf">
+  <div class="container-fluid px-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="SortBlufLink">
+          <%= link_to root_path do %>
+            Fiverr<i class="fa fa-chevron-right SortBlufLinkIcon"></i>
+          <% end %>
+          <%= link_to root_path do %>
+            <%= @category.title %><i class="fa fa-greater-than SortBlufLinkIcon"></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="SortBlufHead">
+          <h1><%= @category.title %></h1>
+          <p class="SortBlufDescription">
+            <%= @category.description %>
+            <a href="#" class="SortBlufDescriptionLink"><i class="fas fa-caret-circle-right"></i>How Fiverr Works</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <% unless @services.blank? %>
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="cat-bar">
+            <div class="dropDownSect">
+             <div class="dropdown">
+              <div class="dropdown-toggle dropdownHead" data-toggle="dropdown">
+               Best Selling</div>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Recommended</a>
+                  <a class="dropdown-item" href="#">Neswest Arrival</a>
+                </div>
+             </div>
+                  <div class="SortParagraph">
+               <p class="font-weight-normal">Sort By</p>
+             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <hr>
+      <div class="alert alert-danger">
+        <p class="text-center">No Services Found.</p>
+      </div>
+    <% end %>
+  </div>
+</section>

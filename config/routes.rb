@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :reviews
   get '/categories/search', to: 'categories#search', as: "search_category"
+  get '/categories/:id/online_users', to: 'categories#online_users'
   resources :categories do
     member do
       get :services

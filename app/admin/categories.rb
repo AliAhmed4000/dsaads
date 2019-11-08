@@ -4,7 +4,7 @@ ActiveAdmin.register Category do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :title, :services_count, :image, :sub_category_id
+  permit_params :title, :services_count, :image, :sub_category_id, :description
   #
   # or
   #
@@ -33,6 +33,7 @@ ActiveAdmin.register Category do
     # end
     f.inputs do
       f.input :title
+      f.input :description
       f.input :image, :as => :file,:hint => (!f.object.image_url.blank?) ? image_tag(f.object.image_url(:extra_small)) : ''
       # f.input :country, as: :select, collection: CS.countries.invert, include_blank: false, :selected => country
       # f.input :sub

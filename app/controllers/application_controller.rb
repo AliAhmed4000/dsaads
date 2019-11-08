@@ -11,7 +11,11 @@ class ApplicationController < ActionController::Base
     end 
     @category = Category.find_by_id(id)
     unless @category.blank?
-      @q = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',@category.id,true).ransack(params[:q])
+      unless params[:q].blank? || params[:q][:user_id].last.blank?
+        @q = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',@category.id,true).where(user_id: @category.user_category_online).ransack(params[:q])
+      else  
+        @q = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',@category.id,true).ransack(params[:q])
+      end 
     else
       @q = Service.ransack(params[:q])
     end 

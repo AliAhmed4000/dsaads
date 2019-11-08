@@ -7,5 +7,10 @@ class CategoriesController < ApplicationController
   def search
     category = Category.find_by_id(params[:id])
     render json: {data: category.sub_categories}      
-  end 
+  end
+
+  def online_users
+  	@category = Category.find_by_id(params[:id])
+  	render json: {user: @category.user_category_online.count}
+  end  
 end

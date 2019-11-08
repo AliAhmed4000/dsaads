@@ -1,11 +1,35 @@
-<div class="underline">
+<div class="underline seller-speak">
   <p class="h4 pb-2">Seller Speaks</p>
   <% @services.group_by{|s| s.seller}.each do |seller,service| %>
     <label class="Checkbox-form">
-    <%= f.check_box :seller_language_in,{multiple: true,:onclick => 'my_submit(this)'},seller.language,"" %><%= seller.language %>
+    <%= f.check_box :seller_language_in,{multiple: true,:onclick => 'my_submit(this)'},seller.language,"" %><%= seller.language.split('-').last %>
       <span class="checkmark"></span>
     </label>
     <span class="OnlineCheckBoxNum">(<%= service.count %>)</span>
   <% end %>
-  <a href="#" class="ServicesInclude">+ Show more</a>
+  <a href="javascript:void(0)" class="ServicesInclude" id="show-more-speak">+ Show more</a>
+  <a href="javascript:void(0)" class="ServicesInclude" id="show-less-speak">- Show Less</a>
 </div>
+<script type="text/javascript">
+  $(function(){
+    var label = $('.seller-speak').find('.Checkbox-form').length;
+    if(label > 2){
+      jQuery(".seller-speak").children(":gt(4)").hide();
+      $('#show-more-speak').show()
+      $('#show-less-speak').hide()
+    }else{
+      $('#show-more-speak').hide()
+      $('#show-less-speak').hide()
+    }
+  });
+  $('#show-more-speak').click(function() {
+    jQuery(".seller-speak").children().show();
+    $('#show-more-speak').hide();
+    $('#show-less-speak').show();
+  })
+  $('#show-less-speak').click(function() {
+    jQuery(".seller-speak").children(":gt(4)").hide();
+    $('#show-more-speak').show();
+    $('#show-less-speak').hide();
+  })
+</script>

@@ -1,18 +1,20 @@
 <%= search_form_for @q, url: services_path,remote: true do |f| %>
 	<% unless @category.blank? %>
     <%= f.hidden_field :id, value: @category.id %>
-  <% end %> 
-  <%= render partial: '/filter/services/delivery_time', locals: {f: f} %>
-  <%= render partial: '/filter/services/budget', locals: {f: f} %>
-  <%= render partial: '/filter/services/seller_avail', locals: {f: f} %>
-  <%= render partial: '/filter/services/seller_level', locals: {f: f} %>
-  <%= render partial: '/filter/services/seller_speak', locals: {f: f} %>
-  <%= render partial: '/filter/services/seller_live', locals: {f: f} %>
+  <% end %>
+  <% unless @services.blank? %>  
+    <%= render partial: '/services/filter/delivery_time', locals: {f: f} %>
+    <%= render partial: '/services/filter/budget', locals: {f: f} %>
+    <%= render partial: '/services/filter/seller_avail', locals: {f: f} %>
+    <%= render partial: '/services/filter/seller_level', locals: {f: f} %>
+    <%= render partial: '/services/filter/seller_speak', locals: {f: f} %>
+    <%= render partial: '/services/filter/seller_live', locals: {f: f} %>
+  <% end %>
 <% end %>
 <script type="text/javascript">
   function my_submit(x){
     $("#service_search").ajaxSubmit({
-        dataType: 'script'
+      dataType: 'script'
     })
   }
 </script>
