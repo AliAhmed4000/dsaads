@@ -6,8 +6,12 @@
           <%= link_to root_path do %>
             Fiverr<i class="fa fa-chevron-right SortBlufLinkIcon"></i>
           <% end %>
-          <%= link_to root_path do %>
-            <%= @category.title %><i class="fa fa-greater-than SortBlufLinkIcon"></i>
+          <% unless @category.blank? %>
+            <%= link_to root_path do %>
+              <%= @category.title %><i class="fa fa-greater-than SortBlufLinkIcon"></i>
+            <% end %>
+          <% else %>
+            All Categories
           <% end %>
         </div>
       </div>
@@ -15,8 +19,20 @@
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="SortBlufHead">
-          <h1><%= @category.title %></h1>
-          <p class="SortBlufDescription"><%= @category.description %></p>
+          <h1>
+            <% unless @category.blank? %>
+              <%= @category.title %>
+            <% else %>
+              All Categories
+            <% end %>
+          </h1>
+          <p class="SortBlufDescription">
+            <% unless @category.blank? %>
+              <%= @category.description %>
+            <% else %>
+              All Categories have not found any services.
+            <% end %>
+          </p>
         </div>
       </div>
     </div>

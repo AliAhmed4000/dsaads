@@ -1,11 +1,11 @@
 <div class="underline seller-speak">
   <p class="h4 pb-2">Seller Speaks</p>
-  <% @services.group_by{|s| s.seller}.each do |seller,service| %>
+  <% Service.seller_languages(@category,@search).each do |key,value| %>
     <label class="Checkbox-form">
-    <%= f.check_box :seller_language_in,{multiple: true,:onclick => 'my_submit(this)'},seller.language,"" %><%= seller.language.split('-').last %>
+    <%= f.check_box :seller_language_in,{multiple: true,:onclick => 'my_submit(this)'},key,"" %><%= key.split('-').last %>
       <span class="checkmark"></span>
     </label>
-    <span class="OnlineCheckBoxNum">(<%= service.count %>)</span>
+    <span class="OnlineCheckBoxNum">(<%= value %>)</span>
   <% end %>
   <a href="javascript:void(0)" class="ServicesInclude" id="show-more-speak">+ Show more</a>
   <a href="javascript:void(0)" class="ServicesInclude" id="show-less-speak">- Show Less</a>

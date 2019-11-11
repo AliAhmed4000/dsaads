@@ -4,7 +4,7 @@
     <input type="checkbox" id="NewSeller" name="NewSeller" value="NewSeller">New Seller
     <span class="checkmark"></span>
   </label>
-  <span class="OnlineCheckBoxNum">(<%= @category.new_seller_services.count %>)</span>
+  <span class="OnlineCheckBoxNum">(<%= Service.new_seller_services(@category,@search).count %>)</span>
   <label class="Checkbox-form">
     <input type="checkbox" id="LevelOne" name="LevelOne" value="LevelOne">Level One
     <span class="checkmark"></span>

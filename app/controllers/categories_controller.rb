@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
   end
 
   def online_users
-  	@category = Category.find_by_id(params[:id])
-  	render json: {user: @category.user_category_online.count}
+  	counter = Service.user_online(params[:id],params[:search]).count
+  	render json: {user: counter}
   end  
 end

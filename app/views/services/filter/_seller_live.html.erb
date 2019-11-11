@@ -1,11 +1,11 @@
 <div class="underline seller-live">
   <p class="h4 pb-2">Seller Lives In</p>
-  <% @services.group_by{|s| s.seller}.each do |seller,service| %>
+  <% Service.seller_countries(@category,@search).each do |key,value| %>
     <label class="Checkbox-form">
-      <%= f.check_box :seller_country_in,{multiple: true,:onclick => 'my_submit(this)'},seller.country,"" %><%= seller.country %>
+      <%= f.check_box :seller_country_in,{multiple: true,:onclick => 'my_submit(this)'},key,"" %><%= key %>
       <span class="checkmark"></span>
     </label>
-    <span class="OnlineCheckBoxNum">(<%= service.count %>)</span>
+    <span class="OnlineCheckBoxNum">(<%= value %>)</span>
   <% end %>
   <a href="javascript:void(0)" class="ServicesInclude" id="show-more-live">+ Show more</a>
   <a href="javascript:void(0)" class="ServicesInclude" id="show-less-live">- Show Less</a>

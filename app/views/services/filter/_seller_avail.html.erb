@@ -4,17 +4,17 @@
     <%= f.check_box :user_id,{multiple: true,:onclick => 'my_submit(this)'},1,"" %> Online
     <span class="checkmark"></span>
   </label>
-  <span class="OnlineCheckBoxNum" id="online-count">(<%= @category.user_category_online.count %>)</span>
+  <span class="OnlineCheckBoxNum" id="online-count">(<%= Service.user_online(@category,@search).count %>)</span>
 </div>
 <script type="text/javascript">
 	setInterval(ajaxCall,100000); 
-	function ajaxCall(){
-		$.ajax({
-      url:  "/categories/<%= @category.id %>/online_users",
+  function ajaxCall(){
+    $.ajax({
+      url:  "/categories/<%= @category.id %>/search/<%= @search %>",
       type: "get",
       success: function(response){
         $('#online-count').html('(' + response.user + ')')
       },
     })
-	}
+  }
 </script>
