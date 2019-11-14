@@ -25,7 +25,7 @@
 //= require script
 //= require dropzone
 //= require jquery.form
-
-
+//= require countdown
+//= require accounting.min.js
 
 

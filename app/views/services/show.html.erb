@@ -51,6 +51,12 @@
               <td class="text-center"><%= pluralize(package.delivery_time, 'Days') %></td>
               <% end %>
             </tr>
+            <tr>
+              <th class="table-secondary" scope="row"></th>
+              <% @packages.each do |package| %>
+              <td class="text-center"><%= link_to "Select",service_package_path(@service,package), class: "btn btn-primary" %></td>
+              <% end %>
+            </tr>
           </tbody>       
         </table>
       </div>   
@@ -121,13 +127,7 @@
       <% end %>
     <% end %>
   </div>
-</div>  
-
-
- 
-
-
-
+</div> 
 <script>
   $('.owl-carousel').owlCarousel({
     loop:true,

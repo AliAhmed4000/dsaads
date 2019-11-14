@@ -8,6 +8,14 @@
       <ul class="navbar-nav ml-auto">
         <!-- Other Nav Tags -->
         <% if user_signed_in? %>
+          <li class="nav-item"><%= link_to 'Messages', conversations_path, class: "nav-link" %></li>
+          <% if current_user.buyers? %>
+            <li class="nav-item"><%= link_to 'Orders', orders_path, class: "nav-link" %></li>
+          <% else %>
+            <li class="nav-item"><%= link_to 'Orders', orders_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to 'GIGS', orders_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to 'Earning', orders_path, class: "nav-link" %></li>
+          <% end %>
           <% if current_user.services.blank? %>
             <li class="nav-item"><%= link_to 'Become a Seller', seller_personal_info_path, class: "nav-link"%></li>
           <% else %>
@@ -17,9 +25,15 @@
               <li class="nav-item"><%= link_to 'Switch as Seller',user_role_path, class: "nav-link"%></li>
             <% end %>
           <% end %>
-          <li class="nav-item"><%= link_to 'Profile', profile_path(current_user), class: "nav-link" %></li>
-          <li class="nav-item"><%= link_to'Chat Room', conversations_path, class: "nav-link" %></li>
-          <li class="nav-item"><%= link_to'Sign Out', destroy_user_session_path, method: :delete, class: "nav-link" %></li>
+          <li class="dropdown">
+            <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+            <div class="profile-img" style="background: url(<%= current_user.check_avatar %>) no-repeat center; background-size: cover;"></div>
+            </a>
+            <ul class="dropdown-menu" id="dropdown-menu">
+              <li class="nav-item"><%= link_to 'Profile', profile_path(current_user), class: "nav-link" %></li>
+              <li class="nav-item"><%= link_to "Sign Out", destroy_user_session_path, method: 'delete', class: "nav-link" %></li>
+            </ul>
+          </li>
         <% else %>
           <li class="nav-item"><%= link_to 'Become a Seller', new_onboarding_path, class: "nav-link",'data-toggle' =>"modal", 'data-target' => "#loginModal" %></li>
           <li class="nav-item"><%= link_to'Join', new_user_registration_path, class: "nav-link",'data-toggle' =>"modal", 'data-target' => "#signupModal" %></li>
@@ -29,3 +43,4 @@
     </div> 
   </div>
 </nav>
+

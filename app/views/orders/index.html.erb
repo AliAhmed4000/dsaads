@@ -1,0 +1,48 @@
+<div class="container-fluid px-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="SortBlufLink">
+          <h2>Manage Order</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" id="documents">
+      <div class="box-tab justified">
+        <ul class="nav nav-tabs">
+          <li class="active nav-item">
+            <a class="nav-link active" href="#new_orders" data-toggle="tab">New Orders</a>
+          </li>
+          <li class="active nav-item">
+            <a class="nav-link" href="#active_orders" data-toggle="tab">Active Orders</a>
+          </li>
+          <% if current_user.buyers? %>
+            <li class="nav-item">
+              <a class="nav-link" href="#awaiting_my_review" data-toggle="tab">Awaiting my Reviews</a>
+            </li>
+          <% end %>
+          <li class="nav-item">
+            <a class="nav-link" href="#delivered" data-toggle="tab">Delivered</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#completed" data-toggle="tab">Completed</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#cancelled" data-toggle="tab">Cancelled</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <%= render partial: "/orders/new_orders" %>
+          <%= render partial: "/orders/active_orders" %>
+          <% if current_user.buyers? %>
+            <%= render partial: "/orders/awaiting_my_review" %>
+          <% end %>
+          <%= render partial: "/orders/delivered" %>
+          <%= render partial: "/orders/completed" %>
+          <%= render partial: "/orders/cancelled" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>

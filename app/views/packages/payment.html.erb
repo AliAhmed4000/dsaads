@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="row">
+    <!-- Service Photo Slider -->
+    <div class="col-lg-8 col-md-12">
+      <div class="border border-light"> 
+        <div class="owl-carousel owl-theme owl-loaded">
+          <div class="owl-stage-outer">
+            <div class="owl-stage">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <h3>Payment Options</h3>
+            </nav><hr>
+            <%= simple_form_for @order,url: orders_path, method: 'post',:html => {:class => 'form-horizontal'} do |f| %>
+              <%= f.error_notification %>
+              <div style="padding-left: 5%;">   
+              <div class="row mb-3">
+                <div class="col-md-3 col-sm-12"> 
+                 <%= f.radio_button :payment_type, "3", :value => "3" ,:class => "form-check-input radio-input" %>Credit Card
+                </div>
+                <div class="col-md-3 col-sm-12"> 
+                 <%= f.radio_button :payment_type, "3", :value => "3" ,:class => "form-check-input radio-input" %>Paypal
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6 col-sm-12"> 
+                  <%= f.input :card_number,placeholder: "* Card Number",label: false, maxlength: 16, required: "required" %>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-2 col-sm-12">
+                  <%=f.input :exp_year, collection: [2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030], prompt: "Select your Expire Year", selected: 2020, label:false %>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                  <%=f.input :exp_month, collection: [1,2,3,4,5,6,7,8,9,10,11,12], prompt: "Select your Expiry Month", selected: 1,label: false %>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6 col-sm-12">
+                  <%= f.input :security_code ,placeholder: "* Security Code",label: false, maxlength: 4, required: "required" %>
+                </div>
+              </div>
+              </div>    
+              <%= f.simple_fields_for :order_items do |i| %>
+                <%= i.hidden_field(:package_id,value: @package.id) %>
+                <%= i.hidden_field(:quantity,value: @quantity) %>
+                <%= i.hidden_field(:price,value: @package.price) %>
+              <% end %>
+              <div>
+                <span class="inline-block float-right">
+                  <%= f.submit "Confirm Payment", class: "btn btn-outline-success" %>
+                </span> 
+              </div>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12">
+      <div class="border border-light"> 
+        <div class="owl-carousel owl-theme owl-loaded">
+          <div class="owl-stage-outer">
+            <div class="owl-stage">
+              <div><h5 class="text-center">Summary</h5></div>
+              <div class="row text-center">
+                <div class="col">
+                SubTotal</div>
+                <div class="col" id="sub-total">
+                </div>
+              </div>
+              <div class="row text-center">
+                <div class="col">
+                Service Fee</div>
+                <div class="col" id="service-fee">
+                </div>
+              </div>
+                <hr>
+              <div class="row text-center">
+                <div class="col">
+                Total</div>
+                <div class="col" id="total">
+                </div>
+              </div>
+              <div class="row text-center">
+                <div class="col">
+                Delivery Time</div>
+                <div class="col">
+                <%= @package.delivery_time %> Days
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $( document ).ready(function(){
+    var qty = $("#order_order_items_attributes_0_quantity").val();
+    var price = '<%= @package.price %>';
+    var service_fee = qty*price*'<%= ENV['SERVICE_FEE'].to_i %>'/100;
+    var total = accounting.formatMoney(qty*price);
+    $("#price-id").html(total);
+    $("#sub-total").html(total);
+    $('#service-fee').html(accounting.formatMoney(service_fee));
+    $('#total').html(accounting.formatMoney(service_fee+qty*price));
+  });
+</script>

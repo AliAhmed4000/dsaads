@@ -50,7 +50,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
   # validate :check_user_skill, on: :update
   attr_accessor :wizard
-
+  
   # def check_user_skill
   #   if self.user_skill_ids.blank? || self.user_language_ids.blank?
   #     errors.add(:base, 'Select Atleast One Professional Body Type')
