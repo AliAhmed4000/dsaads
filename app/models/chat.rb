@@ -22,8 +22,8 @@ class Chat < ApplicationRecord
 		  user_id: self.user_id,
 		  message: self.message,
 		  created_at: created_at,
-		  unread_conversations_count: self.conversation.seller.unread_conversations_count,
-		  unread_conversation_count: self.conversation.seller.unread_conversation_count(self.conversation_id),
+		  unread_conversations_count: self.conversation.sellers.unread_conversations_count,
+		  unread_conversation_count: self.conversation.sellers.unread_conversation_count(self.conversation_id),
 		})
 		ActionCable.server.broadcast("conversations_#{self.conversation.buyer_id}_channel", {
 		  id: id,
@@ -31,8 +31,8 @@ class Chat < ApplicationRecord
 		  user_id: user_id,
 		  message: message,
 		  created_at: created_at,
-		  unread_conversations_count: self.conversation.buyer.unread_conversations_count,
-		  unread_conversation_count: self.conversation.buyer.unread_conversation_count(self.conversation_id),
+		  unread_conversations_count: self.conversation.buyers.unread_conversations_count,
+		  unread_conversation_count: self.conversation.buyers.unread_conversation_count(self.conversation_id),
 		})
   end
 end

@@ -14,4 +14,6 @@
 class OrderItem < ApplicationRecord
   belongs_to :package
   belongs_to :order
+  enum status: [:start,:active,:delivered,:completed,:cancelled,:review]
+  # enum role: [:user, :"Application Administrator" ]
 end

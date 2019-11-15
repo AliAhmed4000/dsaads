@@ -7,10 +7,20 @@
   <span class="OnlineCheckBoxNum" id="online-count">(<%= Service.user_online(@category,@search).count %>)</span>
 </div>
 <script type="text/javascript">
-	setInterval(ajaxCall,100000); 
+	setInterval(ajaxCall,100000);
+  <% if @category.blank? %>
+    var id = "nil";
+  <% else %>  
+    var id = '<%= @category.id%>';
+  <% end %>
+  <% if @search.blank? %>
+    var search = "nil";
+  <% else %>  
+    var search = '<%= @search %>';
+  <% end %>
   function ajaxCall(){
     $.ajax({
-      url:  "/categories/<%= @category.id %>/search/<%= @search %>",
+      url:  "/category/" + id + "/search/" + search,
       type: "get",
       success: function(response){
         $('#online-count').html('(' + response.user + ')')

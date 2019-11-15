@@ -6,14 +6,21 @@ Rails.application.routes.draw do
   root to: "pages#index"
 
   resources :reviews
+  resources :orders
   get '/categories/search', to: 'categories#search', as: "search_category"
-  get '/categories/:id/search/:search', to: 'categories#online_users'
+  get '/category/:id/search/:search', to: 'categories#online_users'
   resources :categories do
     member do
       get :services
     end
   end
-  resources :services
+  resources :services do 
+    resources :packages
+  end
+  resources :balances
+  get '/manage_services', to: 'services#manage_services', as: "services_manage"
+  get '/services/:service_id/packages/:id/payment',to: 'packages#payment', as: "packages_payment"
+  get '/services/:service_id/packages/:id/requirement',to: 'packages#requirement', as: "packages_requirement" 
   resources :skills, only: [:destroy]
   resources :languages, only: [:destroy]
   resources :photos, only: [:destroy]

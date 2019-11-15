@@ -7,6 +7,10 @@
   <div class="cat-bar">
     <%= render partial: "/layouts/services_steps" %>
   </div>
+<% elsif !@set_order_bar.blank? %>
+	<div class="cat-bar">
+    <%= render partial: "/layouts/order_steps" %>
+  </div>
 <% else %>
 	<div class="cat-bar">
 	  <div class="container-fluid">

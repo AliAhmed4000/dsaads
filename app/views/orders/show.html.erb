@@ -1,0 +1,69 @@
+<div class="container mt-4">
+  <div class="py-3">
+    <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
+      <%= link_to "Deliver Your Order",root_path, class: "btn btn-primary" %>
+    <% else %>
+      <%= link_to "Complete Your Order",root_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <div class="p-3 border border-light">
+    <div class="py-3">
+      <div class="review-header pt-3">
+        <span class="h3">Order #<%= @order.id %></span>
+        <span id="all-stars-22" class="pl-2"></span>
+        <span class="pl-2 yellow"><%= link_to "View Gigi",service_path(@order.package.service) %></span>
+        <span class="pl-2 pull-right h3"><%= number_to_currency(@order.package.price) %></span>
+        <p><%= @order.package.description %></p>
+        <div class="underline p-3"></div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Item</th>
+              <th scope="col">Qunatity</th>
+              <th scope="col">Duration</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><%= @order.package.name %></th>
+              <td><%= @order.quantity %></td>
+              <td><%= @order.package.delivery_time %> Days</td>
+              <td><%= number_to_currency(@order.package.price) %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <% date = @order.created_at + @order.package.delivery_time.days %>
+    <%# binding.pry %>
+    <div class='countdown' data-date='<%= date.strftime("%Y-%m-%d") %>' data-time='<%= date.strftime("%H:%m:%s") %>'></div>
+  </div>
+</div>
+<style type="text/css">
+  .countdown {
+    font-family: 'Roboto';
+    text-transform: uppercase;
+    padding-left: 32%;
+  }
+  .countdown > div { display: inline-block; }
+  .countdown > div > span {
+    display: block;
+    text-align: center;
+  }
+  .countdown-container { margin: 0 3px; }
+  .countdown-container .countdown-heading {
+    font-size: 11px;
+    margin: 3px;
+    color: #666
+  }
+  .countdown-container .countdown-value {
+    font-size: 50px;
+    background: #6273c9;
+    padding: 10px;
+    color: #fff;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.4)
+  }
+</style>

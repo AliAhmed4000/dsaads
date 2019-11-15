@@ -1,0 +1,51 @@
+<div class="tab-pane" id="active_orders">
+<div class="panel-body">
+    <div class="table-responsive">
+      <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
+        <thead>
+          <tr>
+            <th>
+              <% if current_user.sellers? %>
+              BUYER
+              <% else %>
+              SELLER
+              <% end %>
+            </th>
+            <th>GIG</th>
+            <th>ORDER DATE</th>
+            <th>DUE DATE</th>
+            <th>TOTAL</th>
+            <th>STATUS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order_active.each do |item| %>
+            <tr>
+              <td class="align-middle">
+                <% if current_user.sellers? %>
+                  <%= link_to item.order.user.full_name,profile_path(item.order.user) %>
+                <% else %>
+                  <%= link_to item.package.service.seller.full_name,profile_path(item.package.service.seller) %>
+                <% end %>
+              </td>
+              <td class="align-middle">
+                <%= link_to item.package.service.title,order_path(item.id) %>
+              </td>
+              <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
+              <td class="align-middle"><%= (item.created_at + item.package.delivery_time.days).strftime("%d %B %Y") %></td>
+              <td class="align-middle"><%= item.quantity %></td>
+              <td class="align-middle">
+                <% due_date = item.created_at + item.package.delivery_time.days %>
+                <% if due_date > DateTime.now %>
+                   <span class="badge badge-info">In-Progress</span>
+                <% else %>
+                  <span class="badge badge-primary">Over Due Date</span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

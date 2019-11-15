@@ -7,7 +7,7 @@
       <div class="border border-light bg-light">
         <p class="h3 text-center p-3">My Gigs</p>
       </div>
-        <% if current_user.id == @seller.id %>
+        <% if current_user.id == @seller.id && current_user.sellers? %>
           <div class="text-center py-5">
             <p class="h4 text-secondary py-3">Let's Create One Now</p>
             <%= link_to 'Create Gig', new_service_path, class: 'btn btn-primary' %>
