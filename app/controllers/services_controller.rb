@@ -1,8 +1,8 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
   before_action :check_seller_profile, except: [:index,:show]
-  before_action :check_servie_owner, only: [:edit,:update] 
-  
+  before_action :check_servie_owner, only: [:edit,:update]
+
   def index
     params["choices-single-default"] = nil if params["choices-single-default"] == "Category" || params["choices-single-default"] == "All Categories"
     if params[:search].present? && params["choices-single-default"].present?
@@ -33,8 +33,13 @@ class ServicesController < ApplicationController
   end
 
   def new
-    @service = Service.new
-    @set_bar = "ok"
+    if current_user.sellers?
+      @service = Service.new
+      @set_bar = "ok"
+    else
+      redirect_to root_path
+      flash[:alert] = "You have no access."
+    end 
     # @service.packages.build
   end
 
@@ -50,8 +55,13 @@ class ServicesController < ApplicationController
   end
 
   def edit
-    @service = Service.find params[:id]
-    @set_bar = "ok"
+    if current_user.sellers?
+      @service = Service.find params[:id]
+      @set_bar = "ok"
+    else
+      redirect_to root_path
+      flash[:alert] = "You have no access."
+    end 
   end
 
   def pricing
@@ -183,7 +193,12 @@ class ServicesController < ApplicationController
   end
 
   def remove_image
-  end   
+  end
+  
+  def manage_services
+    @active_gigs = current_user.services.where('publish=?',true)
+    @draft_gigs = current_user.services.where('publish=?',false)
+  end    
 
   private
   def service_params

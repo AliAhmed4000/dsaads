@@ -1,0 +1,28 @@
+<div class="container-fluid px-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="SortBlufLink">
+          <h2>Manage Order</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12" id="documents">
+      <div class="box-tab justified">
+        <ul class="nav nav-tabs">
+          <li class="active nav-item">
+            <a class="nav-link active" href="#active_gigs" data-toggle="tab">Active</a>
+          </li>
+          <li class="active nav-item">
+            <a class="nav-link" href="#draft_gigs" data-toggle="tab">Draft</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <%= render partial: "/services/manage_services/active" %>
+          <%= render partial: "/services/manage_services/draft" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>

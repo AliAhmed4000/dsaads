@@ -12,12 +12,12 @@
             <%= simple_form_for @order,url: orders_path, method: 'post',:html => {:class => 'form-horizontal'} do |f| %>
               <%= f.error_notification %>
               <div style="padding-left: 5%;">   
-              <div class="row mb-3">
-                <div class="col-md-3 col-sm-12"> 
-                 <%= f.radio_button :payment_type, "3", :value => "3" ,:class => "form-check-input radio-input" %>Credit Card
+              <div class="row mb-3" style="padding-left: 5%;">
+                <div class="col-md-2 col-sm-12"> 
+                 <%= f.radio_button :payment_type, "card", :value => "card" ,:class => "form-check-input radio-input",checked: "checked" %>Credit Card
                 </div>
                 <div class="col-md-3 col-sm-12"> 
-                 <%= f.radio_button :payment_type, "3", :value => "3" ,:class => "form-check-input radio-input" %>Paypal
+                 <%= f.radio_button :payment_type, "paypal", :value => "paypal" ,:class => "form-check-input radio-input" %>Paypal
                 </div>
               </div>
               <div class="row mb-3">
