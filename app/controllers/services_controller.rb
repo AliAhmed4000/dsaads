@@ -39,17 +39,17 @@ class ServicesController < ApplicationController
     else
       redirect_to root_path
       flash[:alert] = "You have no access."
-    end 
+    end
     # @service.packages.build
   end
 
-  def create   
+  def create
     @service = current_user.services.build(service_params)
     if @service.save
       redirect_to services_pricing_path(@service)
       flash[:notice] = "Service Created Successfully"
     else
-      render :new 
+      render :new
       flash[:notice] = @service.errors.full_messages
     end
   end
@@ -61,7 +61,7 @@ class ServicesController < ApplicationController
     else
       redirect_to root_path
       flash[:alert] = "You have no access."
-    end 
+    end
   end
 
   def pricing
@@ -72,7 +72,7 @@ class ServicesController < ApplicationController
       flash[:alert] = "First Complete Your Service OwerView"
       redirect_to edit_services_path(@service)
     end
-  end 
+  end
 
   def description
     @service = Service.find params[:id]
@@ -80,7 +80,7 @@ class ServicesController < ApplicationController
     if @service.packages.blank?
       flash[:alert] = "First Complete Your Service Packages"
       redirect_to services_pricing_path(@service)
-    end 
+    end
   end
 
   def requirement
@@ -92,7 +92,7 @@ class ServicesController < ApplicationController
     elsif @service.description.blank?
       flash[:alert] = "First Complete Your Service Description"
       redirect_to services_pricing_path(@service)
-    end 
+    end
   end
 
   def gallery
@@ -109,8 +109,8 @@ class ServicesController < ApplicationController
       flash[:alert] = "First Complete Your Service Requirement"
       redirect_to services_requirement_path(@service)
     end
-  end 
-  
+  end
+
   def publish
     @service = Service.find params[:id]
     @set_bar = "ok"
@@ -126,7 +126,7 @@ class ServicesController < ApplicationController
     elsif @service.photos.blank?
       flash[:alert] = "First Complete Your Service Gallery"
       redirect_to services_gallery_path(@service)
-    end 
+    end
   end
 
   def gallery_publish
@@ -137,14 +137,14 @@ class ServicesController < ApplicationController
       redirect_to services_gallery_path(@service)
     else
       flash[:notice] = "Service Gallery Successfully Added."
-      redirect_to services_publish_path(@service) 
-    end 
+      redirect_to services_publish_path(@service)
+    end
   end
 
   def update
-    @service = Service.find params[:id] 
+    @service = Service.find params[:id]
     if @service.update_attributes(service_params)
-      if params["service"]["wizard"] == "description" 
+      if params["service"]["wizard"] == "description"
         redirect_to services_description_path(@service)
         flash[:notice] = "Service Packages Successfully Added."
       elsif params["service"]["wizard"] == "requirement"
@@ -156,11 +156,11 @@ class ServicesController < ApplicationController
       elsif params["service"]["wizard"] == "published"
         redirect_to root_path
         flash[:notice] = "Service Created Successfully"
-      end 
+      end
     else
-      render :new 
+      render :new
       flash[:notice] = @service.errors.full_messages
-    end 
+    end
   end
 
   def show
@@ -174,7 +174,7 @@ class ServicesController < ApplicationController
     @service.photos.build(:image => params[:file])
     if @service.save
       render json: {id: @service.photos.last.id,path: @service.photos.last.image_url(:small)}
-    end 
+    end
   end
 
   def video_upload
@@ -184,8 +184,8 @@ class ServicesController < ApplicationController
       @service.save
     else
       @service.video.update_attributes(:video => params[:file])
-    end 
-  end 
+    end
+  end
 
   def show_files
     @service = Service.find(params[:id])
@@ -194,24 +194,24 @@ class ServicesController < ApplicationController
 
   def remove_image
   end
-  
+
   def manage_services
     @active_gigs = current_user.services.where('publish=?',true)
     @draft_gigs = current_user.services.where('publish=?',false)
-  end    
+  end
 
   private
   def service_params
     params.require(:service).permit(
-      :title, 
-      :description, 
-      :requirements, 
-      :category_id, 
+      :title,
+      :description,
+      :requirements,
+      :category_id,
       :favorites_count,
-      :sub_category, 
+      :sub_category,
       :publish,
-      :wizard, 
-      packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time],
+      :wizard,
+      packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish],
       photos_attributes: [:id,:image,:_destroy]
     )
   end
@@ -220,7 +220,7 @@ class ServicesController < ApplicationController
     if current_user.user_skills.blank? && current_user.user_languages.blank?
       flash[:notice] = "Please Complete your profile"
       redirect_to seller_personal_info_path
-    end  
+    end
   end
 
   def check_servie_owner
@@ -228,6 +228,6 @@ class ServicesController < ApplicationController
     if @service.blank? || @service.user_id != current_user.id
       flash[:alert] = "Record Not Found"
       redirect_back fallback_location: root_path
-    end      
-  end   
+    end
+  end
 end

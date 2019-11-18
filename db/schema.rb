@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_15_141615) do
+ActiveRecord::Schema.define(version: 2019_11_14_083826) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 2019_11_15_141615) do
     t.boolean "is_commercial"
     t.integer "revision_number"
     t.integer "delivery_time"
+    t.boolean "publish"
     t.index ["service_id"], name: "index_packages_on_service_id"
   end
 
