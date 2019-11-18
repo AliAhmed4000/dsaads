@@ -105,6 +105,7 @@ Rails.application.configure do
     :authentication => :plain,
     :enable_starttls_auto => true
   }
+  ENV['PANDASTREAM_URL'] = "https://669fbbb7cf79501d85c1:9bb2c6f03dbf259ae546@api.pandastream.com/ta01721a52a8d5d6532ccc04f3fe6a7d"
   config.after_initialize do
     ActiveMerchant::Billing::Base.mode = :test 
     ::StripeGateway = ActiveMerchant::Billing::StripeGateway.new(
@@ -117,4 +118,5 @@ Rails.application.configure do
       :password => ENV['PAYPAL_PASSWORD'],
       :signature => ENV['PAYPAL_SIGNATURE']
     )
+  end 
 end
