@@ -1,0 +1,56 @@
+<div class="row bootstrap snippets">
+  <div class="col-md-12 col-md-offset-2 col-sm-12">
+    <div class="comment-wrapper">
+      <div class="panel panel-info">
+        <div class="panel-body">
+        	<%= simple_form_for @review,url: reviews_path, method: 'post',remote: true,:html => {:class => 'form-horizontal'} do |f| %>
+					  <%= f.error_notification %>  
+						<%= f.input :comment,label: 'Comments', required: true, hint: 'Minimum 50 words required', placeholder: 'Comments...', input_html: {rows: "3"}  %>
+						<%= f.input :package_id,as: :hidden, :input_html => { :value => @order.package_id } %>
+						<%= f.input :buyer_id,as: :hidden, :input_html => { :value => @order.order.user_id } %>
+						<%= f.input :seller_id,as: :hidden, :input_html => { :value => @order.package.service.user_id } %>
+						<%= f.input :type,as: :hidden, :input_html => { :value => current_user.buyers? ? "BuyerReview" : "SellerReview"} %>
+						<%= f.input :order_item_id,as: :hidden, :input_html => { :value => @order.id } %>
+            <%= f.submit "Post", class: "btn btn-info pull-right", id: "post-reset" %>
+					<% end %>
+          <div class="clearfix"></div>
+          <hr>
+          <ul class="media-list" id="my-comments">
+    				<%= render partial: '/orders/reviews', locals: {reviews: @order.reviews} %>
+          </ul>
+        </div>
+      </div>
+    </div>
+	</div>
+</div>
+
+<style type="text/css">
+	body{margin-top:20px;}
+	.comment-wrapper .panel-body {
+    max-height:650px;
+    overflow:auto;
+  }
+	.comment-wrapper .media-list .media img {
+    width:64px;
+    height:64px;
+    border:2px solid #e5e7e8;
+  }
+	.comment-wrapper .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:25px;
+  }        
+</style>
+
+<script type="text/javascript">
+  setInterval(ajaxCall,1000);
+  function ajaxCall(){
+    $.ajax({
+      url:  "<%= review_path(@order) %>",
+      type: "get",
+      dataType: 'script',
+      success: function(response){
+        // document.getElementById("new_review").reset();
+      },
+    })
+  }
+</script>

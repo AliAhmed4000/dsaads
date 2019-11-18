@@ -1,0 +1,2 @@
+document.getElementById("new_review").reset()
+$("#my-comments").html("<%= j render(:partial => 'orders/reviews',locals:{reviews: @reviews}) %>")

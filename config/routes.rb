@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :balances
   get '/manage_services', to: 'services#manage_services', as: "services_manage"
   get '/services/:service_id/packages/:id/payment',to: 'packages#payment', as: "packages_payment"
-  get '/services/:service_id/packages/:id/requirement',to: 'packages#requirement', as: "packages_requirement" 
+  get '/order/:id/requirement',to: 'packages#requirement', as: "packages_requirement" 
   resources :skills, only: [:destroy]
   resources :languages, only: [:destroy]
   resources :photos, only: [:destroy]

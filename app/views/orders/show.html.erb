@@ -38,9 +38,9 @@
   </div>
   <div class="row">
     <% date = @order.created_at + @order.package.delivery_time.days %>
-    <%# binding.pry %>
-    <div class='countdown' data-date='<%= date.strftime("%Y-%m-%d") %>' data-time='<%= date.strftime("%H:%m:%s") %>'></div>
+    <div class='countdown' data-date='<%= date.strftime("%Y-%m-%d") %>' data-time='<%= date.strftime("%H:%M:%S") %>'></div>
   </div>
+  <%= render partial: '/orders/order_chats' %>
 </div>
 <style type="text/css">
   .countdown {

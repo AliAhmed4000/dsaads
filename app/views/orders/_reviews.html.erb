@@ -1,0 +1,24 @@
+<% reviews.each  do |review| %>
+	<li class="media">
+    <a href="#" class="pull-left">
+    	<% if review.type == "BuyerReview" %>
+      	<%= image_tag review.buyer.avatar_url(:medium), class: 'img-circle', alt: "" %>
+    	<% else %>
+    		<%= image_tag review.seller.avatar_url(:medium), class: 'img-circle', alt: "" %>
+    	<% end %>
+    </a>
+    <div class="media-body">
+        <span class="text-muted pull-right">
+          <small class="text-muted"><%= time_ago_in_words(review.created_at) %></small>
+        </span>
+        <strong class="text-success">
+        	<% if review.type == "BuyerReview" %>
+        		<%= review.buyer.full_name %>
+        	<% else %>
+        		<%= review.seller.full_name %>
+        	<% end %>
+        </strong>
+        <p><%= review.comment %></p>
+    </div>
+	</li>
+<% end %>

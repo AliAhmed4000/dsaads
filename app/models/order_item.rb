@@ -14,6 +14,8 @@
 class OrderItem < ApplicationRecord
   belongs_to :package
   belongs_to :order
-  enum status: [:start,:active,:delivered,:completed,:cancelled,:review]
+  has_many :reviews
+  accepts_nested_attributes_for :reviews, reject_if: :all_blank, allow_destroy: true
+  enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review]
   # enum role: [:user, :"Application Administrator" ]
 end

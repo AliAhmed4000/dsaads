@@ -32,10 +32,16 @@
                 <div class="col-md-2 col-sm-12">
                   <%=f.input :exp_month, collection: [1,2,3,4,5,6,7,8,9,10,11,12], prompt: "Select your Expiry Month", selected: 1,label: false %>
                 </div>
+                <div class="col-md-2 col-sm-12">
+                  <%= f.input :security_code ,placeholder: "* CSV",label: false, maxlength: 4, required: "required" %>
+                </div>
               </div>
               <div class="row mb-3">
-                <div class="col-md-6 col-sm-12">
-                  <%= f.input :security_code ,placeholder: "* Security Code",label: false, maxlength: 4, required: "required" %>
+                <div class="col-md-3 col-sm-12">
+                  <%= f.input :first_name ,placeholder: "* First Name",label: false, required: "required" %>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                  <%= f.input :last_name ,placeholder: "* Last Name",label: false, required: "required" %>
                 </div>
               </div>
               </div>    

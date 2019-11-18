@@ -11,24 +11,29 @@
       <div class="box-tab justified">
         <ul class="nav nav-tabs">
           <li class="active nav-item">
-            <a class="nav-link active" href="#new_orders" data-toggle="tab">New Orders</a>
+            <a class="nav-link active" href="#new_orders" data-toggle="tab">New Orders
+              <span class="badge badge-light"><%= @order_start.count %></span>
+            </a>
           </li>
           <li class="active nav-item">
-            <a class="nav-link" href="#active_orders" data-toggle="tab">Active Orders</a>
+            <a class="nav-link" href="#active_orders" data-toggle="tab">Active Orders
+              <span class="badge badge-light"><%= @order_active.count %></span>
+            </a>
           </li>
           <% if current_user.buyers? %>
             <li class="nav-item">
-              <a class="nav-link" href="#awaiting_my_review" data-toggle="tab">Awaiting my Reviews</a>
+              <a class="nav-link" href="#awaiting_my_review" data-toggle="tab">Awaiting my Reviews
+               <span class="badge badge-light"><%= @order_review.count %></span></a>
             </li>
           <% end %>
           <li class="nav-item">
-            <a class="nav-link" href="#delivered" data-toggle="tab">Delivered</a>
+            <a class="nav-link" href="#delivered" data-toggle="tab">Delivered <span class="badge badge-light"><%= @order_delivered.count %></span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#completed" data-toggle="tab">Completed</a>
+            <a class="nav-link" href="#completed" data-toggle="tab">Completed <span class="badge badge-light"><%= @order_completed.count %></span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#cancelled" data-toggle="tab">Cancelled</a>
+            <a class="nav-link" href="#cancelled" data-toggle="tab">Cancelled <span class="badge badge-light"><%= @order_cancelled.count %></span></a>
           </li>
         </ul>
         <div class="tab-content">

@@ -15,4 +15,5 @@
 
 class Review < ApplicationRecord
   belongs_to :package
+  belongs_to :order_item
 end
