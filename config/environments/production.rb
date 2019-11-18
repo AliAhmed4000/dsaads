@@ -105,4 +105,16 @@ Rails.application.configure do
     :authentication => :plain,
     :enable_starttls_auto => true
   }
+  config.after_initialize do
+    ActiveMerchant::Billing::Base.mode = :test 
+    ::StripeGateway = ActiveMerchant::Billing::StripeGateway.new(
+      :login => ENV['STRIPE_USERNAME'],
+      :password => ENV['STRIPE_PASSWORD']
+    )
+
+    ::PaypalGateway = ActiveMerchant::Billing::PaypalGateway.new(
+      :login => ENV['PAYPAL_USERNAME'],
+      :password => ENV['PAYPAL_PASSWORD'],
+      :signature => ENV['PAYPAL_SIGNATURE']
+    )
 end
