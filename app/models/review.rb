@@ -14,6 +14,7 @@
 #
 
 class Review < ApplicationRecord
+  mount_uploader :attachment, ReviewUploader
   belongs_to :package
   belongs_to :order_item
 end

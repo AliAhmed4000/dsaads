@@ -3,43 +3,20 @@
     <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
       <%= link_to "Deliver Your Order",root_path, class: "btn btn-primary" %>
     <% else %>
-      <%= link_to "Complete Your Order",root_path, class: "btn btn-primary" %>
+      <% if @order.inactive? %>
+        <%= render partial: '/orders/order_start' %>
+      <% else %>
+        <%= link_to "Complete Your Order",root_path, class: "btn btn-primary" %>
+      <% end %>
     <% end %>
   </div>
-  <div class="p-3 border border-light">
-    <div class="py-3">
-      <div class="review-header pt-3">
-        <span class="h3">Order #<%= @order.id %></span>
-        <span id="all-stars-22" class="pl-2"></span>
-        <span class="pl-2 yellow"><%= link_to "View Gigi",service_path(@order.package.service) %></span>
-        <span class="pl-2 pull-right h3"><%= number_to_currency(@order.package.price) %></span>
-        <p><%= @order.package.description %></p>
-        <div class="underline p-3"></div>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Item</th>
-              <th scope="col">Qunatity</th>
-              <th scope="col">Duration</th>
-              <th scope="col">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row"><%= @order.package.name %></th>
-              <td><%= @order.quantity %></td>
-              <td><%= @order.package.delivery_time %> Days</td>
-              <td><%= number_to_currency(@order.package.price) %></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <%= render partial: '/orders/order_detail' %>
+  <% if @order.active? %>
+    <div class="row">
+      <% date = @order.created_at + @order.package.delivery_time.days %>
+      <div class='countdown' data-date='<%= date.strftime("%Y-%m-%d") %>' data-time='<%= date.strftime("%H:%M:%S") %>'></div>
     </div>
-  </div>
-  <div class="row">
-    <% date = @order.created_at + @order.package.delivery_time.days %>
-    <div class='countdown' data-date='<%= date.strftime("%Y-%m-%d") %>' data-time='<%= date.strftime("%H:%M:%S") %>'></div>
-  </div>
+  <% end %>
   <%= render partial: '/orders/order_chats' %>
 </div>
 <style type="text/css">

@@ -1,0 +1,17 @@
+<div class="p-3 border border-light">
+  <div class="py-3">
+    <p><%= @order.package.service.requirements %></p>
+    <%= simple_form_for @order,url: order_path(@order), method: 'put',:html => {:class => 'form-horizontal'} do |f| %>
+    <%= f.error_notification %>
+    <div class="review-header pt-3">  
+      <label class="Checkbox-form">
+        <%= f.check_box :status,{},"active","inactive" %>  I have provided all the requirements
+        <span class="checkmark"></span>
+      </label>
+      <label class="Checkbox-form" style="margin-bottom: 2% ">
+        <%= f.submit "Order Start", class: "btn btn-info pull-right" %>
+      </label>
+    </div>
+  <% end %>
+  </div>
+</div>
