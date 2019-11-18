@@ -42,7 +42,7 @@
 </style>
 
 <script type="text/javascript">
-  setInterval(ajaxCall,1000);
+  setInterval(ajaxCall,10000);
   function ajaxCall(){
     $.ajax({
       url:  "<%= review_path(@order) %>",
