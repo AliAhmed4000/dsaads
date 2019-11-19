@@ -164,6 +164,10 @@ class ServicesController < ApplicationController
   end
 
   def show
+    if current_user.sellers?
+      flash[:alert] = "You have no permission to access."
+      redirect_back fallback_location: root_path
+    end 
     @service = Service.find(params[:id])
     @packages = @service.packages
     @seller = @service.seller
@@ -197,6 +201,7 @@ class ServicesController < ApplicationController
 
   def manage_services
     @active_gigs = current_user.services.where('publish=?',true)
+    @pending_for_approval_gigs = current_user.services.where('publish=?',true)
     @draft_gigs = current_user.services.where('publish=?',false)
   end
 

@@ -14,11 +14,15 @@
             <a class="nav-link active" href="#active_gigs" data-toggle="tab">Active</a>
           </li>
           <li class="active nav-item">
+            <a class="nav-link" href="#pending_gigs" data-toggle="tab">Pending For Approval</a>
+          </li>
+          <li class="active nav-item">
             <a class="nav-link" href="#draft_gigs" data-toggle="tab">Draft</a>
           </li>
         </ul>
         <div class="tab-content">
           <%= render partial: "/services/manage_services/active" %>
+          <%= render partial: "/services/manage_services/pending_approval" %>
           <%= render partial: "/services/manage_services/draft" %>
         </div>
       </div>

@@ -1,12 +1,22 @@
 <div class="container mt-4">
-  <div class="py-3">
+  <div class="py-3" style="margin-bottom: 3%">
     <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
-      <%= link_to "Deliver Your Order",root_path, class: "btn btn-primary" %>
+      <%= simple_form_for @order,url: order_path(@order), method: 'put' do |f| %>
+        <%= f.input :status, as: :hidden,:input_html => { :value => "delivered" } %>
+        <label class="Checkbox-form" style="margin-bottom: 2% ">
+          <%= f.submit "Deliver Your Order", class: "btn btn-info pull-right" %>
+        </label>
+      <% end %>
     <% else %>
       <% if @order.inactive? %>
         <%= render partial: '/orders/order_start' %>
       <% else %>
-        <%= link_to "Complete Your Order",root_path, class: "btn btn-primary" %>
+        <%= simple_form_for @order,url: order_path(@order), method: 'put' do |f| %>
+          <%= f.input :status, as: :hidden,:input_html => { :value => "completed" } %>
+          <label class="Checkbox-form" style="margin-bottom: 2% ">
+            <%= f.submit "Complete Your Order", class: "btn btn-info pull-right" %>
+          </label>
+        <% end %>
       <% end %>
     <% end %>
   </div>

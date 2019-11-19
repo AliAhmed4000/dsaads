@@ -1,4 +1,10 @@
 class FavoritesController < ApplicationController
+  before_action :authenticate_user!
+  
+  def index 
+    @services = Service.joins(:favorites).where('favorites.user_id=?',current_user.id).page(params[:page]).per(6)
+  end 
+  
   def create
     @favorite = current_user.favorites.build(service_id: params[:service_id])
     !!@favorite.save ? flash[:notice] = "You have add it into your favorites" : flash[:alert] = "Already put into favorited collection.."

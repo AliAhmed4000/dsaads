@@ -28,7 +28,12 @@
                 <td><%= package.input :price,collection: Package::BASIC_PRICE,required: true, input_html: {name: "service[packages_attributes][0][price]"} %></td>
               </tr>
               <tr>
-                <td><%= package.input :publish, as: :boolean, boolean_style: :inline, required: true, input_html: {name: "service[packages_attributes][0][publish]"}%></td>
+                <td>
+                  <label class="Checkbox-form">
+                    <%= package.check_box :publish,{name: "service[packages_attributes][0][publish]"},"active","inactive" %> You want Publish?
+                    <span class="checkmark"></span>
+                  </label>
+                </td>
               </tr>
             </table>
           </td>
@@ -47,7 +52,12 @@
                 <td><%= package.input :price,collection: Package::STANDARD_PRICE,required: true,input_html: {maxlength: 100,name: "service[packages_attributes][1][price]"} %></td>
               </tr>
               <tr>
-                <td><%= package.input :publish, as: :boolean, boolean_style: :inline, required: true, input_html: {name: "service[packages_attributes][1][publish]"}%></td>
+                <td>
+                  <label class="Checkbox-form">
+                    <%= package.check_box :publish,{name: "service[packages_attributes][1][publish]"},"active","inactive" %> You want Publish?
+                    <span class="checkmark"></span>
+                  </label>
+                </td>
               </tr>
             </table>
           </td>
@@ -66,7 +76,12 @@
                 <td><%= package.input :price,collection: Package::PREMIMUM_PRICE,required: true ,input_html: {maxlength: 100,name: "service[packages_attributes][2][price]"}%></td>
               </tr>
               <tr>
-                <td><%= package.input :publish, as: :boolean, boolean_style: :inline,  required: true, input_html: {name: "service[packages_attributes][2][publish]"}%></td>
+                <td>
+                  <label class="Checkbox-form">
+                    <%= package.check_box :publish,{name: "service[packages_attributes][2][publish]"},"active","inactive" %> You want Publish?
+                    <span class="checkmark"></span>
+                  </label>
+                </td>
               </tr>
             </table>
           </td>

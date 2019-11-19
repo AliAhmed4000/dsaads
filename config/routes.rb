@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   get  '/services/:id/edit/publish', to: 'services#publish', as: "services_publish"
   get  '/services/:id/edit/gallery_publish', to: 'services#gallery_publish', as: "services_gallery_publish"
 
-  resources :favorites, only: [:create, :destroy]
+  resources :favorites, only: [:create, :destroy, :index]
   resources :users, only: [:new, :create, :update], as: "onboarding", path: "seller_onboarding"
   get 'seller_onboarding/personal_info', to: 'users#seller_personal_info', as: "seller_personal_info"
   get 'seller_onboarding/professional_info', to: 'users#seller_professional_info', as: "seller_professional_info"

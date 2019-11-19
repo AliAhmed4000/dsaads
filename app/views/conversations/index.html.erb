@@ -11,19 +11,20 @@
         <div class="stylish-input-group">
           <input type="text" class="search-bar"  placeholder="Search" >
           <span class="input-group-addon">
-          <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-          </span> </div>
+            <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span> 
+        </div>
       </div>
     </div>
-     <% if @conversations.blank? %>
+    <% if @conversations.blank? %>
         <div class="heading-holder">
         <h4>No conversation found</h4>
         </div>  
     <% else %>
       <div class="inbox_chat">
         <% if current_user.buyers? %>
-          <% @conversations.each do |conversation| %> 
-            <%= link_to conversation_path(conversation) do %> 
+          <% @conversations.each do |conversation| %>
+            <%= link_to conversation_path(conversation),method: "get" do %> 
               <div class="chat_list active_chat">
                 <div class="chat_people">
                   <div class="chat_img">
@@ -40,7 +41,7 @@
           <% end %>
         <% elsif current_user.sellers? %>
           <% @conversations.each do |conversation| %>
-            <%= link_to conversation_path(conversation) do %> 
+            <%= link_to conversation_path(conversation),method: "get" do %> 
               <div class="chat_list active_chat">
                 <div class="chat_people">
                   <div class="chat_img"> 

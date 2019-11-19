@@ -25,10 +25,15 @@ class PackagesController < ApplicationController
 
 	private 
 	def check_gig_owner
-    @service = Service.find_by_id(params[:service_id])
-    if @service.blank? || @service.user_id == current_user.id
-      flash[:alert] = "You have no permission to access."
+		if current_user.sellers?
+			flash[:alert] = "You have no permission to access."
       redirect_back fallback_location: root_path
-    end      
+		else
+	    @service = Service.find_by_id(params[:service_id])
+	    if @service.blank? || @service.user_id == current_user.id
+	      flash[:alert] = "You have no permission to access."
+	      redirect_back fallback_location: root_path
+	    end
+	  end       
   end
 end

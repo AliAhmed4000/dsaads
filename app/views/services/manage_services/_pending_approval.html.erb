@@ -1,4 +1,4 @@
-<div class="tab-pane active" id="active_orders">
+<div class="tab-pane" id="pending_gigs">
 <div class="panel-body">
     <div class="table-responsive">
       <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
@@ -19,7 +19,7 @@
               <td class="align-middle">
                 <%= gig.created_at.strftime("%d %B %Y") %>
               </td>
-              <td class="align-middle"><%= gig.packages.joins(:order_items).where('order_items.status=?',OrderItem.statuses['active']).count %></td>
+              <td class="align-middle"><%= gig.packages.joins(:order_items).where('order_items.status=?',OrderItem.statuses['inactive']).count %></td>
               <td class="align-middle">
                 <div class="btn-group pull-right">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Actions
