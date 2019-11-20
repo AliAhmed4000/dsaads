@@ -1,5 +1,6 @@
 <div class="p-3 border border-light">
     <div class="py-3">
+      <h6><%= link_to "#{@order.package.service.seller.full_name}",profile_path(@order.package.service.seller) %></h6>
       <div class="review-header pt-3">
         <span class="h3">Order #<%= @order.id %></span>
         <span id="all-stars-22" class="pl-2"></span>

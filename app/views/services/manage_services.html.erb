@@ -19,6 +19,9 @@
           <li class="active nav-item">
             <a class="nav-link" href="#draft_gigs" data-toggle="tab">Draft</a>
           </li>
+          <li class="active nav-item" style="padding-left: 62%">
+            <%= link_to "New Gig", new_service_path,class: 'btn btn-primary' %>
+          </li>
         </ul>
         <div class="tab-content">
           <%= render partial: "/services/manage_services/active" %>
