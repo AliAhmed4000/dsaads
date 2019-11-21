@@ -1,32 +1,32 @@
 <div class="p-3 border border-light">
-    <div class="py-3">
-      <h6><span>Seller</span>  <%= link_to "#{@order.package.service.seller.full_name}",profile_path(@order.package.service.seller) %></h6>
-      <hr>
-      <div class="review-header pt-3">
-        <span class="h3">Order #<%= @order.id %></span>
-        <span id="all-stars-22" class="pl-2"></span>
-        <span class="pl-2 yellow"><%= link_to "View Gig",service_path(@order.package.service) %> </span>
-        <span class="pl-2 pull-right h3"><%= number_to_currency(@order.package.price) %></span>
-        <p><%= @order.package.description %></p>
-        <div class="underline p-3"></div>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Item</th>
-              <th scope="col">Qunatity</th>
-              <th scope="col">Duration</th>
-              <th scope="col">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row"><%= @order.package.name %></th>
-              <td><%= @order.quantity %></td>
-              <td><%= @order.package.delivery_time %> Days</td>
-              <td><%= number_to_currency(@order.package.price) %></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="py-3">
+    <h6><span>Seller</span>  <%= link_to "#{@order.package.service.seller.full_name}",profile_path(@order.package.service.seller) %></h6>
+    <hr>
+    <div class="review-header pt-3">
+      <span class="h3">Order #<%= @order.id %></span>
+      <span id="all-stars-22" class="pl-2"></span>
+      <span class="pl-2 yellow"><%= link_to "View Gig",service_path(@order.package.service) %> </span>
+      <span class="pl-2 pull-right h3"><%= number_to_currency(@order.package.price) %></span>
+      <p><%= @order.package.description %></p>
+      <div class="underline p-3"></div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Qunatity</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><%= @order.package.name %></th>
+            <td><%= @order.quantity %></td>
+            <td><%= @order.package.delivery_time %> Days</td>
+            <td><%= number_to_currency(@order.package.price) %></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>

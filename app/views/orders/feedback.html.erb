@@ -1,12 +1,7 @@
 <div class="container mt-4">
-  <h5>FeedBack</h5>
   <div class="p-3 border border-light">
     <div class="py-3">
-      <% if current_user.sellers? %>
-        <h6><span>Buyer</span>  <%= link_to "#{@order.order.user.full_name}",profile_path(@order.package.service.seller) %></h6>
-      <% else %>
-        <h6><span>Seller</span>  <%= link_to "#{@order.package.service.seller.full_name}",profile_path(@order.package.service.seller) %></h6>
-      <% end %>
+      <h6>FeedBack</h6>
       <hr>
       <div class="review-header pt-3">
         <span class="h3">Order #<%= @order.id %></span>
@@ -22,8 +17,70 @@
         <span class="pl-2 pull-right h3"><%= number_to_currency(@order.package.price) %></span>
         <p><%= @order.package.description %></p>
         <div class="underline p-3"></div>
-        <%= render partial: '/orders/comment' %>
+        <div class="row bootstrap snippets">
+          <div class="col-md-12 col-md-offset-2 col-sm-12">
+            <div class="comment-wrapper">
+              <div class="panel panel-info">
+                <div class="panel-body">
+                  <div class="clearfix"></div>
+                  <div class="panel-body">
+                    <ul class="list-group">
+                      <%= render partial: '/orders/feedback/buyer_comments' %>
+                      <%= render partial: '/orders/feedback/seller_comments' %>
+                    </ul>
+                  </div>
+                  <% if @order.seller_star_status.blank? %>
+                    <%= render partial: '/orders/forms/feedback_form' %>
+                  <% elsif @order.buyer_star_status.blank? %>
+                    <%= render partial: '/orders/forms/feedback_form' %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<style type="text/css">
+  body{margin-top:20px;}
+  .comment-wrapper .panel-body {
+    max-height:650px;
+    overflow:auto;
+  }
+  .comment-wrapper .media-list .media img {
+    width:64px;
+    height:64px;
+    border:2px solid #e5e7e8;
+  }
+  .comment-wrapper .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:25px;
+  }
+  .image-upload > input{
+    display: none;
+  }
+  .image-upload img{
+    width: 80px;
+    cursor: pointer;
+  }
+</style>
+<script type="text/javascript">
+  <% if @order.seller_star_status.blank? %>
+    $('.review_star').raty({
+      path: '/assets',
+      size: 5,
+      click: function(score,evt) {
+        $('#review_star').val(score)
+      }
+    });
+  <% else %>
+    $('#all-stars').raty({
+      path: '/assets',
+      readOnly: true,
+      size: 5,
+      score: '<%= @order.seller_star_status.star %>'
+    });
+  <% end %>
+</script>

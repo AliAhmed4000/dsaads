@@ -1,0 +1,20 @@
+<% unless @order.seller_star_status.blank? %>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-xs-2 col-md-1">
+        <%= image_tag @order.package.service.seller.avatar_url(:medium), class: 'img-circle', alt: "" %>
+      </div>
+      <div class="col-xs-10 col-md-11">
+        <div>
+          <div class="mic-info">
+            By: <%= link_to "#{@order.order.user.full_name}",profile_path(@order.order.user) %> <%= time_ago_in_words(@order.created_at) %> ago
+          </div>
+        </div>
+        <div class="comment-text"><%= @order.seller_star_status.comment %></div>
+        <div class="action">
+          <div class="mb-3" id="all-stars"></div>
+        </div>
+      </div>
+    </div>
+  </li>
+<% end %>
