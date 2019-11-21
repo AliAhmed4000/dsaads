@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :reviews
   resources :orders
+  get '/orders/:id/feedback', to: 'orders#feedback', as: "order_feedback"
   get '/categories/search', to: 'categories#search', as: "search_category"
   get '/category/:id/search/:search', to: 'categories#online_users'
   resources :categories do

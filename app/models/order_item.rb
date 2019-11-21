@@ -18,4 +18,12 @@ class OrderItem < ApplicationRecord
   accepts_nested_attributes_for :reviews, reject_if: :all_blank, allow_destroy: true
   enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review]
   # enum role: [:user, :"Application Administrator" ]
+
+  def seller_star_status
+    SellerReview.find_by('star is not null and order_item_id=?',self.id)
+  end
+
+  def buyer_star_status
+    BuyerReview.find_by('star is not null and order_item_id=?',self.id)
+  end
 end

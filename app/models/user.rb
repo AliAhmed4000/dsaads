@@ -70,23 +70,12 @@ class User < ApplicationRecord
     self[:language].present? && self[:first_name].present? && self[:last_name].present? && self[:country].present? && self[:description].present?
   end
 
+  def seller_review_star
+    SellerReview.where('buyer_id=?',self.id).average(:star)
+  end
+  
   def buyer_review_star
-    if self.services.present?
-      if self.services.size == 0
-        return 0
-      else
-        self.services.each do |service|
-          if service.buyer_review_star.present?
-            results = []
-            results << service.buyer_review_star.to_i
-            total = results.sum
-            return (total/results.length).round(1)
-          end
-        end
-      end
-    else
-      return 0
-    end
+    BuyerReview.where('seller_id=?',self.id).average(:star)
   end
 
   def professional_complete?

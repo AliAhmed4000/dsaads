@@ -164,13 +164,14 @@ class ServicesController < ApplicationController
   end
 
   def show
-    if current_user.sellers?
+    if user_signed_in? && current_user.sellers?
       flash[:alert] = "You have no permission to access."
       redirect_back fallback_location: root_path
     end 
     @service = Service.find(params[:id])
     @packages = @service.packages
     @seller = @service.seller
+    @show = "page"
   end
 
   def file_upload

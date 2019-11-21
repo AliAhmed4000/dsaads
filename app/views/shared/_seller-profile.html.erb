@@ -40,7 +40,6 @@
     </div>
     
 </div>
-
 <div class="border border-light p-3 mt-3">
   <p class="h3 bold">Description</p>
   <p class="text-secondary"><%= @seller.description %></p>
@@ -50,10 +49,19 @@
 </div>
 
 <script>
-$('#all-stars-<%= @seller.id %>').raty({
+  <% if @show.blank? %>
+    <% if @seller.sellers? %>
+      var star = <%= @seller.buyer_review_star %>
+    <% else %>
+      var star = <%= @seller.seller_review_star %>
+    <% end %>
+  <% else %>
+      var star = <%= @service.buyer_review_star %>
+  <% end %>
+  $('#all-stars-<%= @seller.id %>').raty({
     path: '/assets',
     readOnly: true,
     size: 5,
-    score: <%= @seller.buyer_review_star %>
+    score: star
   });
 </script>

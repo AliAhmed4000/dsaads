@@ -1,0 +1,101 @@
+<div class="row bootstrap snippets">
+  <div class="col-md-12 col-md-offset-2 col-sm-12">
+    <div class="comment-wrapper">
+      <div class="panel panel-info">
+        <div class="panel-body">
+        	<div class="clearfix"></div>
+          <% if @order.seller_star_status.blank? %>
+            <%= render partial: '/orders/forms/feedback_form' %>
+          <% elsif @order.buyer_star_status.blank? %>
+            <%= render partial: '/orders/forms/feedback_form' %>
+          <% end %>
+          <div class="panel-body">
+            <ul class="list-group">
+              <% unless @order.seller_star_status.blank? %>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-xs-2 col-md-1">
+                      <%= image_tag @order.package.service.seller.avatar_url(:medium), class: 'img-circle', alt: "" %>
+                    </div>
+                    <div class="col-xs-10 col-md-11">
+                      <div>
+                        <div class="mic-info">
+                          By: <%= link_to "#{@order.order.user.full_name}",profile_path(@order.order.user) %> <%= time_ago_in_words(@order.created_at) %> ago
+                        </div>
+                      </div>
+                      <div class="comment-text"><%= @order.seller_star_status.comment %></div>
+                      <div class="action">
+                        <div class="mb-3" id="all-stars"></div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+              <% unless @order.buyer_star_status.blank? %>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-xs-2 col-md-1">
+                      <%= image_tag @order.order.user.avatar_url(:medium), class: 'img-circle', alt: "" %>
+                    </div>
+                    <div class="col-xs-10 col-md-11">
+                      <div>
+                        <div class="mic-info">
+                          By: <%= link_to "#{@order.package.service.seller.full_name}",profile_path(@order.order.user) %> <%= time_ago_in_words(@order.created_at) %> ago
+                        </div>
+                      </div>
+                      <div class="comment-text"><%= @order.buyer_star_status.comment %></div>
+                      <div class="action">
+                        <div class="mb-3" id="all-stars"></div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div>
+</div>
+<style type="text/css">
+	body{margin-top:20px;}
+	.comment-wrapper .panel-body {
+    max-height:650px;
+    overflow:auto;
+  }
+	.comment-wrapper .media-list .media img {
+    width:64px;
+    height:64px;
+    border:2px solid #e5e7e8;
+  }
+	.comment-wrapper .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:25px;
+  }
+  .image-upload > input{
+    display: none;
+  }
+  .image-upload img{
+    width: 80px;
+    cursor: pointer;
+  }
+</style>
+<script type="text/javascript">
+  <% if @order.seller_star_status.blank? %>
+    $('.review_star').raty({
+      path: '/assets',
+      size: 5,
+      click: function(score,evt) {
+        $('#review_star').val(score)
+      }
+    });
+  <% else %>
+    $('#all-stars').raty({
+      path: '/assets',
+      readOnly: true,
+      size: 5,
+      score: '<%= @order.seller_star_status.star %>'
+    });
+  <% end %>
+</script>

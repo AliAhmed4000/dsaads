@@ -21,9 +21,9 @@
             <li class="nav-item"><%= link_to 'Become a Seller', seller_personal_info_path, class: "nav-link"%></li>
           <% else %>
             <% if current_user.sellers? %>
-              <li class="nav-item"><%= link_to 'Switch as Buyer',user_role_path, class: "nav-link"%></li>
+              <li class="nav-item"><%= link_to 'Switch as Buyer',user_role_path,method: 'get', class: "nav-link"%></li>
             <% else %>
-              <li class="nav-item"><%= link_to 'Switch as Seller',user_role_path, class: "nav-link"%></li>
+              <li class="nav-item"><%= link_to 'Switch as Seller',user_role_path,method: 'get', class: "nav-link"%></li>
             <% end %>
           <% end %>
           <li class="dropdown">

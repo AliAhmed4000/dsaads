@@ -1,0 +1,12 @@
+<%= simple_form_for @review,url: reviews_path, method: 'post',:html => {:class => 'form-horizontal'} do |f| %>
+  <%= f.error_notification %>
+  <div>Rating *</div> 
+  <%= f.input :star,as: :hidden,required: true,label: false, wrap: false,value: ""  %>
+  <%= f.input :comment,label: 'Comments', required: true, hint: 'Minimum 50 words required', placeholder: "Comments For #{@order.package.service.seller.full_name}", input_html: {rows: "3"}  %>
+  <%= f.input :package_id,as: :hidden, :input_html => { :value => @order.package_id } %>
+  <%= f.input :buyer_id,as: :hidden, :input_html => { :value => @order.order.user_id } %>
+  <%= f.input :seller_id,as: :hidden, :input_html => { :value => @order.package.service.user_id } %>
+  <%= f.input :type,as: :hidden, :input_html => { :value => current_user.buyers? ? "BuyerReview" : "SellerReview"} %>
+  <%= f.input :order_item_id,as: :hidden, :input_html => { :value => @order.id } %>
+  <%= f.submit "Post", class: "btn btn-info pull-right", id: "post-reset" %>
+<% end %>

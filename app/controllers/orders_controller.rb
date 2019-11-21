@@ -46,7 +46,12 @@ class OrdersController < ApplicationController
   def show
     @order = OrderItem.find_by_id(params[:id])
     @review = Review.new 
-  end 
+  end
+
+  def feedback
+    @order = OrderItem.find_by_id(params[:id])
+    @review = Review.new
+  end  
 
   private 
   def order_params

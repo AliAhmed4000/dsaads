@@ -5,6 +5,8 @@ class ReviewsController < ApplicationController
     review = Review.create(reviews_params)
     order_item  = OrderItem.find_by_id(review.order_item_id)
     @reviews = order_item.reviews
+    flash[:notice] = "FeedBack Successfully Done."
+    redirect_to orders_path
   end
 
   def show
@@ -21,7 +23,8 @@ class ReviewsController < ApplicationController
       :package_id,
       :order_item_id,
       :type,
-      :attachment
+      :attachment,
+      :star
     ) 
   end
 end
