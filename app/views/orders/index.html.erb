@@ -37,14 +37,14 @@
           </li>
         </ul>
         <div class="tab-content">
-          <%= render partial: "/orders/new_orders" %>
-          <%= render partial: "/orders/active_orders" %>
+          <%= render partial: "/orders/manage_orders/new_orders" %>
+          <%= render partial: "/orders/manage_orders/active_orders" %>
           <% if current_user.buyers? %>
-            <%= render partial: "/orders/awaiting_my_review" %>
+            <%= render partial: "/orders/manage_orders/awaiting_my_review" %>
           <% end %>
-          <%= render partial: "/orders/delivered" %>
-          <%= render partial: "/orders/completed" %>
-          <%= render partial: "/orders/cancelled" %>
+          <%= render partial: "/orders/manage_orders/delivered" %>
+          <%= render partial: "/orders/manage_orders/completed" %>
+          <%= render partial: "/orders/manage_orders/cancelled" %>
         </div>
       </div>
     </div>

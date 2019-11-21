@@ -9,7 +9,7 @@
       <% end %>
     <% else %>
       <% if @order.inactive? %>
-        <%= render partial: '/orders/order_start' %>
+        <%= render partial: '/orders/forms/order_start_form' %>
       <% else %>
         <%= simple_form_for @order,url: order_path(@order), method: 'put' do |f| %>
           <%= f.input :status, as: :hidden,:input_html => { :value => "completed" } %>
