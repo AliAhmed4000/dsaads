@@ -2,11 +2,15 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!
   
   def create
-    review = Review.create(reviews_params)
-    order_item  = OrderItem.find_by_id(review.order_item_id)
-    @reviews = order_item.reviews
-    flash[:notice] = "FeedBack Successfully Done."
-    redirect_to orders_path
+    @review = Review.new(reviews_params)
+    @order  = OrderItem.find_by_id(@review.order_item_id)
+    if @review.save  
+      @reviews = @order.reviews
+      flash[:notice] = "FeedBack Successfully Done."
+      redirect_to orders_path
+    else
+      render template: "orders/feedback"  
+    end  
   end
 
   def show
@@ -24,7 +28,8 @@ class ReviewsController < ApplicationController
       :order_item_id,
       :type,
       :attachment,
-      :star
+      :star,
+      :feedback
     ) 
   end
 end

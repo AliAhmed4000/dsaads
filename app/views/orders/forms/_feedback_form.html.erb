@@ -1,12 +1,39 @@
-<%= simple_form_for @review,url: reviews_path, method: 'post',:html => {:class => 'form-horizontal'} do |f| %>
-  <%= f.error_notification %>
-  <div>Rating *</div> 
-  <%= f.input :star,as: :hidden,required: true,label: false, wrap: false,value: ""  %>
-  <%= f.input :comment,label: 'Comments', required: true, hint: 'Minimum 50 words required', placeholder: "Comments For #{@order.package.service.seller.full_name}", input_html: {rows: "3"}  %>
-  <%= f.input :package_id,as: :hidden, :input_html => { :value => @order.package_id } %>
-  <%= f.input :buyer_id,as: :hidden, :input_html => { :value => @order.order.user_id } %>
-  <%= f.input :seller_id,as: :hidden, :input_html => { :value => @order.package.service.user_id } %>
-  <%= f.input :type,as: :hidden, :input_html => { :value => current_user.buyers? ? "BuyerReview" : "SellerReview"} %>
-  <%= f.input :order_item_id,as: :hidden, :input_html => { :value => @order.id } %>
-  <%= f.submit "Post", class: "btn btn-info pull-right", id: "post-reset" %>
-<% end %>
+<div class="row bootstrap snippets">
+  <div class="col-md-12 col-md-offset-2 col-sm-12">
+    <div class="comment-wrapper">
+      <div class="panel panel-info">
+        <div class="panel-body">
+          <div class="clearfix"></div>
+          <hr>
+          <%= simple_form_for @review,url: reviews_path, method: 'post',:html => {:class => 'form-horizontal'} do |f| %>
+            <%= f.error_notification %>
+            <div class="row">
+              <div class="col-xs-2 col-md-1">
+                <% if current_user.sellers? %>
+                  <%= image_tag @order.order.user.avatar_url(:medium), class: 'img-circle', alt: "" %>
+                <% else %>  
+                  <%= image_tag @order.package.service.seller.avatar_url(:medium), class: 'img-circle', alt: "" %>
+                <% end %>
+              </div>
+              <div>
+                <%= f.input :star,as: :hidden,required: true,label: false, wrap: false,value: ""  %>
+              </div> 
+            </div>
+            <% if current_user.sellers? %>
+              <%= f.input :comment,label: 'Comments', required: true, hint: 'Minimum 50 words required', placeholder: "Comments For Buyer #{@order.order.user.full_name}", input_html: {rows: "3"}  %>
+            <% else %>
+              <%= f.input :comment,label: 'Comments', required: true, hint: 'Minimum 50 words required', placeholder: "Comments For Seller #{@order.package.service.seller.full_name}", input_html: {rows: "3"}  %>
+            <% end %>
+            <%= f.input :package_id,as: :hidden, :input_html => { :value => @order.package_id } %>
+            <%= f.input :buyer_id,as: :hidden, :input_html => { :value => @order.order.user_id } %>
+            <%= f.input :seller_id,as: :hidden, :input_html => { :value => @order.package.service.user_id } %>
+            <%= f.input :type,as: :hidden, :input_html => { :value => current_user.buyers? ? "BuyerReview" : "SellerReview"} %>
+            <%= f.input :order_item_id,as: :hidden, :input_html => { :value => @order.id } %>
+            <%= f.input :feedback,as: :hidden, :input_html => { :value => "feedback" } %>
+            <%= f.submit "Post", class: "btn btn-info pull-right", id: "post-reset" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

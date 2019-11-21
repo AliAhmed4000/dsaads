@@ -25,15 +25,14 @@
                   <div class="clearfix"></div>
                   <div class="panel-body">
                     <ul class="list-group">
-                      <%= render partial: '/orders/feedback/buyer_comments' %>
-                      <%= render partial: '/orders/feedback/seller_comments' %>
+                      <% unless @order.buyer_star_status.blank? %>
+                        <%= render partial: '/orders/feedback/buyer_comments' %>
+                      <% end %>
+                      <% unless @order.seller_star_status.blank? %>
+                        <%= render partial: '/orders/feedback/seller_comments' %>
+                      <% end %>
                     </ul>
                   </div>
-                  <% if @order.seller_star_status.blank? %>
-                    <%= render partial: '/orders/forms/feedback_form' %>
-                  <% elsif @order.buyer_star_status.blank? %>
-                    <%= render partial: '/orders/forms/feedback_form' %>
-                  <% end %>
                 </div>
               </div>
             </div>
@@ -42,6 +41,11 @@
       </div>
     </div>
   </div>
+  <% if @order.seller_star_status.blank? && current_user.sellers? %>
+    <%= render partial: '/orders/forms/feedback_form' %>
+  <% elsif @order.buyer_star_status.blank? %>
+    <%= render partial: '/orders/forms/feedback_form' %>
+  <% end %>
 </div>
 <style type="text/css">
   body{margin-top:20px;}
@@ -58,16 +62,9 @@
     border-bottom:1px dashed #efefef;
     margin-bottom:25px;
   }
-  .image-upload > input{
-    display: none;
-  }
-  .image-upload img{
-    width: 80px;
-    cursor: pointer;
-  }
 </style>
 <script type="text/javascript">
-  <% if @order.seller_star_status.blank? %>
+  <% if @order.seller_star_status.blank? || @order.buyer_star_status.blank?  %>
     $('.review_star').raty({
       path: '/assets',
       size: 5,
@@ -75,12 +72,30 @@
         $('#review_star').val(score)
       }
     });
-  <% else %>
-    $('#all-stars').raty({
+  <% end %>
+  <% unless @order.buyer_star_status.blank? %>
+    $('#seller-stars').raty({
+      path: '/assets',
+      readOnly: true,
+      size: 5,
+      score: '<%= @order.buyer_star_status.star %>'
+    });
+  <% end %>
+  <% unless @order.seller_star_status.blank? %>
+    $('#buyer-stars').raty({
       path: '/assets',
       readOnly: true,
       size: 5,
       score: '<%= @order.seller_star_status.star %>'
     });
   <% end %>
+  $('#new_review').submit(function(e){
+    var star = $('#review_star').val();
+    if(star == 0){
+      alert('Please Select Star')
+      return false;
+    }else{
+      this.submit();
+    }
+  });
 </script>

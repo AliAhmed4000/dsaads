@@ -1,22 +1,12 @@
 <div class="container mt-4">
   <div class="py-3" style="margin-bottom: 3%">
-    <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
-      <%= simple_form_for @order,url: order_path(@order), method: 'put' do |f| %>
-        <%= f.input :status, as: :hidden,:input_html => { :value => "delivered" } %>
-        <label class="Checkbox-form" style="margin-bottom: 2% ">
-          <%= f.submit "Deliver Your Order", class: "btn btn-info pull-right" %>
-        </label>
-      <% end %>
-    <% else %>
-      <% if @order.inactive? %>
-        <%= render partial: '/orders/forms/order_start_form' %>
+    <% if @order.inactive? %>
+      <%= render partial: '/orders/forms/order_active_form' %>
+    <% elsif @order.active? %>
+      <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
+        <%= render partial: '/orders/forms/order_delivered_form' %>
       <% else %>
-        <%= simple_form_for @order,url: order_path(@order), method: 'put' do |f| %>
-          <%= f.input :status, as: :hidden,:input_html => { :value => "completed" } %>
-          <label class="Checkbox-form" style="margin-bottom: 2% ">
-            <%= f.submit "Complete Your Order", class: "btn btn-info pull-right" %>
-          </label>
-        <% end %>
+        <%= render partial: '/orders/forms/order_complete_form' %>
       <% end %>
     <% end %>
   </div>

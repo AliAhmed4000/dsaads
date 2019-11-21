@@ -78,7 +78,6 @@
         <div class="underline p-3"></div>
       </div>
     </div>
-     
     <% @packages.each do |package| %>
       <% package.buyer_reviews.each do |buyer_review| %>
         <% package.seller_reviews.each do |seller_review| %>
@@ -93,7 +92,7 @@
                     <% end %>
                   </div>
                   <div class="align-self-center">
-                    <%= buyer_review.buyer.name %>
+                    <%= buyer_review.buyer.full_name %>
                     <span class="px-1 yellow"><%= image_tag 'star-on.png' %> <%= package.buyer_review_star %></span>      
                   </div>
                   <div class="align-self-center pl-5 buyer_msg">
@@ -112,7 +111,7 @@
                     <% end %>  
                   </div>
                   <div class="align-self-center">
-                    <%= seller_review.seller.name %>
+                    <%= seller_review.seller.full_name %>
                     <span class="pl-1 yellow"><%= image_tag 'star-on.png' %> <%= package.seller_review_star.to_i %></span>    
                   </div>
                   <div class="align-self-center pl-5 seller_msg">

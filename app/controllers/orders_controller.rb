@@ -33,13 +33,18 @@ class OrdersController < ApplicationController
   def update
     @order_item = OrderItem.find_by_id(params[:id])
     if @order_item.update(status: params[:order_item][:status])
-      if @order_item.active?
-        flash[:notice] = "Order Successfully Started."
-        redirect_to orders_path
-      else
-        flash[:alert] = "Order is InActive."
-        redirect_to orders_path
-      end 
+      if @order_item.inactive?
+        flash[:notice] = "Order Successfully Created."
+      elsif @order_item.active?
+        flash[:notice] = "Order Successfully Active."
+      elsif @order_item.completed?
+        flash[:notice] = "Order Successfully Completed."
+      elsif @order_item.delivered?
+        flash[:notice] = "Order Successfully Delivered."
+      elsif @order_item.cancelled?
+        flash[:notice] = "Order Successfully Cancelled."
+      end
+      redirect_to orders_path
     end  
   end 
 

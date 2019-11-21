@@ -30,7 +30,7 @@
               <tr>
                 <td>
                   <label class="Checkbox-form">
-                    <%= package.check_box :publish,{name: "service[packages_attributes][0][publish]"},"active","inactive" %> You want Publish?
+                    <%= package.check_box :publish,{name: "service[packages_attributes][0][publish]"} %> You want Publish?
                     <span class="checkmark"></span>
                   </label>
                 </td>
@@ -54,7 +54,7 @@
               <tr>
                 <td>
                   <label class="Checkbox-form">
-                    <%= package.check_box :publish,{name: "service[packages_attributes][1][publish]"},"active","inactive" %> You want Publish?
+                    <%= package.check_box :publish,{name: "service[packages_attributes][1][publish]"} %> You want Publish?
                     <span class="checkmark"></span>
                   </label>
                 </td>
@@ -78,7 +78,7 @@
               <tr>
                 <td>
                   <label class="Checkbox-form">
-                    <%= package.check_box :publish,{name: "service[packages_attributes][2][publish]"},"active","inactive" %> You want Publish?
+                    <%= package.check_box :publish,{name: "service[packages_attributes][2][publish]"} %> You want Publish?
                     <span class="checkmark"></span>
                   </label>
                 </td>
@@ -98,7 +98,15 @@
                 <td><%= package.input :delivery_time, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
               </tr>
               <tr>
-                <td><%= package.input :price,collection: Package::PREMIMUM_PRICE,required: true,input_html: {maxlength: 100,name: "service[packages_attributes][0][name]"} %></td>
+                <td><%= package.input :price,collection: Package::PREMIMUM_PRICE,required: true,input_html: {maxlength: 100} %></td>
+              </tr>
+              <tr>
+                <td>
+                  <label class="Checkbox-form">
+                    <%= package.check_box :publish %> You want Publish?
+                    <span class="checkmark"></span>
+                  </label>
+                </td>
               </tr>
             </table>
           </td>

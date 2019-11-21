@@ -2,7 +2,7 @@ class ServicesController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
   before_action :check_seller_profile, except: [:index,:show]
   before_action :check_servie_owner, only: [:edit,:update]
-
+  before_action :service_show_for_buyer, only: [:show]
   def index
     params["choices-single-default"] = nil if params["choices-single-default"] == "Category" || params["choices-single-default"] == "All Categories"
     if params[:search].present? && params["choices-single-default"].present?
@@ -164,12 +164,8 @@ class ServicesController < ApplicationController
   end
 
   def show
-    if user_signed_in? && current_user.sellers?
-      flash[:alert] = "You have no permission to access."
-      redirect_back fallback_location: root_path
-    end 
     @service = Service.find(params[:id])
-    @packages = @service.packages
+    @packages = @service.packages.where('publish=?',true)
     @seller = @service.seller
     @show = "page"
   end
@@ -234,6 +230,19 @@ class ServicesController < ApplicationController
     if @service.blank? || @service.user_id != current_user.id
       flash[:alert] = "Record Not Found"
       redirect_back fallback_location: root_path
-    end
+    end 
   end
+
+  def service_show_for_buyer
+    if user_signed_in? && current_user.sellers?
+      flash[:alert] = "Become Buyer For Access Gigs."
+      redirect_back fallback_location: root_path
+    elsif user_signed_in? && current_user.buyers?
+      @service = Service.find_by_id(params[:id])
+      if @service.user_id == current_user.id
+        flash[:alert] = "you have no permission to access gig."
+        redirect_back fallback_location: root_path
+      end
+    end   
+  end 
 end
