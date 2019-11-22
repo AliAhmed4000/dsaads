@@ -284,7 +284,7 @@ function show_message(message) {
   }else{
     html = '<div class="incoming_msg">';
     html += '<div class="incoming_msg_img">';
-    html += '<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>';
+    html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" alt="sunil"> </div>';
     html += '<div class="received_msg">';
     html += '<div class="received_withd_msg">';
     html += '<p>' + message_body + '</p>';

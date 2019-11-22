@@ -9,16 +9,18 @@
       </div>
       <div class="srch_bar">
         <div class="stylish-input-group">
-          <input type="text" class="search-bar"  placeholder="Search" >
-          <span class="input-group-addon">
-            <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
-          </span> 
+          <%= form_tag( conversations_path, method: :get) do %>
+            <%= text_field_tag :name,params[:name] , placeholder: "Search here"%>
+            <span class="input-group-addon">
+              <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </span>
+          <%end%>
         </div>
       </div>
     </div>
     <% if @conversations.blank? %>
         <div class="heading-holder">
-        <h4>No conversation found</h4>
+        <h4 class="text-center" style="padding-top: 5%">No conversation found</h4>
         </div>  
     <% else %>
       <div class="inbox_chat">
@@ -32,8 +34,7 @@
                   </div>
                   <div class="chat_ib">
                     <h5><%= conversation.sellers.full_name %><span class="chat_date">Dec 25</span></h5>
-                    <p>Test, which is a new approach to have all solutions 
-                      astrology under one roof.</p>
+                    <p>I am Seller</p>
                   </div>
                 </div>
               </div>
@@ -49,8 +50,7 @@
                   </div>
                   <div class="chat_ib">
                     <h5><%= conversation.buyers.full_name %><span class="chat_date">Dec 25</span></h5>
-                    <p>Test, which is a new approach to have all solutions 
-                      astrology under one roof.</p>
+                    <p>I am Buyer</p>
                   </div>
                 </div>
               </div>

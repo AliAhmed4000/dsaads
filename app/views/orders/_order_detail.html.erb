@@ -5,7 +5,16 @@
     <div class="review-header pt-3">
       <span class="h3">Order #<%= @order.id %></span>
       <span id="all-stars-22" class="pl-2"></span>
-      <span class="pl-2 yellow"><%= link_to "View Gig",service_path(@order.package.service) %> </span>
+      <span class="pl-2 yellow">
+        <%= link_to "View Gig",service_path(@order.package.service) %> 
+        <% if @order.completed? %>
+          <span class="badge badge-info">completed</span>
+        <% elsif @order.active? %>
+          <span class="badge badge-success">active</span>
+        <% elsif @order.delivered? %>
+          <span class="badge badge-info">delivered</span>
+        <% end %>
+      </span>
       <span class="pl-2 pull-right h3"><%= number_to_currency(@order.package.price) %></span>
       <p><%= @order.package.description %></p>
       <div class="underline p-3"></div>
