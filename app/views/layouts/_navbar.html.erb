@@ -11,9 +11,15 @@
           <li id="conversations_counter_container">
             <%= link_to conversations_path, class: "msg" do %>
               Messages
-              <% if current_user.unread_conversations_count > 0 %>
-                <span class="unread-conversations-count"><%= current_user.unread_conversations_count %></span>
-              <% end %>  
+              <% if current_user.sellers? %>
+                <% if current_user.seller_unread_conversations_count > 0 %>
+                  <span class="unread-conversations-count"><%= current_user.seller_unread_conversations_count %></span>
+                <% end %>
+              <% else %>
+                <% if current_user.buyer_unread_conversations_count > 0 %>
+                  <span class="unread-conversations-count"><%= current_user.buyer_unread_conversations_count %></span>
+                <% end %>
+              <% end %>
             <% end %>
           </li>    
           <% if current_user.buyers? %>
