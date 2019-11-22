@@ -5,25 +5,32 @@
     </div>
     <div class="collapse navbar-collapse" id="navbarNav">
       <!-- Collect the nav links, forms, and other content for toggling -->  
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto profile-setting">
         <!-- Other Nav Tags -->
         <% if user_signed_in? %>
-          <li class="nav-item"><span class="notify"></span><%= link_to 'Messages', conversations_path, class: "nav-link" %></li>
+          <li id="conversations_counter_container">
+            <%= link_to conversations_path, class: "msg" do %>
+              Messages
+              <% if current_user.unread_conversations_count > 0 %>
+                <span class="unread-conversations-count"><%= current_user.unread_conversations_count %></span>
+              <% end %>  
+            <% end %>
+          </li>    
           <% if current_user.buyers? %>
-            <li class="nav-item"><%= link_to 'Orders', orders_path, class: "nav-link" %></li>
-            <li class="nav-item"><%= link_to 'Saved', favorites_path, class: "nav-link" %></li>
+            <li><%= link_to 'Orders', orders_path%></li>
+            <li class="nav-item"><%= link_to 'Saved', favorites_path%></li>
           <% else %>
-            <li class="nav-item"><%= link_to 'Orders', orders_path, class: "nav-link" %></li>
-            <li class="nav-item"><%= link_to 'GIGS', services_manage_path, class: "nav-link" %></li>
-            <li class="nav-item"><%= link_to 'Earning', balances_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to 'Orders', orders_path %></li>
+            <li class="nav-item"><%= link_to 'Gigs', services_manage_path%></li>
+            <li class="nav-item"><%= link_to 'Earning', balances_path%></li>
           <% end %>
           <% if current_user.services.blank? %>
-            <li class="nav-item"><%= link_to 'Become a Seller', seller_personal_info_path, class: "nav-link"%></li>
+            <li class="nav-item"><%= link_to 'Become a Seller', seller_personal_info_path%></li>
           <% else %>
             <% if current_user.sellers? %>
-              <li class="nav-item"><%= link_to 'Switch as Buyer',user_role_path,method: 'get', class: "nav-link"%></li>
+              <li class="nav-item"><%= link_to 'Switch as Buyer',user_role_path,method: 'get'%></li>
             <% else %>
-              <li class="nav-item"><%= link_to 'Switch as Seller',user_role_path,method: 'get', class: "nav-link"%></li>
+              <li class="nav-item"><%= link_to 'Switch as Seller',user_role_path,method: 'get'%></li>
             <% end %>
           <% end %>
           <li class="dropdown">
@@ -31,8 +38,8 @@
             <div class="profile-img" style="background: url(<%= current_user.check_avatar %>) no-repeat center; background-size: cover;"></div>
             </a>
             <ul class="dropdown-menu" id="dropdown-menu">
-              <li class="nav-item"><%= link_to 'Profile', profile_path(current_user), class: "nav-link" %></li>
-              <li class="nav-item"><%= link_to "Sign Out", destroy_user_session_path, method: 'delete', class: "nav-link" %></li>
+              <li class="nav-item"><%= link_to 'Profile', profile_path(current_user)%></li>
+              <li class="nav-item"><%= link_to "Sign Out", destroy_user_session_path, method: 'delete'%></li>
             </ul>
           </li>
         <% else %>

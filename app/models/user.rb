@@ -83,8 +83,12 @@ class User < ApplicationRecord
   end
 
   def unread_conversations_count
-    self.chats_recipients.where('read = ?', false).select(:conversation_id).distinct(:conversation_id).count
+    self.chats_recipients.joins(:conversation).where('read=?',false).select(:conversation_id).distinct(:conversation_id).count
   end
+
+  # def buyer_unread_conversations_count
+  #   self.chats_recipients.joins(:conversation).where('read=?',false).select(:conversation_id).distinct(:conversation_id).count
+  # end 
 
   def unread_conversation_count(conversation_id)
     self.chats_recipients.where('read = ? AND conversation_id = ?', false, conversation_id).count
