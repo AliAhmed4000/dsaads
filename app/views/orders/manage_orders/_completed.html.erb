@@ -15,7 +15,7 @@
             <th>ORDER DATE</th>
             <th>DUE DATE</th>
             <th>TOTAL</th>
-            <th></th>
+            <th>STATUS</th>
           </tr>
         </thead>
         <tbody>
@@ -35,22 +35,13 @@
               <td class="align-middle"><%= (item.created_at + item.package.delivery_time.days).strftime("%d %B %Y") %></td>
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
-                <td class="align-middle">
-                <div class="btn-group pull-right">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Actions
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li class="nav-item">
-                      <% if item.seller_star_status.blank? %>
-                        <%= link_to "FeedBack",order_feedback_path(item),class: "nav-link" %>
-                      <% else %>
-                        <%= link_to "View FeedBack",order_feedback_path(item),class: "nav-link" %>
-                      <% end %>
-                    </li>
-                  </ul>
-                </div>
-              </td>
+                <% if item.buyer_star_status.blank? %>
+                  <span class="badge badge-info">awaiting for you review</span>
+                <% else %>
+                  <%= link_to order_feedback_path(item) do %>
+                    <span class="badge badge-success">Completed</span>
+                  <% end %>
+                <% end %>
               </td>
             </tr>
           <% end %>

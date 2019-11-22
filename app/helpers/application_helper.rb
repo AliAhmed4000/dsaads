@@ -48,6 +48,18 @@ module ApplicationHelper
     i = (1..20).to_a.sample
     ""
   end
+
+  def online_status(user)
+    if user.user_online?
+      content_tag :span, 'Online',
+        class: "online_status #{'online' if user.user_online?}",
+        id: "user-#{user.id}"
+    else
+      content_tag :span, 'Offline',
+        class: "online_status",
+        id: "user-#{user.id}"
+    end
+  end
 end
 
 

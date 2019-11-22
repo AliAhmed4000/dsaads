@@ -7,6 +7,7 @@
             <th>GIG</th>
             <th>Create DATE</th>
             <th>Orders</th>
+            <th>Views</th>
             <th></th>
           </tr>
         </thead>
@@ -20,6 +21,7 @@
                 <%= gig.created_at.strftime("%d %B %Y") %>
               </td>
               <td class="align-middle"><%= gig.packages.joins(:order_items).where('order_items.status=?',OrderItem.statuses['active']).count %></td>
+              <td class="align-middle"><%#= gig.size %></td>
               <td class="align-middle">
                 <div class="btn-group pull-right">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Actions

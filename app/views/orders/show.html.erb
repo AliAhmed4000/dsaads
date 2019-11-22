@@ -2,11 +2,15 @@
   <div class="py-3" style="margin-bottom: 3%">
     <% if @order.inactive? %>
       <%= render partial: '/orders/forms/order_active_form' %>
-    <% elsif @order.active? %>
+    <% elsif @order.active? || @order.delivered? %>
       <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
-        <%= render partial: '/orders/forms/order_delivered_form' %>
+        <% unless @order.delivered? %>
+          <%= render partial: '/orders/forms/order_delivered_form' %>
+        <% end %>
       <% else %>
-        <%= render partial: '/orders/forms/order_complete_form' %>
+        <% unless @order.completed? %>
+          <%= render partial: '/orders/forms/order_complete_form' %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

@@ -33,7 +33,7 @@
                     <%= image_tag(conversation.sellers.check_avatar.present? ? conversation.sellers.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.sellers.full_name) %>
                   </div>
                   <div class="chat_ib">
-                    <h5><%= conversation.sellers.full_name %><span class="chat_date">Dec 25</span></h5>
+                    <h5><%= conversation.sellers.full_name %><span class="chat_date"><%= online_status conversation.sellers %></span></h5>
                     <p>I am Seller</p>
                   </div>
                 </div>
@@ -49,7 +49,7 @@
                     <%= image_tag(conversation.buyers.check_avatar.present? ? conversation.buyers.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.buyers.full_name) %>
                   </div>
                   <div class="chat_ib">
-                    <h5><%= conversation.buyers.full_name %><span class="chat_date">Dec 25</span></h5>
+                    <h5><%= conversation.buyers.full_name %><span class="chat_date"><%= online_status conversation.buyers %></span></h5>
                     <p>I am Buyer</p>
                   </div>
                 </div>
@@ -122,3 +122,8 @@
   // });
 </script>
 <% end %>
+<style type="text/css">
+  .online{
+    width: 38px;
+  }
+</style>

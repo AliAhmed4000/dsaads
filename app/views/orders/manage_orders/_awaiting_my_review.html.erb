@@ -35,11 +35,8 @@
               <td class="align-middle"><%= (item.created_at + item.package.delivery_time.days).strftime("%d %B %Y") %></td>
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
-                <% due_date = item.created_at + item.package.delivery_time.days %>
-                <% if due_date > DateTime.now %>
-                   <span class="badge badge-info">In-Progress</span>
-                <% else %>
-                  <span class="badge badge-primary">Over Due Date</span>
+                <%= link_to order_feedback_path(item) do %>
+                  <span class="badge badge-info">awaiting for you review</span>
                 <% end %>
               </td>
             </tr>

@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
       @order_delivered = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:delivered])
       @order_completed = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:completed])
       @order_cancelled = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:cancelled])
-      @order_review = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:review])
+      @order_review = @order_completed.select{|order| order.buyer_star_status.blank?}
     else
       @order_start = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:inactive])
       @order_active = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:active])
