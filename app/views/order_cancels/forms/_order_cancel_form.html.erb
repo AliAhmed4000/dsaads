@@ -1,0 +1,36 @@
+<%= simple_form_for @order_cancel,url: order_cancels_path, method: 'post' do |f| %>
+  <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
+  <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
+  <%= f.input :status, as: :hidden,:input_html => { :value => 'pending' } %>
+  <%= f.error_notification %>
+  	<%#= f.simple_fields_for :order_cancels do |cancel| %>  
+	    <div class="row mb-3">
+	      <div class="col-md-6 col-sm-12"> 
+	        <%= f.input :description,required: true, hint: 'Minimum 50 words required', placeholder: "Reason For Cancel Order", input_html: {rows: "3"},as: :text  %>
+	      </div>
+	    </div>
+	    <div class="underline">
+			  <p class="h4 pb-2">Reason</p>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio1">
+			      <%= f.radio_button :reason,'modify_order',:value =>'modify_order',:class => "form-check-input radio-input" %>Modify Order
+			    </label>
+			  </div>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio2">
+			      <%= f.radio_button :reason,'extend_delivery_time', :value => 'extend_delivery_time' ,:class => "form-check-input radio-input" %>Extend Delivery Time
+			    </label>
+			  </div>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio3">
+			      <%= f.radio_button :reason,'ask_buyer_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Ask buyer to Cancel Order
+			    </label>
+			  </div>
+			</div>    
+	    <div class="row mb-3">
+	    	<span class="inline-block float-right">
+	        <%= f.submit "Cancel Order", class: "btn btn-outline-success" %>
+	      </span> 
+	    </div>
+	  <%# end %>
+<% end %>

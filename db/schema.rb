@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_18_113019) do
+ActiveRecord::Schema.define(version: 2019_11_22_144609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -124,6 +124,18 @@ ActiveRecord::Schema.define(version: 2019_11_18_113019) do
     t.index ["user_id"], name: "index_identities_on_user_id"
   end
 
+  create_table "order_cancels", force: :cascade do |t|
+    t.bigint "order_item_id"
+    t.bigint "user_id"
+    t.integer "reason"
+    t.text "description"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_item_id"], name: "index_order_cancels_on_order_item_id"
+    t.index ["user_id"], name: "index_order_cancels_on_user_id"
+  end
+
   create_table "order_items", force: :cascade do |t|
     t.bigint "package_id"
     t.bigint "order_id"
@@ -170,6 +182,16 @@ ActiveRecord::Schema.define(version: 2019_11_18_113019) do
     t.integer "delivery_time"
     t.boolean "publish"
     t.index ["service_id"], name: "index_packages_on_service_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "order_item_id"
+    t.bigint "user_id"
+    t.float "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_item_id"], name: "index_payments_on_order_item_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "photos", force: :cascade do |t|

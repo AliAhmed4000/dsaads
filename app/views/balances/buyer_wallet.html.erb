@@ -2,16 +2,15 @@
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="SortBlufLink">
-          <h2>Earnings</h2>
-          <span> expected Icome: <%= number_to_currency(current_user.expected_coming) %></span>
+          <h2>Buyings</h2>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="card" style="width: 15rem;">
         <div class="card-body text-center">
-          <h5 class="card-title">Net Income</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.net_coming) %></h5>
+          <h5 class="card-title">Net Amount</h5>
+          <h5 class="card-text"><%= number_to_currency(current_user.buying_amount) %></h5>
         </div>
       </div>
       <div class="card" style="width: 15rem;">
@@ -22,8 +21,8 @@
       </div>
       <div class="card" style="width: 15rem;">
         <div class="card-body text-center">
-          <h5 class="card-title">Used For Purchases</h5>
-          <h5 class="card-text">$0</h5>
+          <h5 class="card-title">Refund</h5>
+          <h5 class="card-text"><%= number_to_currency(current_user.refund_amount) %></h5>
         </div>
       </div>
       <div class="card" style="width: 15rem;">
@@ -48,17 +47,21 @@
           <tr>
             <th>Date</th>
             <th>For</th>
-            <th>Amount</th>
+            <th>Sub Total</th>
+            <th>Service Fee</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>
-          <%# @order_active.each do |item| %>
-            <tr>
-              <td class="align-middle"></td>
-              <td class="align-middle"></td>
-              <td class="align-middle"></td>
+          <% current_user.purchase.each do |item| %>
+          	<tr>
+              <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
+              <td class="align-middle"><%= link_to item.package.service.title,order_path(item.id) %></td>
+              <td class="align-middle"><%= number_to_currency(item.price) %></td>
+              <td class="align-middle"><%= number_to_currency(item.price*ENV['SERVICE_FEE'].to_i/100) %></td>
+              <td class="align-middle"><%= number_to_currency(item.price + item.price*ENV['SERVICE_FEE'].to_i/100) %></td>
             </tr>
-          <%# end %>
+          <% end %>
         </tbody>
       </table>
     </div>

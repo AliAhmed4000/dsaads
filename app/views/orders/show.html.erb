@@ -1,6 +1,8 @@
 <div class="container mt-4">
   <div class="py-3" style="margin-bottom: 3%">
-    <% if @order.inactive? %>
+    <% if @order.cancelled? %>
+      <%= render partial: '/orders/forms/order_cancel_approval_form' %>
+    <% elsif @order.inactive? %>
       <%= render partial: '/orders/forms/order_active_form' %>
     <% elsif @order.active? || @order.delivered? %>
       <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>

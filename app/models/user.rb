@@ -151,4 +151,25 @@ class User < ApplicationRecord
   def full_name
     first_name.to_s.capitalize + " " + last_name.to_s.capitalize
   end
+
+  def net_coming
+    OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:completed]).sum(:price)
+  end
+
+  def buying_amount
+    fiver_service_fee = self.orders.joins(:order_items).sum(:price)*ENV['SERVICE_FEE'].to_i/100
+    total_amount = fiver_service_fee + self.orders.joins(:order_items).sum(:price)
+  end
+
+  def expected_coming
+    OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:active]).sum(:price)
+  end
+
+  def purchase
+    OrderItem.joins(:order).where('orders.user_id=?',self.id)
+  end
+
+  def refund_amount
+    self.order_items.cancelled.joins(:order_cancel).where('order_cancels.status=?',OrderCancel.statuses['approved']).sum(:price)
+  end   
 end

@@ -1,0 +1,6 @@
+<%= simple_form_for @order,url: order_cancel_path(@order.order_cancel.id), method: 'put' do |f| %>
+  <%= f.input :status, as: :hidden,:input_html => { :value => "approved" } %>
+  <label class="Checkbox-form" style="margin-bottom: 2% ">
+    <%= f.submit "Order Cancellation Approve", class: "btn btn-info pull-right" %>
+  </label>
+<% end %>

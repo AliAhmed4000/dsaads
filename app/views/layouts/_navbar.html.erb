@@ -25,6 +25,9 @@
           <% if current_user.buyers? %>
             <li><%= link_to 'Orders', orders_path%></li>
             <li class="nav-item"><%= link_to 'Saved', favorites_path%></li>
+            <% unless current_user.orders.blank? %>
+              <li class="nav-item"><%= link_to 'Wallet', buyer_wallet_path%></li>
+            <% end %>
           <% else %>
             <li class="nav-item"><%= link_to 'Orders', orders_path %></li>
             <li class="nav-item"><%= link_to 'Gigs', services_manage_path%></li>

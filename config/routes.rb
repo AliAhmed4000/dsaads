@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     resources :packages
   end
   resources :balances
+  resources :order_cancels
+  get '/buyer_wallet', to: 'balances#buyer_wallet', as: "buyer_wallet"
   get '/manage_services', to: 'services#manage_services', as: "services_manage"
   get '/services/:service_id/packages/:id/payment',to: 'packages#payment', as: "packages_payment"
   get '/order/:id/requirement',to: 'packages#requirement', as: "packages_requirement" 

@@ -1,5 +1,8 @@
 class BalancesController < ApplicationController
 	before_action :authenticate_user!
 	def index
-	end 
+	end
+	
+	def buyer_wallet
+	end  
 end 
