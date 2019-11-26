@@ -33,13 +33,8 @@ class ServicesController < ApplicationController
   end
 
   def new
-    if current_user.sellers?
-      @service = Service.new
-      @set_bar = "ok"
-    else
-      redirect_to root_path
-      flash[:alert] = "You have no access."
-    end
+    @service = Service.new
+    @set_bar = "ok"
     # @service.packages.build
   end
 
@@ -168,6 +163,7 @@ class ServicesController < ApplicationController
     @packages = @service.packages.where('publish=?',true)
     @seller = @service.seller
     @show = "page"
+    @service.punch(request)
   end
 
   def file_upload

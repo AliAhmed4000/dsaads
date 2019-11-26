@@ -22,6 +22,7 @@ class Service < ApplicationRecord
   has_many :favorited_users, through: :favorites, source: :user
   accepts_nested_attributes_for :packages, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :photos, reject_if: :all_blank, allow_destroy: true
+  acts_as_punchable
   # validates :title, :category_id, presence: true
   # validates :title, length: {minimum: 50, maximum: 700}
   # validates :description, length: {minimum: 50, maximum: 700}
