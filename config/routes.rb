@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   end
   resources :balances
   resources :order_cancels
+  resources :wish_lists
+  get '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#list', as: "wish_list_status"
+  delete '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#wish_list_delete', as: "wish_list_delete"
   get '/buyer_wallet', to: 'balances#buyer_wallet', as: "buyer_wallet"
   get '/manage_services', to: 'services#manage_services', as: "services_manage"
   get '/services/:service_id/packages/:id/payment',to: 'packages#payment', as: "packages_payment"

@@ -39,6 +39,7 @@ class User < ApplicationRecord
   has_many :user_educations, dependent: :destroy
   has_many :user_certificates, dependent: :destroy
   has_many :user_languages, dependent: :destroy
+  has_many :wishes, dependent: :destroy
   has_many :identities, class_name: "Identity", dependent: :destroy
   enum role: [:buyers,:sellers]
 
@@ -171,5 +172,5 @@ class User < ApplicationRecord
 
   def refund_amount
     self.order_items.cancelled.joins(:order_cancel).where('order_cancels.status=?',OrderCancel.statuses['approved']).sum(:price)
-  end   
+  end    
 end

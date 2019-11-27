@@ -3,11 +3,16 @@ class ReviewsController < ApplicationController
   
   def create
     @review = Review.new(reviews_params)
-    @order  = OrderItem.find_by_id(@review.order_item_id)
-    if @review.save  
+    if @review.save
+      @order  = OrderItem.find_by_id(@review.order_item_id)  
       @reviews = @order.reviews
-      flash[:notice] = "FeedBack Successfully Done."
-      redirect_to orders_path
+      respond_to do |format|
+        format.js
+        format.html{
+          flash[:notice] = "FeedBack Successfully Done."
+          redirect_to orders_path
+        }
+      end
     else
       render template: "orders/feedback"  
     end  

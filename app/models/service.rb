@@ -20,6 +20,8 @@ class Service < ApplicationRecord
   has_many :packages 
   has_many :favorites, dependent: :destroy
   has_many :favorited_users, through: :favorites, source: :user
+  has_many :wish_favorites
+  accepts_nested_attributes_for :wish_favorites, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :packages, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :photos, reject_if: :all_blank, allow_destroy: true
   acts_as_punchable

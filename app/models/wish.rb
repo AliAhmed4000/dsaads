@@ -9,8 +9,8 @@
 #  updated_at :datetime         not null
 #
 
-class Favorite < ApplicationRecord
+class Wish < ApplicationRecord
   belongs_to :user
-  belongs_to :service
-  validates :user_id, uniqueness: {scope: :service_id}
+  has_many :wish_favorites
+  accepts_nested_attributes_for :wish_favorites, reject_if: :all_blank, allow_destroy: true
 end

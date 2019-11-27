@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_052318) do
+ActiveRecord::Schema.define(version: 2019_11_27_121252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -331,6 +331,23 @@ ActiveRecord::Schema.define(version: 2019_11_26_052318) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["service_id"], name: "index_videos_on_service_id"
+  end
+
+  create_table "wish_favorites", force: :cascade do |t|
+    t.bigint "wish_id"
+    t.bigint "service_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id"], name: "index_wish_favorites_on_service_id"
+    t.index ["wish_id"], name: "index_wish_favorites_on_wish_id"
+  end
+
+  create_table "wishes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_wishes_on_user_id"
   end
 
 end

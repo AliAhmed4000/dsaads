@@ -18,7 +18,7 @@ class Review < ApplicationRecord
   belongs_to :package
   belongs_to :order_item
   attr_accessor :feedback
-  validates :star,presence: true
+  # validates :star,presence: true
   after_create :order_review_notification_seller,:order_review_notification_buyer, unless: lambda{|o| o.feedback.blank?}
   
   def order_review_notification_seller
