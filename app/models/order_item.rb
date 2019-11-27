@@ -21,9 +21,10 @@ class OrderItem < ApplicationRecord
   accepts_nested_attributes_for :reviews, reject_if: :all_blank, allow_destroy: true
   enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review]
   # enum role: [:user, :"Application Administrator" ]
-  after_update :order_completed, if: lambda{|o| o.completed?}
+  after_update :order_completed_notification_seller,:order_completed_notification_buyer, if: lambda{|o| o.completed?}
   after_update :order_inactive_notification_seller,:order_inactive_notification_buyer, if: lambda{|o| o.inactive?}
   after_update :order_active_notification_seller,:order_active_notification_buyer, if: lambda{|o| o.active?}
+  after_update :order_deliver_notification_seller,:order_deliver_notification_buyer, if: lambda{|o| o.delivered?}
 
   def seller_star_status
     SellerReview.find_by('star is not null and order_item_id=?',self.id)
@@ -31,10 +32,6 @@ class OrderItem < ApplicationRecord
 
   def buyer_star_status
     BuyerReview.find_by('star is not null and order_item_id=?',self.id)
-  end
-
-  def order_completed
-    self.order_payments() 
   end
   
   def order_inactive_notification_seller
@@ -51,5 +48,21 @@ class OrderItem < ApplicationRecord
 
   def order_active_notification_buyer
     UserMailer.order_active_notification_for_buyer(self).deliver_now
-  end  
+  end
+
+  def order_completed_notification_seller
+    UserMailer.order_completed_notification_for_seller(self).deliver_now
+  end
+
+  def order_completed_notification_buyer
+    UserMailer.order_completed_notification_for_buyer(self).deliver_now
+  end
+
+  def order_deliver_notification_seller
+    UserMailer.order_deliver_notification_for_seller(self).deliver_now
+  end
+
+  def order_deliver_notification_buyer
+    UserMailer.order_deliver_notification_for_buyer(self).deliver_now
+  end 
 end

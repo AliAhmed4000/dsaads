@@ -16,7 +16,7 @@ class OrderCancelsController < ApplicationController
 
   def update
     @order = OrderCancel.find(params[:id])
-    if @order.update(status: params[:order_item][:status])
+    if @order.update(status: params[:order_item][:status], role: params[:order_item][:role])
       flash[:notice] = "Order Successfully Approved."
       redirect_to orders_path
     end 
@@ -29,7 +29,8 @@ class OrderCancelsController < ApplicationController
       :user_id,
   	  :reason, 
   	  :description,
-      :status
+      :status,
+      :role
     )
   end   
 end

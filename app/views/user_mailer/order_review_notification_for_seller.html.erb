@@ -1,0 +1,3 @@
+<p>Hi <%= @order_item.order.user.full_name %>!</p>
+<p>Your feedback on <%= link_to 'Order',order_url(@order_item) %>Request.</p>
+<p>You Seller is <%= @order_item.package.service.seller.full_name %></p>

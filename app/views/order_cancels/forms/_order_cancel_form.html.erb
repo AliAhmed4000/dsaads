@@ -9,6 +9,11 @@
 	        <%= f.input :description,required: true, hint: 'Minimum 50 words required', placeholder: "Reason For Cancel Order", input_html: {rows: "3"},as: :text  %>
 	      </div>
 	    </div>
+      <% if current_user.sellers? %>
+        <%= f.input :role, as: :hidden,:input_html => { :value => "seller" } %>
+      <% else %>
+        <%= f.input :role, as: :hidden,:input_html => { :value => "buyer" } %>
+      <% end %>
 	    <div class="underline">
 			  <p class="h4 pb-2">Reason</p>
 			  <div class="form-check">
