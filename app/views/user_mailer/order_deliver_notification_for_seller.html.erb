@@ -1,0 +1,5 @@
+<p>Hi <%= @order_item.package.service.seller.full_name %>!</p>
+
+<p>Your <%= link_to 'Order',order_url(@order_item) %> has been Delivered.</p>
+
+<p>Your Buyer is <%=  @order_item.order.user.full_name %></p>

@@ -1,0 +1,7 @@
+<p>Hi <%= @order_item.package.service.seller.full_name %>!</p>
+<% if @role == "seller" %>
+	<p>Your <%= link_to 'Order',order_url(@order_item) %> Cancel Request sent Successfully.</p>
+<% else %>
+	<p>You got cancel <%= link_to 'Order',order_url(@order_item) %> Request.</p>
+<% end %>
+<p>You Buyer is <%= @order_item.order.user.full_name %></p>
