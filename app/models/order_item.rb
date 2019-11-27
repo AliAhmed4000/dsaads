@@ -22,6 +22,8 @@ class OrderItem < ApplicationRecord
   enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review]
   # enum role: [:user, :"Application Administrator" ]
   after_update :order_completed, if: lambda{|o| o.completed?}
+  after_update :order_inactive_notification_seller,:order_inactive_notification_buyer, if: lambda{|o| o.inactive?}
+  after_update :order_active_notification_seller,:order_active_notification_buyer, if: lambda{|o| o.active?}
 
   def seller_star_status
     SellerReview.find_by('star is not null and order_item_id=?',self.id)
@@ -33,5 +35,21 @@ class OrderItem < ApplicationRecord
 
   def order_completed
     self.order_payments() 
-  end 
+  end
+  
+  def order_inactive_notification_seller
+    UserMailer.order_inactive_notification_for_seller(self).deliver_now
+  end
+
+  def order_inactive_notification_buyer
+    UserMailer.order_inactive_notification_for_buyer(self).deliver_now
+  end
+
+  def order_active_notification_seller
+    UserMailer.order_active_notification_for_seller(self).deliver_now
+  end
+
+  def order_active_notification_buyer
+    UserMailer.order_active_notification_for_buyer(self).deliver_now
+  end  
 end

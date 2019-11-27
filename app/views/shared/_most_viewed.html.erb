@@ -1,1 +1,50 @@
-card
+<div class="owl-carousel owl-theme">
+  <% Service.most_hit.each do |service| %>
+    <div class="item card">
+      <% unless service.photos.blank? %>
+        <%= link_to image_tag(service.photos.first.image_url(:service_small_thumb), alt: "",class: "card-img-top img-fluid"), service_path(service) %>
+      <% end %>
+      <div class="card-body">
+        <h5 class="card-title text-truncate text-capitalize">
+          I Can <%= service.title %>
+        </h5>
+        <% unless service.seller.avatar_url.blank? %>
+          <p><%= image_tag service.seller.avatar_url(:small), class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name, profile_path(service.user_id) %></span></p>
+        <% else %>
+          <p><%= image_tag default_image_url, size: '50x50', class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name, profile_path(service.user_id) %></span></p>
+        <% end %>
+        <p class="card-text text-truncate">
+          <% if service.description.blank? %>
+            <%= service.description %>
+          <% else %>
+            <%= service.description.truncate(40) %>
+          <% end %>
+        </p>
+      </div> 
+      <div class="card-footer">
+        <%= favorite_heart(current_user, service) %>
+        <span><%= service.favorited_users.size %></span>
+        <span class="float-right small">STARTING AT <span class="h5">$<%= service.minimum_price %></span></span>
+      </div>    
+    </div>
+  <% end %>
+</div>
+<script type="text/javascript">
+  $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:true,
+    onInitialized:6,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:3
+        },
+        1000:{
+            items:4
+        }
+    }
+  })
+</script>
