@@ -1,6 +1,6 @@
 <div class="modal" tabindex="-1" role="dialog" id="myModal">
   <div class="modal-dialog" role="document">
-    <%= simple_form_for wish,url: wish_lists_path,method: 'post' do |f| %>
+    <%= simple_form_for wish,url: wish_lists_path,method: 'post', remote: true do |f| %>
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Create List</h5>

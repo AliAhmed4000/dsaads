@@ -58,6 +58,12 @@ class User < ApplicationRecord
   #   end  
   # end
   
+  after_create :set_username
+
+  def set_username 
+    self.update_column('user_name',self.email.split("@").first)
+  end 
+  
   def check_avatar
     if self.avatar.blank?
       gravatar_id = Digest::MD5::hexdigest(email).downcase

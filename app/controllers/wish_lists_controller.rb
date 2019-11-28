@@ -9,10 +9,7 @@ class WishListsController < ApplicationController
   
   def create
     @wish = Wish.new(wish_list_params)
-    if @wish.save
-      flash[:notice] = "Wish Successfully Created."
-      redirect_to root_path
-    end 
+    @wish.save 
   end 
   
   def list

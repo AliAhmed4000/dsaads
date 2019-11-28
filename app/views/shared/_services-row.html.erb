@@ -28,8 +28,8 @@
           <ul class="dropdown-menu">
             <% current_user.wishes.each do |w| %>
               <li>
-                <%= w.name %>
-                <% if service.wish_favorites.blank? %>
+                <%= w.name %>>
+                <% if w.favorite(service).blank? %>
                   <%= link_to "<i class='fa fa-heart-o'></i>".html_safe,wish_list_status_path(service,w)
                   %>
                 <% else %>
