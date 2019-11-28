@@ -1,8 +1,23 @@
-<% current_user.wishes.each do |wish| %>
-  <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 p-3">
-    <div class="card">
-    	<%= link_to "<i class='fa fa-file'></i>".html_safe,my_wishes_path(wish) %>
-    	<p><%= wish.name %></p>
-  	</div>
-  </div>
-<% end %>
+<div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 p-3">
+	<div class="jumbotron">
+		<div class="row w-100">
+      <% current_user.wishes.each do |wish| %>
+        <div class="col-md-3">
+          <div class="card border-danger mx-sm-1 p-3">
+            <div class="card border-danger shadow text-danger p-3 my-card" ><span class="fa fa-heart" aria-hidden="true"></span></div>
+            <div class="text-danger text-center mt-3"><h4><%= link_to wish.name,my_wishes_path(wish) %></h4></div>
+            <div class="text-danger text-center mt-2"><h1><%= wish.wish_favorites.count %></h1></div>
+          </div>
+        </div>
+      <% end %>
+   	</div>
+	</div>
+</div>
+<style type="text/css">
+.my-card{
+  position:absolute;
+  left:40%;
+  top:-20px;
+  border-radius:50%;
+}
+</style>

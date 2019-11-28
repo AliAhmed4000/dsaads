@@ -30,6 +30,7 @@ class WishListsController < ApplicationController
   end 
 
   def my_wishes
+    @wish = Wish.find_by_id(params[:wish_id])
     @services = Service.joins(:wish_favorites).where('wish_id=?',params[:wish_id])
   end
 
