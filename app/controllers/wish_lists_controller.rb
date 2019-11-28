@@ -29,6 +29,10 @@ class WishListsController < ApplicationController
     end 
   end 
 
+  def my_wishes
+    @services = Service.joins(:wish_favorites).where('wish_id=?',params[:wish_id])
+  end
+
   private 
   def wish_list_params
   	params.require(:wish).permit(

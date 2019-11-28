@@ -1,0 +1,11 @@
+<%#= render 'favorites/fav_header' %>
+<section id="home-service" class="py-5">
+  <div class="container pb-3">
+    <h3 class="bold text-center">My Wishes</h3>
+  </div>
+  <div id="page-services" class="home-service-wrapper">
+    <div class="row">
+      <%= render partial: 'shared/services-row', locals: {services: @services} %>
+    </div>
+  </div>
+</section>

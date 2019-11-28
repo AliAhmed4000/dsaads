@@ -1,0 +1,8 @@
+<% current_user.wishes.each do |wish| %>
+  <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 p-3">
+    <div class="card">
+    	<%= link_to "<i class='fa fa-file'></i>".html_safe,my_wishes_path(wish) %>
+    	<p><%= wish.name %></p>
+  	</div>
+  </div>
+<% end %>

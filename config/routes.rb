@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :balances
   resources :order_cancels
   resources :wish_lists
+  get '/wishlist/:wish_id',to: 'wish_lists#my_wishes', as: "my_wishes"
   get '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#list', as: "wish_list_status"
   delete '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#wish_list_delete', as: "wish_list_delete"
   get '/buyer_wallet', to: 'balances#buyer_wallet', as: "buyer_wallet"
