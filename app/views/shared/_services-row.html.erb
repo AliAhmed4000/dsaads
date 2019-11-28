@@ -27,8 +27,8 @@
           <i class='fa fa-bars' data-toggle="dropdown"></i>
           <ul class="dropdown-menu">
             <% current_user.wishes.each do |w| %>
-              <li>
-                <%= w.name %>>
+              <li class="dropdown-item">
+                <%= w.name %>
                 <% if w.favorite(service).blank? %>
                   <%= link_to "<i class='fa fa-heart-o'></i>".html_safe,wish_list_status_path(service,w)
                   %>
@@ -36,8 +36,11 @@
                   <%= link_to "<i class='fa fa-heart'></i>".html_safe,wish_list_delete_path(service,w), method: :delete %>
                 <% end %>
               </li>
-            <% end %>   
-            <li>
+            <% end %>
+            <% unless current_user.wishes.blank? %>
+              <div class="dropdown-divider"></div>   
+            <% end %>
+            <li class="dropdown-item">
               <i class='fa fa-plus'>
               <%= link_to "Create List",wish_list_path(service), remote: true %>
               </i>

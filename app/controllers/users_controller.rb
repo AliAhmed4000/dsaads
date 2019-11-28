@@ -12,14 +12,20 @@ class UsersController < ApplicationController
       if @user.update(seller_params)
         if params[:user][:wizard] == "seller_personal_info"
           redirect_to seller_professional_info_path
+          flash[:notice] = "Seller Profile Created Successfully !"
         elsif params[:user][:wizard] == "seller_professional_info"
           redirect_to seller_linked_accounts_path
+          flash[:notice] = "Seller Profile Created Successfully !"
         elsif params[:user][:wizard] == "seller_account_info"
           redirect_to seller_account_security_path
+          flash[:notice] = "Seller Profile Created Successfully !"
         elsif params[:user][:wizard] == "seller_finish_info"
           redirect_to new_service_path
+          flash[:notice] = "Seller Profile Created Successfully !"
+        elsif params[:user][:wizard] == "buyer_info"
+          flash[:notice] = "Profile Successfully Updated"
+          redirect_back(fallback_location: root_path)
         end   
-        flash[:notice] = "Seller Profile Created Successfully !"
       end
       unless @user.valid?
         if params[:user][:wizard] == "seller_personal_info"
@@ -42,7 +48,8 @@ class UsersController < ApplicationController
     find_user
     @services = @seller.services
     @favorited_services = @seller.favorited_services
-    @categories = Category.get_categories 
+    @categories = Category.get_categories
+    @user = current_user 
   end
 
   def seller_personal_info

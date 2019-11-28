@@ -23,10 +23,10 @@
     <%= f.input :country, as: :country, required: true , prompt: true %>
     <%= f.input :language, collection: LanguageList::COMMON_LANGUAGES, required: true ,prompt: true %>
     <%= f.input :description ,required: true, hint: 'Minimum 150 words required', input_html: {rows: "5"} %> 
-    <%= f.input :wizard, :as => :hidden, :input_html => {:value => "seller_personal_info"} %> 
+    <%= f.input :wizard, :as => :hidden, :input_html => {:value => "buyer_info"} %> 
     <div class="form-group row mb-0">
       <div class="col-sm-9 offset-sm-3">
-        <%= f.button :submit, class: "btn-success pull-right", value: 'Continue' %>
+        <%= f.button :submit, class: "btn-success pull-right", value: 'Submit' %>
       </div>
     </div>
   <% end %>
