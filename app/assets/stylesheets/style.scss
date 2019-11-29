@@ -223,3 +223,38 @@ p { margin: 0; }
 .profile-setting .profile-pic img {
   margin: 0;
 }
+
+
+.explore_img{
+  height: 50px;
+  width: 50px;}
+.underline_image {
+  position:relative;
+  color: #90EE90
+;
+  display:inline-block;
+  margin:0;
+  text-transform:uppercase;
+  text-align:center;
+  line-height:1.2em;
+}
+.underline_image:after, underline_image:before {
+  display:block;
+  content: '';
+  border-bottom: solid 1px #D3D3D3
+;
+  transform: scaleX(0.6);
+  transition: transform 250ms ease-in-out;
+}
+.underline_image:before{
+  position:absolute;
+  border-bottom: solid 1px #90EE90
+;  bottom:1.2em; left:0;
+  width:100%;
+}.underline_image:hover:after, underline_image:hover:before {
+  transform: scaleX(1.2);
+  border-bottom: solid 3px #90EE90
+; }
+
+
+
