@@ -1,6 +1,8 @@
 <div class="container">
   <div class="mb-3 pull-right">
-    <input type="checkbox" checked data-toggle="toggle" id="my-toggle">
+    <label class="checkbox-inline">
+      <input type="checkbox" data-toggle="toggle" id="my-toggle" data-onstyle="warning" data-offstyle="info">  3 Packages
+    </label>
   </div>
   <%= simple_form_for @service do |f|  %>
     <div id="packages">
@@ -35,10 +37,12 @@
 </div>
 <script type="text/javascript">
   $(function() {
-    $('#my-toggle').bootstrapToggle()
+    $('#my-toggle').bootstrapToggle('off')
     $('#my-toggle').change(function() {
       if($('#my-toggle').is(":checked")){
+        enabled_fields()
       }else{
+        disabled_fields()
       }
     })
   })
