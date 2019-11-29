@@ -23,7 +23,7 @@ class Package < ApplicationRecord
 
   BASIC_PRICE = ['5','10','20','50','100']
   STANDARD_PRICE = ['5','10','20','50','100'] 
-  PREMIMUM_PRICE = ['5','10','20','50','100'] 
+  PREMIMUM_PRICE = ['5','10','20','50','100']
 
   belongs_to :service
   has_many :package_metrics
@@ -38,8 +38,7 @@ class Package < ApplicationRecord
   # validates :is_commercial, presence: true
   validates :price, numericality: { only_integer: true, greater_than: 1, less_than: 10000 }
   # validates :revision_number,  inclusion: { in: Package::REVISION_NUMBER }
-
-
+  enum level: ['basic','standard','premimum']
   def seller_reviews
     SellerReview.where(package: self)
   end

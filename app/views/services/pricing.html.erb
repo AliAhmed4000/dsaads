@@ -13,109 +13,16 @@
           </tr>
         </thead>
         <tbody>
-      <%= f.simple_fields_for :packages do |package| %>
-        <%#= render 'package_fields', f: package %>
-        <% if package.object.id.blank? %>
           <td>
-            <table class="table table-bordered">
-              <tr>
-                <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,name: "service[packages_attributes][0][name]"} %></td>
-              </tr>
-              <tr>
-                <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,name: "service[packages_attributes][0][description]" }%></td>
-              </tr>
-              <tr>
-                <td><%= package.input :delivery_time,collection: Package::BASIC_DELIVERY,required: true, input_html: {name: "service[packages_attributes][0][delivery_time]"} %></td>
-              </tr>
-              <tr>
-                <td><%= package.input :price,collection: Package::BASIC_PRICE,required: true, input_html: {name: "service[packages_attributes][0][price]"} %></td>
-              </tr>
-              <tr>
-                <td>
-                  <label class="Checkbox-form">
-                    <%= package.check_box :publish,input_html: {name: "service[packages_attributes][0][publish]"} %> You want Publish?
-                    <span class="checkmark"></span>
-                  </label>
-                </td>
-              </tr>
-            </table>
+            <%= render partial: 'services/forms/basic_package_form',locals: {f: f} %>
           </td>
           <td>
-            <table class="table table-bordered">
-              <tr>
-                <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,name: "service[packages_attributes][1][name]",id: "service_packages_attributes_1_name"} %></td>
-              </tr>
-              <tr>
-                <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,name: "service[packages_attributes][1][description]",id: "service_packages_attributes_1_description"} %></td>
-              </tr>
-              <tr>
-                <td><%= package.input :delivery_time,collection: Package::STANDARD_DELIVERY,required: true,input_html: {maxlength: 100,name: "service[packages_attributes][1][delivery_time]",id: "service_packages_attributes_1_delivery_time"} %></td>
-              </tr>
-              <tr>
-                <td><%= package.input :price,collection: Package::STANDARD_PRICE,required: true,input_html: {maxlength: 100,name: "service[packages_attributes][1][price]",id: "service_packages_attributes_1_price"} %></td>
-              </tr>
-              <tr>
-                <td>
-                  <label class="Checkbox-form">
-                    <%= package.check_box :publish,input_html: {name: "service[packages_attributes][1][publish]",id: "service_packages_attributes_1_publish"} %> You want Publish?
-                    <span class="checkmark"></span>
-                  </label>
-                </td>
-              </tr>
-            </table>
+            <%= render partial: 'services/forms/standard_package_form',locals: {f: f} %>
           </td>
           <td>
-            <table class="table table-bordered">
-              <tr>
-                <td><%= package.input :name, hint: 'Maximum 100 words', required: true,input_html: {maxlength: 100,name: "service[packages_attributes][2][name]",id: "service_packages_attributes_2_name"} %></td>
-              </tr>
-              <tr>
-                <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100,name: "service[packages_attributes][2][description]",id: "service_packages_attributes_2_description"}%></td>
-              </tr>
-              <tr>
-                <td><%= package.input :delivery_time,collection: Package::PREMIMUM_DELIVERY,required: true, input_html: {maxlength: 100,name: "service[packages_attributes][2][delivery_time]",id: "service_packages_attributes_2_delivery_time"} %></td>
-              </tr>
-              <tr>
-                <td><%= package.input :price,collection: Package::PREMIMUM_PRICE,required: true ,input_html: {maxlength: 100,name: "service[packages_attributes][2][price]",id: "service_packages_attributes_2_price"}%></td>
-              </tr>
-              <tr>
-                <td>
-                  <label class="Checkbox-form">
-                    <%= package.check_box :publish,input_html:{name: "service[packages_attributes][2][publish]",id: "service_packages_attributes_2_publish"} %> You want Publish?
-                    <span class="checkmark"></span>
-                  </label>
-                </td>
-              </tr>
-            </table>
+            <%= render partial: 'services/forms/premimum_packge_form',locals: {f: f} %>
           </td>
-        <% else %>
-          <td>
-            <table class="table table-bordered">
-              <tr>
-                <td><%= package.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
-              </tr>
-              <tr>
-                <td><%= package.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100 }%></td>
-              </tr>
-              <tr>
-                <td><%= package.input :delivery_time, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>
-              </tr>
-              <tr>
-                <td><%= package.input :price,collection: Package::PREMIMUM_PRICE,required: true,input_html: {maxlength: 100} %></td>
-              </tr>
-              <tr>
-                <td>
-                  <label class="Checkbox-form">
-                    <%= package.check_box :publish %> You want Publish?
-                    <span class="checkmark"></span>
-                  </label>
-                </td>
-              </tr>
-            </table>
-          </td>
-        <% end %>
-      <% end %>
-      </tbody>
+        </tbody>
       </table>
       <div class="form-group row mb-0">
         <div class="col-sm-9 offset-sm-3">
@@ -131,49 +38,42 @@
     $('#my-toggle').bootstrapToggle()
     $('#my-toggle').change(function() {
       if($('#my-toggle').is(":checked")){
-        $("#service_packages_attributes_1_name").attr('disabled',true)
-        $("#service_packages_attributes_2_name").attr('disabled',true)
-        $("#service_packages_attributes_1_description").attr('disabled',true)
-        $("#service_packages_attributes_2_description").attr('disabled',true)
-        $("#service_packages_attributes_1_delivery_time").attr('disabled','disabled')
-        $("#service_packages_attributes_2_delivery_time").attr('disabled',true)
-        $("#service_packages_attributes_1_price").attr('disabled',true)
-        $("#service_packages_attributes_2_price").attr('disabled',true)
-        $("#service_packages_attributes_1_publish").attr('disabled',true)
-        $("#service_packages_attributes_2_publish").attr('disabled',true)
+        $("#service_standard_packages_attributes_0_name").attr('disabled',true)
+        $("#service_premimum_packages_attributes_0_name").attr('disabled',true)
+        $("#service_standard_packages_attributes_0_description").attr('disabled',true)
+        $("#service_premimum_packages_attributes_0_description").attr('disabled',true)
+        $("#service_standard_packages_attributes_0_delivery_time").attr('disabled',true)
+        $("#service_premimum_packages_attributes_0_delivery_time").attr('disabled',true)
+        $("#service_standard_packages_attributes_0_price").attr('disabled',true)
+        $("#service_premimum_packages_attributes_0_price").attr('disabled',true)
 
-        $("#service_packages_attributes_1_name").attr('required',false)
-        $("#service_packages_attributes_2_name").attr('required',false)
-        $("#service_packages_attributes_1_description").attr('required',false)
-        $("#service_packages_attributes_2_description").attr('required',false)
-        $("#service_packages_attributes_1_delivery_time").attr('required',false)
-        $("#service_packages_attributes_2_delivery_time").attr('required',false)
-        $("#service_packages_attributes_1_price").attr('required',false)
-        $("#service_packages_attributes_2_price").attr('required',false)
-        $("#service_packages_attributes_1_publish").attr('required',false)
-        $("#service_packages_attributes_2_publish").attr('required',false)
-      }else{
-        $("#service_packages_attributes_1_name").attr('disabled',false)
-        $("#service_packages_attributes_2_name").attr('disabled',false)
-        $("#service_packages_attributes_1_description").attr('disabled',false)
-        $("#service_packages_attributes_2_description").attr('disabled',false)
-        $("#service_packages_attributes_1_delivery_time").attr('disabled',false)
-        $("#service_packages_attributes_2_delivery_time").attr('disabled',false)
-        $("#service_packages_attributes_1_price").attr('disabled',false)
-        $("#service_packages_attributes_2_price").attr('disabled',false)
-        $("#service_packages_attributes_1_publish").attr('disabled',false)
-        $("#service_packages_attributes_2_publish").attr('disabled',false)
 
-        $("#service_packages_attributes_1_name").attr('required',true)
-        $("#service_packages_attributes_2_name").attr('required',true)
-        $("#service_packages_attributes_1_description").attr('required',true)
-        $("#service_packages_attributes_2_description").attr('required',true)
-        $("#service_packages_attributes_1_delivery_time").attr('required',true)
-        $("#service_packages_attributes_2_delivery_time").attr('required',true)
-        $("#service_packages_attributes_1_price").attr('required',true)
-        $("#service_packages_attributes_2_price").attr('required',true)
-        $("#service_packages_attributes_1_publish").attr('required',true)
-        $("#service_packages_attributes_2_publish").attr('required',true)
+        $("#service_standard_packages_attributes_0_name").attr('required',true)
+        $("#service_premimum_packages_attributes_0_name").attr('required',true)
+        $("#service_standard_packages_attributes_0_description").attr('required',true)
+        $("#service_premimum_packages_attributes_0_description").attr('required',true)
+        $("#service_standard_packages_attributes_0_delivery_time").attr('required',true)
+        $("#service_premimum_packages_attributes_0_delivery_time").attr('required',true)
+        $("#service_standard_packages_attributes_0_price").attr('required',true)
+        $("#service_premimum_packages_attributes_0_price").attr('required',true)
+      }else{        
+        $("#service_standard_packages_attributes_0_name").attr('disabled',false)
+        $("#service_premimum_packages_attributes_0_name").attr('disabled',false)
+        $("#service_standard_packages_attributes_0_description").attr('disabled',false)
+        $("#service_premimum_packages_attributes_0_description").attr('disabled',false)
+        $("#service_standard_packages_attributes_0_delivery_time").attr('disabled',false)
+        $("#service_premimum_packages_attributes_0_delivery_time").attr('disabled',false)
+        $("#service_standard_packages_attributes_0_price").attr('disabled',false)
+        $("#service_premimum_packages_attributes_0_price").attr('disabled',false)
+
+        $("#service_standard_packages_attributes_0_name").attr('required',false)
+        $("#service_premimum_packages_attributes_0_name").attr('required',false)
+        $("#service_standard_packages_attributes_0_description").attr('required',false)
+        $("#service_premimum_packages_attributes_0_description").attr('required',false)
+        $("#service_standard_packages_attributes_0_delivery_time").attr('required',false)
+        $("#service_premimum_packages_attributes_0_delivery_time").attr('required',false)
+        $("#service_standard_packages_attributes_0_price").attr('required',false)
+        $("#service_premimum_packages_attributes_0_price").attr('required',false)
       }
     })
   })

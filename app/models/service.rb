@@ -17,12 +17,18 @@ class Service < ApplicationRecord
   belongs_to :seller, class_name: "User", foreign_key: :user_id
   has_many   :photos
   has_one  :video 
-  has_many :packages 
+  has_many :packages
+  has_many :basic_packages, -> {where(level: "basic")}, :class_name => 'Package', dependent: :destroy
+  has_many :standard_packages,-> {where(level: "standard")}, :class_name => 'Package', dependent: :destroy
+  has_many :premimum_packages ,-> {where(level: "premimum")}, :class_name => 'Package', dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :favorited_users, through: :favorites, source: :user
   has_many :wish_favorites
   accepts_nested_attributes_for :wish_favorites, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :packages, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :basic_packages, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :standard_packages, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :premimum_packages, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :photos, reject_if: :all_blank, allow_destroy: true
   acts_as_punchable
   # validates :title, :category_id, presence: true

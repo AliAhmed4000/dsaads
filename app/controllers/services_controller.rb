@@ -62,7 +62,9 @@ class ServicesController < ApplicationController
   def pricing
     @service = Service.find params[:id]
     @set_bar = "ok"
-    @service.packages.build if @service.packages.blank?
+    @service.basic_packages.build if @service.basic_packages.blank?
+    @service.standard_packages.build if @service.standard_packages.blank?
+    @service.premimum_packages.build if @service.premimum_packages.blank?
     if @service.title.blank?
       flash[:alert] = "First Complete Your Service OwerView"
       redirect_to edit_services_path(@service)
@@ -212,7 +214,9 @@ class ServicesController < ApplicationController
       :sub_category,
       :publish,
       :wizard,
-      packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish],
+      basic_packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      standard_packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      premimum_packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
       photos_attributes: [:id,:image,:_destroy]
     )
   end
