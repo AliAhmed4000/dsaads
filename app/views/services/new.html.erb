@@ -15,10 +15,10 @@
         <%= f.input :sub_category, label: 'Sub Category',collection: [],prompt: 'Select Sub Category',include_blank: true, :input_html => {:id => "sub1"},required: true %>
       </div>
     </div>    
-    <div>
-      <span class="inline-block float-right">
-        <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
-      </span> 
+    <div class ="form-group row mb-0">
+      <div class="col-sm-9 offset-sm-3">
+        <%= f.submit "Save & Continue", class: "btn btn-outline-success pull-right" %>
+      </div>
     </div>
   <% end %>
 </div>

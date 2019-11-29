@@ -139,7 +139,10 @@ class ServicesController < ApplicationController
   def update
     @service = Service.find params[:id]
     if @service.update_attributes(service_params)
-      if params["service"]["wizard"] == "description"
+      if params["service"]["wizard"] == "pricing"
+        redirect_to services_pricing_path(@service)
+        flash[:notice] = "Service Packages Successfully Added."
+      elsif params["service"]["wizard"] == "description"
         redirect_to services_description_path(@service)
         flash[:notice] = "Service Packages Successfully Added."
       elsif params["service"]["wizard"] == "requirement"

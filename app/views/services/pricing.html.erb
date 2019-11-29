@@ -1,4 +1,7 @@
-<div class="container font-weight-bold" style="height: 700px;">
+<div class="container">
+  <div class="mb-3 pull-right">
+    <input type="checkbox" checked data-toggle="toggle" id="my-toggle">
+  </div>
   <%= simple_form_for @service do |f|  %>
     <div id="packages">
       <table class="table table-bordered">
@@ -10,7 +13,6 @@
           </tr>
         </thead>
         <tbody>
-      <input type="checkbox" checked data-toggle="toggle" id="my-toggle">
       <%= f.simple_fields_for :packages do |package| %>
         <%#= render 'package_fields', f: package %>
         <% if package.object.id.blank? %>
@@ -31,7 +33,7 @@
               <tr>
                 <td>
                   <label class="Checkbox-form">
-                    <%= package.check_box :publish,{name: "service[packages_attributes][0][publish]"} %> You want Publish?
+                    <%= package.check_box :publish,input_html: {name: "service[packages_attributes][0][publish]"} %> You want Publish?
                     <span class="checkmark"></span>
                   </label>
                 </td>
@@ -55,7 +57,7 @@
               <tr>
                 <td>
                   <label class="Checkbox-form">
-                    <%= package.check_box :publish,{name: "service[packages_attributes][1][publish]",id: "service_packages_attributes_1_publish"} %> You want Publish?
+                    <%= package.check_box :publish,input_html: {name: "service[packages_attributes][1][publish]",id: "service_packages_attributes_1_publish"} %> You want Publish?
                     <span class="checkmark"></span>
                   </label>
                 </td>
@@ -79,7 +81,7 @@
               <tr>
                 <td>
                   <label class="Checkbox-form">
-                    <%= package.check_box :publish,{name: "service[packages_attributes][2][publish]",id: "service_packages_attributes_2_publish"} %> You want Publish?
+                    <%= package.check_box :publish,input_html:{name: "service[packages_attributes][2][publish]",id: "service_packages_attributes_2_publish"} %> You want Publish?
                     <span class="checkmark"></span>
                   </label>
                 </td>
@@ -115,17 +117,18 @@
       <% end %>
       </tbody>
       </table>
-      <div>
-        <span class="inline-block float-right">
+      <div class="form-group row mb-0">
+        <div class="col-sm-9 offset-sm-3">
           <%= f.input :wizard,as: :hidden, :input_html => { :value => "description" } %>
-          <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
-        </span>
+          <%= f.submit "Save & Continue", class: "btn btn-outline-success pull-right" %>
+        </div>
       </div>
     </div>
   <% end %>
 </div>
 <script type="text/javascript">
   $(function() {
+    $('#my-toggle').bootstrapToggle()
     $('#my-toggle').change(function() {
       if($('#my-toggle').is(":checked")){
         $("#service_packages_attributes_1_name").attr('disabled',true)
@@ -138,6 +141,17 @@
         $("#service_packages_attributes_2_price").attr('disabled',true)
         $("#service_packages_attributes_1_publish").attr('disabled',true)
         $("#service_packages_attributes_2_publish").attr('disabled',true)
+
+        $("#service_packages_attributes_1_name").attr('required',false)
+        $("#service_packages_attributes_2_name").attr('required',false)
+        $("#service_packages_attributes_1_description").attr('required',false)
+        $("#service_packages_attributes_2_description").attr('required',false)
+        $("#service_packages_attributes_1_delivery_time").attr('required',false)
+        $("#service_packages_attributes_2_delivery_time").attr('required',false)
+        $("#service_packages_attributes_1_price").attr('required',false)
+        $("#service_packages_attributes_2_price").attr('required',false)
+        $("#service_packages_attributes_1_publish").attr('required',false)
+        $("#service_packages_attributes_2_publish").attr('required',false)
       }else{
         $("#service_packages_attributes_1_name").attr('disabled',false)
         $("#service_packages_attributes_2_name").attr('disabled',false)
@@ -149,6 +163,17 @@
         $("#service_packages_attributes_2_price").attr('disabled',false)
         $("#service_packages_attributes_1_publish").attr('disabled',false)
         $("#service_packages_attributes_2_publish").attr('disabled',false)
+
+        $("#service_packages_attributes_1_name").attr('required',true)
+        $("#service_packages_attributes_2_name").attr('required',true)
+        $("#service_packages_attributes_1_description").attr('required',true)
+        $("#service_packages_attributes_2_description").attr('required',true)
+        $("#service_packages_attributes_1_delivery_time").attr('required',true)
+        $("#service_packages_attributes_2_delivery_time").attr('required',true)
+        $("#service_packages_attributes_1_price").attr('required',true)
+        $("#service_packages_attributes_2_price").attr('required',true)
+        $("#service_packages_attributes_1_publish").attr('required',true)
+        $("#service_packages_attributes_2_publish").attr('required',true)
       }
     })
   })
