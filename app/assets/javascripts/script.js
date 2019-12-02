@@ -457,12 +457,15 @@ function end_video_chat(msg,model_slug, visitor_slug) {
   });
 }
 
-function tip_message_show(message){
-  console.log(message)
-  new PNotify({
-    title: 'Success!',
-    text: 'Memeber gives you tip!.'
-  });
+function comment_message_show(message){
+  $.ajax({
+    url:  "/reviews/" + message.order_item_id,
+    type: "get",
+    dataType: 'script',
+    success: function(response){
+      // document.getElementById("new_review").reset();
+    },
+  })
 }
 function tip_message_show_for_member(message){
  console.log(message)

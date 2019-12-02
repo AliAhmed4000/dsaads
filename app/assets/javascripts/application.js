@@ -28,5 +28,6 @@
 //= require countdown
 //= require accounting.min.js
 //= require bootstrap-toggle
+//= require pnotify
 
 

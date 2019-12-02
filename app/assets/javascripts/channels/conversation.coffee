@@ -36,8 +36,8 @@ $ ->
         if message.hasOwnProperty('notification_counter')
           show_notification(message)
 
-        if message.hasOwnProperty('tip_message')
-          tip_message_show(message)
+        if message.hasOwnProperty('comment')
+          comment_message_show(message)
 
         if message.hasOwnProperty('tip_message_for_member')
           tip_message_show_for_member(message)    

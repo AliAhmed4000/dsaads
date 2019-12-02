@@ -52,17 +52,3 @@
     cursor: pointer;
   }
 </style>
-
-<script type="text/javascript">
-  setInterval(ajaxCall,1000);
-  function ajaxCall(){
-    $.ajax({
-      url:  "<%= review_path(@order) %>",
-      type: "get",
-      dataType: 'script',
-      success: function(response){
-        // document.getElementById("new_review").reset();
-      },
-    })
-  }
-</script>
