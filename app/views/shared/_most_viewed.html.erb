@@ -1,4 +1,4 @@
-<div class="owl-carousel owl-theme">
+<div class="owl-carousel owl-theme owl-loaded">
   <% Service.most_hit.each do |service| %>
     <div class="item card">
       <% unless service.photos.blank? %>
@@ -9,9 +9,9 @@
           I Can <%= service.title %>
         </h5>
         <% unless service.seller.avatar_url.blank? %>
-          <p><%= image_tag service.seller.avatar_url(:small), class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name, profile_path(service.user_id) %></span></p>
+          <p class="align-inline"><%= image_tag service.seller.avatar_url(:small), class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name, profile_path(service.user_id) %></span></p>
         <% else %>
-          <p><%= image_tag default_image_url, size: '50x50', class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name, profile_path(service.user_id) %></span></p>
+          <p class="align-inline"><%= image_tag default_image_url, size: '50x50', class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name, profile_path(service.user_id) %></span></p>
         <% end %>
         <p class="card-text text-truncate">
           <% if service.description.blank? %>
@@ -48,3 +48,16 @@
     }
   })
 </script>
+<style type="text/css">
+  .owl-carousel .owl-item img{
+    width: auto;
+    display: block;
+  }
+
+  .align-inline{
+  display: -webkit-flex; /* Safari */
+    -webkit-align-items: center; /* Safari 7.0+ */
+    display: flex;
+    align-items: center;
+}
+</style>

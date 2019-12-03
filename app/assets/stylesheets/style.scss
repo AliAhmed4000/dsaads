@@ -251,10 +251,14 @@ p { margin: 0; }
   border-bottom: solid 1px #90EE90
 ;  bottom:1.2em; left:0;
   width:100%;
-}.underline_image:hover:after, underline_image:hover:before {
+}
+.underline_image:hover:after, underline_image:hover:before {
   transform: scaleX(1.2);
-  border-bottom: solid 3px #90EE90
-; }
-
-
-
+  border-bottom: solid 3px #90EE90; 
+}
+.categories{
+  color: white;
+  background-color: rgba(0,0,255,0.6);
+  font-size: 14px;
+  padding: 2px 3px 2px 3px;
+}
