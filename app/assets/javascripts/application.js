@@ -29,5 +29,6 @@
 //= require accounting.min.js
 //= require bootstrap-toggle
 //= require pnotify
+//= require jquery-fileupload/basic
 
 

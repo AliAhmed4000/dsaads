@@ -1,4 +1,5 @@
 class Chat < ApplicationRecord
+  mount_uploader :image, ChatUploader
   belongs_to :user
   belongs_to :conversation
   has_many :chats_recipients, dependent: :destroy

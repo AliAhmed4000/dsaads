@@ -70,7 +70,15 @@
         <% if !@conversation.blank? %>
           <%= form_for @chat,url: "#" do |f| %>
             <%= hidden_field_tag :user_id, current_user.id %> 
-            <%= f.text_field  :message, class: 'message-input write_msg', data: {emojiable: true } %>
+            <%= f.text_field :message, class: 'message-input write_msg', data: {emojiable: true } %>
+            <div class="conversation-file-container"></div>
+            <div class="image-upload" style="position: absolute; margin-top: -6%; margin-left: 1%">
+              <label for="file-input">
+                <i class="fa fa-paperclip"></i>
+              </label>
+              <%#= f.file_field :image,id: "file-input",class: "" %>
+              <%= file_field_tag "conversation[image]", id: "file-input",data: { url: image_conversation_path(@conversation.id) } ,multiple: false %>
+            </div>
             <%= button_tag(type: "submit", class: "msg_send_btn") do %>
               <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
             <% end %>
@@ -112,18 +120,46 @@
   //   });
   //   $('.rating-cancel').remove()
   // });
-  // $(function() {
-  //   $('#fileupload').fileupload({
-  //       dataType: 'json',
-  //       done: function (e, data) {
-  //         $(".conversation-file-container").html('<div class="file-container"><img class= "thumb" src="'+data.result.file_path+'" /><a href="javascript:;" onclick="$(\'.conversation-file-container\').html(\'\')">X</a></div>');
-  //       }
-  //   });
-  // });
+  $(function() {
+    $('#file-input').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+          $(".conversation-file-container").html('<div class="file-container"><img class= "thumb" src="'+data.result.file_path+'" /><a href="javascript:;" onclick="$(\'.conversation-file-container\').html(\'\')">X</a></div>');
+        }
+    });
+  });
 </script>
 <% end %>
 <style type="text/css">
   .online{
     width: 38px;
+  }
+</style>
+
+<style type="text/css">
+  body{margin-top:20px;}
+  .comment-wrapper .panel-body {
+    max-height:650px;
+    overflow:auto;
+  }
+  .comment-wrapper .media-list .media img {
+    width:64px;
+    height:64px;
+    border:2px solid #e5e7e8;
+  }
+  .comment-wrapper .media-list .media {
+    border-bottom:1px dashed #efefef;
+    margin-bottom:25px;
+  }
+  .image-upload > input{
+    display: none;
+  }
+  .image-upload img{
+    width: 80px;
+    cursor: pointer;
+  }
+  .thumb{
+    height: 100px;
+    width: 100px;
   }
 </style>

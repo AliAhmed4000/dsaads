@@ -17,6 +17,13 @@ class ConversationsController < ApplicationController
     redirect_to conversation_path(@conversation.id)  
 	end
 
+  def image 
+    @chat = @conversation.chats.build(user_id: params[:user_id], image: params[:conversation][:image])
+    if @chat.image.url.present?
+      render json:{file_path: @chat.image.url}
+    end
+  end
+
 	private
 	def set_query
     if current_user.buyers?

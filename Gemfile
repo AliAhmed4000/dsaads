@@ -105,3 +105,4 @@ gem 'jquery-datatables'
 gem 'punching_bag'
 gem 'bootstrap-toggle-rails'
 gem 'pnotify-rails'
+gem "jquery-fileupload-rails"
