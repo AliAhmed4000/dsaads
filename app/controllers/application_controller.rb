@@ -38,6 +38,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user_status
-    current_user.update_column('role','buyers')
+    if user_signed_in? 
+      current_user.update_column('role','buyers')
+    end 
   end
 end

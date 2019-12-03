@@ -36,13 +36,15 @@
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
                 <% if item.order_cancel.pending?  %>
-                  <% if item.order_cancel.id == current_user.id  %>
-                    <span class="badge badge-info">In-Progress</span>
-                  <% else %>
-                    <span class="badge badge-info">Ask For Approval</span>
+                  <% if item.order_cancel.ask_buyer_to_cancel_order?  %>
+                    <span class="badge badge-info">Ask for Cancel Order</span>
+                  <% elsif item.order_cancel.extend_delivery_time?  %>
+                    <span class="badge badge-info">Ask For Extend Delivery</span>
+                  <% elsif item.order_cancel.modify_order? %>
+                    <span class="badge badge-info">Ask For Modify Order</span>
                   <% end %>
                 <% else %>
-                  <span class="badge badge-primary">Completed</span>
+                  <span class="badge badge-success">Completed</span>
                 <% end %>
               </td>
             </tr>

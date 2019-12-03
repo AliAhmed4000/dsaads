@@ -165,7 +165,7 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.find(params[:id])
-    @packages = @service.packages.where('publish=?',true)
+    @packages = @service.packages
     @seller = @service.seller
     @show = "page"
     @service.punch(request)

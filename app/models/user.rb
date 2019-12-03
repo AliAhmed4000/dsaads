@@ -31,6 +31,7 @@ class User < ApplicationRecord
   has_many :favorited_services, through: :favorites, source: :service
   has_many :reviews, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_many :order_cancels, dependent: :destroy
   has_many :order_items, through: :orders
   has_many :conversations, dependent: :destroy
   has_many :chats_recipients
