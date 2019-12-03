@@ -7,12 +7,12 @@
       <!--<img class="card-img-top img-fluid" src="http://www.lorempixel.com/400/200/sports/2" alt="Card img cap">-->
       <div class="card-body">
         <h5 class="card-title text-truncate text-capitalize">
-          I Can <%= service.title %>
+          I Can <%= service.title.truncate(15) %>
         </h5>
         <% unless service.seller.avatar_url.blank? %>
-          <p><%= image_tag service.seller.avatar_url(:small), class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name, profile_path(service.user_id) %></span></p>
+          <p><%= image_tag service.seller.avatar_url(:small), class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name.truncate(10), profile_path(service.user_id) %></span></p>
         <% else %>
-          <p><%= image_tag default_image_url, size: '50x50', class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name, profile_path(service.user_id) %></span></p>
+          <p><%= image_tag default_image_url, size: '50x50', class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name.truncate(10), profile_path(service.user_id) %></span></p>
         <% end %>
         <p class="card-text text-truncate">
           <% if service.description.blank? %>
