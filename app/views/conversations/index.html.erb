@@ -72,7 +72,7 @@
             <%= hidden_field_tag :user_id, current_user.id %> 
             <%= f.text_field :message, class: 'message-input write_msg', data: {emojiable: true } %>
             <div class="conversation-file-container"></div>
-            <div class="image-upload" style="position: absolute; margin-top: -6%; margin-left: 1%">
+            <div class="image-upload" id="abc" >
               <label for="file-input">
                 <i class="fa fa-paperclip"></i>
               </label>
@@ -124,7 +124,8 @@
     $('#file-input').fileupload({
         dataType: 'json',
         done: function (e, data) {
-          $(".conversation-file-container").html('<div class="file-container"><img class= "thumb" src="'+data.result.file_path+'" /><a href="javascript:;" onclick="$(\'.conversation-file-container\').html(\'\')">X</a></div>');
+          $("#image-upload").attr("top","15%");
+          $(".conversation-file-container").html('<div class="file-container"><img class= "thumb" src="'+data.result.file_path+'" /><a href="javascript:;" id="image-link" onclick="$(\'.conversation-file-container\').html(\'\')">X</a></div>');
         }
     });
   });
@@ -161,5 +162,18 @@
   .thumb{
     height: 100px;
     width: 100px;
+  }
+  #image-link{
+    position: absolute;
+    left: 96px;
+    top: 36px;
+  }
+
+  #abc{
+    height: 33px;
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    width: 33px;
   }
 </style>
