@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
   before_action :set_global_search_variable, :get_category_list
+  before_action :set_user_status, if: :devise_controller?
   rescue_from PG::ForeignKeyViolation, :with => :unable_to_delete
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
-
+  
   private
   def set_global_search_variable
     id = params[:id] unless params[:id].blank?
@@ -34,5 +35,9 @@ class ApplicationController < ActionController::Base
 
   def unable_to_delete
     redirect_back_or_default(alert: "You can not delete this record as there are some records depending on this!")
+  end
+
+  def set_user_status
+    current_user.update_column('role','buyers')
   end
 end

@@ -20,7 +20,7 @@ class Review < ApplicationRecord
   attr_accessor :feedback
   # validates :star,presence: true
   after_create :order_feedback_notification,:order_review_notification_seller,:order_review_notification_buyer, unless: lambda{|o| o.feedback.blank?}
-  after_create :order_completed_notification_counter, if: lambda{|o| o.feedback.blank?}
+  after_create :order_message,:order_message_notification, if: lambda{|o| o.feedback.blank?}
   
   def order_feedback_notification
     if self.type == "BuyerReview"
@@ -44,7 +44,7 @@ class Review < ApplicationRecord
   	UserMailer.order_review_notification_for_buyer(self).deliver_now
   end
 
-  def order_completed_notification_counter
+  def order_message
     if self.type == "BuyerReview"
       ActionCable.server.broadcast("conversations_#{self.seller_id}_channel", {
         id: id,
@@ -65,4 +65,18 @@ class Review < ApplicationRecord
       })
     end
   end
+
+  def order_message_notification
+    if self.type == "BuyerReview"
+      ActionCable.server.broadcast("conversations_#{self.package.service.seller.id}_channel", {
+        visitor_notification: "#{self.order_item.order.user.full_name} has sent comment on order.",
+        status: ""
+      })
+    else
+      ActionCable.server.broadcast("conversations_#{self.order_item.order.user.id}_channel", {
+        visitor_notification: "#{self.package.service.seller.full_name} has sent comment on order.", 
+        status: ""
+      }) 
+    end
+  end 
 end
