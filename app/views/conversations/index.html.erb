@@ -125,7 +125,15 @@
         dataType: 'json',
         done: function (e, data) {
           $("#image-upload").attr("top","15%");
-          $(".conversation-file-container").html('<div class="file-container"><img class= "thumb" src="'+data.result.file_path+'" /><a href="javascript:;" id="image-link" onclick="$(\'.conversation-file-container\').html(\'\')">X</a></div>');
+          var arr = ["pdf","doc","docx"]
+          var extension = data.result.file_path.split(".").pop()
+          var html = "";
+          if(jQuery.inArray(extension,arr) !== -1){
+            html = '<div class="file-container"><img src="https://img.icons8.com/cute-clipart/128/000000/image-file.png" data-src="'+data.result.file_path+'"><a href="javascript:;" id="image-link" onclick="$(\'.conversation-file-container\').html(\'\')">X</a></div>'
+          }else{
+            html = '<div class="file-container"><img class= "thumb" src="'+data.result.file_path+'" data-src="'+data.result.file_path+'" /><a href="javascript:;" id="image-link" onclick="$(\'.conversation-file-container\').html(\'\')">X</a></div>';
+          }
+          $(".conversation-file-container").html(html);
         }
     });
   });

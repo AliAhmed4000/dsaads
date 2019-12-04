@@ -6,8 +6,9 @@
         	<div class="clearfix"></div>
           <hr>
           <ul class="media-list" id="my-comments">
-    				<%= render partial: '/orders/reviews', locals: {reviews: @order.reviews} %>
+    				<%= render partial: '/orders/reviews', locals: {reviews: @order.reviews.order(created_at: :asc)} %>
           </ul>
+        </div>
           <%= simple_form_for @review,url: reviews_path, method: 'post',remote: true,:html => {:class => 'form-horizontal'} do |f| %>
             <%= f.error_notification %>  
             <%= f.input :comment,label: 'Comments', required: true, hint: 'Minimum 50 words required', placeholder: "Message #{@order.package.service.seller.full_name}", input_html: {rows: "3"}  %>
@@ -24,7 +25,6 @@
             <%= f.input :order_item_id,as: :hidden, :input_html => { :value => @order.id } %>
             <%= f.submit "Post", class: "btn btn-info pull-right", id: "post-reset" %>
           <% end %>
-        </div>
       </div>
     </div>
 	</div>

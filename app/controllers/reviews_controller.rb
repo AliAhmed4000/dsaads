@@ -5,7 +5,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(reviews_params)
     if @review.save
       @order  = OrderItem.find_by_id(@review.order_item_id)  
-      @reviews = @order.reviews
+      @reviews = @order.reviews.order(created_at: :asc)
       respond_to do |format|
         format.js
         format.html{
@@ -20,7 +20,7 @@ class ReviewsController < ApplicationController
 
   def show
     order_item  = OrderItem.find_by_id(params[:id])
-    @reviews = order_item.reviews 
+    @reviews = order_item.reviews.order(created_at: :asc) 
   end
 
   private 

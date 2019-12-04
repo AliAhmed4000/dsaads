@@ -86,93 +86,7 @@ $(function(){
       }
     }
   });
-  jQuery.validator.addMethod("mobile", function(value, element) {
-      var pattern1 =  /^\d+(\d+)*$/.test(value);
-      var pattern2 =  /^[+]{1}\d+(\d+)*$/.test(value);
-      if(pattern1 == true){
-        return true;
-      }else if(pattern2 == true){
-        return true;
-      }else{
-        return this.optional(element); 
-      } 
-  }, "valid format +0123456789");
-
-  if ($('#new_user').length == 1) { 
-    $('#new_user').validate({
-      rules:{
-        'user[password]':{
-          required: true,
-          minlength: 6,
-        },
-        'user[password_confirmation]':{
-          required: true,
-          minlength: 6,
-          equalTo:"#user_password"
-        },
-        'user[card_number]':{
-          required: {
-            depends: function(element) {
-              return $("#user_type").val() == "model"
-            }
-          },
-          number: true
-        },
-        'user[security_code]':{
-          required:  {
-            depends: function(element) {
-              return $("#user_type").val() == "model"
-            }
-          },
-          number: true,
-        },
-        'user[mobile]':{
-          required:  {
-            depends: function(element) {
-              return $("#user_type").val() == "model"
-            }
-          },
-          mobile: true
-        },
-      },
-      messages: {
-        "user[card_number]": {
-          number: "invalid credit card number"
-        },
-        "user[security_code]": {
-          number: "invalid CVV number"
-        }
-      } 
-    });
-  } else if ($('#edit_user').length == 1) {
-    $('#edit_user').validate({
-      rules:{
-        'user[card_number]':{
-          required: true,
-          number:true
-        },
-        'user[security_code]':{
-          required: true,
-          number:true,
-        },
-        'user[mobile]':{
-          required: true,
-          mobile: true
-        },
-      },
-      messages: {
-        "user[card_number]": {
-          number: "invalid credit card number"
-        },
-        "user[security_code]": {
-          number: "invalid CVV number"
-        }
-      } 
-    });
-  } else {
-    $('form').validate();
-  } 
- 
+  
   $('#user_term_and_condition').on('change', function() { 
     if (this.checked) {
       $('.user_term_and_condition').removeClass('has-error')
@@ -271,7 +185,13 @@ function show_message(message) {
   if (url.length == 1) {
     message_body = message['message'];
   } else {
-    message_body = url[0] + '<br><a target="_blank" href="' + url[1] + '"><img class= "thumb" src="' + url[1]  + '" /></a>';
+    var arr = ["pdf","doc","docx"]
+    var extension = url[1].split(".").pop()
+    if(jQuery.inArray(extension,arr) !== -1){
+      message_body = url[0] + '<br><a target="_blank" href="' + url[1] + '"><img class= "thumb" src="https://img.icons8.com/cute-clipart/128/000000/image-file.png" data-src="' + url[1]  + '" /></a>';
+    }else{
+      message_body = url[0] + '<br><a target="_blank" href="' + url[1] + '"><img class= "thumb" src="' + url[1]  + '" /></a>';
+    }
   }
   var message_date = new Date(message['created_at']);
   var html = "";  

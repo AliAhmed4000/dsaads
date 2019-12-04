@@ -76,11 +76,11 @@ $ ->
     $('#new_chat').submit (e) ->
       $this = $(this)
       textarea = $this.find('#chat_message')
-      # image_file = ($('.conversation-file-container img').length > 0) ? $('.conversation-file-container img').attr('src') : '';
+      # image_file = ($('.conversation-file-container img').length > 0) ? $('.conversation-file-container img').attr('data-src') : '';
       if $.trim(textarea.val()).length > 0 || $('.conversation-file-container img').length > 0
         message = textarea.val()
         if $('.conversation-file-container img').length > 0
-          message += '<<image>>' + $('.conversation-file-container img').attr('src')
+          message += '<<image>>' + $('.conversation-file-container img').attr('data-src')
         App.global_conversation.send_message message, messages.data('conversation-id'), $('#user_id').val()
         textarea.val('')
         $('.conversation-file-container').html('')
