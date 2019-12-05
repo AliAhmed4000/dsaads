@@ -1,0 +1,40 @@
+<div class="border border-light"> 
+  <div class="owl-carousel owl-theme owl-loaded">
+    <div class="owl-stage-outer">
+      <div class="owl-stage">
+        <div>
+          <h5 class="text-center">Order Detail</h5>
+        </div>
+        <div class="row text-center">
+          <div class="col">
+          Order #</div>
+          <div class="col" id="sub-total">
+          <%= @order.id %></div>
+        </div>
+        <div class="row text-center">
+          <div class="col">
+          Total</div>
+          <div class="col" id="service-fee">
+          <%= @order.quantity %></div>
+        </div>
+        <hr>
+        <div class="row text-center">
+          <div class="col">
+          Price</div>
+          <div class="col" id="total">
+          <%# gig_fee = @package.price %>
+          <%# service_fee = @package.price*ENV['SERVICE_FEE'].to_i/100 %>
+          <%= number_to_currency(@order.price) %>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col">
+          Delivery Time</div>
+          <div class="col">
+            <%= @order.package.delivery_time %> Days
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

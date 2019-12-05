@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   end
   resources :balances
   resources :order_cancels
+  post '/order_cancels/:id',to: 'order_cancels#reason', as: "order_cancel_reason"
+  get '/order_cancels/:id/:level',to: 'order_cancels#detail', as: "order_cancel_detail"
   resources :wish_lists
   get '/wishlist/:wish_id',to: 'wish_lists#my_wishes', as: "my_wishes"
   get '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#list', as: "wish_list_status"

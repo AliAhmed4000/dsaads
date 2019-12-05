@@ -1,42 +1,73 @@
-<%= simple_form_for @order_cancel,url: order_cancels_path, method: 'post' do |f| %>
+<%= simple_form_for @order_cancel,url: order_cancel_reason_path, method: 'post' do |f| %>
   <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
   <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
   <%= f.input :status, as: :hidden,:input_html => { :value => 'pending' } %>
   <%= f.error_notification %>
-  	<h4>Resolution Center</h4>
-    <%#= f.simple_fields_for :order_cancels do |cancel| %>  
-	    <!-- <div class="row mb-3">
-	      <div class="col-md-6 col-sm-12"> --> 
-	        <%#= f.input :description,required: true, hint: 'Minimum 50 words required', placeholder: "Reason For Cancel Order", input_html: {rows: "3"},as: :text  %>
-	      <!-- </div>
-	    </div> -->
       <% if current_user.sellers? %>
         <%= f.input :role, as: :hidden,:input_html => { :value => "seller" } %>
       <% else %>
         <%= f.input :role, as: :hidden,:input_html => { :value => "buyer" } %>
       <% end %>
 	    <div class="underline">
-			  <p class="h4 pb-2">Reason</p>
+			  <p class="h5 pb-2">What can we help you do?</p>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio1">
-			      <%= f.radio_button :reason,'modify_order',:value =>'modify_order',:class => "form-check-input radio-input" %>Modify Order
+			      <%= f.radio_button :level,'modify_order',:value =>'modify_order',:class => "form-check-input radio-input",checked: "checked" %>Modify Order
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio2">
-			      <%= f.radio_button :reason,'extend_delivery_time', :value => 'extend_delivery_time' ,:class => "form-check-input radio-input" %>Extend Delivery Time
+			      <%= f.radio_button :level,'extend_delivery_time', :value => 'extend_delivery_time' ,:class => "form-check-input radio-input" %>Extend Delivery Time
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio3">
-			      <%= f.radio_button :reason,'ask_buyer_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Ask buyer to Cancel Order
+			      <%= f.radio_button :level,'ask_buyer_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Ask buyer to Cancel Order
 			    </label>
 			  </div>
-			</div>    
-	    <div class="row mb-3">
-	    	<span class="inline-block float-right">
-	        <%= f.submit "Cancel Order", class: "btn btn-outline-success" %>
-	      </span> 
-	    </div>
+			</div>
+			<div class="underline">
+			  <p class="h5 pb-2">Can you give us more detail on why?</p>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio1">
+			      <%= f.radio_button :reason,'modify_order',:value =>'modify_order',:class => "form-check-input radio-input",checked: "checked" %>The buyer is not responding
+			    </label>
+			  </div>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio2">
+			      <%= f.radio_button :reason,'extend_delivery_time', :value => 'extend_delivery_time' ,:class => "form-check-input radio-input" %>The will order again
+			    </label>
+			  </div>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio3">
+			      <%= f.radio_button :reason,'ask_buyer_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>I am too busy for this job
+			    </label>
+			  </div>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio3">
+			      <%= f.radio_button :reason,'ask_buyer_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>We could not agree on price
+			    </label>
+			  </div>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio3">
+			      <%= f.radio_button :reason,'ask_buyer_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>I am not able to do this job
+			    </label>
+			  </div>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio3">
+			      <%= f.radio_button :reason,'ask_buyer_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>I did not receive enough information from client
+			    </label>
+			  </div>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio3">
+			      <%= f.radio_button :reason,'ask_buyer_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Due to personal technical reason I could not complete work
+			    </label>
+			  </div>
+			</div>
+	    <div class="form-group row mb-0">
+        <div class="col-sm-9 offset-sm-3">
+          <%= f.submit "Save & Continue", class: "btn btn-outline-success pull-right" %>
+        </div>
+      </div>
 	  <%# end %>
 <% end %>

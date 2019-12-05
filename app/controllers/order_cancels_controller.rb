@@ -22,6 +22,16 @@ class OrderCancelsController < ApplicationController
       redirect_to orders_path
     end 
   end 
+
+  def reason
+    redirect_to order_cancel_detail_path( params['order_cancel']['order_item_id'],params['order_cancel']['reason'])
+  end
+
+  def detail
+    @order = OrderItem.find_by_id(params[:id])
+    @order_cancel = @order.build_order_cancel
+    @set_cancel_order_bar = "ok"
+  end  
   
   private 
   def order_cancel_params

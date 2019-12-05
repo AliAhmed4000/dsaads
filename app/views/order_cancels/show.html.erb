@@ -1,8 +1,27 @@
-<div class="container mt-4">
-  <div class="p-3 border border-light">
-  <div class="py-3">
-      <%= render partial: 'order_cancels/forms/order_cancel_form'%>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9 col-md-12">
+      <div class=""> 
+        <div class="owl-carousel owl-theme owl-loaded">
+          <div class="owl-stage-outer">
+            <div class="owl-stage">
+      			  <h4>Resolution Center</h4>
+      			  <p>Welcome! Here you can work things out resolve issues regarding your order.</p>
+      			  <hr>
+    				  <%= render partial: 'order_cancels/forms/order_cancel_form'%>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="col-lg-3 col-md-12">
+      <%= render partial: 'orders/order_sidebar_detail' %>
+    </div>
 </div>
-</div>
+<style type="text/css">
+  .form-check{
+    display: block;
+    padding-left: 2.25rem;
+    position: relative;
+  }
+</style>

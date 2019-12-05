@@ -9,16 +9,9 @@
     <%= f.input :role, as: :hidden,:input_html => { :value => "buyer" } %>
   <% end %>
 	<%= f.simple_fields_for :order_cancels do |cancel| %>  
-    <div class="underline">
-		  <div class="form-check">
-		    <label class="form-check-label radio" for="radio1">
-		      <%= cancel.input :extend_delivery,collection: Package::BASIC_DELIVERY,required: true %>
-		    </label>
-		  </div>
-		</div>
     <div class="row mb-3">
-      <div class="col-md-6 col-sm-12"> 
-        <%= f.input :description,required: true, hint: 'Minimum 50 words required', placeholder: "Description", input_html: {rows: "3"},as: :text  %>
+      <div class="col-md-6 col-sm-12">
+      	<%= f.input :description,required: true, hint: 'Minimum 50 words required', placeholder: "Description", input_html: {rows: "3"},as: :text  %>
       </div>
     </div>
 	<% end %>

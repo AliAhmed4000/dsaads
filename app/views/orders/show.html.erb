@@ -1,29 +1,45 @@
-<div class="container mt-4">
-  <div class="py-3" style="margin-bottom: 3%">
-    <% if @order.cancelled? %>
-      <%= render partial: '/orders/forms/order_cancel_approval_form' %>
-    <% elsif @order.inactive? && current_user.buyers? %>
-      <%= render partial: '/orders/forms/order_active_form' %>
-    <% elsif @order.active? || @order.delivered? %>
-      <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
-        <% unless @order.delivered? %>
-          <%= render partial: '/orders/forms/order_delivered_form' %>
-        <% end %>
-      <% else %>
-        <% unless @order.completed? %>
-          <%= render partial: '/orders/forms/order_complete_form' %>
-        <% end %>
-      <% end %>
-    <% end %>
-  </div>
-  <%= render partial: '/orders/order_detail' %>
-  <% if @order.active? %>
-    <div class="row">
-      <% date = @order.created_at + @order.package.delivery_time.days %>
-      <div class='countdown' data-date='<%= date.strftime("%Y-%m-%d") %>' data-time='<%= date.strftime("%H:%M:%S") %>'></div>
+<div class="container">
+  <div class="row">
+    <!-- Service Photo Slider -->
+    <div class="col-lg-9 col-md-12">
+      <div class="border border-light"> 
+        <div class="owl-carousel owl-theme owl-loaded">
+          <div class="owl-stage-outer">
+            <div class="owl-stage">
+              <div class="py-3" style="margin-bottom: 3%">
+                <% if @order.cancelled? %>
+                  <%= render partial: '/orders/forms/order_cancel_approval_form' %>
+                <% elsif @order.inactive? && current_user.buyers? %>
+                  <%= render partial: '/orders/forms/order_active_form' %>
+                <% elsif @order.active? || @order.delivered? %>
+                  <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
+                    <% unless @order.delivered? %>
+                      <%= render partial: '/orders/forms/order_delivered_form' %>
+                    <% end %>
+                  <% else %>
+                    <% unless @order.completed? %>
+                      <%= render partial: '/orders/forms/order_complete_form' %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+              <%= render partial: '/orders/order_detail' %>
+              <% if @order.active? %>
+                <div class="row">
+                  <% date = @order.created_at + @order.package.delivery_time.days %>
+                  <div class='countdown' data-date='<%= date.strftime("%Y-%m-%d") %>' data-time='<%= date.strftime("%H:%M:%S") %>'></div>
+                </div>
+              <% end %>
+              <%= render partial: '/orders/order_chats' %>
+            </div>
+          </div>
+        </div>
+      </div>   
     </div>
-  <% end %>
-  <%= render partial: '/orders/order_chats' %>
+    <div class="col-lg-3 col-md-12">
+      <%= render partial: 'orders/resolution_center' %>
+    </div>
+  </div>
 </div>
 <style type="text/css">
   .countdown {

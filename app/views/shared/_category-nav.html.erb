@@ -11,6 +11,10 @@
 	<div class="cat-bar">
     <%= render partial: "/layouts/order_steps" %>
   </div>
+<% elsif !@set_cancel_order_bar.blank? %>
+	<div class="cat-bar">
+    <%= render partial: "/layouts/order_cancel_steps" %>
+  </div>
 <% else %>
 	<div class="cat-bar">
 	  <div class="container-fluid">
