@@ -12,6 +12,7 @@ class OrderCancelsController < ApplicationController
   def show
   	@order = OrderItem.find_by_id(params[:id])
     @order_cancel = @order.build_order_cancel
+    @set_cancel_order_bar = "ok"
   end
 
   def update

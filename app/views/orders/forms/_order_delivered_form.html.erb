@@ -1,7 +1,6 @@
 <%= simple_form_for @order,url: order_path(@order), method: 'put' do |f| %>
   <%= f.input :status, as: :hidden,:input_html => { :value => "delivered" } %>
   <label class="Checkbox-form">
-  	<%= link_to "Cancel Order", order_cancel_path(@order),class: "btn btn-info pull-right" %>
     <%= f.submit "Deliver Your Order", class: "btn btn-info pull-right"  %>
   </label>
 <% end %>

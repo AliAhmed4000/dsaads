@@ -1,0 +1,30 @@
+<%= simple_form_for @order_cancel,url: order_cancel_reason_path, method: 'post' do |f| %>
+  <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
+  <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
+  <%= f.input :status, as: :hidden,:input_html => { :value => 'pending' } %>
+  <%= f.error_notification %>
+	<% if current_user.sellers? %>
+    <%= f.input :role, as: :hidden,:input_html => { :value => "seller" } %>
+  <% else %>
+    <%= f.input :role, as: :hidden,:input_html => { :value => "buyer" } %>
+  <% end %>
+	<%= f.simple_fields_for :order_cancels do |cancel| %>  
+    <div class="underline">
+		  <div class="form-check">
+		    <label class="form-check-label radio" for="radio1">
+		      <%= cancel.input :extend_delivery,collection: Package::BASIC_DELIVERY,required: true %>
+		    </label>
+		  </div>
+		</div>
+    <div class="row mb-3">
+      <div class="col-md-6 col-sm-12"> 
+        <%= f.input :description,required: true, hint: 'Minimum 50 words required', placeholder: "Description", input_html: {rows: "3"},as: :text  %>
+      </div>
+    </div>
+	<% end %>
+  <div class="form-group row mb-0">
+    <div class="col-sm-9 offset-sm-3">
+      <%= f.submit "Submit", class: "btn btn-outline-success pull-right" %>
+    </div>
+  </div>
+<% end %>

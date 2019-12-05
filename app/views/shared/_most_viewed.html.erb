@@ -22,7 +22,32 @@
         </p>
       </div> 
       <div class="card-footer">
-        <%= favorite_heart(current_user, service) %>
+        <% if user_signed_in? && current_user.buyers? %>
+          <i class='fa fa-bars' data-toggle="dropdown"></i>
+          <ul class="dropdown-menu">
+            <% current_user.wishes.each do |w| %>
+              <li class="dropdown-item">
+                <%= w.name %>
+                <% if w.favorite(service).blank? %>
+                  <%= link_to "<i class='fa fa-heart-o'></i>".html_safe,wish_list_status_path(service,w)
+                  %>
+                <% else %>
+                  <%= link_to "<i class='fa fa-heart'></i>".html_safe,wish_list_delete_path(service,w), method: :delete %>
+                <% end %>
+              </li>
+            <% end %>
+            <% unless current_user.wishes.blank? %>
+              <div class="dropdown-divider"></div>   
+            <% end %>
+            <li class="dropdown-item">
+              <i class='fa fa-plus'>
+              <%= link_to "Create List",wish_list_path(service), remote: true %>
+              </i>
+            </li>
+          </ul>
+          <%#= link_to "<i class='fa fa-bars'></i>".html_safe,"data-toggle" => "dropdown" %>
+        <% end %>
+        <%= favorite_heart(current_user,service) %>
         <span><%= service.favorited_users.size %></span>
         <span class="float-right small">STARTING AT <span class="h5">$<%= service.minimum_price %></span></span>
       </div>    
