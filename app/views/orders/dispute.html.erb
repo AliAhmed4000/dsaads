@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-9 col-md-12">
+      <div class=""> 
+        <div class="owl-carousel owl-theme owl-loaded">
+          <div class="owl-stage-outer">
+            <div class="owl-stage">
+              <h4>Disputed Order</h4>
+      			  <p>Welcome! Here you can work things out resolve issues regarding your order.</p>
+      			  <hr>
+              <!-- Package Comparison Table -->
+              <div class="package-table">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="table-secondary"><th scope="col" colspan="4" class="h3">Order #<%= @dispute.order_item.order.id %></th></tr>
+                    <tr>
+                      <th class="table-secondary" scope="col">Dispute Type</th>
+                      <th scope="col" class="text-center"><%= @dispute.level.split('_').map(&:capitalize).join(' ') %></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th class="table-secondary" scope="row">Reason</th>
+                      <td class="text-center"><%= @dispute.reason.split('_').map(&:capitalize).join(' ') %></td>
+                    </tr>
+                    <tr>
+                      <th class="table-secondary" scope="row">Days</th>
+                      <td class="text-center"><%= @dispute.extend_delivery %></td>
+                    </tr>
+                    <tr>
+                      <th class="table-secondary" scope="row">Description</th>
+                      <td class="text-center"><%= @dispute.description %></td>
+                    </tr>
+                    <tr>
+                      <th class="table-secondary" scope="row">Created at</th>
+                      <td class="text-center"><%= @dispute.created_at.strftime("%d %B %Y") %></td>
+                    </tr>
+                    <tr>
+                      <th class="table-secondary" scope="row"></th>
+                      <td class="text-center">
+                      </td>
+                    </tr>
+                  </tbody>       
+                </table>
+                <% if current_user.buyers? && @dispute.pending? %>
+                  <%= render partial: 'orders/forms/order_cancel_reject_form' %>
+                  <%= render partial: 'orders/forms/order_cancel_approval_form' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-12">
+      <%= render partial: 'orders/order_sidebar_detail', locals: {"@order": @dispute.order_item} %>
+    </div>
+</div>

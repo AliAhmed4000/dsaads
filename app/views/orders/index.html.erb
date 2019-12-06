@@ -20,6 +20,11 @@
               <span class="badge badge-light"><%= @order_active.count %></span>
             </a>
           </li>
+          <li class="active nav-item">
+            <a class="nav-link" href="#disputed_orders" data-toggle="tab">Disputed Orders
+              <span class="badge badge-light"><%= @order_disputed.count %></span>
+            </a>
+          </li>
           <% if current_user.buyers? %>
             <li class="nav-item">
               <a class="nav-link" href="#awaiting_my_review" data-toggle="tab">Awaiting my Reviews
@@ -39,6 +44,7 @@
         <div class="tab-content">
           <%= render partial: "/orders/manage_orders/new_orders" %>
           <%= render partial: "/orders/manage_orders/active_orders" %>
+          <%= render partial: "/orders/manage_orders/disputed" %>
           <% if current_user.buyers? %>
             <%= render partial: "/orders/manage_orders/awaiting_my_review" %>
           <% end %>
