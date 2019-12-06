@@ -1,7 +1,7 @@
 class OrderCancelsController < ApplicationController
   before_action :authenticate_user!
   
-  def create
+  def create 
   	@order = OrderCancel.new(order_cancel_params)
     if @order.save
       flash[:notice] = "Order Successfully Cancelled."
@@ -11,25 +11,25 @@ class OrderCancelsController < ApplicationController
 
   def show
   	@order = OrderItem.find_by_id(params[:id])
-    @order_cancel = @order.build_order_cancel
+    @order_cancel = @order.order_cancels.build
     @set_cancel_order_bar = "ok"
   end
 
-  def update
+  def update 
     @order = OrderCancel.find(params[:id])
-    if @order.update(status: params[:order_item][:status], role: params[:order_item][:role])
+    if @order.update(status: params[:order_cancel][:status], role: params[:order_cancel][:role])
       flash[:notice] = "Order Successfully Approved."
       redirect_to orders_path
     end 
   end 
 
   def reason
-    redirect_to order_cancel_detail_path( params['order_cancel']['order_item_id'],params['order_cancel']['reason'])
+    redirect_to order_cancel_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['level'],params['order_cancel']['reason'])
   end
 
   def detail
     @order = OrderItem.find_by_id(params[:id])
-    @order_cancel = @order.build_order_cancel
+    @order_cancel = @order.order_cancels.build
     @set_cancel_order_bar = "ok"
   end  
   
@@ -41,7 +41,9 @@ class OrderCancelsController < ApplicationController
   	  :reason, 
   	  :description,
       :status,
-      :role
+      :role,
+      :extend_delivery,
+      :level
     )
   end   
 end

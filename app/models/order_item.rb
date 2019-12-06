@@ -14,12 +14,12 @@
 class OrderItem < ApplicationRecord
   belongs_to :package
   belongs_to :order
-  has_many :reviews
-  has_one  :order_cancel
-  has_many :payments
-  accepts_nested_attributes_for :order_cancel, reject_if: :all_blank, allow_destroy: true
+  has_many   :reviews
+  has_many   :order_cancels
+  has_many   :payments
+  accepts_nested_attributes_for :order_cancels, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :reviews, reject_if: :all_blank, allow_destroy: true
-  enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review]
+  enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review,:disputed]
   # enum role: [:user, :"Application Administrator" ]
   after_update :order_completed_notification_counter,:order_completed_notification_seller,:order_completed_notification_buyer, if: lambda{|o| o.completed?}
   after_update :order_inactivation_notification_counter,:order_inactive_notification_seller,:order_inactive_notification_buyer, if: lambda{|o| o.inactive?}

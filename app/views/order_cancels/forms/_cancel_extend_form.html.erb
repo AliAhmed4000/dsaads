@@ -1,17 +1,19 @@
-<%= simple_form_for @order_cancel,url: order_cancel_reason_path, method: 'post' do |f| %>
+<%= simple_form_for @order_cancel,url: order_cancels_path, method: 'post' do |f| %>
   <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
   <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
   <%= f.input :status, as: :hidden,:input_html => { :value => 'pending' } %>
+  <%= f.input :level, as: :hidden,:input_html => { :value => 'extend_delivery_time' } %>
+  <%= f.input :reason, as: :hidden,:input_html => { :value => params[:reason] } %>
   <%= f.error_notification %>
 	<% if current_user.sellers? %>
     <%= f.input :role, as: :hidden,:input_html => { :value => "seller" } %>
   <% else %>
     <%= f.input :role, as: :hidden,:input_html => { :value => "buyer" } %>
   <% end %>
-	<%= f.simple_fields_for :order_cancels do |cancel| %>  
+	<%#= f.simple_fields_for :order_cancels do |cancel| %>  
     <div class="row mb-3">
       <div class="col-md-6 col-sm-12"> 
-      	<%= cancel.input :extend_delivery,collection: Package::BASIC_DELIVERY,required: true %>
+      	<%= f.input :extend_delivery,collection: Package::BASIC_DELIVERY,required: true %>
       </div>
     </div>
     <div class="row mb-3">
@@ -19,7 +21,7 @@
       	<%= f.input :description,required: true, hint: 'Minimum 50 words required', placeholder: "Description", input_html: {rows: "3"},as: :text  %>
       </div>
     </div>
-	<% end %>
+	<%# end %>
   <div class="form-group row mb-0">
     <div class="col-sm-9 offset-sm-3">
       <%= f.submit "Submit", class: "btn btn-outline-success pull-right" %>

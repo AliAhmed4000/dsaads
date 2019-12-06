@@ -1,7 +1,9 @@
-<%= simple_form_for @order_cancel,url: order_cancel_reason_path, method: 'post' do |f| %>
+<%= simple_form_for @order_cancel,url: order_cancels_path, method: 'post' do |f| %>
   <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
   <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
   <%= f.input :status, as: :hidden,:input_html => { :value => 'pending' } %>
+  <%= f.input :level, as: :hidden,:input_html => { :value => 'modify_order' } %>
+  <%= f.input :reason, as: :hidden,:input_html => { :value => params[:reason] } %>
   <%= f.error_notification %>
 	<% if current_user.sellers? %>
     <%= f.input :role, as: :hidden,:input_html => { :value => "seller" } %>

@@ -1,17 +1,26 @@
 class OrderCancel < ApplicationRecord
  	belongs_to :order_item
   belongs_to :user
- 	enum reason: ['modify_order','extend_delivery_time','ask_buyer_to_cancel_order']
-	enum status: ['pending','approved']
- 	after_create :order_cancel_request,:change_status,:order_cancel_notification_seller,:order_cancel_notification_buyer, if: lambda{|o| o.pending?}
+ 	enum level: ['modify_order','extend_delivery_time','ask_buyer_to_cancel_order']
+  enum reason: [
+                'The_buyer_is_not_responding',
+                'The_will_order_again',
+                'I_am_too_busy_for_this_job',
+                'We_could_not_agree_ on_price',
+                'I_am_not_able_to_do_this_job',
+                'I_did_not_receive_enough_information_from_client',
+                'Due_to personal_technical_reason_I_could_not_complete_work'
+              ]
+	enum status: ['pending','approved','rejected']
+ 	after_create :order_cancel_request,:order_cancel_notification_seller,:order_cancel_notification_buyer, if: lambda{|o| o.pending?}
   after_update :order_cancel_approved_notification_seller,:order_cancel_approved_notification_buyer, if: lambda{|o| o.approved?}
 
   attr_accessor :role
  	
-  def change_status
- 		order_item = OrderItem.find(self.order_item_id)  
- 		order_item.update('status'=>OrderItem.statuses['cancelled'])
- 	end
+  # def change_status
+ 	# 	order_item = OrderItem.find(self.order_item_id)  
+ 	# 	order_item.update('status'=>OrderItem.statuses['disputed'])
+ 	# end
 
   def order_cancel_notification_seller
     UserMailer.order_cancel_notification_for_seller(self,role).deliver_now

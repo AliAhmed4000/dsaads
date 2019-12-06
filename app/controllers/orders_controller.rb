@@ -8,6 +8,7 @@ class OrdersController < ApplicationController
       @order_delivered = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:delivered])
       @order_completed = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:completed])
       @order_cancelled = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:cancelled])
+      @order_disputed = OrderCancel.joins(order_item:[:order]).where('orders.user_id=?',current_user.id) 
       @order_review = @order_completed.select{|order| order.buyer_star_status.blank?}
     else
       @order_start = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:inactive])
@@ -15,6 +16,7 @@ class OrdersController < ApplicationController
       @order_delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:delivered])
       @order_completed = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:completed])
       @order_cancelled = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:cancelled])
+      @order_disputed =  OrderCancel.joins(order_item:[package:[:service]]).where('services.user_id=?',current_user.id)
       @order_review = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:review])
     end 
   end
@@ -58,6 +60,11 @@ class OrdersController < ApplicationController
     @review = Review.new
   end  
 
+  def dispute
+    @dispute = OrderCancel.find_by_id(params[:id])
+    # @order_cancel = @order.order_cancels.build
+    # @order = dispute.order_item
+  end 
   private 
   def order_params
     params.require(:order).permit(

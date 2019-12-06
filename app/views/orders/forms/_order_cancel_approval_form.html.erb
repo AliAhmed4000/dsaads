@@ -1,4 +1,4 @@
-<%= simple_form_for @order,url: order_cancel_path(@order.order_cancel.id), method: 'put' do |f| %>
+<%= simple_form_for @dispute,url: order_cancel_path(@dispute.id), method: 'put' do |f| %>
   <%= f.input :status, as: :hidden,:input_html => { :value => "approved" } %>
   <% if current_user.sellers? %>
   	<%= f.input :role, as: :hidden,:input_html => { :value => "seller" } %>
@@ -6,6 +6,6 @@
   	<%= f.input :role, as: :hidden,:input_html => { :value => "buyer" } %>
   <% end %>
   <label class="Checkbox-form" style="margin-bottom: 2% ">
-    <%= f.submit "Order Cancellation Approve", class: "btn btn-info pull-right" %>
+    <%= f.submit "Accept", class: "btn btn-info pull-right" %>
   </label>
 <% end %>
