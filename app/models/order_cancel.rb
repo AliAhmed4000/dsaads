@@ -15,46 +15,60 @@ class OrderCancel < ApplicationRecord
                 'seller_did_late_delivery'
               ]
 	enum status: ['pending','approved','rejected']
- 	after_create :order_cancel_request,:order_cancel_notification_seller,:order_cancel_notification_buyer, if: lambda{|o| o.pending?}
-  after_update :order_cancel_approved_notification_seller,:order_cancel_approved_notification_buyer, if: lambda{|o| o.approved?}
-  # after_update :order_cancel_approved_notification_seller,:order_cancel_approved_notification_buyer, if: lambda{|o| o.rejected?}
-  after_update :order_cancel_approved_notification_seller,:order_cancel_approved_notification_buyer, if: lambda{|o| o.approved?}
- 
+ 	after_create :order_resolution_center_by_seller,if: lambda{|o| o.extend_delivery_time? || o.ask_buyer_to_cancel_order? || o.modify_order?}
+  after_create :order_resolution_center_by_buyer,if: lambda{|o| o.ask_seller_to_cancel_order? || o.The_seller_is_not_responding? || o.seller_did_late_delivery?}
+  after_update :order_status_changes,if: lambda{|o| o.approved? || o.rejected?}
+  # after_update :chnage_order_status_for_cancel,
   attr_accessor :role
  	
   # def change_status
  	# 	order_item = OrderItem.find(self.order_item_id)  
  	# 	order_item.update('status'=>OrderItem.statuses['disputed'])
  	# end
-
-  def order_cancel_notification_seller
-    UserMailer.order_cancel_notification_for_seller(self,role).deliver_now
-  end 
-
-  def order_cancel_notification_buyer
+  private 
+  def order_resolution_center_by_seller
+    if self.extend_delivery_time?
+      level_status = "Order Extend Delivery"
+    elsif self.ask_buyer_to_cancel_order?
+      level_status = "Order Cancel"
+    elsif self.modify_order?
+      level_status = "Order Modify"
+    end 
+    ActionCable.server.broadcast("conversations_#{self.order_item.order.user.id}_channel",{
+      visitor_notification: "#{self.user.full_name} has sent you #{level_status} request.", 
+      status: "#{self.level}"
+    })
     UserMailer.order_cancel_notification_for_buyer(self,role).deliver_now
   end
 
-  def order_cancel_approved_notification_seller
-    UserMailer.order_cancel_approved_notification_for_seller(self,role).deliver_now
+  def order_resolution_center_by_buyer
+      if self.ask_seller_to_cancel_order?
+      level_status = "you Order Cancel"
+    elsif self.The_seller_is_not_responding?
+      level_status = "Order Seller is not reponding"
+    elsif self.seller_did_late_delivery?
+      level_status = "Late Delivery"
+    end 
+    ActionCable.server.broadcast("conversations_#{self.order_item.package.service.user_id}_channel",{
+      visitor_notification: "#{self.user.full_name} has sent you #{level_status} request.", 
+      status: "#{self.level}"
+    })
+    UserMailer.order_cancel_notification_for_seller(self,role).deliver_now
   end 
 
-  def order_cancel_approved_notification_buyer
-    UserMailer.order_cancel_approved_notification_for_buyer(self,role).deliver_now
-  end
-
-   def order_cancel_request
+  def order_status_changes
     if role == "seller"
-      ActionCable.server.broadcast("conversations_#{self.order_item.order.user.id}_channel", {
-        visitor_notification: "#{self.user.full_name} has sent you order cancel request.", 
-        status: "#{self.status}"
+      ActionCable.server.broadcast("conversations_#{self.order_item.order.user.id}_channel",{
+        visitor_notification: "#{self.user.full_name} has #{status} your request.", 
+        status: "#{self.level}"
       })
-    else 
-      ActionCable.server.broadcast("conversations_#{self.order_item.order.user.id}_channel", {
-        visitor_notification: "#{self.order_item.package.service.seller.full_name} has delivered order to you.", 
-        status: "#{self.status}"
-      }) 
+      UserMailer.order_cancel_approved_notification_for_buyer(self,role).deliver_now
+    else
+      ActionCable.server.broadcast("conversations_#{self.order_item.package.service.user_id}_channel",{
+        visitor_notification: "#{self.user.full_name} has #{status} your request.", 
+        status: "#{self.level}"
+      })
+      UserMailer.order_cancel_approved_notification_for_seller(self,role).deliver_now
     end 
-    # self.model.update_attributes(notification_counter: self.model.user_friends.pending.count)
-  end
+  end 
 end

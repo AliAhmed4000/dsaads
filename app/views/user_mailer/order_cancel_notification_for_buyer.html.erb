@@ -1,7 +1,2 @@
 <p>Hi <%= @order_item.order.user.full_name %>!</p>
-<% if @role == "buyer" %>
-	<p>Your <%= link_to 'Order',order_url(@order_item) %> Cancel Request sent Successfully.</p>
-<% else %>
-	<p>You got cancel <%= link_to 'Order',order_url(@order_item) %> Request.</p>
-<% end %>
-<p>You Seller is <%= @order_item.package.service.seller.full_name %></p>
+<p><%= @order_item.package.service.seller.full_name %> has sent you request of <%= @order_cancel.level.split('_').map(&:capitalize).join(' ') %> <%= link_to 'Order',order_url(@order_item) %>.</p>
