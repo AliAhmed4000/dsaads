@@ -26,6 +26,7 @@
           </td>
         </tbody>
       </table>
+      <%= render partial: 'services/forms/extra_fast_delivery',locals: {f: f} %>
       <div class="form-group row mb-0">
         <div class="col-sm-9 offset-sm-3">
           <%= f.input :wizard,as: :hidden, :input_html => { :value => "description" } %>
@@ -47,41 +48,59 @@
     })
   })
 
+  $('#collapseOne').on('shown.bs.collapse', function () {
+    $('#service_extra_basic_package_attributes_delivery_time').attr('required',true)
+    $('#service_extra_standard_package_attributes_delivery_time').attr('required',true)
+    $('#service_extra_premimum_package_attributes_delivery_time').attr('required',true)
+    $('#service_extra_basic_package_attributes_price').attr('required',true)
+    $('#service_extra_standard_package_attributes_price').attr('required',true)
+    $('#service_extra_premimum_package_attributes_price').attr('required',true)
+  });
+
+  $('#collapseOne').on('hidden.bs.collapse', function () {
+    $('#service_extra_basic_package_attributes_delivery_time').attr('required',false)
+    $('#service_extra_standard_package_attributes_delivery_time').attr('required',false)
+    $('#service_extra_premimum_package_attributes_delivery_time').attr('required',false)
+    $('#service_extra_basic_package_attributes_price').attr('required',false)
+    $('#service_extra_standard_package_attributes_price').attr('required',false)
+    $('#service_extra_premimum_package_attributes_price').attr('required',false)
+  });
+  
   function enabled_fields(){
-    $("#service_standard_packages_attributes_0_name").attr('disabled',true)
-    $("#service_premimum_packages_attributes_0_name").attr('disabled',true)
-    $("#service_standard_packages_attributes_0_description").attr('disabled',true)
-    $("#service_premimum_packages_attributes_0_description").attr('disabled',true)
-    $("#service_standard_packages_attributes_0_delivery_time").attr('disabled',true)
-    $("#service_premimum_packages_attributes_0_delivery_time").attr('disabled',true)
-    $("#service_standard_packages_attributes_0_price").attr('disabled',true)
-    $("#service_premimum_packages_attributes_0_price").attr('disabled',true)
-    $("#service_standard_packages_attributes_0_name").attr('required',true)
-    $("#service_premimum_packages_attributes_0_name").attr('required',true)
-    $("#service_standard_packages_attributes_0_description").attr('required',true)
-    $("#service_premimum_packages_attributes_0_description").attr('required',true)
-    $("#service_standard_packages_attributes_0_delivery_time").attr('required',true)
-    $("#service_premimum_packages_attributes_0_delivery_time").attr('required',true)
-    $("#service_standard_packages_attributes_0_price").attr('required',true)
-    $("#service_premimum_packages_attributes_0_price").attr('required',true)
+    $("#service_standard_package_attributes_name").attr('disabled',true)
+    $("#service_premimum_package_attributes_name").attr('disabled',true)
+    $("#service_standard_package_attributes_description").attr('disabled',true)
+    $("#service_premimum_package_attributes_description").attr('disabled',true)
+    $("#service_standard_package_attributes_delivery_time").attr('disabled',true)
+    $("#service_premimum_package_attributes_delivery_time").attr('disabled',true)
+    $("#service_standard_package_attributes_price").attr('disabled',true)
+    $("#service_premimum_package_attributes_price").attr('disabled',true)
+    $("#service_standard_package_attributes_name").attr('required',true)
+    $("#service_premimum_package_attributes_name").attr('required',true)
+    $("#service_standard_package_attributes_description").attr('required',true)
+    $("#service_premimum_package_attributes_description").attr('required',true)
+    $("#service_standard_package_attributes_delivery_time").attr('required',true)
+    $("#service_premimum_package_attributes_delivery_time").attr('required',true)
+    $("#service_standard_package_attributes_price").attr('required',true)
+    $("#service_premimum_package_attributes_price").attr('required',true)
   }
 
   function disabled_fields(){
-    $("#service_standard_packages_attributes_0_name").attr('disabled',false)
-    $("#service_premimum_packages_attributes_0_name").attr('disabled',false)
-    $("#service_standard_packages_attributes_0_description").attr('disabled',false)
-    $("#service_premimum_packages_attributes_0_description").attr('disabled',false)
-    $("#service_standard_packages_attributes_0_delivery_time").attr('disabled',false)
-    $("#service_premimum_packages_attributes_0_delivery_time").attr('disabled',false)
-    $("#service_standard_packages_attributes_0_price").attr('disabled',false)
-    $("#service_premimum_packages_attributes_0_price").attr('disabled',false)
-    $("#service_standard_packages_attributes_0_name").attr('required',false)
-    $("#service_premimum_packages_attributes_0_name").attr('required',false)
-    $("#service_standard_packages_attributes_0_description").attr('required',false)
-    $("#service_premimum_packages_attributes_0_description").attr('required',false)
-    $("#service_standard_packages_attributes_0_delivery_time").attr('required',false)
-    $("#service_premimum_packages_attributes_0_delivery_time").attr('required',false)
-    $("#service_standard_packages_attributes_0_price").attr('required',false)
-    $("#service_premimum_packages_attributes_0_price").attr('required',false)
+    $("#service_standard_package_attributes_name").attr('disabled',false)
+    $("#service_premimum_package_attributes_name").attr('disabled',false)
+    $("#service_standard_package_attributes_description").attr('disabled',false)
+    $("#service_premimum_package_attributes_description").attr('disabled',false)
+    $("#service_standard_package_attributes_delivery_time").attr('disabled',false)
+    $("#service_premimum_package_attributes_delivery_time").attr('disabled',false)
+    $("#service_standard_package_attributes_price").attr('disabled',false)
+    $("#service_premimum_package_attributes_price").attr('disabled',false)
+    $("#service_standard_package_attributes_name").attr('required',false)
+    $("#service_premimum_package_attributes_name").attr('required',false)
+    $("#service_standard_package_attributes_description").attr('required',false)
+    $("#service_premimum_package_attributes_description").attr('required',false)
+    $("#service_standard_package_attributes_delivery_time").attr('required',false)
+    $("#service_premimum_package_attributes_delivery_time").attr('required',false)
+    $("#service_standard_package_attributes_price").attr('required',false)
+    $("#service_premimum_package_attributes_price").attr('required',false)
   }
 </script>
