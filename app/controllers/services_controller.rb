@@ -62,9 +62,12 @@ class ServicesController < ApplicationController
   def pricing
     @service = Service.find params[:id]
     @set_bar = "ok"
-    @service.basic_packages.build if @service.basic_packages.blank?
-    @service.standard_packages.build if @service.standard_packages.blank?
-    @service.premimum_packages.build if @service.premimum_packages.blank?
+    @service.build_basic_package if @service.basic_package.blank?
+    @service.build_standard_package if @service.standard_package.blank?
+    @service.build_premimum_package if @service.premimum_package.blank?
+    @service.build_extra_basic_package if @service.extra_basic_package.blank?
+    @service.build_extra_standard_package if @service.extra_standard_package.blank?
+    @service.build_extra_premimum_package if @service.extra_premimum_package.blank?
     if @service.title.blank?
       flash[:alert] = "First Complete Your Service OwerView"
       redirect_to edit_services_path(@service)
@@ -74,6 +77,7 @@ class ServicesController < ApplicationController
   def description
     @service = Service.find params[:id]
     @set_bar = "ok"
+    @service.faqs.build
     if @service.packages.blank?
       flash[:alert] = "First Complete Your Service Packages"
       redirect_to services_pricing_path(@service)
@@ -214,10 +218,14 @@ class ServicesController < ApplicationController
       :sub_category,
       :publish,
       :wizard,
-      basic_packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
-      standard_packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
-      premimum_packages_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
-      photos_attributes: [:id,:image,:_destroy]
+      basic_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      standard_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      premimum_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      extra_basic_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      extra_standard_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      extra_premimum_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      photos_attributes: [:id,:image,:_destroy],
+      faqs_attributes: [:id,:question,:answer,:_destroy]
     )
   end
 

@@ -1,0 +1,15 @@
+<div class="row mb-3 nested-fields">
+  <div class="col-md-5 col-sm-12">
+  	<%= f.input :question,required: true %>
+	</div>
+	<div class="col-md-5 col-sm-12">
+  	<%= f.input :answer,required: true %>
+	</div>
+  <div class="col-md-2 col-sm-12" style="margin-top: 3%">
+  	<%= link_to_remove_association f do %>
+    	<p class="pull-right">Delete</p>
+    <% end %>
+    </div>
+</div>
+
+
