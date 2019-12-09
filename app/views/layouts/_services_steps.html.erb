@@ -88,5 +88,9 @@
   </div>
 </div>
 <style type="text/css">
-  .bs-wizard > .bs-wizard-step {padding: 0; position: relative; width: 16%;}
+  <% if @service.publish? %>
+    .bs-wizard > .bs-wizard-step{ width: 20%;}
+  <% else %>
+    .bs-wizard > .bs-wizard-step {padding: 0; position: relative; width: 16%;}
+  <% end %>
 </style>

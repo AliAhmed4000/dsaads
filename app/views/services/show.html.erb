@@ -21,47 +21,85 @@
             <tr class="table-secondary"><th scope="col" colspan="4" class="h3">Compare Packages</th></tr>
             <tr>
               <th class="table-secondary" scope="col"></th>
-              <% @packages.each do |package| %>
-              <th scope="col" class="text-center"><%= package.name %><br>$<%= package.price %></th>
+              <% unless @service.basic_package.blank? %>
+                <th scope="col" class="text-center"><%= @service.basic_package.name %><br>$<%= @service.basic_package.price %></th>
+              <% end %>
+              <% unless @service.standard_package.blank? %>
+                <th scope="col" class="text-center"><%= @service.standard_package.name %><br>$<%= @service.standard_package.price %></th>
+              <% end %>
+              <% unless @service.premimum_package.blank? %>
+                <th scope="col" class="text-center"><%= @service.premimum_package.name %><br>$<%= @service.premimum_package.price %></th>
               <% end %>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th class="table-secondary" scope="row">Description</th>
-              <% @packages.each do |package| %>
-              <td class="text-center"><%= package.description %></td>
+              <% unless @service.basic_package.blank? %>
+                <td class="text-center"><%= @service.basic_package.description %></td>
+              <% end %>
+              <% unless @service.standard_package.blank? %>
+                <td class="text-center"><%= @service.standard_package.description %></td>
+              <% end %>
+              <% unless @service.premimum_package.blank? %>
+                <td class="text-center"><%= @service.premimum_package.description %></td>
               <% end %>
             </tr>
             <tr>
               <th class="table-secondary" scope="row">Commercial Use</th>
-              <% @packages.each do |package| %>
-              <td class="text-center"><%= package.is_commercial ? "Yes" : "No" %></td>
+              <% unless @service.basic_package.blank? %>
+                <td class="text-center"><%= @service.basic_package.is_commercial ? "Yes" : "No" %></td>
+              <% end %>
+              <% unless @service.standard_package.blank? %>
+                <td class="text-center"><%= @service.standard_package.is_commercial ? "Yes" : "No" %></td>
+              <% end %>
+              <% unless @service.premimum_package.blank? %>
+                <td class="text-center"><%= @service.premimum_package.is_commercial ? "Yes" : "No" %></td>
               <% end %>
             </tr>
             <tr>
               <th class="table-secondary" scope="row">Revision</th>
-              <% @packages.each do |package| %>
-              <td class="text-center"><%= package.revision_number %></td>
+              <% unless @service.basic_package.blank? %>
+                <td class="text-center"><%= @service.basic_package.revision_number %></td>
+              <% end %>
+              <% unless @service.standard_package.blank? %>
+                <td class="text-center"><%= @service.standard_package.revision_number %></td>
+              <% end %>
+              <% unless @service.premimum_package.blank? %>
+                <td class="text-center"><%= @service.premimum_package.revision_number %></td>
               <% end %>
             </tr>
             <tr>
               <th class="table-secondary" scope="row">Delivery Time</th>
-              <% @packages.each do |package| %>
-              <td class="text-center"><%= pluralize(package.delivery_time, 'Days') %></td>
+              <% unless @service.basic_package.blank? %>
+                <td class="text-center"><%= pluralize(@service.basic_package.delivery_time, 'Days') %></td>
+              <% end %>
+              <% unless @service.standard_package.blank? %>
+                <td class="text-center"><%= pluralize(@service.standard_package.delivery_time, 'Days') %></td>
+              <% end %>
+              <% unless @service.premimum_package.blank? %>
+                <td class="text-center"><%= pluralize(@service.premimum_package.delivery_time, 'Days') %></td>
               <% end %>
             </tr>
             <tr>
               <th class="table-secondary" scope="row"></th>
-              <% @packages.each do |package| %>
-              <td class="text-center"><%= link_to "Select",service_package_path(@service,package), class: "btn btn-primary" %></td>
+              <% unless @service.basic_package.blank? %>
+                <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.basic_package), class: "btn btn-primary" %></td>
+              <% end %>
+              <% unless @service.standard_package.blank? %>
+                <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.standard_package), class: "btn btn-primary" %></td>
+              <% end %>
+              <% unless @service.premimum_package.blank? %>
+                <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.premimum_package), class: "btn btn-primary" %></td>
               <% end %>
             </tr>
           </tbody>       
         </table>
-      </div>   
+      </div>
+      <% unless @service.faqs.blank? %>
+        <%= render partial: 'services/faq_detail' %>
+      <% end %>
     </div>
-     
     <div class="col-lg-5 col-md-12">
       <%= render partial: 'shared/seller-profile' %>
     </div>

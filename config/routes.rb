@@ -22,7 +22,8 @@ Rails.application.routes.draw do
   resources :balances
   resources :order_cancels
   post '/order_cancels/:id',to: 'order_cancels#reason', as: "order_cancel_reason"
-  get '/order_cancels/:id/:level/:reason',to: 'order_cancels#detail', as: "order_cancel_detail"
+  get '/order_cancels/:id/:level/:reason',to: 'order_cancels#seller_detail', as: "order_cancel_seller_detail"
+  get '/order_cancels/:id/:reason',to: 'order_cancels#buyer_detail', as: "order_cancel_buyer_detail"
   resources :wish_lists
   get '/wishlist/:wish_id',to: 'wish_lists#my_wishes', as: "my_wishes"
   get '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#list', as: "wish_list_status"
@@ -45,6 +46,7 @@ Rails.application.routes.draw do
   get  '/services/:id/edit/publish', to: 'services#publish', as: "services_publish"
   get  '/services/:id/edit/gallery_publish', to: 'services#gallery_publish', as: "services_gallery_publish"
 
+  resources :faqs, only: [:destroy]
   resources :favorites, only: [:create, :destroy, :index]
   resources :users, only: [:new, :create, :update], as: "onboarding", path: "seller_onboarding"
   get 'seller_onboarding/personal_info', to: 'users#seller_personal_info', as: "seller_personal_info"
