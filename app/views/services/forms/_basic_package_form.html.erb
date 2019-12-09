@@ -1,4 +1,4 @@
-<%= f.simple_fields_for :basic_packages do |basic| %>
+<%= f.simple_fields_for :basic_package do |basic| %>
   <table class="table table-bordered">
     <tr>
       <td><%= basic.input :name, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100} %></td>

@@ -18,17 +18,25 @@ class Service < ApplicationRecord
   has_many   :photos
   has_one  :video 
   has_many :packages
-  has_many :basic_packages, -> {where(level: "basic")}, :class_name => 'Package', dependent: :destroy
-  has_many :standard_packages,-> {where(level: "standard")}, :class_name => 'Package', dependent: :destroy
-  has_many :premimum_packages ,-> {where(level: "premimum")}, :class_name => 'Package', dependent: :destroy
+  has_many :faqs
+  has_one  :basic_package, -> {where(level: "basic")}, :class_name => 'Package', dependent: :destroy
+  has_one  :standard_package,-> {where(level: "standard")}, :class_name => 'Package', dependent: :destroy
+  has_one  :premimum_package ,-> {where(level: "premimum")}, :class_name => 'Package', dependent: :destroy
+  has_one  :extra_basic_package, -> {where(level: "extra_basic")}, :class_name => 'Package', dependent: :destroy
+  has_one  :extra_standard_package,-> {where(level: "extra_standard")}, :class_name => 'Package', dependent: :destroy
+  has_one  :extra_premimum_package ,-> {where(level: "extra_premimum")}, :class_name => 'Package', dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :favorited_users, through: :favorites, source: :user
   has_many :wish_favorites
+  accepts_nested_attributes_for :faqs, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :wish_favorites, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :packages, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :basic_packages, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :standard_packages, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :premimum_packages, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :basic_package, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :standard_package, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :premimum_package, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :extra_basic_package, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :extra_standard_package, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :extra_premimum_package, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :photos, reject_if: :all_blank, allow_destroy: true
   acts_as_punchable
   # validates :title, :category_id, presence: true

@@ -1,11 +1,36 @@
 <div class="container font-weight-bold">  
   <%= simple_form_for @service do |f|  %>
     <%= f.input :description,label: 'Gig Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Give some impressive description for your valuable service', input_html: {rows: "3"}  %>
-    <div>
-      <span class="inline-block float-right">
-      	<%= f.input :wizard,as: :hidden, :input_html => { :value => "requirement" } %>
-        <%= f.submit "Save & Continue", class: "btn btn-outline-success" %>
-      </span> 
+    <h4>Frequently Answer Question</h4>
+    <%= f.simple_fields_for :faqs do |faq| %>
+      <% unless faq.object.id.blank? %>
+        <div class="row mb-3 nested-fields" id="<%= faq.object.id %>_faq">
+          <div class="col-md-5 col-sm-12">
+            <%= faq.input :question,required: true %>
+          </div>
+          <div class="col-md-5 col-sm-12">
+            <%= faq.input :answer,required: true %>
+          </div>
+          <div class="col-md-2 col-sm-12" style="margin-top: 3%">
+		  			<%= link_to faq_path(faq.object.id),remote: true, method: 'delete' do %>
+		  				<p class="pull-right">Delete</p>
+						<% end %>
+					</div>
+        </div>
+      <% end %>
+    <% end %>
+    <p><%= link_to_add_association 'Add Faq', f, :faqs , class: 'btn btn-outline-primary pull-right'%></p>
+    <div class="form-group row mb-0">
+      <div class="col-sm-9 offset-sm-3">
+        <%= f.input :wizard,as: :hidden, :input_html => { :value => "requirement" } %>
+        <%= f.submit "Save & Continue", class: "btn btn-outline-success pull-right" %>
+      </div>
     </div>
   <% end %>
 </div>
+<style type="text/css">
+	.offset-sm-3{
+		margin-left: 35%;
+		margin-top: 3%;
+	}
+</style>
