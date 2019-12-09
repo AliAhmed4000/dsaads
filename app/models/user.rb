@@ -177,7 +177,7 @@ class User < ApplicationRecord
     OrderItem.joins(:order).where('orders.user_id=?',self.id)
   end
 
-  def refund_amount
-    self.order_items.cancelled.joins(:order_cancel).where('order_cancels.status=?',OrderCancel.statuses['approved']).sum(:price)
+  def refund_amount 
+    self.order_items.cancelled.joins(:order_cancels).where('order_cancels.status=? and order_cancels.level=?',OrderCancel.statuses['approved'],OrderCancel.levels['ask_buyer_to_cancel_order']).sum(:price)
   end    
 end

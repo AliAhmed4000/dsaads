@@ -1,0 +1,35 @@
+<%= simple_form_for @order_cancel,url: order_cancel_reason_path, method: 'post' do |f| %>
+  <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
+  <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
+  <%= f.input :status, as: :hidden,:input_html => { :value => 'pending' } %>
+  <%= f.error_notification %>
+      <% if current_user.sellers? %>
+        <%= f.input :role, as: :hidden,:input_html => { :value => "seller" } %>
+      <% else %>
+        <%= f.input :role, as: :hidden,:input_html => { :value => "buyer" } %>
+      <% end %>
+	    <div class="underline">
+			  <p class="h5 pb-2">Can you give us more detail on why?</p>
+			  <div class="form-check">
+          <label class="form-check-label radio" for="radio3">
+            <%= f.radio_button :reason,'ask_seller_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Ask Seller to Cancel Order
+          </label>
+        </div>
+        <div class="form-check">
+			    <label class="form-check-label radio" for="radio1">
+			      <%= f.radio_button :reason,'The_seller_is_not_responding',:value =>'The_seller_is_not_responding',:class => "form-check-input radio-input",checked: "checked" %>The Seller is not responding
+			    </label>
+			  </div>
+			  <div class="form-check">
+			    <label class="form-check-label radio" for="radio2">
+			      <%= f.radio_button :reason,'seller_did_late_delivery', :value => 'seller_did_late_delivery' ,:class => "form-check-input radio-input" %>Seller did late delivery
+			    </label>
+			  </div>
+			</div>
+	    <div class="form-group row mb-0">
+        <div class="col-sm-9 offset-sm-3">
+          <%= f.submit "Save & Continue", class: "btn btn-outline-success pull-right" %>
+        </div>
+      </div>
+	  <%# end %>
+<% end %>

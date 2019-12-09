@@ -34,11 +34,11 @@ class Package < ApplicationRecord
   has_many :cart_items
 
   # validates :delivery_time, :revision_number, :description, :name, :price, presence: true
-  validates :delivery_time, :description, :name, :price, presence: true
+  # validates :delivery_time, :description, :name, :price, presence: true
   # validates :is_commercial, presence: true
-  validates :price, numericality: { only_integer: true, greater_than: 1, less_than: 10000 }
+  # validates :price, numericality: { only_integer: true, greater_than: 1, less_than: 10000 }
   # validates :revision_number,  inclusion: { in: Package::REVISION_NUMBER }
-  enum level: ['basic','standard','premimum']
+  enum level: ['basic','standard','premimum','extra_basic','extra_standard','extra_premimum']
   def seller_reviews
     SellerReview.where(package: self)
   end

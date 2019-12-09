@@ -9,12 +9,17 @@ class OrderCancel < ApplicationRecord
                 'We_could_not_agree_ on_price',
                 'I_am_not_able_to_do_this_job',
                 'I_did_not_receive_enough_information_from_client',
-                'Due_to personal_technical_reason_I_could_not_complete_work'
+                'Due_to personal_technical_reason_I_could_not_complete_work',
+                'ask_seller_to_cancel_order',
+                'The_seller_is_not_responding',
+                'seller_did_late_delivery'
               ]
 	enum status: ['pending','approved','rejected']
  	after_create :order_cancel_request,:order_cancel_notification_seller,:order_cancel_notification_buyer, if: lambda{|o| o.pending?}
   after_update :order_cancel_approved_notification_seller,:order_cancel_approved_notification_buyer, if: lambda{|o| o.approved?}
-
+  # after_update :order_cancel_approved_notification_seller,:order_cancel_approved_notification_buyer, if: lambda{|o| o.rejected?}
+  after_update :order_cancel_approved_notification_seller,:order_cancel_approved_notification_buyer, if: lambda{|o| o.approved?}
+ 
   attr_accessor :role
  	
   # def change_status
@@ -44,9 +49,9 @@ class OrderCancel < ApplicationRecord
         visitor_notification: "#{self.user.full_name} has sent you order cancel request.", 
         status: "#{self.status}"
       })
-    else
-      ActionCable.server.broadcast("conversations_#{self.order.user.id}_channel", {
-        visitor_notification: "#{self.package.service.seller.full_name} has delivered order to you.", 
+    else 
+      ActionCable.server.broadcast("conversations_#{self.order_item.order.user.id}_channel", {
+        visitor_notification: "#{self.order_item.package.service.seller.full_name} has delivered order to you.", 
         status: "#{self.status}"
       }) 
     end 

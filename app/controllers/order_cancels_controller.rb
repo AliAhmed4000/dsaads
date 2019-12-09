@@ -24,14 +24,24 @@ class OrderCancelsController < ApplicationController
   end 
 
   def reason
-    redirect_to order_cancel_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['level'],params['order_cancel']['reason'])
+    if current_user.sellers?  
+      redirect_to order_cancel_seller_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['level'],params['order_cancel']['reason'])
+    else
+      redirect_to order_cancel_buyer_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['reason'])
+    end 
   end
 
-  def detail
+  def seller_detail
     @order = OrderItem.find_by_id(params[:id])
     @order_cancel = @order.order_cancels.build
     @set_cancel_order_bar = "ok"
-  end  
+  end
+
+  def buyer_detail
+    @order = OrderItem.find_by_id(params[:id])
+    @order_cancel = @order.order_cancels.build
+    @set_cancel_order_bar = "ok"
+  end
   
   private 
   def order_cancel_params
