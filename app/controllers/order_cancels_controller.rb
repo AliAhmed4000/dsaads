@@ -17,10 +17,15 @@ class OrderCancelsController < ApplicationController
     end 
   end
 
-  def show
+  def show 
   	@order = OrderItem.find_by_id(params[:id])
-    @order_cancel = @order.order_cancels.build
-    @set_cancel_order_bar = "ok"
+    if @order.completed? || @order.cancelled?
+      flash[:alert] = "You have no permission to access."
+      redirect_to orders_path
+    else
+      @order_cancel = @order.order_cancels.build
+      @set_cancel_order_bar = "ok"
+    end 
   end
 
   def update 
@@ -63,5 +68,5 @@ class OrderCancelsController < ApplicationController
       :extend_delivery,
       :level
     )
-  end   
+  end 
 end

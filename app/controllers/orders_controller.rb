@@ -88,5 +88,5 @@ class OrdersController < ApplicationController
       flash[:alert] = "You have no permission to access."
       redirect_to root_path
     end
-  end    
+  end     
 end
