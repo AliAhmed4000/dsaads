@@ -4,6 +4,14 @@ class OrderCancelsController < ApplicationController
   def create 
   	@order = OrderCancel.new(order_cancel_params)
     if @order.save
+      if @order.modify_order? 
+        @order.order_item.package.update_columns(
+          name: params[:order_cancel][:package][:name],
+          description: params[:order_cancel][:package][:description],
+          delivery_time: params[:order_cancel][:package][:delivery_time],
+          price: params[:order_cancel][:package][:price]
+        )
+      end 
       flash[:notice] = "Order Successfully Cancelled."
       redirect_to orders_path
     end 
@@ -33,7 +41,7 @@ class OrderCancelsController < ApplicationController
 
   def seller_detail
     @order = OrderItem.find_by_id(params[:id])
-    @order_cancel = @order.order_cancels.build
+    @order_cancel = @order.order_cancels.build 
     @set_cancel_order_bar = "ok"
   end
 

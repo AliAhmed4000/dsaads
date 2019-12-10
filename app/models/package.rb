@@ -32,7 +32,8 @@ class Package < ApplicationRecord
   has_many :buyers, through: :orders, source: :user
   has_many :buyer_reviews, through: :buyers
   has_many :cart_items
-
+  accepts_nested_attributes_for :order_items, reject_if: :all_blank, allow_destroy: true
+  
   # validates :delivery_time, :revision_number, :description, :name, :price, presence: true
   # validates :delivery_time, :description, :name, :price, presence: true
   # validates :is_commercial, presence: true
@@ -44,11 +45,19 @@ class Package < ApplicationRecord
   end
 
   def seller_review_star
-    SellerReview.where(package: self).average(:star).round(1)
+    if SellerReview.where(package: self).average(:star).blank?
+      return 0
+    else
+      SellerReview.where(package: self).average(:star).round(1)
+    end 
   end
 
   def buyer_review_star
-    BuyerReview.where(package: self).average(:star).round(1)
+    if BuyerReview.where(package: self).average(:star).blank?
+      return 0
+    else
+      BuyerReview.where(package: self).average(:star).round(1)
+    end 
   end
 
   def buyer_review_count
