@@ -18,14 +18,21 @@ class OrderCancel < ApplicationRecord
  	after_create :order_resolution_center_by_seller,if: lambda{|o| o.extend_delivery_time? || o.ask_buyer_to_cancel_order? || o.modify_order?}
   after_create :order_resolution_center_by_buyer,if: lambda{|o| o.ask_seller_to_cancel_order? || o.The_seller_is_not_responding? || o.seller_did_late_delivery?}
   after_update :order_status_changes,if: lambda{|o| o.approved? || o.rejected?}
-  # after_update :chnage_order_status_for_cancel,
+  after_update :change_order_status_for_buyer,if: lambda{|o| o.approved? && o.ask_buyer_to_cancel_order?}
+  after_update :change_order_status_for_seller,if: lambda{|o| o.approved? && o.ask_seller_to_cancel_order?}
   attr_accessor :role
  	
-  # def change_status
- 	# 	order_item = OrderItem.find(self.order_item_id)  
- 	# 	order_item.update('status'=>OrderItem.statuses['disputed'])
- 	# end
   private 
+  def change_order_status_for_buyer
+    order_item = OrderItem.find(self.order_item_id)
+    order_item.update('status'=>OrderItem.statuses['cancelled'])
+  end
+
+  def change_order_status_for_seller
+    order_item = OrderItem.find(self.order_item_id)
+    order_item.update('status'=>OrderItem.statuses['cancelled'])
+  end
+  
   def order_resolution_center_by_seller
     if self.extend_delivery_time?
       level_status = "Order Extend Delivery"

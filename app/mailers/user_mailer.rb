@@ -57,13 +57,15 @@ class UserMailer < ApplicationMailer
   end
 
   def order_cancel_approved_notification_for_seller(arguments,role)
-    @order_item = arguments.order_item
+    @order_cancel = arguments
+    @order_item = @order_cancel.order_item
     @role = role
     mail(:to => @order_item.package.service.seller.email, :subject => "Order Request Approved.")
   end
 
   def order_cancel_approved_notification_for_buyer(arguments,role)
-    @order_item = arguments.order_item
+    @order_cancel = arguments
+    @order_item = @order_cancel.order_item
     @role = role
     mail(:to => @order_item.order.user.email, :subject => "Order Cancel Approved.")
   end

@@ -2,20 +2,17 @@
   <div class="owl-carousel owl-theme owl-loaded">
     <div class="owl-stage-outer">
       <div class="owl-stage">
-        <% unless @order.order_cancels.blank? %>
-          <div class="review-header pt-3">
-            <h5 class="text-center">Order have an issue please resolve</h5>
-          </div>
-          <% @order.order_cancels.each do |order_cancel| %>
-            <% if order_cancel.user_id != current_user.id && order_cancel.pending? %>
-              <div class="review-header pt-3 row text-center">
-                <div class="col" style="padding-bottom: 5%">
-                  <%= link_to "Resolve Me", order_dispute_path(order_cancel),class: "btn btn-info" %>  
-                </div>
+        <% @order.order_cancels.each do |order_cancel| %>
+          <% if order_cancel.user_id != current_user.id && order_cancel.pending? %>
+            <div class="review-header pt-3">
+              <h5 class="text-center">Order have an issue please resolve</h5>
+            </div>
+            <div class="review-header pt-3 row text-center">
+              <div class="col" style="padding-bottom: 5%">
+                <%= link_to "Resolve Me", order_dispute_path(order_cancel),class: "btn btn-info" %>  
               </div>
-            <% end %>
+            </div>
           <% end %>
-          <hr>
         <% end %>
         <div class="review-header pt-3">
           <h5 class="text-center">Need to Change or cancel your Order?</h5>
