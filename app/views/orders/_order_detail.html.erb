@@ -20,7 +20,7 @@
       <span class="pl-2 pull-right h3"><%= number_to_currency(@order.package.price) %></span>
       <p>
         <% if current_user.sellers? %>
-          buyer: <%= link_to @order.order.user.users_full,profile_path(@order.order.user) %>
+          buyer: <%= link_to @order.order.user.full_name,profile_path(@order.order.user) %>
         <% else %>
           seller: <%= link_to @order.package.service.seller.full_name,profile_path(@order.package.service.seller) %>
         <% end %>

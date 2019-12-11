@@ -83,14 +83,16 @@
             </tr>
             <tr>
               <th class="table-secondary" scope="row"></th>
-              <% unless @service.basic_package.blank? %>
-                <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.basic_package), class: "btn btn-primary" %></td>
-              <% end %>
-              <% unless @service.standard_package.blank? %>
-                <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.standard_package), class: "btn btn-primary" %></td>
-              <% end %>
-              <% unless @service.premimum_package.blank? %>
-                <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.premimum_package), class: "btn btn-primary" %></td>
+              <% if @service.user_id != current_user.id %>
+                <% unless @service.basic_package.blank? %>
+                  <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.basic_package), class: "btn btn-primary" %></td>
+                <% end %>
+                <% unless @service.standard_package.blank? %>
+                  <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.standard_package), class: "btn btn-primary" %></td>
+                <% end %>
+                <% unless @service.premimum_package.blank? %>
+                  <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.premimum_package), class: "btn btn-primary" %></td>
+                <% end %>
               <% end %>
             </tr>
           </tbody>       

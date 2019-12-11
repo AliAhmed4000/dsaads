@@ -1,5 +1,5 @@
 <div class="owl-carousel owl-theme owl-loaded">
-  <% Service.most_hit.each do |service| %>
+  <% services.each do |service| %>
     <div class="item card">
       <% unless service.photos.blank? %>
         <%= link_to image_tag(service.photos.first.image_url(:service_small_thumb), alt: "",class: "card-img-top img-fluid"), service_path(service) %>
@@ -23,7 +23,7 @@
       </div> 
       <div class="card-footer">
         <% if user_signed_in? && current_user.buyers? %>
-        <span class="dropup">
+          <span class="dropup">
           <i class='fa fa-bars' data-toggle="dropdown"></i>
           <ul class="dropdown-menu">
             <% current_user.wishes.each do |w| %>
@@ -46,8 +46,8 @@
               </i>
             </li>
           </ul>
+          </span>
           <%#= link_to "<i class='fa fa-bars'></i>".html_safe,"data-toggle" => "dropdown" %>
-        </span>
         <% end %>
         <%= favorite_heart(current_user,service) %>
         <span><%= service.favorited_users.size %></span>
@@ -56,6 +56,7 @@
     </div>
   <% end %>
 </div>
+<div id="wish_lists_pop"></div>
 <script type="text/javascript">
   $('.owl-carousel').owlCarousel({
     loop:true,
