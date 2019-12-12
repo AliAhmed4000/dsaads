@@ -3,6 +3,7 @@
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="SortBlufLink">
           <h2>Manage Gigs</h2>
+          <%= link_to "New", new_service_path,class: 'btn btn-outline-primary pull-right' %>
         </div>
       </div>
     </div>
@@ -11,16 +12,22 @@
       <div class="box-tab justified">
         <ul class="nav nav-tabs">
           <li class="active nav-item">
-            <a class="nav-link active" href="#active_gigs" data-toggle="tab">Active</a>
+            <a class="nav-link active" href="#active_gigs" data-toggle="tab">
+              Active
+              <span class="badge badge-light"><%= @active_gigs.count %></span>
+            </a>
           </li>
           <li class="active nav-item">
-            <a class="nav-link" href="#pending_gigs" data-toggle="tab">Pending For Approval</a>
+            <a class="nav-link" href="#pending_gigs" data-toggle="tab">
+              Pending For Approval
+              <span class="badge badge-light"><%= @pending_for_approval_gigs.count %></span>
+            </a>
           </li>
           <li class="active nav-item">
-            <a class="nav-link" href="#draft_gigs" data-toggle="tab">Draft</a>
-          </li>
-          <li class="active nav-item" style="padding-left: 62%">
-            <%= link_to "New Gig", new_service_path,class: 'btn btn-primary' %>
+            <a class="nav-link" href="#draft_gigs" data-toggle="tab">
+            Draft
+            <span class="badge badge-light"><%= @draft_gigs.count %></span>
+            </a>
           </li>
         </ul>
         <div class="tab-content">

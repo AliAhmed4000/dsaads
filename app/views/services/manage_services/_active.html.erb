@@ -4,8 +4,9 @@
       <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
         <thead>
           <tr>
-            <th>GIG</th>
-            <th>Create DATE</th>
+            <th>Image</th>
+            <th>Gig</th>
+            <th>Created At</th>
             <th>Orders</th>
             <th>Views</th>
             <th></th>
@@ -14,17 +15,24 @@
         <tbody>
           <% @active_gigs.each do |gig| %>
             <tr>
+              <td class="align-middle" scope="row">
+                <% if gig.photos.blank? %>
+                  <%= image_tag('missing.png') %>
+                <% else %>
+                  <img src="<%= gig.photos.first.image_url %>" style="width: 10%">
+                <% end %>
+              </td>
               <td class="align-middle">
                 <%= gig.title %>
               </td>
               <td class="align-middle">
                 <%= gig.created_at.strftime("%d %B %Y") %>
               </td>
-              <td class="align-middle"><%= gig.packages.joins(:order_items).where('order_items.status=?',OrderItem.statuses['active']).count %></td>
-              <td class="align-middle"><%#= gig.size %></td>
+              <td class="align-middle"><%= gig.packages.joins(:order_items).count %></td>
+              <td class="align-middle"><%= gig.hits %></td>
               <td class="align-middle">
                 <div class="btn-group pull-right">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Actions
+                  <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">Actions
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu">

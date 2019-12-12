@@ -4,15 +4,24 @@
       <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
         <thead>
           <tr>
-            <th>GIG</th>
-            <th>Create DATE</th>
+            <th>Image</th>
+            <th>Gig</th>
+            <th>Created At</th>
             <th>Orders</th>
+            <th>Views</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <% @draft_gigs.each do |gig| %>
             <tr>
+              <td class="align-middle">
+                <% if gig.photos.blank? %>
+                  <%= image_tag('missing.png') %>
+                <% else %>
+                  <img src="<%= gig.photos.first.image_url %>" style="width: 10%">
+                <% end %>
+              </td>
               <td class="align-middle">
                 <%= gig.title %>
               </td>
