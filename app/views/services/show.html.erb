@@ -83,7 +83,7 @@
             </tr>
             <tr>
               <th class="table-secondary" scope="row"></th>
-              <% if @service.user_id != current_user.id %>
+              <% if user_signed_in? && @service.user_id != current_user.id   %>
                 <% unless @service.basic_package.blank? %>
                   <td class="text-center"><%= link_to "Select",service_package_path(@service,@service.basic_package), class: "btn btn-primary" %></td>
                 <% end %>
