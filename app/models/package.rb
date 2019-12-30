@@ -31,6 +31,7 @@ class Package < ApplicationRecord
   has_many :orders, through: :order_items
   has_many :buyers, through: :orders, source: :user
   has_many :buyer_reviews, through: :buyers
+  has_many :reviews
   has_many :cart_items
   accepts_nested_attributes_for :order_items, reject_if: :all_blank, allow_destroy: true
   

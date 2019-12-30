@@ -19,7 +19,30 @@ class ServicesController < ApplicationController
       @services = Service.search(@search).page(params[:page]).per(6)
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params[:q].present? && params[:q].values != ["",""]
-      @services = @q.result(:distinct=>true).page(params[:page]).per(6)
+      @services = @q.result.uniq
+      new_service = []
+      unless params[:q][:new_seller].blank?
+        @services.each do |s| 
+          if s.seller.services.active.count >= 7 && s.seller.order_items.where('status!=?',OrderItem.statuses['completed']).sum(:price) >= 5000 
+            new_service.push(s.seller.id)
+          end 
+        end
+        @services = new_service
+      end
+      unless params[:q][:pro_seller].blank?
+        @services.each do |s| 
+          if s.seller.services.active.count >= 10 && s.seller.order_items.where('status=?',OrderItem.statuses['completed']).sum(:price) >= 1000 && s.seller.order_items.where('status=?',OrderItem.statuses['completed']).count >= 25
+            new_service.push(s.seller.id)
+          end 
+        end
+      end 
+      unless params[:q][:top_seller].blank?
+        @services.each do |s| 
+          if s.seller.order_items.where('status=?',OrderItem.statuses['completed']).sum(:price) >= 15000 && s.seller.order_items.where('status=?',OrderItem.statuses['completed']).count >= 80 
+            new_service.push(s.seller.id)
+          end
+        end  
+      end   
       respond_to do |format|
         format.html
         format.js
@@ -76,6 +99,9 @@ class ServicesController < ApplicationController
   def description
     @service = Service.find params[:id]
     @set_bar = "ok"
+    @service.build_question1_faq if @service.question1_faq.blank?
+    @service.build_question2_faq if @service.question2_faq.blank?
+    @service.build_question3_faq if @service.question3_faq.blank?
     @service.faqs.build
     if @service.packages.blank?
       flash[:alert] = "First Complete Your Service Packages"
@@ -98,7 +124,9 @@ class ServicesController < ApplicationController
   def gallery
     @service = Service.find params[:id]
     @set_bar = "ok"
-    @service.photos.build if @service.photos.blank?
+    @service.build_primary_photo if @service.primary_photo.blank?
+    @service.build_secondary_photo if @service.secondary_photo.blank?
+    @service.build_last_photo if @service.last_photo.blank?
     if @service.packages.blank?
       flash[:alert] = "First Complete Your Service Packages"
       redirect_to services_pricing_path(@service)
@@ -175,10 +203,12 @@ class ServicesController < ApplicationController
   end
 
   def file_upload
-    @service = Service.find(params[:id])
-    @service.photos.build(:image => params[:file])
+    @service = Service.find(params[:id]) 
+    @service.update_attributes(service_photo_params)
     if @service.save
-      render json: {id: @service.photos.last.id,path: @service.photos.last.image_url(:small)}
+      redirect_to services_gallery_path(@service)
+      flash[:notice] = "Photo Successfully Added"
+      # render json: {id: @service.photos.last.id,path: @service.photos.last.image_url(:small)}
     end
   end
 
@@ -201,10 +231,22 @@ class ServicesController < ApplicationController
   end
 
   def manage_services
-    @active_gigs = current_user.services.where('publish=?',true)
-    @pending_for_approval_gigs = current_user.services.where('publish=?',true)
+    @active_gigs = current_user.services.active.where('publish=?',true)
+    @inactive_gigs = current_user.services.inactive.where('publish=?',true)
     @draft_gigs = current_user.services.where('publish=?',false)
   end
+
+  def change_status
+    @service = Service.find_by_id(params[:service_id]) 
+    if @service.update(status: params[:status])
+      redirect_to services_manage_path
+      if @service.active?
+        flash[:notice] = "Service Successfully Active"
+      else
+        flash[:notice] = "Service Successfully Inactive"
+      end 
+    end   
+  end 
 
   private
   def service_params
@@ -224,7 +266,18 @@ class ServicesController < ApplicationController
       extra_standard_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
       extra_premimum_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
       photos_attributes: [:id,:image,:_destroy],
-      faqs_attributes: [:id,:question,:answer,:_destroy]
+      faqs_attributes: [:id,:question,:answer,:_destroy],
+      question1_faq_attributes: [:id,:question,:answer,:_destroy],
+      question2_faq_attributes: [:id,:question,:answer,:_destroy],
+      question3_faq_attributes: [:id,:question,:answer,:_destroy]
+    )
+  end
+
+  def service_photo_params
+    params.require(:service).permit(
+      primary_photo_attributes: [:id,:_destroy,:image],
+      secondary_photo_attributes: [:id,:_destroy,:image],
+      last_photo_attributes: [:id,:_destroy,:image]
     )
   end
 

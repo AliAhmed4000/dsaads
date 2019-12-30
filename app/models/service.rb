@@ -25,6 +25,12 @@ class Service < ApplicationRecord
   has_one  :extra_basic_package, -> {where(level: "extra_basic")}, :class_name => 'Package', dependent: :destroy
   has_one  :extra_standard_package,-> {where(level: "extra_standard")}, :class_name => 'Package', dependent: :destroy
   has_one  :extra_premimum_package ,-> {where(level: "extra_premimum")}, :class_name => 'Package', dependent: :destroy
+  has_one  :primary_photo, -> {where(level: "primary")}, :class_name => 'Photo', dependent: :destroy
+  has_one  :secondary_photo,-> {where(level: "secondary")}, :class_name => 'Photo', dependent: :destroy
+  has_one  :last_photo,-> {where(level: "last_image")}, :class_name => 'Photo', dependent: :destroy
+  has_one  :question1_faq, -> {where(level: "question1")}, :class_name => 'Faq', dependent: :destroy
+  has_one  :question2_faq,-> {where(level: "question2")}, :class_name => 'Faq', dependent: :destroy
+  has_one  :question3_faq,-> {where(level: "question3")}, :class_name => 'Faq', dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :favorited_users, through: :favorites, source: :user
   has_many :wish_favorites
@@ -38,15 +44,23 @@ class Service < ApplicationRecord
   accepts_nested_attributes_for :extra_standard_package, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :extra_premimum_package, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :photos, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :primary_photo, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :secondary_photo, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :last_photo, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :question1_faq, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :question2_faq, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :question3_faq, reject_if: :all_blank, allow_destroy: true
   acts_as_punchable
   # validates :title, :category_id, presence: true
   # validates :title, length: {minimum: 50, maximum: 700}
   # validates :description, length: {minimum: 50, maximum: 700}
   # validates :requirements, length: {minimum: 50, maximum: 700}
-  attr_accessor :sub_category, :wizard
+
+  enum status: ['active','inactive']
+  attr_accessor :sub_category, :wizard, :new_seller, :top_seller, :pro_seller
   after_create :set_sub_categoty
 
-  def set_sub_categoty
+  def set_sub_categoty 
     self.update_column('category_id',sub_category)
   end
 
@@ -111,11 +125,45 @@ class Service < ApplicationRecord
       services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).order(created_at: :desc)
     elsif category.blank? && !keyword.blank?
       services = Service.where('description LIKE ? OR title LIKE ?',keyword,keyword).where('services.publish=?',true).order(created_at: :desc)
-    end 
+    end
     new_service = []
-    services.each do |service|
-      if service.seller.orders.blank? 
-        new_service.push(service.seller.id)
+    services.each do |s| 
+      if s.seller.services.active.count >= 7 && s.seller.order_items.where('status!=?',OrderItem.statuses['completed']).sum(:price) >= 5000 
+        new_service.push(s.seller.id)
+      end 
+    end
+    return new_service.uniq 
+  end
+
+  def self.pro_seller_services(category,keyword)
+    if !category.blank? && !keyword.blank?
+      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where('services.description LIKE ? OR services.title LIKE ?',keyword,keyword).order(created_at: :desc)
+    elsif !category.blank? && keyword.blank?
+      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).order(created_at: :desc)
+    elsif category.blank? && !keyword.blank?
+      services = Service.where('description LIKE ? OR title LIKE ?',keyword,keyword).where('services.publish=?',true).order(created_at: :desc)
+    end
+    new_service = []
+    services.each do |s| 
+      if s.seller.services.active.count >= 10 && s.seller.order_items.where('status=?',OrderItem.statuses['completed']).sum(:price) >= 1000 && s.seller.order_items.where('status=?',OrderItem.statuses['completed']).count >= 25
+        new_service.push(s.seller.id)
+      end 
+    end
+    return new_service.uniq 
+  end
+
+  def self.top_seller_services(category,keyword)
+    if !category.blank? && !keyword.blank?
+      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where('services.description LIKE ? OR services.title LIKE ?',keyword,keyword).order(created_at: :desc)
+    elsif !category.blank? && keyword.blank?
+      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).order(created_at: :desc)
+    elsif category.blank? && !keyword.blank?
+      services = Service.where('description LIKE ? OR title LIKE ?',keyword,keyword).where('services.publish=?',true).order(created_at: :desc)
+    end
+    new_service = []
+    services.each do |s| 
+      if s.seller.order_items.where('status=?',OrderItem.statuses['completed']).sum(:price) >= 15000 && s.seller.order_items.where('status=?',OrderItem.statuses['completed']).count >= 80 
+        new_service.push(s.seller.id)
       end 
     end
     return new_service.uniq 
