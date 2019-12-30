@@ -1,10 +1,10 @@
-<div class="container font-weight-bold">
+<div class="container font-weight-bold bg-light">
   <div class="container">  
     <%= simple_form_for @service do |f|  %>
       <%= f.input :publish, as: :hidden,:input_html => { :value => true } %>
-      Almost there...
+      <h3>Almost there...
       Let's publish your Gig and get
-      some buyers rolling in.
+      some buyers rolling in.</h3>
       <div>
         <span class="inline-block float-right">
           <%= f.input :wizard,as: :hidden, :input_html => { :value => "published" } %>

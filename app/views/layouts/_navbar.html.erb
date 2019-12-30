@@ -27,7 +27,7 @@
             <li><%= link_to 'Orders', orders_path%></li>
             <li class="nav-item"><%= link_to 'Saved', favorites_path%></li>
             <% unless current_user.orders.blank? %>
-              <li class="nav-item"><%= link_to 'My Shopping', buyer_wallet_path%></li>
+              <li class="nav-item"><%= link_to 'My Shopping', my_shopping_path%></li>
             <% end %>
           <% else %>
             <li class="nav-item"><%= link_to 'Orders', orders_path %></li>

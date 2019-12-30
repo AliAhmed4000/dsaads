@@ -3,6 +3,6 @@ class BalancesController < ApplicationController
 	def index
 	end
 	
-	def buyer_wallet
+	def my_shpping
 	end  
 end 

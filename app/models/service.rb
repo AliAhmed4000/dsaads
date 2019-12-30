@@ -58,9 +58,14 @@ class Service < ApplicationRecord
 
   enum status: ['active','inactive']
   attr_accessor :sub_category, :wizard, :new_seller, :top_seller, :pro_seller
-  after_create :set_sub_categoty
+  after_create :set_sub_category
+  after_update :set_sub_category_on_change,if: lambda{|s| s.sub_category.present?}
+  
+  def set_sub_category
+    self.update_column('category_id',sub_category)
+  end
 
-  def set_sub_categoty 
+  def set_sub_category_on_change
     self.update_column('category_id',sub_category)
   end
 

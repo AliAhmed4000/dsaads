@@ -18,9 +18,11 @@
       <%= @service.premimum_package.revision_number %> Revision
     </div>
   </div>
-  <div class="row py-2 text-center">
-    <div class="col">
-      <%= link_to "Continue #{number_to_currency(@service.premimum_package.price)}",service_package_path(@service,@service.premimum_package), class: "btn btn-primary" %>
+  <% if user_signed_in? && @service.user_id != current_user.id  %>
+    <div class="row py-2 text-center">
+      <div class="col">
+        <%= link_to "Continue #{number_to_currency(@service.premimum_package.price)}",service_package_path(@service,@service.premimum_package), class: "btn btn-primary" %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
