@@ -30,6 +30,9 @@
 <script type="text/javascript">  
   Dropzone.options.myDropzoneVideo = {
     acceptedFiles: 'video/*',
+    maxFilesize: 50,
+    maxFiles: 1,
+    uploadMultiple: false,
     addRemoveLinks: true,
     init: function(){
       thisDropzone = this;
