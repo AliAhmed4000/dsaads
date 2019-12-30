@@ -2,72 +2,26 @@
   <h3 class="bold text-center">Explore The Marketplace</h3>
   <div class="container">
     <center>
-      <ul class="nav nav-tabs nav-justified" role="tablist">
+      <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#CLI">
+          <a class="nav-link active" href="#cli" data-toggle="tab">
             <%= image_tag "img2.png",width: "30px", height: "30px" %> 
             CLIENTS
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#FREE">
+          <a class="nav-link" href="#free" data-toggle="tab">
             <%= image_tag "img3.png",width: "30px", height: "30px" %>FREELANCER
           </a>
         </li>
       </ul>
-    </center>  <!-- Tab panes -->
-  <div class="tab-content">
-    <div id="CLI" class="container tab-pane active"><br>
-     <div class="container">
-       <h2 class="display-5 text-center py-3">How Its Work</h2>
-       <div class="row">
-        <div class="col-md-4">
-         <center><%= image_tag "1mg4.png", :class=>"images" %></center>
-         <h2 class="display-5 text-center">Create an Account</h2>
-         <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-       </div>
-       <div class="col-md-4">
-         <center><%= image_tag "img5.png", :class=>"images" %></center>
-         <h2 class="display-5 text-center">Find a gig</h2>
-         <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-       </div>
-       <div class="col-md-4">
-         <center><%= image_tag "img6.png", :class=>"images" %></center>
-         <h2 class="display-5 text-center">Choose as expert</h2>
-         <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-       </div>
-     </div>
-   </div>
- </div>
- <div id="FREE" class="container tab-pane fade"><br>
-   <div class="container">
-     <h2 class="display-5 text-center py-3">How Its Work</h2>
-     <div class="row">
-       <div class="col-md-3">
-        <center><%= image_tag "1mg4.png",:class=>"images" %></center>
-        <h2 class="display-5 text-center">Create an Account</h2>
-        <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-      </div>
-      <div class="col-md-3">
-        <center><%= image_tag "1mg4.png",:class=>"images" %></center>
-        <h2 class="display-5 text-center">Create an Account</h2>
-        <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-      </div>
-      <div class="col-md-3">
-       <center><%= image_tag "1mg4.png",:class=>"images" %></center>
-       <h2 class="display-5 text-center">Create an Account</h2>
-       <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-     </div>
-     <div class="col-md-3">
-      <center><%= image_tag "1mg4.png",:class=>"images" %></center>
-      <h2 class="display-5 text-center">Create an Account</h2>
-      <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+    </center>  
+    <div class="tab-content">
+      <%= render 'pages/freelancer/cli' %>
+      <%= render 'pages/freelancer/free' %>
     </div>
   </div>
-</div>
 </div>  
-</div>
-</div>
 <style type="text/css">
   .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     color: #495057;
@@ -96,5 +50,9 @@
     padding: 2px 3px 2px 3px;
   }
 </style>
-
+<script type="text/javascript">
+  $('.nav-tabs a').click(function(){
+    $(window).off("scroll", scrollHandler);
+  });
+</script>
 
