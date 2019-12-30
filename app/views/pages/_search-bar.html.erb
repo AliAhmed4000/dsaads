@@ -1,0 +1,79 @@
+<!--SHOWCASE SLIDER -->
+<script type="text/javascript">
+  const choices = new Choices('[data-trigger]',
+  {
+    searchEnabled: false,
+    itemSelectText: '',
+  });
+</script>
+<section id="showcase">
+  <div class="s003">
+<%= form_tag services_path,:id => 'elm_id', method: :get do %>
+  <div class="inner-form">
+    <div class="input-field first-wrap">
+      <div class="input-select">
+        <select data-trigger="" name="choices-single-default" >
+          <option placeholder="">Categories</option>
+          <%= @categories.each do |category| %>
+            <option value="<%= category.id %>"><%= category.title %></option>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <div class="input-field second-wrap">
+      <%= text_field_tag :search,nil,:placeholder=>"Search"  %>
+    </div>
+    <div class="input-field third-wrap">
+      <button class="btn-search" type="button" id="search-button">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+<% end %>
+</div>
+</section>
+<script type="text/javascript">
+  $("#search-button").click(function() {
+    $("#elm_id").submit();
+  });
+</script>
+<script type="text/javascript">
+$(function(){
+  const choices = new Choices('[data-trigger]',
+  {
+    searchEnabled: false,
+    itemSelectText: '',
+  });
+});
+</script>
+<style type="text/css">
+  .s003 {
+  position: absolute;
+  height: 40px;
+  top: 15px;
+  left: 115px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  font-family: 'Poppins', sans-serif;
+  background-size: cover;
+  background-position: center center;
+  padding: 15px;
+}
+.s003 form .inner-form .input-field.second-wrap{
+  width: 150px;
+  height: 40px;
+}
+
+.s003 form .inner-form .input-field.first-wrap{
+  width: 150px;
+  height: 40px;
+}
+
+.s003 form .inner-form .input-field{
+  height: 43px;
+}
+</style>

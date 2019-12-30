@@ -10,19 +10,19 @@
         </div>
       <% else %>
         <%if @services.present? %>
-          <div class="border border-light bg-light">
+          <!-- <div class="border border-light bg-light">
             <p class="h3 text-center p-3">My Gigs</p>
-          </div>
+          </div> -->
           <div class="row">
             <%= render partial: 'shared/services-row',locals: {services: @services} %>
           </div>
         <% end %>
-        <div class="border border-light bg-light">
+        <!-- <div class="border border-light bg-light">
           <p class="h3 text-center p-3">My Favorites</p>
-        </div>
-        <div class="row">
-          <%= render partial: 'shared/services-row', locals: {services: @favorited_services} %>
-        </div>
+        </div> -->
+        <!-- <div class="row">
+          <%#= render partial: 'shared/services-row', locals: {services: @favorited_services} %>
+        </div> -->
       <% end %>
     </div>
   </div>

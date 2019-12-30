@@ -1,18 +1,21 @@
-<%= render 'services/category_details' %>
+<%= render partial: 'services/category_details',locals: {services: @services} %>
 <div class="container-fluid px-5">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-3">
-        <div class="pt-2">
-          <%= render 'services/search-sidebar' %>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-12 col-lg-8">
-        <div class="row" id="services-row">
-          <%= render partial: 'shared/services-row', locals: {services: @services} %>
-        </div>
+  <div class="row" id="category-services">
+    <%= render partial: 'services/sorting',locals: {services: @services} %>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-3">
+      <div class="pt-2">
+        <%= render 'services/search-sidebar' %>
       </div>
     </div>
+    <div class="col-sm-12 col-md-12 col-lg-8">
+      <div class="row" id="services-row">
+        <%= render partial: 'shared/services-row', locals: {services: @services} %>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="pagination text-success justify-content-center mt-5">
-  <%= paginate @services %>
+  <%#= paginate @services %>
 </div>

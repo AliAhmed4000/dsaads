@@ -1,0 +1,31 @@
+<div class="border border-light text-center" style="margin-bottom: 10px;">
+  <div class="box-tab justified">
+    <ul class="nav nav-tabs navbar-light bg-light mr-auto nav nav-pills nav-justified">
+      <% unless @service.premimum_package.blank? %>
+        <li class="active nav-item">
+          <a class="nav-link" href="#premium" data-toggle="tab"><h6>Premium</h6>
+          </a>
+        </li>
+      <% end %>
+      <% unless @service.standard_package.blank? %>
+        <li class="active nav-item">
+          <a class="nav-link" href="#standard" data-toggle="tab"><h6>Standard</h6>
+          </a>
+        </li>
+      <% end %>
+      <li class="active nav-item">
+        <a class="nav-link active" href="#basic" data-toggle="tab"><h6>Basic</h6>
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <%= render partial: "/services/packages/basic" %>
+      <% unless @service.standard_package.blank? %>
+        <%= render partial: "/services/packages/standard" %>
+      <% end %>
+      <% unless @service.premimum_package.blank? %>
+        <%= render partial: "/services/packages/premium" %>
+      <% end %>
+    </div>
+	</div>
+</div>

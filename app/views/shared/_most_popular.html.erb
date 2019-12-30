@@ -6,7 +6,7 @@
       <% end %>
       <div class="card-body">
         <h5 class="card-title text-truncate text-capitalize">
-          I Can <%= service.title.truncate(15) %>
+          I can <%= service.title.truncate(15) %>
         </h5>
         <% unless service.seller.avatar_url.blank? %>
           <p class="align-inline"><%= image_tag service.seller.avatar_url(:small), class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name.truncate(10), profile_path(service.user_id) %></span></p>

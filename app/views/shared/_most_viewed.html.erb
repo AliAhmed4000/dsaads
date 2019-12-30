@@ -6,7 +6,7 @@
       <% end %>
       <div class="card-body">
         <h5 class="card-title text-truncate text-capitalize">
-          I Can <%= service.title.truncate(15) %>
+          I can <%= service.title.truncate(15) %>
         </h5>
         <% unless service.seller.avatar_url.blank? %>
           <p class="align-inline"><%= image_tag service.seller.avatar_url(:small), class: 'rounded-circle' %><span class="pl-3"><%= link_to service.seller.full_name.truncate(10), profile_path(service.user_id) %></span></p>
@@ -56,13 +56,19 @@
     </div>
   <% end %>
 </div>
+<div class="nav-options">
+    <%= image_tag 'next.png', class: 'am-next' %>
+    <%= image_tag 'back.png', class: 'am-prev' %>
+  </div>
 <script type="text/javascript">
-  $('.owl-carousel').owlCarousel({
+  var owl = $('.owl-carousel');
+    owl.owlCarousel({
     loop:true,
     margin:10,
     nav:true,
     onInitialized:6,
-    responsive:{
+    navText: [$('.am-next'),$('.am-prev')],
+        responsive:{
         0:{
             items:1
         },
@@ -86,5 +92,23 @@
     -webkit-align-items: center; /* Safari 7.0+ */
     display: flex;
     align-items: center;
-}
+  }
+
+ .am-next ,.am-prev{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .am-prev{
+    left: -2rem;
+    height: 50px;
+    width: 50px;
+  }
+
+  .am-next{
+    right: -3.1rem;
+    height: 50px;
+    width: 50px;
+  }
 </style>

@@ -1,5 +1,5 @@
-<div class="tab-pane" id="pending_gigs">
-<div class="panel-body">
+<div class="tab-pane" id="inactive_gigs">
+  <div class="panel-body">
     <div class="table-responsive">
       <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
         <thead>
@@ -8,13 +8,14 @@
             <th>Gig</th>
             <th>Created At</th>
             <th>Orders</th>
+            <th>Views</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <% @active_gigs.each do |gig| %>
+          <% @inactive_gigs.each do |gig| %>
             <tr>
-              <td class="align-middle" scope="row">
+              <td class="align-middle" scope="row" width="30%">
                 <% if gig.photos.blank? %>
                   <%= image_tag('missing.png') %>
                 <% else %>
@@ -28,14 +29,16 @@
                 <%= gig.created_at.strftime("%d %B %Y") %>
               </td>
               <td class="align-middle"><%= gig.packages.joins(:order_items).where('order_items.status=?',OrderItem.statuses['inactive']).count %></td>
+              <td class="align-middle"><%= gig.hits %></td>
               <td class="align-middle">
                 <div class="btn-group pull-right">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Actions
+                  <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">Actions
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
                     <li class="nav-item"><%= link_to "Edit", edit_service_path(gig),class: "nav-link" %></li>
                     <li class="nav-item"><%= link_to "View", service_path(gig),class: "nav-link" %></li>
+                    <li class="nav-item"><%= link_to "Active", change_status_path(gig,'active'),class: "nav-link" %></li>
                   </ul>
                 </div>
               </td>

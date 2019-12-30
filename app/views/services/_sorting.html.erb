@@ -1,0 +1,63 @@
+<% unless services.blank? %>
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="cat-bar" style="height: 35px;">
+        <div class="dropDownSect">
+         <div class="dropdown">
+          <div class="dropdown-toggle dropdownHead" data-toggle="dropdown" style="margin-top: auto;">
+           Sort By</div>
+            <div class="dropdown-menu">
+              <div class="dropdown-item" href="#">
+              <%= link_to "Neswest Arrival",sort_highest_path(@category,services.pluck(:id).join(','),'neswest'),remote: true %>
+              </div>
+              <div class="dropdown-item">
+              <%= link_to "Most Reviewed",sort_highest_path(@category,services.pluck(:id).join(','),'review'),remote: true %>
+              </div>
+              <div class="dropdown-item" href="#">
+                <%= link_to "Relevant",sort_highest_path(@category,services.pluck(:id).join(','),'relevant'),remote: true %>
+              </div>
+              <div class="dropdown-item">
+                <%= link_to "Highest Rated",sort_highest_path(@category,services.pluck(:id).join(','),'rated'),remote: true %>
+              </div>
+              <div class="dropdown-item">
+                <%= link_to "Lowest Price",sort_highest_path(@category,services.pluck(:id).join(','),'asc'),remote: true %>
+              </div>
+              <div class="dropdown-item">
+                <%= link_to "Highest Price",sort_highest_path(@category,services.pluck(:id).join(','),'desc'),remote: true %>
+              </div>
+            </div>
+         </div>
+        </div>
+      </div>
+    </div>
+<% else %>
+  <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="cat-bar" style="height: 35px;">
+        <div class="dropDownSect">
+         <div class="dropdown">
+          <div class="dropdown-toggle dropdownHead" data-toggle="dropdown" style="margin-top: auto;">
+           Sort By</div>
+            <!-- <div class="dropdown-menu"> -->
+              <!-- <div class="dropdown-item" href="#">
+              <%#= link_to "Neswest Arrival",sort_highest_path(@category,services.pluck(:id).join(','),'neswest'),remote: true %>
+              </div>
+              <div class="dropdown-item">
+              <%#= link_to "Most Reviewed",sort_highest_path(@category,services.pluck(:id).join(','),'review'),remote: true %>
+              </div>
+              <div class="dropdown-item" href="#">
+                <%#= link_to "Relevant",sort_highest_path(@category,services.pluck(:id).join(','),'relevant'),remote: true %>
+              </div>
+              <div class="dropdown-item">
+                <%#= link_to "Highest Rated",sort_highest_path(@category,services.pluck(:id).join(','),'rated'),remote: true %>
+              </div>
+              <div class="dropdown-item">
+                <%#= link_to "Lowest Price",sort_highest_path(@category,services.pluck(:id).join(','),'asc'),remote: true %>
+              </div>
+              <div class="dropdown-item">
+                <%#= link_to "Highest Price",sort_highest_path(@category,services.pluck(:id).join(','),'desc'),remote: true %>
+              </div> -->
+            <!-- </div> -->
+         </div>
+        </div>
+      </div>
+    </div>
+<% end %>

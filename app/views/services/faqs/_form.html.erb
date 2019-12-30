@@ -1,0 +1,53 @@
+<h4>FREQUENTLY ASKED QUESTIONS (FAQ)</h4>
+<p>Add Questions & Answers to help buyers better understand your service.</p>
+<%= f.simple_fields_for :question1_faq do |q1| %>
+  <div class="row mb-3 nested-fields">
+    <div class="col-md-5 col-sm-12">
+      <%= q1.input :question,required: true %>
+    </div>
+    <div class="col-md-5 col-sm-12">
+      <%= q1.input :answer,required: true %>
+    </div>
+  </div>
+<% end %>
+
+<%= f.simple_fields_for :question2_faq do |q2| %>
+  <div class="row mb-3 nested-fields">
+    <div class="col-md-5 col-sm-12">
+      <%= q2.input :question,required: true %>
+    </div>
+    <div class="col-md-5 col-sm-12">
+      <%= q2.input :answer,required: true %>
+    </div>
+  </div>
+<% end %>
+
+<%= f.simple_fields_for :question3_faq do |q3| %>
+  <div class="row mb-3 nested-fields">
+    <div class="col-md-5 col-sm-12">
+      <%= q3.input :question,required: true %>
+    </div>
+    <div class="col-md-5 col-sm-12">
+      <%= q3.input :answer,required: true %>
+    </div>
+  </div>
+<% end %>
+
+<%= f.simple_fields_for :faqs do |faq| %>
+  <% if !faq.object.id.blank? && ['question1','question2','question3'].include?(faq.object.level).blank? %>
+    <div class="row mb-3 nested-fields" id="<%= faq.object.id %>_faq">
+      <div class="col-md-5 col-sm-12">
+        <%= faq.input :question,required: true%>
+      </div>
+      <div class="col-md-5 col-sm-12">
+        <%= faq.input :answer,required: true %>
+      </div>
+      <div class="col-md-2 col-sm-12" style="margin-top: 3%">
+  			<%= link_to faq_path(faq.object.id),remote: true, method: 'delete' do %>
+  				<p class="pull-right">Delete</p>
+				<% end %>
+			</div>
+    </div>
+  <% end %>
+<% end %>
+<p><%= link_to_add_association 'Add FAQ', f, :faqs , class: 'btn btn-outline-primary pull-right'%></p>

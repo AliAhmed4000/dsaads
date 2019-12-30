@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/orders/:id/dispute', to: 'orders#dispute', as: "order_dispute"
   get '/categories/search', to: 'categories#search', as: "search_category"
   get '/category/:id/search/:search', to: 'categories#online_users'
+  get '/category/:id/services/:ids/order/:order', to: 'categories#sort_highest', as: "sort_highest"
   resources :categories do
     member do
       get :services
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
   delete '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#wish_list_delete', as: "wish_list_delete"
   get '/buyer_wallet', to: 'balances#buyer_wallet', as: "buyer_wallet"
   get '/manage_services', to: 'services#manage_services', as: "services_manage"
+  get '/service/:service_id/status/:status',to: 'services#change_status', as: "change_status"
   get '/services/:service_id/packages/:id/payment',to: 'packages#payment', as: "packages_payment"
   get '/order/:id/requirement',to: 'packages#requirement', as: "packages_requirement" 
   resources :skills, only: [:destroy]

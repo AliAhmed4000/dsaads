@@ -2,8 +2,8 @@
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-12">
         <div class="SortBlufLink">
-          <h2>Manage Gigs</h2>
-          <%= link_to "New", new_service_path,class: 'btn btn-outline-primary pull-right' %>
+          <h2>Manage Services</h2>
+          <%= link_to "POST NEW SERVICE", new_service_path,class: 'btn btn-outline-primary pull-right' %>
         </div>
       </div>
     </div>
@@ -18,9 +18,9 @@
             </a>
           </li>
           <li class="active nav-item">
-            <a class="nav-link" href="#pending_gigs" data-toggle="tab">
-              Pending For Approval
-              <span class="badge badge-light"><%= @pending_for_approval_gigs.count %></span>
+            <a class="nav-link" href="#inactive_gigs" data-toggle="tab">
+              Inactive
+              <span class="badge badge-light"><%= @inactive_gigs.count %></span>
             </a>
           </li>
           <li class="active nav-item">
@@ -32,7 +32,7 @@
         </ul>
         <div class="tab-content">
           <%= render partial: "/services/manage_services/active" %>
-          <%= render partial: "/services/manage_services/pending_approval" %>
+          <%= render partial: "/services/manage_services/inactive" %>
           <%= render partial: "/services/manage_services/draft" %>
         </div>
       </div>

@@ -1,15 +1,20 @@
 <div class="underline seller-speak">
   <p class="h4 pb-2">Seller Speaks</p>
+  <select class="form-control form-control-lg" name="q[seller_language_in][]" id="validationCustom03" onchange="my_submit(this)" required>
+  <option value="" selected disabled>Please select</option>
   <% Service.seller_languages(@category,@search).each do |key,value| %>
-    <label class="Checkbox-form">
-    <%= f.check_box :seller_language_in,{multiple: true,:onclick => 'my_submit(this)'},key,"" %><%= key.split('-').last %>
+    <!-- <label class="Checkbox-form">
+    <%#= f.check_box :seller_language_in,{multiple: true,:onclick => 'my_submit(this)'},key,"" %><%= key.split('-').last %>
       <span class="checkmark"></span>
     </label>
-    <span class="OnlineCheckBoxNum">(<%= value %>)</span>
+    <span class="OnlineCheckBoxNum">(<%#= value %>)</span> -->
+    <option value="<%= key %>"><%= key.split('-').last%><span class="pull-right">(<%= value %>)</span></option>
   <% end %>
+  </select>
   <a href="javascript:void(0)" class="ServicesInclude" id="show-more-speak">+ Show more</a>
   <a href="javascript:void(0)" class="ServicesInclude" id="show-less-speak">- Show Less</a>
 </div>
+<hr>
 <script type="text/javascript">
   $(function(){
     var label = $('.seller-speak').find('.Checkbox-form').length;

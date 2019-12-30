@@ -1,36 +1,57 @@
 <!-- HOME CATEGORY SECTION -->
 <section id="home-category" class="py-5">
-  <div class="container">
+  <div id="Gallery">
+    <!-- <h2 class="display-5 mx-3">Popular Collection</h2>
+     -->
+    <div class="container">
+      <div class="row port-page">            
+      <% @categories.each do |category| %>
+        <div class="gallery_product col-lg-3 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+          <a href="<%= services_category_path(category)%>">
+            <img src="<%= category.image_url(:small) %>" class="img-responsive center-block port-image img-fluid" style="height: 170px;">
+            <div class="centered"><%= category.title.upcase %></div>
+          </a>            
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <!-- <div class="container">
     <div class="row">
-    <% @categories.each do |category| %>
+    <%# @categories.each do |category| %>
       <div class="col-md-2 mb-2 text-center">
         <div class="thumbnail">
-          <a href="<%= services_category_path(category)%>">
-            <img src="<%= category.image_url(:small) %>" style="object-fit: cover;">
+          <a href="<%#= services_category_path(category)%>">
+            <img src="<%#= category.image_url(:small) %>" style="object-fit: cover;">
             <div class="caption">
-              <p class="categories"><%= category.title.upcase %></p>
+              <p class="categories"><%#= category.title.upcase %></p>
             </div>
           </a>
         </div>
       </div>
-    <% end %>
+    <%# end %>
     </div>
-  </div>
+  </div> -->
 </section>
 
 <style type="text/css">
-.thumbnail {
-  position: relative;
-  /*text-align: center;*/
-  /*color: white;*/
-  font-weight: bold;
+.port-image {
+  width: 100%;
 }
-
-/* Centered text */
-.caption {
+.gallery_product {
+  margin-bottom: 30px;
+}
+.container-fluid{
+}
+.centered{
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: white;
+  font-size: 18px;
+  font-weight:700;
+  padding: 0 5px;
 }
 </style>

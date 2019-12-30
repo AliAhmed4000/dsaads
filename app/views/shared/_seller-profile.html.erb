@@ -41,6 +41,62 @@
   <hr>
   <p class="h3 bold pt-3">Language</p>
   <p class="text-secondary"><%= @seller.language %></p>
+  <hr>
+  <p class="h3 bold pt-3">Skills</p>
+  <% @seller.user_skills.each do |s| %>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary profile-icon-size"><%= s.skill.name %></p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong><%= s.level %></strong></p>
+      </div>
+    </div>
+  <% end %>
+  <hr>
+  <p class="h3 bold pt-3">Education</p>
+  <% @seller.user_educations.each do |e| %>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary profile-icon-size">Country</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong><%= e.country %></strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary profile-icon-size">Institution</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong><%= e.institution_name %></strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary profile-icon-size">Degree Title</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong><%= e.title %></strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary profile-icon-size">Major</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong><%= e.major %></strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary profile-icon-size">Passing Year</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong><%= e.passing_year %></strong></p>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <script>

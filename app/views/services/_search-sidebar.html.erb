@@ -1,6 +1,7 @@
 <%= search_form_for @q, url: services_path,remote: true do |f| %>
 	<% unless @category.blank? %>
     <%= f.hidden_field :id, value: @category.id %>
+    <%= f.hidden_field :packages_level_eq, value: "basic" %>
   <% end %>
   <% unless @services.blank? %>  
     <%= render partial: '/services/filter/serach_bar',locals: {f: f} %>

@@ -1,12 +1,16 @@
 <div class="underline seller-live">
   <p class="h4 pb-2">Seller Lives In</p>
-  <% Service.seller_countries(@category,@search).each do |key,value| %>
-    <label class="Checkbox-form">
-      <%= f.check_box :seller_country_in,{multiple: true,:onclick => 'my_submit(this)'},key,"" %><%= key %>
-      <span class="checkmark"></span>
-    </label>
-    <span class="OnlineCheckBoxNum">(<%= value %>)</span>
-  <% end %>
+  <select class="form-control form-control-lg" name="q[seller_country_in][]" id="validationCustom03" onchange="my_submit(this)" required>
+    <option value="" selected disabled>Please select</option>
+    <% Service.seller_countries(@category,@search).each do |key,value| %>
+      <!-- <label class="Checkbox-form">
+        <%#= f.check_box :seller_country_in,{multiple: true,:onclick => 'my_submit(this)'},key,"" %><%= key %>
+        <span class="checkmark"></span>
+      </label>
+      <span class="OnlineCheckBoxNum">(<%#= value %>)</span> -->
+      <option value="<%= key %>"><%= key %><span class="pull-right">(<%= value %>)</span></option>
+    <% end %>
+  </select>
   <a href="javascript:void(0)" class="ServicesInclude" id="show-more-live">+ Show more</a>
   <a href="javascript:void(0)" class="ServicesInclude" id="show-less-live">- Show Less</a>
 </div>

@@ -7,15 +7,13 @@
             <th>Image</th>
             <th>Gig</th>
             <th>Created At</th>
-            <th>Orders</th>
-            <th>Views</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <% @draft_gigs.each do |gig| %>
             <tr>
-              <td class="align-middle">
+              <td class="align-middle" width="30%">
                 <% if gig.photos.blank? %>
                   <%= image_tag('missing.png') %>
                 <% else %>
@@ -28,10 +26,9 @@
               <td class="align-middle">
                 <%= gig.created_at.strftime("%d %B %Y") %>
               </td>
-              <td class="align-middle"><%#= item.created_at.strftime("%d %B %Y") %></td>
               <td class="align-middle">
                 <div class="btn-group pull-right">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Actions
+                  <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">Actions
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu">

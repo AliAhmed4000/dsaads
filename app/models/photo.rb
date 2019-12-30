@@ -13,4 +13,5 @@ class Photo < ApplicationRecord
   mount_uploader :image, ImageUploader
   belongs_to :service
   validates :image, presence: true
+  enum level: ['primary','secondary','last_image']
 end

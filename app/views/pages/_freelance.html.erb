@@ -1,91 +1,100 @@
-<div class="container">
-  <center>
-    <ul class="nav nav-tabs nav-justified" role="tablist">
-      <li class="nav-item">
-        <%= link_to image_tag('img2.png',width: '30px',height: '30px'),root_path, class: "nav-link active","data-toggle" => "tab" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to image_tag('img3.png',width: '30px',height: '30px'),root_path, class: "nav-link","data-toggle" => "tab" %>
-      </li>
-    </ul>
-  </center>
-<div class="tab-content">
-  <div id="CLI" class="container tab-pane active"><br>
-   <div class="container">
-     <h2 class="display-5 text-center py-3">How Its Work</h2>
-     <div class="row">
-      <div class="col-md-4">
-       <center><%= image_tag '1mg4.png', class: 'images', alt: "" %></center>
-       <h2 class="display-5 text-center">Create an Account</h2>
-       <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-     </div>
-     <div class="col-md-4">
-       <center><%= image_tag 'img5.png', class: 'images', alt: "" %></center>
-       <h2 class="display-5 text-center">Find a gig</h2>
-       <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-     </div>
-     <div class="col-md-4">
-       <center><%= image_tag 'img6.png', class: 'images', alt: "" %></center>
-       <h2 class="display-5 text-center">Choose as expert</h2>
-       <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+<div class="container pb-3">
+  <h3 class="bold text-center">Explore The Marketplace</h3>
+  <div class="container">
+    <center>
+      <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="#CLI">
+            <%= image_tag "img2.png",width: "30px", height: "30px" %> 
+            CLIENTS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#FREE">
+            <%= image_tag "img3.png",width: "30px", height: "30px" %>FREELANCER
+          </a>
+        </li>
+      </ul>
+    </center>  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="CLI" class="container tab-pane active"><br>
+     <div class="container">
+       <h2 class="display-5 text-center py-3">How Its Work</h2>
+       <div class="row">
+        <div class="col-md-4">
+         <center><%= image_tag "1mg4.png", :class=>"images" %></center>
+         <h2 class="display-5 text-center">Create an Account</h2>
+         <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+       </div>
+       <div class="col-md-4">
+         <center><%= image_tag "img5.png", :class=>"images" %></center>
+         <h2 class="display-5 text-center">Find a gig</h2>
+         <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+       </div>
+       <div class="col-md-4">
+         <center><%= image_tag "img6.png", :class=>"images" %></center>
+         <h2 class="display-5 text-center">Choose as expert</h2>
+         <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+       </div>
      </div>
    </div>
  </div>
-</div>
-<div id="FREE" class="container tab-pane fade"><br>
- <div class="container">
-   <h2 class="display-5 text-center py-3">How Its Work</h2>
-   <div class="row">
+ <div id="FREE" class="container tab-pane fade"><br>
+   <div class="container">
+     <h2 class="display-5 text-center py-3">How Its Work</h2>
+     <div class="row">
+       <div class="col-md-3">
+        <center><%= image_tag "1mg4.png",:class=>"images" %></center>
+        <h2 class="display-5 text-center">Create an Account</h2>
+        <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+      </div>
+      <div class="col-md-3">
+        <center><%= image_tag "1mg4.png",:class=>"images" %></center>
+        <h2 class="display-5 text-center">Create an Account</h2>
+        <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+      </div>
+      <div class="col-md-3">
+       <center><%= image_tag "1mg4.png",:class=>"images" %></center>
+       <h2 class="display-5 text-center">Create an Account</h2>
+       <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
+     </div>
      <div class="col-md-3">
-      <center><%= image_tag '1mg4.png', class: 'images', alt: "" %></center>
+      <center><%= image_tag "1mg4.png",:class=>"images" %></center>
       <h2 class="display-5 text-center">Create an Account</h2>
       <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
     </div>
-    <div class="col-md-3">
-      <center><%= image_tag '1mg4.png', class: 'images', alt: "" %></center>
-      <h2 class="display-5 text-center">Create an Account</h2>
-      <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-    </div>
-    <div class="col-md-3">
-     <center><%= image_tag '1mg4.png', class: 'images', alt: "" %></center>
-     <h2 class="display-5 text-center">Create an Account</h2>
-     <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
-   </div>
-   <div class="col-md-3">
-    <center><%= image_tag '1mg4.png', class: 'images', alt: "" %></center>
-    <h2 class="display-5 text-center">Create an Account</h2>
-    <p class="text-center display-6">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.</p>
   </div>
 </div>
-</div>
 </div>  
 </div>
-</div>  
+</div>
 <style type="text/css">
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-  color: #495057;
-  background-color:#95464600;
-  border-color:#426f9b #DEE2E6 #fff;
-}
-.nav-tabs .nav-link:hover{
-  border-bottom: 3px solid green;
-}
-.nav-tabs {
-  border-bottom: 1px solid  #DEE2E6;
-  width: 26%;
-}
-a.nav-link{
-  width:121.2px;
-  height: 74px;
-}
-.images{
-  height: 50px;
-  width: 50px;
-}
-.categories{
-  color: white;
-  background-color: rgb(0,0,255, 0.6);
-  font-size: 14px;
-  padding: 2px 3px 2px 3px;
-}
+  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #495057;
+    background-color:#95464600;
+    border-color:#426f9b #DEE2E6 #fff;
+  }
+  .nav-tabs .nav-link:hover{
+    border-bottom: 3px solid green;
+  }
+  .nav-tabs {
+    border-bottom: 1px solid  #DEE2E6;
+    width: 26%;
+  }
+  a.nav-link{
+    width:121.2px;
+    height: 74px;
+  }
+  .images{
+    height: 50px;
+    width: 50px;
+  }
+  .categories{
+    color: white;
+    background-color: rgb(0,0,255, 0.6);
+    font-size: 14px;
+    padding: 2px 3px 2px 3px;
+  }
 </style>
+
+

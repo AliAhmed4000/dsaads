@@ -1,0 +1,76 @@
+<% sum = 0 %>
+  <% unless @service.primary_photo.image_url.blank? %>
+    <% sum = sum + 1; %>
+  <% end %>
+  <% unless @service.secondary_photo.image_url.blank? %>
+    <% sum = sum + 1; %>
+  <% end %>
+  <% unless @service.last_photo.image_url.blank? %>
+    <% sum = sum + 1; %>
+  <% end %>
+  <p>Upload photos that describe or are related to your Gig.<span class="pull-right">(<%= sum %>/3)</span></p>
+  <div class="row">
+    <div class="col-md-4">
+      <% if @service.primary_photo.image_url.blank? %>
+        <%= simple_form_for @service,url: file_upload_path(@service),method: 'post', html: {id: 'primary-img'} do |f|  %>
+          <%= f.simple_fields_for :primary_photo do |primary| %>
+            <div class="form-group files">
+              <%#= primary.file_field :image %>
+              <%= primary.input :image, as: :file,label: "primary",:input_html => { accept: "image/*" } %>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <div class="show-image form-group">
+          <p>primary *</p>
+          <%= image_tag @service.primary_photo.image_url %>
+          <%= link_to "Delete",photo_path(@service.primary_photo.id), method: 'delete', class: "delete" %> 
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <% if @service.secondary_photo.image_url.blank? %>
+        <%= simple_form_for @service,url: file_upload_path(@service),method: 'post', html: {id: 'secondary-img'} do |f|  %>
+          <%= f.simple_fields_for :secondary_photo do |secondary| %>
+            <div class="form-group files">
+              <%= secondary.input :image, as: :file,label: "secondary",:input_html => { accept: "image/*" } %>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <div class="show-image">
+          <p>secondary *</p>
+          <%= image_tag @service.secondary_photo.image_url %>
+          <%= link_to "Delete",photo_path(@service.secondary_photo.id), method: 'delete', class: "delete" %>
+        </div> 
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <% if @service.last_photo.image_url.blank? %>
+        <%= simple_form_for @service,url: file_upload_path(@service),method: 'post', html: {id: 'last-img'} do |f|  %>
+          <%= f.simple_fields_for :last_photo do |l_photo| %>
+            <div class="form-group files">
+              <%= l_photo.input :image, as: :file,label: "last",:input_html => { accept: "image/*" } %>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <div class="show-image">
+          <p>last *</p>
+          <%= image_tag @service.last_photo.image_url %>
+          <%= link_to "Delete",photo_path(@service.last_photo.id), method: 'delete', class: "delete" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<script type="text/javascript">
+  $('#primary-img').on('change',function(){
+    $('#primary-img').submit();
+  });
+  $('#secondary-img').on('change',function(){
+    $('#secondary-img').submit();
+  });
+  $('#last-img').on('change',function(){
+    $('#last-img').submit();
+  });
+</script>

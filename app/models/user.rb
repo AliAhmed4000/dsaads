@@ -23,7 +23,7 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable,:trackable,
          :recoverable, :rememberable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :twitter, :gplus]
   mount_uploader :avatar, AvatarUploader
   has_many :services, dependent: :destroy
@@ -179,5 +179,17 @@ class User < ApplicationRecord
 
   def refund_amount 
     self.order_items.cancelled.joins(:order_cancels).where('order_cancels.status=? and order_cancels.level=?',OrderCancel.statuses['approved'],OrderCancel.levels['ask_buyer_to_cancel_order']).sum(:price)
-  end    
+  end
+
+  def seller_level(seller)
+    if seller.services.active.count >= 7 && seller.order_items.where('status!=?',OrderItem.statuses['completed']).sum(:price) >= 5000 
+      return "New Seller"
+    elsif seller.services.active.count >= 10 && seller.order_items.where('status=?',OrderItem.statuses['completed']).sum(:price) >= 1000 && seller.order_items.where('status=?',OrderItem.statuses['completed']).count >= 25
+      return "Pro Seller"
+    elsif seller.order_items.where('status=?',OrderItem.statuses['completed']).sum(:price) >= 15000 && seller.order_items.where('status=?',OrderItem.statuses['completed']).count >= 80 
+      return "Top Seller"
+    else
+      return "New Seller"
+    end 
+  end     
 end

@@ -33,8 +33,13 @@
                     <%= image_tag(conversation.sellers.check_avatar.present? ? conversation.sellers.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.sellers.full_name) %>
                   </div>
                   <div class="chat_ib">
-                    <h5><%= conversation.sellers.full_name %><span class="chat_date"><%= online_status conversation.sellers %></span></h5>
-                    <p>I am Seller</p>
+                    <h5>
+                      <%= link_to conversation.sellers.full_name,profile_path(conversation.sellers),target: "_blank" %>
+                      <span class="chat_date"><%= online_status conversation.sellers %></span>
+                      <span class="chat_date">&nbsp;|&nbsp;</span>
+                      <span class="chat_date"><%= time_ago_in_words(conversation.sellers.last_sign_in_at) %> ago</span>
+                    </h5>
+                    <p><%= conversation.sellers.seller_level(conversation.sellers) %> | From <%= conversation.sellers.country %></p>
                   </div>
                 </div>
               </div>
@@ -49,8 +54,12 @@
                     <%= image_tag(conversation.buyers.check_avatar.present? ? conversation.buyers.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.buyers.full_name) %>
                   </div>
                   <div class="chat_ib">
-                    <h5><%= conversation.buyers.full_name %><span class="chat_date"><%= online_status conversation.buyers %></span></h5>
-                    <p>I am Buyer</p>
+                    <h5><%= link_to conversation.buyers.full_name,profile_path(conversation.buyers),target: "_blank" %>
+                      <span class="chat_date"><%= online_status conversation.buyers %></span>
+                      <span class="chat_date">&nbsp;|&nbsp;</span>
+                      <span class="chat_date"><%= time_ago_in_words(conversation.buyers.last_sign_in_at) %> ago</span>
+                    </h5>
+                    <p>From <%= conversation.buyers.country %></p>
                   </div>
                 </div>
               </div>
@@ -144,9 +153,7 @@
     width: 38px;
   }
 </style>
-
 <style type="text/css">
-  body{margin-top:20px;}
   .comment-wrapper .panel-body {
     max-height:650px;
     overflow:auto;

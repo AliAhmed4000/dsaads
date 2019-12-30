@@ -1,0 +1,26 @@
+<div class="tab-pane" id="premium">
+  <div class="row py-2">
+    <div class="col"><h5>Premium Service</h5></div>
+    <div class="col"><h5><%= number_to_currency(@service.premimum_package.price) %></h5></div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <p>••• CONTACT ME BEFORE ORDERING •••</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <i class="fa fa-clock-o" aria-hidden="true"></i> 
+      <%= pluralize(@service.premimum_package.delivery_time, 'Days') %> Delivery
+    </div>
+    <div class="col">
+      <i class="fa fa-repeat" aria-hidden="true"></i>
+      <%= @service.premimum_package.revision_number %> Revision
+    </div>
+  </div>
+  <div class="row py-2 text-center">
+    <div class="col">
+      <%= link_to "Continue #{number_to_currency(@service.premimum_package.price)}",service_package_path(@service,@service.premimum_package), class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

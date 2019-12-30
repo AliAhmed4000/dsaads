@@ -1,23 +1,19 @@
 <div class="underline">
   <p class="h4 pb-2">Seller Level</p>
   <label class="Checkbox-form">
-    <input type="checkbox" id="NewSeller" name="NewSeller" value="NewSeller">New Seller
+    <%#= f.radio_button :user_id, "new_seller", :value => "new_seller" ,:class => "form-check-input radio-input",:onclick => 'my_submit(this)' %>
+    <input value="new_seller" class="form-check-input radio-input" onclick="my_submit(this)" type="checkbox" name="q[new_seller]" id="q_user_id_new_seller">New Seller
     <span class="checkmark"></span>
   </label>
   <span class="OnlineCheckBoxNum">(<%= Service.new_seller_services(@category,@search).count %>)</span>
   <label class="Checkbox-form">
-    <input type="checkbox" id="LevelOne" name="LevelOne" value="LevelOne">Level One
+    <input value="pro_seller" class="form-check-input radio-input" onclick="my_submit(this)" type="checkbox" name="q[new_seller]" id="q_user_id_pro_seller">Pro Seller
     <span class="checkmark"></span>
   </label>
-  <span class="OnlineCheckBoxNum">(45)</span>
+  <span class="OnlineCheckBoxNum">(<%= Service.pro_seller_services(@category,@search).count %>)</span>
   <label class="Checkbox-form">
-    <input type="checkbox" id="LevelTwo" name="LevelTwo" value="LevelTwo">Level Two
+    <input value="pro_seller" class="form-check-input radio-input" onclick="my_submit(this)" type="checkbox" name="q[new_seller]" id="q_user_id_top_seller">Top Seller 
     <span class="checkmark"></span>
   </label>
-  <span class="OnlineCheckBoxNum">(23)</span>
-  <label class="Checkbox-form">
-    <input type="checkbox" id="TopRatedSeller" name="TopRatedSeller" value="TopRatedSeller">Top Rated Seller
-    <span class="checkmark"></span>
-  </label>
-  <span class="OnlineCheckBoxNum">(15)</span>
+  <span class="OnlineCheckBoxNum">(<%= Service.top_seller_services(@category,@search).count %>)</span>
 </div>
