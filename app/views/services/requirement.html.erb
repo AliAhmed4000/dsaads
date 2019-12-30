@@ -1,6 +1,6 @@
 <div class="container font-weight-bold">  
   <%= simple_form_for @service do |f|  %>
-    <%= f.input :requirements,label: 'Gig Requirement', required: true, hint: 'Minimum 50 words required', placeholder: ' Structure your Buyer Instructions as free text, a multiple choice question or file upload.', input_html: {rows: "3"},as: :text  %>
+    <%= f.input :requirements,label: 'Gig Requirement', required: true, hint: 'MAXIMUM 1000 CHARACTERS', placeholder: ' Structure your Buyer Instructions as free text, a multiple choice question or file upload.',:maxlength=>"1000", input_html: {rows: "3"},as: :text  %>
     <div>
       <span class="inline-block float-right">
         <%= f.input :wizard,as: :hidden, :input_html => { :value => "gallery" } %>

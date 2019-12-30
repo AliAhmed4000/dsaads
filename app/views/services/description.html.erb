@@ -1,6 +1,6 @@
 <div class="container font-weight-bold">  
   <%= simple_form_for @service do |f|  %>
-    <%= f.input :description,label: 'Gig Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Give some impressive description for your valuable service', input_html: {rows: "3"}  %>
+    <%= f.input :description,label: 'Gig Description', required: true, hint: 'MAXIMUM 1000 CHARACTERS', placeholder: 'Give some impressive description for your valuable service',:maxlength=>"1000", input_html: {rows: "3"}  %>
     <%= render partial: 'services/faqs/form', locals: {f: f} %>
     <div class="form-group row mb-0">
       <div class="col-sm-9 offset-sm-3">

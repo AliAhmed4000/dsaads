@@ -3,7 +3,7 @@
     <%= f.error_notification %>   
     <div class="row mb-3">
       <div class="col-md-6 col-sm-12"> 
-        <%= f.input :title,label: 'Gig Tile', required: true, hint: 'Minimum 50 words required', placeholder: "do something I'm really good at", input_html: {rows: "3"},as: :text  %>
+        <%= f.input :title,label: 'Gig Tile',required: true,hint: 'MAXIMUM 85 CHARACTERS',placeholder: "do something I'm really good at",:maxlength=>"85",input_html: {rows: "3"},as: :text %>
       </div>
       <div style="position: absolute; padding-left: 20px; padding-top: 40px;"><h5>I can</h5></div>
     </div>
