@@ -41,3 +41,13 @@
     text-transform: capitalize;
     text-align: center;
 }
+
+.filess  {
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    padding: 150px 0px 85px 35%;
+    margin: 0;
+    width: 100% !important;
+}

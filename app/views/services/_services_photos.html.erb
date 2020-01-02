@@ -30,12 +30,19 @@
     </div>
     <div class="col-md-4">
       <% if @service.secondary_photo.image_url.blank? %>
-        <%= simple_form_for @service,url: file_upload_path(@service),method: 'post', html: {id: 'secondary-img'} do |f|  %>
-          <%= f.simple_fields_for :secondary_photo do |secondary| %>
-            <div class="form-group files">
-              <%= secondary.input :image, as: :file,label: "secondary",:input_html => { accept: "image/*" } %>
-            </div>
+        <% unless @service.primary_photo.image_url.blank? %>
+          <%= simple_form_for @service,url: file_upload_path(@service),method: 'post', html: {id: 'secondary-img'} do |f|  %>
+            <%= f.simple_fields_for :secondary_photo do |secondary| %>
+              <div class="form-group files">
+                <%= secondary.input :image, as: :file,label: "secondary",:input_html => { accept: "image/*" } %>
+              </div>
+            <% end %>
           <% end %>
+        <% else %>
+          <label class="file required" for="service_primary_photo_attributes_image">Secondary
+            <abbr title="required">*</abbr>
+          </label>
+          <div class="form-group filess"></div>
         <% end %>
       <% else %>
         <div class="show-image">
@@ -47,12 +54,19 @@
     </div>
     <div class="col-md-4">
       <% if @service.last_photo.image_url.blank? %>
-        <%= simple_form_for @service,url: file_upload_path(@service),method: 'post', html: {id: 'last-img'} do |f|  %>
-          <%= f.simple_fields_for :last_photo do |l_photo| %>
-            <div class="form-group files">
-              <%= l_photo.input :image, as: :file,label: "last",:input_html => { accept: "image/*" } %>
-            </div>
+        <% unless @service.secondary_photo.image_url.blank? %>
+          <%= simple_form_for @service,url: file_upload_path(@service),method: 'post', html: {id: 'last-img'} do |f|  %>
+            <%= f.simple_fields_for :last_photo do |l_photo| %>
+              <div class="form-group files">
+                <%= l_photo.input :image, as: :file,label: "last",:input_html => { accept: "image/*" } %>
+              </div>
+            <% end %>
           <% end %>
+        <% else %>
+          <label class="file required" for="service_primary_photo_attributes_image">Last
+            <abbr title="required">*</abbr>
+          </label>
+          <div class="form-group filess"></div>
         <% end %>
       <% else %>
         <div class="show-image">
