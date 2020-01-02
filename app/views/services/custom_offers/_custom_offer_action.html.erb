@@ -1,0 +1,62 @@
+<div class="border border-light text-center" style="margin-bottom: 10px;">
+  <div class="box-tab justified">
+    <ul class="nav nav-tabs navbar-light bg-light mr-auto nav nav-pills nav-justified">
+      <li class="active nav-item">
+        <a class="nav-link active" href="#basic" data-toggle="tab"><h6>Custom Offer</h6>
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active in" id="basic">
+        <div class="row py-2">
+          <div class="col"><h5>Custom Offer</h5></div>
+          <div class="col"><h5><%= number_to_currency(@custom_offer.price) %></h5></div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p>••• CONTACT ME BEFORE ORDERING •••</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <i class="fa fa-clock-o" aria-hidden="true"></i> 
+            <%= pluralize(@custom_offer.delivery_time, 'Days') %> Delivery
+          </div>
+          <div class="col">
+            <i class="fa fa-repeat" aria-hidden="true"></i>
+            <%= @custom_offer.revision_number %> Revision
+          </div>
+        </div>
+        <% if user_signed_in? && @service.user_id != current_user.id  %>
+          <% if @custom_offer.order_items.blank? %>
+            <div class="row py-2 text-center">
+              <div class="col">
+                <%= link_to "Continue #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% else %>
+            <div class="row py-2 text-center">
+              <div class="col">
+                Order has been Started
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <% if @custom_offer.order_items.blank? %>
+            <div class="row py-2 text-center">
+              <div class="col">
+                <%= link_to "With Draw #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% else %>
+            <div class="row py-2 text-center">
+              <div class="col">
+                Order has been Started
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+	</div>
+</div>

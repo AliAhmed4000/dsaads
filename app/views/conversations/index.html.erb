@@ -81,23 +81,33 @@
             <%= hidden_field_tag :user_id, current_user.id %> 
             <%= f.text_field :message, class: 'message-input write_msg', data: {emojiable: true } %>
             <div class="conversation-file-container"></div>
-            <div class="image-upload" id="abc" >
-              <label for="file-input">
-                <i class="fa fa-paperclip"></i>
-              </label>
-              <%#= f.file_field :image,id: "file-input",class: "" %>
-              <%= file_field_tag "conversation[image]", id: "file-input",data: { url: image_conversation_path(@conversation.id) } ,multiple: false %>
+            <div class="py-3">
+              <div class="row">
+                <div class="col">
+                  <div class="image-upload" id="abc" >
+                    <label for="file-input">
+                      <i class="fa fa-paperclip"></i>
+                    </label>
+                    <%#= f.file_field :image,id: "file-input",class: "" %>
+                    <%= file_field_tag "conversation[image]", id: "file-input",data: { url: image_conversation_path(@conversation.id) } ,multiple: false %>
+                  </div>
+                  <% if current_user.sellers? %>
+                    <%= link_to "Custom Offer",show_customer_offer_path(@conversation.id),method: :get,class: "btn btn-success", id: 'customer-offer', remote: true %>  
+                  <% end %>
+                </div>
+                <div class="col">
+                  <%= button_tag 'Send', type: 'Submit', class: "btn btn-success pull-right" %>
+                </div>
+              </div>
             </div>
-            <%= button_tag(type: "submit", class: "msg_send_btn") do %>
-              <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-            <% end %>
           <% end %>
         <% end %>
       </div>
     </div>
   </div>
 </div>
-
+<div id="customer-form-modal"></div>
+<div id="show-custom-form-modal"></div>
 <% if @conversation.present? %>
   <script type="text/javascript">
     var current_conversation_id = <%= @conversation.id %>;
@@ -185,10 +195,12 @@
   }
 
   #abc{
-    height: 33px;
     position: absolute;
-    right: 20px;
-    top: 16px;
-    width: 33px;
+    top: 10px;
+  }
+
+  #customer-offer{
+    position: absolute;
+    left: 35px;
   }
 </style>

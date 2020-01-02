@@ -2,6 +2,8 @@ class ServicesController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
   before_action :check_seller_profile, except: [:index,:show]
   before_action :check_servie_owner, only: [:edit,:update]
+  include ActionView::Helpers::UrlHelper
+
   def index
     params["choices-single-default"] = nil if params["choices-single-default"] == "Category" || params["choices-single-default"] == "All Categories"
     if params[:search].present? && params["choices-single-default"].present?
@@ -246,9 +248,48 @@ class ServicesController < ApplicationController
         flash[:notice] = "Service Successfully Inactive"
       end 
     end   
+  end
+
+  def custom_offer 
+    @service = Service.find_by_id(params[:id])
+    @conversation = Conversation.find params[:conversation_id]
+    @service.custom_packages.build 
+  end 
+  
+  def custom_offer_create
+    @service = Service.find params[:id]
+    if @service.update_attributes(custom_offer_params)
+      chat = Chat.create!(
+        conversation_id: params[:service][:conversation_id],
+        user_id: current_user.id,
+        message: "<h4>I will #{@service.title}<span class='pull-right'>$ #{@service.custom_packages.last.price}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Show Detail",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank' }</p>"
+      )
+      chat.conversation.update_attributes(
+        last_user_id: current_user.id,
+        message: ""
+      )
+      redirect_to conversation_path(params[:service][:conversation_id])
+      flash[:notice] = "Custom Offer Successfully Send."
+    end 
+  end
+
+  def show_custom_details
+    @service = Service.find params[:id]
+    @custom_offer = Package.find params[:custom_offer_id]  
+  end 
+  
+  def remove_custom_offer
+    custom_offer = Package.find params[:id]
+    custom_offer.destroy
   end 
 
-  private
+  private  
+  def custom_offer_params 
+    params.require(:service).permit(
+      custom_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+    )  
+  end 
+  
   def service_params
     params.require(:service).permit(
       :title,

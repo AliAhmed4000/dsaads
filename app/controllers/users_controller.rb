@@ -96,7 +96,12 @@ class UsersController < ApplicationController
     end
     redirect_to root_path 
   end
-     
+  
+  def show_customer_offer
+    @cutom_services = current_user.services.active.where('publish=?',true)
+    @conversation = Conversation.find(params[:id]) 
+  end
+
   private
   def seller_params
     params.require(:user).permit(

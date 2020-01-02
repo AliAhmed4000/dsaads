@@ -7,7 +7,7 @@ class Chat < ApplicationRecord
   after_create_commit :after_create_update
 
   def after_create_update
-		self.chats_recipients.create(
+    self.chats_recipients.create(
 		  conversation_id: self.conversation_id,
 		  user_id: self.conversation.buyer_id,
 		  read: (self.user_id == self.conversation.buyer_id)

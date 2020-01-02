@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="SortBlufLink">
+        <%= link_to root_path do %>
+          Fiverr<i class="fa fa-chevron-right SortBlufLinkIcon"></i>
+        <% end %>
+        <%= link_to root_path do %>
+          <%= @service.category.title %><i class="fa fa-greater-than SortBlufLinkIcon"></i>
+        <% end %>
+      </div>
+    <div class="h3">I can <%= @service.title %></div>
+    <div class="profile-img py-2" style="background: url(<%= @service.seller.check_avatar %>) no-repeat center; background-size: cover;"></div><span><%= link_to @service.seller.full_name,profile_path(@service.seller) %></span>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Service Photo Slider -->
+    <div class="col-lg-7 col-md-12">
+      <div class="border border-light"> 
+        <div class="owl-carousel owl-theme owl-loaded">
+          <div class="owl-stage-outer">
+            <div class="owl-stage">
+              <% @service.photos.each do |photo| %>
+                <div class="owl-item" ><%= image_tag photo.image_url(:thumb) %></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5 col-md-12">
+        <%= render partial: 'services/packages/service_description' %>
+      </div>
+      <!-- Package Comparison Table -->
+      <% unless @service.faqs.blank? %>
+        <%= render partial: 'services/faq_detail' %>
+      <% end %>
+      <%#= render partial: 'services/review' %>
+    </div>
+    <div class="col-lg-5 col-md-12">
+      <%= render partial: 'services/custom_offers/custom_offer_action' %>
+      <div class="divider"></div>
+      <%#= render partial: 'shared/seller-profile' %>
+    </div>
+  </div>
+ </div>
+<script>
+  $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:1,
+            nav:true
+        },
+        600:{
+            items:1,
+            nav:true
+        },
+        1000:{
+            items:1,
+            nav:true,
+            loop:false
+        }
+    }
+  });
+</script>

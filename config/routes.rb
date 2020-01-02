@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   resources :photos, only: [:destroy]
   resources :videos, only: [:destroy]
   post '/services/:id/image', to: 'services#file_upload', as: "file_upload"
+  put '/services/:id/custom_offer_create', to: 'services#custom_offer_create', as: 'custom_offer_create'
+  get '/services/:id/custom_offer/:custom_offer_id', to: 'services#show_custom_details', as: 'show_custom_details'
   post '/services/:id/video', to: 'services#video_upload', as: "video_upload"
   get  '/services/:id/image/show', to: 'services#show_files', as: "show_files"
   get  '/services/:id/edit/pricing', to: 'services#pricing', as: "services_pricing"
@@ -47,6 +49,7 @@ Rails.application.routes.draw do
   get  '/services/:id/edit/gallery', to: 'services#gallery', as: "services_gallery"
   get  '/services/:id/edit/publish', to: 'services#publish', as: "services_publish"
   get  '/services/:id/edit/gallery_publish', to: 'services#gallery_publish', as: "services_gallery_publish"
+  get  '/services/:id/conversation/:conversation_id', to: 'services#custom_offer', as: "services_custom_offer"
 
   resources :faqs, only: [:destroy]
   resources :favorites, only: [:create, :destroy, :index]
@@ -55,6 +58,8 @@ Rails.application.routes.draw do
   get 'seller_onboarding/professional_info', to: 'users#seller_professional_info', as: "seller_professional_info"
   get 'seller_onboarding/linked_accounts', to: 'users#seller_linked_accounts', as: "seller_linked_accounts"
   get 'seller_onboarding/account_security', to: 'users#seller_account_security', as: "seller_account_security"
+  get 'seller_onboarding/conversation_id/:id', to: 'users#show_customer_offer', as: "show_customer_offer"
+    
   resources :users, only: [:show], as: "profile", path: "profile"
   get 'user/role', to: 'users#role', as: "user_role"
   resources :conversations do

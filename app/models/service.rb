@@ -25,6 +25,7 @@ class Service < ApplicationRecord
   has_one  :extra_basic_package, -> {where(level: "extra_basic")}, :class_name => 'Package', dependent: :destroy
   has_one  :extra_standard_package,-> {where(level: "extra_standard")}, :class_name => 'Package', dependent: :destroy
   has_one  :extra_premimum_package ,-> {where(level: "extra_premimum")}, :class_name => 'Package', dependent: :destroy
+  has_many :custom_packages ,-> {where(level: "custom_offer")}, :class_name => 'Package', dependent: :destroy
   has_one  :primary_photo, -> {where(level: "primary")}, :class_name => 'Photo', dependent: :destroy
   has_one  :secondary_photo,-> {where(level: "secondary")}, :class_name => 'Photo', dependent: :destroy
   has_one  :last_photo,-> {where(level: "last_image")}, :class_name => 'Photo', dependent: :destroy
@@ -43,6 +44,7 @@ class Service < ApplicationRecord
   accepts_nested_attributes_for :extra_basic_package, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :extra_standard_package, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :extra_premimum_package, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :custom_packages, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :photos, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :primary_photo, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :secondary_photo, reject_if: :all_blank, allow_destroy: true
@@ -57,7 +59,7 @@ class Service < ApplicationRecord
   # validates :requirements, length: {minimum: 50, maximum: 700}
 
   enum status: ['active','inactive']
-  attr_accessor :sub_category, :wizard, :new_seller, :top_seller, :pro_seller
+  attr_accessor :sub_category, :wizard, :new_seller, :top_seller, :pro_seller, :conversation_id
   after_create :set_sub_category
   after_update :set_sub_category_on_change,if: lambda{|s| s.sub_category.present?}
   

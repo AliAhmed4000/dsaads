@@ -1,0 +1,33 @@
+<div id="customer-form-modal">
+  <div class="modal" tabindex="-1" role="dialog" id="customer-form">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Select A Gig To Offer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <% @cutom_services.each do |s| %>
+            <%= link_to services_custom_offer_path(s,@conversation),method: "get", remote: true do %>  
+              <div class="card mb-3">
+                <% unless s.primary_photo.blank? %>
+                  <%= image_tag s.primary_photo.image_url %>
+                <% end %>
+                <div class="card-body">
+                  <h5 class="card-title"><%= s.title %></h5>
+                  <p class="card-text"><%= s.description %></p>
+                  <p class="card-text"><small class="text-muted"><%= s.created_at.strftime("%d %B %Y") %></small></p>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
