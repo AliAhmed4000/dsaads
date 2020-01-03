@@ -23,7 +23,11 @@
   <% end %>
   <div>
     <span class="inline-block float-right">
-      <%= link_to "Save & Continue", services_gallery_publish_path(@service), class: 'btn btn-outline-success' %>
+      <% if @service.publish? %>
+        <%= link_to "Save", services_gallery_publish_path(@service), class: 'btn btn-outline-success' %>
+      <% else %>  
+        <%= link_to "Save & Continue", services_gallery_publish_path(@service), class: 'btn btn-outline-success' %>
+      <% end %>
     </span> 
   </div>
 </div>

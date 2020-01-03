@@ -159,13 +159,16 @@ class ServicesController < ApplicationController
     end
   end
 
-  def gallery_publish
+  def gallery_publish 
     @service = Service.find params[:id]
     @set_bar = "ok"
     if @service.photos.blank?
       flash[:alert] = "First Complete Your Service Gallery"
       redirect_to services_gallery_path(@service)
-    else
+    elsif @service.publish? 
+      flash[:notice] = "Service Gallery Successfully Updated."
+      redirect_to services_manage_path
+    else  
       flash[:notice] = "Service Gallery Successfully Added."
       redirect_to services_publish_path(@service)
     end

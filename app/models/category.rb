@@ -34,6 +34,6 @@ class Category < ApplicationRecord
   end
 
   def get_services(category)
-    Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category,true).order(created_at: :desc)
+    Service.joins(:category).where('categories.sub_category_id=? and services.publish=? and services.status=?',category,true,Service.statuses['active']).order(created_at: :desc)
   end   
 end
