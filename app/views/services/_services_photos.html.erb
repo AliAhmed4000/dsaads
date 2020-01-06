@@ -25,7 +25,7 @@
           <p>primary *</p>
           <%= simple_form_for @service,url: file_upload_path(@service),method: 'post', html: {id: 'primary-img'} do |f|  %>
             <%= f.simple_fields_for :primary_photo do |primary| %>
-              <div class="form-group image-upload" id="show-image">
+              <div class="form-group image-upload">
                 <label for="file-input">
                   <%= image_tag @service.primary_photo.image_url %>
                 </label>
@@ -33,7 +33,7 @@
               </div>
             <% end %>
           <% end %>
-          <%#= link_to "Delete",photo_path(@service.primary_photo.id), method: 'delete', class: "delete" %>
+          <div id="text">Click For Change Image</div>
         </div>
       <% end %>
     </div>
@@ -99,6 +99,14 @@
 </script>
 <style type="text/css">
   .image-upload>input {
-  display: none;
-}
+    display: none;
+  }
+  #text{
+    position:absolute;
+    display:none;
+  }
+  div.show-image div{
+    top:10px;
+    left:79%;
+  }
 </style>
