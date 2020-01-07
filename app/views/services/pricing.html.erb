@@ -1,7 +1,19 @@
 <div class="container">
   <div class="mb-3 pull-right">
     <label class="checkbox-inline">
-      <input type="checkbox" data-toggle="toggle" id="my-toggle" data-onstyle="warning" data-offstyle="info" data-on="+" data-off="-">  3 Packages
+      <!-- <input type="checkbox" data-toggle="toggle" id="my-toggle" data-onstyle="warning" data-offstyle="info" data-on="+" data-off="-"> -->  
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]"><span class="fa fa-minus"></span>
+          </button>
+        </span>
+        <input type="text" name="quant[2]" class="form-control input-number input-sm-1" value="3" min="1" max="3">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+          <span class="fa fa-plus"></span>
+          </button>
+        </span>
+      </div>
     </label>
   </div>
   <%= simple_form_for @service do |f|  %>
@@ -66,41 +78,140 @@
     $('#service_extra_premimum_package_attributes_price').attr('required',false)
   });
   
-  function enabled_fields(){
+  function standard_disabled_fields(){
     $("#service_standard_package_attributes_name").attr('disabled',true)
-    $("#service_premimum_package_attributes_name").attr('disabled',true)
     $("#service_standard_package_attributes_description").attr('disabled',true)
-    $("#service_premimum_package_attributes_description").attr('disabled',true)
     $("#service_standard_package_attributes_delivery_time").attr('disabled',true)
-    $("#service_premimum_package_attributes_delivery_time").attr('disabled',true)
     $("#service_standard_package_attributes_price").attr('disabled',true)
-    $("#service_premimum_package_attributes_price").attr('disabled',true)
     $("#service_standard_package_attributes_name").attr('required',true)
-    $("#service_premimum_package_attributes_name").attr('required',true)
     $("#service_standard_package_attributes_description").attr('required',true)
-    $("#service_premimum_package_attributes_description").attr('required',true)
     $("#service_standard_package_attributes_delivery_time").attr('required',true)
-    $("#service_premimum_package_attributes_delivery_time").attr('required',true)
     $("#service_standard_package_attributes_price").attr('required',true)
-    $("#service_premimum_package_attributes_price").attr('required',true)
   }
 
-  function disabled_fields(){
+  function standard_enabled_fields(){
     $("#service_standard_package_attributes_name").attr('disabled',false)
-    $("#service_premimum_package_attributes_name").attr('disabled',false)
     $("#service_standard_package_attributes_description").attr('disabled',false)
-    $("#service_premimum_package_attributes_description").attr('disabled',false)
     $("#service_standard_package_attributes_delivery_time").attr('disabled',false)
-    $("#service_premimum_package_attributes_delivery_time").attr('disabled',false)
     $("#service_standard_package_attributes_price").attr('disabled',false)
-    $("#service_premimum_package_attributes_price").attr('disabled',false)
     $("#service_standard_package_attributes_name").attr('required',false)
-    $("#service_premimum_package_attributes_name").attr('required',false)
     $("#service_standard_package_attributes_description").attr('required',false)
-    $("#service_premimum_package_attributes_description").attr('required',false)
     $("#service_standard_package_attributes_delivery_time").attr('required',false)
-    $("#service_premimum_package_attributes_delivery_time").attr('required',false)
     $("#service_standard_package_attributes_price").attr('required',false)
+  }
+
+  function premimum_disabled_fields(){
+    $("#service_premimum_package_attributes_name").attr('disabled',true)
+    $("#service_premimum_package_attributes_description").attr('disabled',true)
+    $("#service_premimum_package_attributes_delivery_time").attr('disabled',true)
+    $("#service_premimum_package_attributes_price").attr('disabled',true)
+    $("#service_premimum_package_attributes_name").attr('required',true)
+    $("#service_premimum_package_attributes_description").attr('required',true)
+    $("#service_premimum_package_attributes_delivery_time").attr('required',true)
+    $("#service_premimum_package_attributes_price").attr('required',true)
+  } 
+
+  function premimum_enabled_fields(){
+    $("#service_premimum_package_attributes_name").attr('disabled',false)
+    $("#service_premimum_package_attributes_description").attr('disabled',false)
+    $("#service_premimum_package_attributes_delivery_time").attr('disabled',false)
+    $("#service_premimum_package_attributes_price").attr('disabled',false)
+    $("#service_premimum_package_attributes_name").attr('required',false)
+    $("#service_premimum_package_attributes_description").attr('required',false)
+    $("#service_premimum_package_attributes_delivery_time").attr('required',false)
     $("#service_premimum_package_attributes_price").attr('required',false)
   }
+
+  //plugin bootstrap minus and plus
+  //http://jsfiddle.net/laelitenetwork/puJ6G/
+  $('.btn-number').click(function(e){
+    e.preventDefault();
+    fieldName = $(this).attr('data-field');
+    type      = $(this).attr('data-type');
+    var input = $("input[name='"+fieldName+"']");
+    var currentVal = parseInt(input.val());
+    if(!isNaN(currentVal)){
+      if(type == 'minus'){
+        if(currentVal > input.attr('min')) {
+          input.val(currentVal - 1).change();
+        }   
+        if(parseInt(input.val()) == input.attr('min')) {
+          $(this).attr('disabled', true);
+        }
+        if(input.val() == 1){
+          standard_disabled_fields()
+        } 
+        if(input.val() == 2){
+          premimum_disabled_fields()
+        }
+      }else if(type == 'plus'){
+        if(currentVal < input.attr('max')) {
+          input.val(currentVal + 1).change();
+        }
+        if(parseInt(input.val()) == input.attr('max')){
+          $(this).attr('disabled', true);
+        }
+        if(input.val() == 2){
+          standard_enabled_fields()
+          premimum_disabled_fields()
+        }
+
+        if(input.val() == 3){
+          standard_enabled_fields()
+          premimum_enabled_fields()         
+        }
+      }
+    }else{
+      input.val(0);
+    }
+  });
+  
+  $('.input-number').focusin(function(){
+    $(this).data('oldValue', $(this).val());
+  });
+  
+  $('.input-number').change(function() {
+    minValue =  parseInt($(this).attr('min'));
+    maxValue =  parseInt($(this).attr('max'));
+    valueCurrent = parseInt($(this).val());
+    name = $(this).attr('name');
+    if(valueCurrent >= minValue) {
+      $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+    }else{
+      alert('Sorry, the minimum value was reached');
+      $(this).val($(this).data('oldValue'));
+    }
+    if(valueCurrent <= maxValue) {
+      $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+    }else{
+      alert('Sorry, the maximum value was reached');
+      $(this).val($(this).data('oldValue'));
+    }
+    if(valueCurrent == 1){
+      standard_disabled_fields()
+      premimum_disabled_fields()
+    }else if(valueCurrent == 2){
+      standard_enabled_fields()
+      premimum_disabled_fields()
+    }else if(valueCurrent == 3){
+      standard_enabled_fields()
+      premimum_enabled_fields()
+    }
+  });
+  
+  $(".input-number").keydown(function (e){
+    // Allow: backspace, delete, tab, escape, enter and .
+    if($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+      // Allow: Ctrl+A
+      (e.keyCode == 65 && e.ctrlKey === true) || 
+      // Allow: home, end, left, right
+      (e.keyCode >= 35 && e.keyCode <= 39)) {
+        // let it happen, don't do anything
+        return;
+      }
+      // Ensure that it is a number and stop the keypress
+      if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+      }
+  });
 </script>
