@@ -19,8 +19,8 @@ class Order < ApplicationRecord
   has_many :order_items
   accepts_nested_attributes_for :order_items
   attr_accessor :provided,:card_number, :security_code, :exp_month, :exp_year, :card_type, :ip, :subscription, :payment_type,:first_name,:last_name
-  validate  :check_authorize_stripe, on: :create, :unless => lambda{|u| u.card_number.blank? && u.security_code.blank?}
-  def check_authorize_stripe
+  validate :check_payment, on: :create, :unless => lambda{|u| u.card_number.blank? && u.security_code.blank?}
+  def check_payment
     credit_card = ActiveMerchant::Billing::CreditCard.new(
       :first_name         => first_name,
       :last_name          => last_name,
@@ -35,7 +35,11 @@ class Order < ApplicationRecord
     else
       service_fee = self.order_items.first.price*self.order_items.first.quantity*ENV['SERVICE_FEE'].to_i/100
     	total_fee = service_fee + self.order_items.first.price*self.order_items.first.quantity 
-      response = StripeGateway.purchase(total_fee*100,credit_card)
+      if self.payment_type == "stripe"
+        response = StripeGateway.purchase(total_fee*100,credit_card)
+      else
+        response = PaypalGateway.purchase(total_fee*100,credit_card,:ip => self.ip) 
+      end 
     end   
   end 
 end

@@ -14,7 +14,7 @@
               <div style="padding-left: 5%;">   
               <div class="row mb-3" style="padding-left: 5%;">
                 <div class="col-md-2 col-sm-12"> 
-                 <%= f.radio_button :payment_type, "card", :value => "card" ,:class => "form-check-input radio-input",checked: "checked" %>Credit Card
+                 <%= f.radio_button :payment_type, "stripe", :value => "stripe" ,:class => "form-check-input radio-input",checked: "checked" %>Credit Card
                 </div>
                 <div class="col-md-3 col-sm-12"> 
                  <%= f.radio_button :payment_type, "paypal", :value => "paypal" ,:class => "form-check-input radio-input" %>Paypal
@@ -52,6 +52,7 @@
               <% end %>
               <div>
                 <span class="inline-block float-right">
+                  <%= f.hidden_field :ip, value: request.remote_ip %>
                   <%= f.submit "Confirm Payment", class: "btn btn-outline-success" %>
                 </span> 
               </div>
