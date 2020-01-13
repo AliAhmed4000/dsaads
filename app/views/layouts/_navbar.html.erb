@@ -31,7 +31,7 @@
             <% end %>
           <% else %>
             <li class="nav-item"><%= link_to 'Orders', orders_path %></li>
-            <li class="nav-item"><%= link_to 'Gigs', services_manage_path%></li>
+            <li class="nav-item"><%= link_to 'Services', services_manage_path%></li>
             <li class="nav-item"><%= link_to 'Earning', balances_path%></li>
           <% end %>
           <% if current_user.services.blank? %>

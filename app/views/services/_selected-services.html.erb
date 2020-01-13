@@ -17,5 +17,7 @@
   </div>
 </div>
 <div class="pagination text-success justify-content-center mt-5">
-  <%= paginate @services %>
+  <% unless @services.blank? %>
+    <%= paginate @services %>
+  <% end %>
 </div>

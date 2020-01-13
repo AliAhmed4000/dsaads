@@ -14,10 +14,14 @@ class ServicesController < ApplicationController
     elsif params["choices-single-default"].present?
       search = "%#{params["choices-single-default"]}%"
       @category= Category.find_by_id(params["choices-single-default"])
-      @services = @category.get_services(@category).page(params[:page]).per(6)
+      unless @category.blank?
+        @services = @category.get_services(@category).page(params[:page]).per(6)
+      else
+        @services = [] 
+      end 
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params[:search].present?
-      @search = "%#{params[:search]}%"
+      @search = "%#{params[:search]}%" 
       @services = Service.search(@search).page(params[:page]).per(6)
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params[:q].present? && params[:q].values != ["",""]
