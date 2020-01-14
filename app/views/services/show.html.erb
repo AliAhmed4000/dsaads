@@ -9,7 +9,7 @@
           <%= @service.category.title %><i class="fa fa-greater-than SortBlufLinkIcon"></i>
         <% end %>
       </div>
-    <div class="h3">I can <%= @service.title %></div>
+    <div class="h3">I can <%= @service.title.truncate(55) %></div>
     <div class="profile-img py-2" style="background: url(<%= @service.seller.check_avatar %>) no-repeat center; background-size: cover;"></div><span><%= link_to @service.seller.full_name,profile_path(@service.seller) %></span>
     </div>
   </div>
@@ -33,6 +33,10 @@
             </div>
           </div>
         </div>
+        <div class="nav-options">
+          <%= image_tag 'next.png', class: 'am-next' %>
+          <%= image_tag 'back.png', class: 'am-prev' %>
+        </div>
       </div>
       <div class="col-lg-5 col-md-12">
         <%= render partial: 'services/packages/service_description' %>
@@ -55,6 +59,7 @@
     loop:true,
     margin:10,
     responsiveClass:true,
+    navText: [$('.am-next'),$('.am-prev')],
     responsive:{
         0:{
             items:1,
@@ -72,3 +77,23 @@
     }
   });
 </script>
+<style type="text/css">
+  
+ .am-next ,.am-prev{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .am-prev{
+    left: -1rem;
+    height: 50px;
+    width: 50px;
+  }
+
+  .am-next{
+    right: -1rem;
+    height: 50px;
+    width: 50px;
+  }
+</style>
