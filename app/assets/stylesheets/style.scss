@@ -95,15 +95,6 @@ ul,ol{
 .year-select select{
   padding-right: 38px !important;
 }
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  text-indent: 1px;
-  text-overflow: '';
-  background: url(asset-path("select_arrow.png")) no-repeat #fff !important;
-  // background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat #fff !important;
-  background-position: right 10px center !important;
-}
 /*@media (min-width:1464px){.container{width:1464px !important}}*/
 p { margin: 0; }
 .btn {

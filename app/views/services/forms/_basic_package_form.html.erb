@@ -7,7 +7,8 @@
       <td><%= basic.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100}%></td>
     </tr>
     <tr>
-      <td><%= basic.input :delivery_time,collection: Package::BASIC_DELIVERY,required: true %></td>
+      <td>  
+        <%= basic.input :delivery_time,collection: Package::BASIC_DELIVERY,required: true %></td>
     </tr>
     <tr>
       <td><%= basic.input :price,collection: Package::BASIC_PRICE,required: true %></td>

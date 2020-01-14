@@ -5,7 +5,7 @@
         <%= link_to image_tag(service.photos.first.image_url(:service_small_thumb), alt: "",class: "card-img-top img-fluid"), service_path(service) %>
       <% end %>
       <div class="card-body">
-        <h5 class="card-title text-truncate text-capitalize">
+        <h5 class="card-title text-truncate">
           I can <%= service.title.truncate(15) %>
         </h5>
         <% unless service.seller.avatar_url.blank? %>

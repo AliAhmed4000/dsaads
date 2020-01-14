@@ -23,6 +23,13 @@
               <% @service.photos.each do |photo| %>
                 <div class="owl-item" ><%= image_tag photo.image_url(:thumb) %></div>
               <% end %>
+              <% unless @service.video.blank? %>
+                <div class="owl-item" >
+                  <video width="100%" height="10%" controls>
+                    <source src="<%= @service.video.video_url %>">
+                  </video>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>

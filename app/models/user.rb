@@ -70,7 +70,7 @@ class User < ApplicationRecord
       gravatar_id = Digest::MD5::hexdigest(email).downcase
       "https://gravatar.com/avatar/#{gravatar_id}.png"
     else
-      avatar_url
+      avatar_url(:circle)
     end
   end
 
