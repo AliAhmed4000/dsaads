@@ -16,11 +16,7 @@
             <div class="container-fluid pb-5">
                 <div class="d-flex justify-content-start buyer_review">
                   <div class="buyer_img pr-3">
-                    <% if buyer_review.buyer.avatar_url %>
-                      <%= image_tag buyer_review.buyer.avatar_url(:small), class: 'img-fluid rounded-circle' %>
-                    <% else %>
-                      <%= image_tag default_image_url, size: '50x50', class: 'img-fluid rounded-circle' %>
-                    <% end %>
+                    <%= image_tag buyer_review.buyer.check_avatar, class: 'img-fluid rounded-circle', height: 50, width: 50; %>
                   </div>
                   <div class="align-self-center">
                     <%= buyer_review.buyer.full_name %>

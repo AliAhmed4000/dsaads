@@ -157,7 +157,11 @@ class User < ApplicationRecord
   end
 
   def full_name
-    first_name.to_s.capitalize + " " + last_name.to_s.capitalize
+    unless first_name.blank?
+      first_name.to_s.capitalize + " " + last_name.to_s.capitalize
+    else
+      user_name 
+    end 
   end
 
   def net_coming
