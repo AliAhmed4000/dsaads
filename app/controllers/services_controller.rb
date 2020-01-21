@@ -9,19 +9,23 @@ class ServicesController < ApplicationController
     if params[:search].present? && params["choices-single-default"].present?
       @category = Category.find_by_id(params["choices-single-default"])
       @search = "%#{params[:search]}%"
-      @services = Category.search_category(@category,@search).page(params[:page]).per(6)
+      unless @category.blank?
+        @services = Category.search_category(@category,@search).page(params[:page]).per(6)
+      else
+        @services = Service.search(@search).page(params[:page]).per(6) 
+      end   
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params["choices-single-default"].present?
       search = "%#{params["choices-single-default"]}%"
-      @category= Category.find_by_id(params["choices-single-default"])
+      @category= Category.find_by_id(params["choices-single-default"]) 
       unless @category.blank?
         @services = @category.get_services(@category).page(params[:page]).per(6)
-      else
+      else 
         @services = [] 
       end 
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params[:search].present?
-      @search = "%#{params[:search]}%" 
+      @search = "%#{params[:search]}%"  
       @services = Service.search(@search).page(params[:page]).per(6)
       @services.blank? ? flash[:notice] = "No Results Matched, Try Again" : @services
     elsif params[:q].present? && params[:q].values != ["",""]

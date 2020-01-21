@@ -7,7 +7,7 @@
       <td><%= premimum.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100}%></td>
     </tr>
     <tr>
-      <td><%= premimum.input :delivery_time,collection: Package::PREMIMUM_DELIVERY,required: true, input_html: {maxlength: 100} %></td>
+      <td><%= premimum.input :delivery_time,label: 'Delivery Time in Days',collection: Package::PREMIMUM_DELIVERY,required: true, input_html: {maxlength: 100} %></td>
     </tr>
     <tr>
       <td><%= premimum.input :price,collection: Package::PREMIMUM_PRICE,required: true ,input_html: {maxlength: 100}%></td>

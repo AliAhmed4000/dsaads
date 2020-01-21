@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get '/orders/:id/dispute', to: 'orders#dispute', as: "order_dispute"
   get '/categories/search', to: 'categories#search', as: "search_category"
   get '/category/:id/search/:search', to: 'categories#online_users'
-  get '/category/:id/services/:ids/order/:order', to: 'categories#sort_highest', as: "sort_highest"
+  get '/services/:ids/order/:order', to: 'categories#sort_highest', as: "sort_highest"
   resources :categories do
     member do
       get :services

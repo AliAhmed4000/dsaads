@@ -7,22 +7,22 @@
            Sort By</div>
             <div class="dropdown-menu">
               <div class="dropdown-item" href="#">
-              <%= link_to "Neswest Arrival",sort_highest_path(@category,services.pluck(:id).join(','),'neswest'),remote: true %>
+              <%= link_to "Neswest Arrival",sort_highest_path(services.pluck(:id).join(','),'neswest'),remote: true %>
               </div>
               <div class="dropdown-item">
-              <%= link_to "Most Reviewed",sort_highest_path(@category,services.pluck(:id).join(','),'review'),remote: true %>
+              <%= link_to "Most Reviewed",sort_highest_path(services.pluck(:id).join(','),'review'),remote: true %>
               </div>
               <div class="dropdown-item" href="#">
-                <%= link_to "Relevant",sort_highest_path(@category,services.pluck(:id).join(','),'relevant'),remote: true %>
+                <%= link_to "Relevant",sort_highest_path(services.pluck(:id).join(','),'relevant'),remote: true %>
               </div>
               <div class="dropdown-item">
-                <%= link_to "Highest Rated",sort_highest_path(@category,services.pluck(:id).join(','),'rated'),remote: true %>
+                <%= link_to "Highest Rated",sort_highest_path(services.pluck(:id).join(','),'rated'),remote: true %>
               </div>
               <div class="dropdown-item">
-                <%= link_to "Lowest Price",sort_highest_path(@category,services.pluck(:id).join(','),'asc'),remote: true %>
+                <%= link_to "Lowest Price",sort_highest_path(services.pluck(:id).join(','),'asc'),remote: true %>
               </div>
               <div class="dropdown-item">
-                <%= link_to "Highest Price",sort_highest_path(@category,services.pluck(:id).join(','),'desc'),remote: true %>
+                <%= link_to "Highest Price",sort_highest_path(services.pluck(:id).join(','),'desc'),remote: true %>
               </div>
             </div>
          </div>
