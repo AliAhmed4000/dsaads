@@ -5,9 +5,9 @@
         <div class="owl-carousel owl-theme owl-loaded">
           <div class="owl-stage-outer">
             <div class="owl-stage">
-              <% @service.photos.each do |photo| %>
-                <div class="owl-item" ><%= image_tag photo.image_url(:thumb) %></div>
-              <% end %>
+              <%# @service.photos.each do |photo| %>
+                <div class="owl-item" ><%= image_tag @service.primary_photo.image_url(:thumb) %></div>
+              <%# end %>
             </div>
           </div>
         </div>

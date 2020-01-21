@@ -78,6 +78,11 @@
       <div class="input_msg_write">
         <% if !@conversation.blank? %>
           <%= form_for @chat,url: "#" do |f| %>
+            <% if current_user.sellers? %>
+              <%= hidden_field_tag :user_name, @conversation.buyers.full_name %> 
+            <% else %>
+              <%= hidden_field_tag :user_name, @conversation.sellers.full_name %>
+            <% end %>
             <%= hidden_field_tag :user_id, current_user.id %> 
             <%= f.text_field :message, class: 'message-input write_msg', data: {emojiable: true } %>
             <div class="conversation-file-container"></div>
@@ -112,6 +117,7 @@
   <script type="text/javascript">
     var current_conversation_id = <%= @conversation.id %>;
     var current_user_id = <%= current_user.id %>;
+    var user_name = $("#user_name").val();
     var conversation_url = '<%= conversation_url(@conversation) %>';
     var chats_recipients = new Object();
     chats_recipients[<%= @conversation.seller_id %>] = {

@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
   before_action :check_seller_profile, except: [:index,:show]
-  before_action :check_servie_owner, only: [:edit,:update]
+  before_action :check_servie_owner, only: [:edit,:pricing,:description,:requirement,:gallery,:publish,:update]
   include ActionView::Helpers::UrlHelper
 
   def index
@@ -268,12 +268,13 @@ class ServicesController < ApplicationController
   end 
   
   def custom_offer_create
-    @service = Service.find params[:id]
+    @service = Service.find params[:id] 
     if @service.update_attributes(custom_offer_params)
       chat = Chat.create!(
         conversation_id: params[:service][:conversation_id],
         user_id: current_user.id,
-        message: "<h4>I will #{@service.title}<span class='pull-right'>$ #{@service.custom_packages.last.price}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Show Detail",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank' }</p>"
+        message: "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['service']['custom_package']['price'] 
+        }</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Show Detail",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank' }</p>"
       )
       chat.conversation.update_attributes(
         last_user_id: current_user.id,

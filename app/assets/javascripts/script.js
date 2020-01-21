@@ -196,19 +196,21 @@ function show_message(message) {
   var message_date = new Date(message['created_at']);
   var html = "";  
   if(message.user_id == current_user_id){
-    html += '<div class="outgoing_msg">';
-    html += '<div class="sent_msg">';
+    html = '<div class="incoming_msg">';
+    html += '<div class="incoming_msg_img">';
+    html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" class="profile-img"><span id="s_name">Me </span><span class="">' + message_date.toLocaleString() + '</span></div>';
+    html += '<div class="received_msg">';
+    html += '<div class="received_withd_msg">';
     html += '<p>' + message_body + '</p>';
-    html += '<span class="time_date">' + message_date.toLocaleString() + '</span> </div>';
+    html += '</div>';
     html += '</div>';
   }else{
     html = '<div class="incoming_msg">';
     html += '<div class="incoming_msg_img">';
-    html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" alt="sunil"> </div>';
+    html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" class="profile-img"><span id="s_name">' + user_name  + '</span><span class="">' + message_date.toLocaleString() + '</span></div>';
     html += '<div class="received_msg">';
     html += '<div class="received_withd_msg">';
     html += '<p>' + message_body + '</p>';
-    html += '<span class="time_date">' + message_date.toLocaleString() + '</span></div>';
     html += '</div>';
     html += '</div>';
   }

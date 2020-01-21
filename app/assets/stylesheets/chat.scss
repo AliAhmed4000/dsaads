@@ -62,13 +62,15 @@ img{ max-width:100%;}
 
 .incoming_msg_img {
   display: inline-block;
-  width: 6%;
+  // width: 6%;
+  margin-top: 10px;
 }
 .received_msg {
-  display: inline-block;
+  // display: inline-block;
   padding: 0 0 0 10px;
   vertical-align: top;
-  width: 92%;
+  // width: 92%;
+  margin-top: 5px;
  }
  .received_withd_msg p {
   background: #ebebeb none repeat scroll 0 0;
@@ -85,7 +87,7 @@ img{ max-width:100%;}
   font-size: 12px;
   margin: 8px 0 0;
 }
-.received_withd_msg { width: 57%;}
+// .received_withd_msg { width: 57%;}
 .mesgs {
   float: left;
   padding: 30px 15px 0 25px;
@@ -133,4 +135,15 @@ img{ max-width:100%;}
 .msg_history {
   height: 516px;
   overflow-y: auto;
+}
+
+.outgoing_msg_img {
+  display: inline-block;
+}
+
+#s_name {
+  font-weight: bold;
+  margin-left: -10px;
+  padding: 6px;
+  color: black;
 }
