@@ -1,47 +1,48 @@
 <div class="container-fluid px-5">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="SortBlufLink">
-          <h2>Earnings</h2>
-          <span> expected Icome: <%= number_to_currency(current_user.expected_coming) %></span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="card" style="width: 15rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Net Income</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.net_coming) %></h5>
-        </div>
-      </div>
-      <div class="card" style="width: 15rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Withdrawn</h5>
-          <h5 class="card-text">$0</h5>
-        </div>
-      </div>
-      <div class="card" style="width: 15rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Used For Purchases</h5>
-          <h5 class="card-text">$0</h5>
-        </div>
-      </div>
-      <div class="card" style="width: 15rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Pending Clearance</h5>
-          <h5 class="card-text">$0</h5>
-        </div>
-      </div>
-      <div class="card" style="width: 15rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Available for Withdraw</h5>
-          <h5 class="card-text">$0</h5>
-        </div>
-      </div>
-    </div>
-    <div class="row">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
       <div class="SortBlufLink">
-        <h2>Transaction</h2>
+        <h2>Earnings</h2>
+        <span> expected Icome: <%= number_to_currency(current_user.expected_coming) %></span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card" style="width: 15rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title">Net Income</h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.net_coming) %></h5>
+      </div>
+    </div>
+    <div class="card" style="width: 15rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title">Withdrawn</h5>
+        <h5 class="card-text">$0</h5>
+      </div>
+    </div>
+    <div class="card" style="width: 15rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title">Used For Purchases</h5>
+        <h5 class="card-text">$0</h5>
+      </div>
+    </div>
+    <div class="card" style="width: 15rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title">Pending Clearance</h5>
+        <h5 class="card-text">$0</h5>
+      </div>
+    </div>
+    <div class="card" style="width: 15rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title">Available for Withdraw</h5>
+        <h5 class="card-text">$0</h5>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="">
+      <div class="SortBlufLink">
+        <h3>Transactions</h3>
       </div>
       <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
         <thead>
@@ -52,16 +53,21 @@
           </tr>
         </thead>
         <tbody>
-          <%# @order_active.each do |item| %>
+          <% @order_completed.each do |item| %>
             <tr>
-              <td class="align-middle"></td>
-              <td class="align-middle"></td>
-              <td class="align-middle"></td>
+              <td class="align-middle"><%= item.updated_at.strftime("%d %B %Y") %></td>
+              <td class="align-middle"><%=  item.package.service.title %></td>
+              <td class="align-middle"><%= number_to_currency(item.price) %></td>
             </tr>
-          <%# end %>
+          <% end %>
         </tbody>
       </table>
     </div>
   </div>
-  </div>
+</div>
 </section>
+<script>
+  $(function(){
+    $('table').DataTable();
+  });
+</script>

@@ -30,5 +30,6 @@
 //= require bootstrap-toggle
 //= require pnotify
 //= require jquery-fileupload/basic
+//= require datatables
 
 

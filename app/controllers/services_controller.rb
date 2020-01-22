@@ -92,79 +92,104 @@ class ServicesController < ApplicationController
   end
 
   def pricing
-    @service = Service.find params[:id]
-    @set_bar = "ok"
-    @service.build_basic_package if @service.basic_package.blank?
-    @service.build_standard_package if @service.standard_package.blank?
-    @service.build_premimum_package if @service.premimum_package.blank?
-    @service.build_extra_basic_package if @service.extra_basic_package.blank?
-    @service.build_extra_standard_package if @service.extra_standard_package.blank?
-    @service.build_extra_premimum_package if @service.extra_premimum_package.blank?
-    if @service.title.blank?
-      flash[:alert] = "First Complete Your Service OwerView"
-      redirect_to edit_services_path(@service)
+    if current_user.sellers?
+      @service = Service.find params[:id]
+      @set_bar = "ok"
+      @service.build_basic_package if @service.basic_package.blank?
+      @service.build_standard_package if @service.standard_package.blank?
+      @service.build_premimum_package if @service.premimum_package.blank?
+      @service.build_extra_basic_package if @service.extra_basic_package.blank?
+      @service.build_extra_standard_package if @service.extra_standard_package.blank?
+      @service.build_extra_premimum_package if @service.extra_premimum_package.blank?
+      if @service.title.blank?
+        flash[:alert] = "First Complete Your Service OwerView"
+        redirect_to edit_services_path(@service)
+      end
+    else
+      redirect_to root_path
+      flash[:alert] = "You have no access." 
     end
   end
 
   def description
-    @service = Service.find params[:id]
-    @set_bar = "ok"
-    @service.build_question1_faq if @service.question1_faq.blank?
-    @service.build_question2_faq if @service.question2_faq.blank?
-    @service.build_question3_faq if @service.question3_faq.blank?
-    @service.faqs.build
-    if @service.packages.blank?
-      flash[:alert] = "First Complete Your Service Packages"
-      redirect_to services_pricing_path(@service)
-    end
+    if current_user.sellers?
+      @service = Service.find params[:id]
+      @set_bar = "ok"
+      @service.build_question1_faq if @service.question1_faq.blank?
+      @service.build_question2_faq if @service.question2_faq.blank?
+      @service.build_question3_faq if @service.question3_faq.blank?
+      @service.faqs.build
+      if @service.packages.blank?
+        flash[:alert] = "First Complete Your Service Packages"
+        redirect_to services_pricing_path(@service)
+      end
+    else 
+      redirect_to root_path
+      flash[:alert] = "You have no access."
+    end 
   end
 
   def requirement
-    @service = Service.find params[:id]
-    @set_bar = "ok"
-    if @service.packages.blank?
-      flash[:alert] = "First Complete Your Service Packages"
-      redirect_to services_pricing_path(@service)
-    elsif @service.description.blank?
-      flash[:alert] = "First Complete Your Service Description"
-      redirect_to services_pricing_path(@service)
-    end
+    if current_user.sellers?
+      @service = Service.find params[:id]
+      @set_bar = "ok"
+      if @service.packages.blank?
+        flash[:alert] = "First Complete Your Service Packages"
+        redirect_to services_pricing_path(@service)
+      elsif @service.description.blank?
+        flash[:alert] = "First Complete Your Service Description"
+        redirect_to services_pricing_path(@service)
+      end
+    else
+      redirect_to root_path
+      flash[:alert] = "You have no access."
+    end 
   end
 
   def gallery
-    @service = Service.find params[:id]
-    @set_bar = "ok"
-    @service.build_primary_photo if @service.primary_photo.blank?
-    @service.build_secondary_photo if @service.secondary_photo.blank?
-    @service.build_last_photo if @service.last_photo.blank?
-    if @service.packages.blank?
-      flash[:alert] = "First Complete Your Service Packages"
-      redirect_to services_pricing_path(@service)
-    elsif @service.description.blank?
-      flash[:alert] = "First Complete Your Service Description"
-      redirect_to services_description_path(@service)
-    elsif @service.requirements.blank?
-      flash[:alert] = "First Complete Your Service Requirement"
-      redirect_to services_requirement_path(@service)
-    end
+    if current_user.sellers?
+      @service = Service.find params[:id]
+      @set_bar = "ok"
+      @service.build_primary_photo if @service.primary_photo.blank?
+      @service.build_secondary_photo if @service.secondary_photo.blank?
+      @service.build_last_photo if @service.last_photo.blank?
+      if @service.packages.blank?
+        flash[:alert] = "First Complete Your Service Packages"
+        redirect_to services_pricing_path(@service)
+      elsif @service.description.blank?
+        flash[:alert] = "First Complete Your Service Description"
+        redirect_to services_description_path(@service)
+      elsif @service.requirements.blank?
+        flash[:alert] = "First Complete Your Service Requirement"
+        redirect_to services_requirement_path(@service)
+      end
+    else
+      redirect_to root_path
+      flash[:alert] = "You have no access."
+    end 
   end
 
   def publish
-    @service = Service.find params[:id]
-    @set_bar = "ok"
-    if @service.packages.blank?
-      flash[:alert] = "First Complete Your Service Packages"
-      redirect_to services_pricing_path(@service)
-    elsif @service.description.blank?
-      flash[:alert] = "First Complete Your Service Description"
-      redirect_to services_description_path(@service)
-    elsif @service.requirements.blank?
-      flash[:alert] = "First Complete Your Service Requirement"
-      redirect_to services_requirement_path(@service)
-    elsif @service.photos.blank?
-      flash[:alert] = "First Complete Your Service Gallery"
-      redirect_to services_gallery_path(@service)
-    end
+    if current_user.sellers?
+      @service = Service.find params[:id]
+      @set_bar = "ok"
+      if @service.packages.blank?
+        flash[:alert] = "First Complete Your Service Packages"
+        redirect_to services_pricing_path(@service)
+      elsif @service.description.blank?
+        flash[:alert] = "First Complete Your Service Description"
+        redirect_to services_description_path(@service)
+      elsif @service.requirements.blank?
+        flash[:alert] = "First Complete Your Service Requirement"
+        redirect_to services_requirement_path(@service)
+      elsif @service.photos.blank?
+        flash[:alert] = "First Complete Your Service Gallery"
+        redirect_to services_gallery_path(@service)
+      end
+    else
+      redirect_to root_path
+      flash[:alert] = "You have no access."
+    end 
   end
 
   def gallery_publish 

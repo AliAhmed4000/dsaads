@@ -1,7 +1,7 @@
 <div class="tab-pane active in" id="new_orders">
 <div class="panel-body">
     <div class="table-responsive">
-      <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
+      <table id="new-table" class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
         <thead>
           <tr>
             <th>
@@ -13,7 +13,7 @@
             </th>
             <th>GIG</th>
             <th>ORDER DATE</th>
-            <th>DUE DATE</th>
+            <!-- <th>DUE DATE</th> -->
             <th>TOTAL</th>
             <th>STATUS</th>
           </tr>
@@ -32,7 +32,9 @@
                 <%= link_to item.package.service.title,order_path(item.id) %>
               </td>
               <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
-              <td class="align-middle"><%= (item.created_at + item.package.delivery_time.days).strftime("%d %B %Y") %></td>
+              <!-- <td class="align-middle"> -->
+                <%#= (item.created_at + item.package.delivery_time.days).strftime("%d %B %Y") %>
+              <!-- </td> -->
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
                 <% due_date = item.created_at + item.package.delivery_time.days %>
@@ -49,3 +51,8 @@
     </div>
   </div>
 </div>
+<script>
+  $(function(){
+    $('table').DataTable();
+  });
+</script>

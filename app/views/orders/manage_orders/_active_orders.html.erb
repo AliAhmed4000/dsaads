@@ -1,7 +1,7 @@
 <div class="tab-pane" id="active_orders">
 <div class="panel-body">
     <div class="table-responsive">
-      <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
+      <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true" id="active-orders">
         <thead>
           <tr>
             <th>
@@ -32,7 +32,9 @@
                 <%= link_to item.package.service.title,order_path(item.id),method: 'get' %>
               </td>
               <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
-              <td class="align-middle"><%= (item.created_at + item.package.delivery_time.days).strftime("%d %B %Y") %></td>
+              <td class="align-middle">
+                <%= (item.created_at + item.package.delivery_time.days).strftime("%d %B %Y") %>
+              </td>
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
                 <% due_date = item.created_at + item.package.delivery_time.days %>

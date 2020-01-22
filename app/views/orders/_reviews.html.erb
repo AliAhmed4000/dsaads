@@ -2,9 +2,9 @@
   <li class="media">
     <a href="#" class="pull-left">
       <% if review.type == "BuyerReview" %>
-        <%= image_tag review.buyer.check_avatar, class: 'img-circle', alt: "" %>
+        <%= image_tag review.buyer.check_avatar, class: 'img-circle profile-img', alt: "" %>
       <% else %>
-        <%= image_tag review.seller.check_avatar, class: 'img-circle', alt: "" %>
+        <%= image_tag review.seller.check_avatar, class: 'img-circle profile-img', alt: "" %>
       <% end %>
     </a>
     <div class="media-body">
