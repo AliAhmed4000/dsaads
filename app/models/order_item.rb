@@ -12,6 +12,7 @@
 #
 
 class OrderItem < ApplicationRecord
+  mount_uploader :file, OrderUploader
   belongs_to :package
   belongs_to :order
   has_many   :reviews
@@ -23,8 +24,13 @@ class OrderItem < ApplicationRecord
   # enum role: [:user, :"Application Administrator" ]
   after_update :order_completed_notification_counter,:order_completed_notification_seller,:order_completed_notification_buyer, if: lambda{|o| o.completed?}
   after_update :order_inactivation_notification_counter,:order_inactive_notification_seller,:order_inactive_notification_buyer, if: lambda{|o| o.inactive?}
-  after_update :order_activation_notification_counter,:order_active_notification_seller,:order_active_notification_buyer, if: lambda{|o| o.active?}
+  after_update :set_order_start_date,:order_activation_notification_counter,:order_active_notification_seller,:order_active_notification_buyer, if: lambda{|o| o.active?}
   after_update :order_delivered_notification_counter,:order_deliver_notification_seller,:order_deliver_notification_buyer, if: lambda{|o| o.delivered?}
+
+  def set_order_start_date
+    self.update_column('starting_at',DateTime.now)
+    self.update_column('ending_at',(self.starting_at + self.package.delivery_time.days))
+  end
 
   def seller_star_status
     SellerReview.find_by('star is not null and order_item_id=?',self.id)
