@@ -1,4 +1,8 @@
-<div class="tab-pane active in" id="new_orders">
+<% if current_user.sellers? %>
+  <div class="tab-pane" id="new_orders">
+<% else %>
+  <div class="tab-pane active in" id="new_orders">
+<% end %>
 <div class="panel-body">
     <div class="table-responsive">
       <table id="new-table" class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">

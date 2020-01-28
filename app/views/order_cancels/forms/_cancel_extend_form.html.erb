@@ -2,7 +2,7 @@
   <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
   <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
   <%= f.input :status, as: :hidden,:input_html => { :value => 'pending' } %>
-  <%= f.input :level, as: :hidden,:input_html => { :value => 'extend_delivery_time' } %>
+  <%= f.input :level, as: :hidden,:input_html => { :value => 'seller_extend_delivery_time' } %>
   <%= f.input :reason, as: :hidden,:input_html => { :value => params[:reason] } %>
   <%= f.error_notification %>
 	<% if current_user.sellers? %>
@@ -13,12 +13,12 @@
 	<%#= f.simple_fields_for :order_cancels do |cancel| %>  
     <div class="row mb-3">
       <div class="col-md-6 col-sm-12"> 
-      	<%= f.input :extend_delivery,collection: Package::BASIC_DELIVERY,required: true %>
+      	<%= f.input :extend_delivery,collection: Package::EXTEND_DELIVERY,required: true %>
       </div>
     </div>
     <div class="row mb-3">
       <div class="col-md-6 col-sm-12">
-      	<%= f.input :description,required: true, hint: 'Minimum 50 words required', placeholder: "Description", input_html: {rows: "3"},as: :text  %>
+      	<%= f.input :description,required: true,label: 'Reason', hint: 'Minimum 50 words required', placeholder: "Reason", input_html: {rows: "3"},as: :text  %>
       </div>
     </div>
 	<%# end %>

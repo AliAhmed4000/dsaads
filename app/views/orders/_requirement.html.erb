@@ -1,0 +1,16 @@
+<div class="py-3 border border-light container-fluid"  id="order-requirement">
+  <div class="py-3">
+    <h6>Order Requirement</h6>
+    <hr>
+    <div class="review-header pt-3"> 
+      <p><%= @order.package.service.requirements %></p>
+      <h5>Description</h5>
+      <% unless @order.description.blank? %>
+        <p><%= @order.description %></p>
+      <% end %>
+      <% unless @order.file.blank? %>
+        <p><%= link_to "attachment",@order.file.url,:target => "_blank" %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 <div class="container">
   <div class="row">
-    <!-- Service Photo Slider -->
     <div class="col-lg-8 col-md-12">
       <div class="border border-light"> 
         <div class="owl-carousel owl-theme owl-loaded">
@@ -12,7 +11,9 @@
             <%= simple_form_for @order_item,url: order_path(@order_item), method: 'put',:html => {:class => 'form-horizontal'} do |f| %>
               <%= f.error_notification %>
               <div style="padding: 5%;">  
-              <div> <%= @service.requirements %></div>
+              <div><%= @service.requirements %></div>
+              <%= f.input :description,label: 'Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Description',:minlength=>"50", input_html: {rows: "3"}  %>
+              <%= f.input :file, as: :file,label: false,wrapper: false,input_html: {id: "file-input",class: ""} %>
               <label class="Checkbox-form" style="margin-top: 2%;">
                   <%= f.check_box :status,{},"active","inactive" %>  I have provided all the requirements
                   <span class="checkmark"></span>

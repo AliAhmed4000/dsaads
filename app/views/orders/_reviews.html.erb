@@ -13,13 +13,21 @@
         </span>
         <strong class="text-success">
           <% if review.type == "BuyerReview" %>
-            <%= review.buyer.full_name %>
+            <% if review.buyer_id == current_user.id %>
+              Me
+            <% else %>
+              <%= review.buyer.full_name %>
+            <% end %>
           <% else %>
-            <%= review.seller.full_name %>
+            <% if review.seller_id == current_user.id %>
+              Me 
+            <% else %>
+              <%= review.seller.full_name %>
+            <% end %>
           <% end %>
         </strong>
         <p>
-          <%= review.comment %>
+          <%= strip_tags(review.comment) %>
           <% unless review.attachment.blank? %>
             <span>
               <%= link_to review.attachment_url,:target => "_blank" do  %>

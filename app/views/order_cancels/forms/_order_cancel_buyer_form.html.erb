@@ -12,17 +12,17 @@
 			  <p class="h5 pb-2">Can you give us more detail on why?</p>
 			  <div class="form-check">
           <label class="form-check-label radio" for="radio3">
-            <%= f.radio_button :reason,'ask_seller_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input",checked: "checked"%>Ask Seller to Cancel Order
+            <%= f.radio_button :level,'buyer_ask_seller_to_cancel_order', :value => 'buyer_ask_seller_to_cancel_order' ,:class => "form-check-input radio-input",checked: "checked"%>Ask Seller to Cancel Order
           </label>
         </div>
         <div class="form-check">
 			    <label class="form-check-label radio" for="radio1">
-			      <%= f.radio_button :reason,'The_seller_is_not_responding',:value =>'The_seller_is_not_responding',:class => "form-check-input radio-input" %>The Seller is not responding
+			      <%= f.radio_button :level,'buyer_seller_is_not_responding',:value =>'buyer_seller_is_not_responding',:class => "form-check-input radio-input" %>The Seller is not responding
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio2">
-			      <%= f.radio_button :reason,'seller_did_late_delivery', :value => 'seller_did_late_delivery' ,:class => "form-check-input radio-input" %>Seller did late delivery
+			      <%= f.radio_button :level,'buyer_seller_did_late_delivery', :value => 'buyer_seller_did_late_delivery' ,:class => "form-check-input radio-input" %>Seller did late delivery
 			    </label>
 			  </div>
 			</div>

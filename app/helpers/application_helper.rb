@@ -51,12 +51,12 @@ module ApplicationHelper
 
   def online_status(user)
     if user.user_online?
-      content_tag :span, 'Online',
-        class: "online_status #{'online' if user.user_online?}",
+      content_tag :span, '',
+        class: "dot dot-online",
         id: "user-#{user.id}"
     else
-      content_tag :span, 'Offline',
-        class: "online_status",
+      content_tag :span, '',
+        class: "dot dot-offline",
         id: "user-#{user.id}"
     end
   end

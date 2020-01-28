@@ -2,7 +2,7 @@
     <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
     <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
     <%= f.input :status, as: :hidden,:input_html => { :value => 'pending' } %>
-    <%= f.input :level, as: :hidden,:input_html => { :value => 'modify_order' } %>
+    <%= f.input :level, as: :hidden,:input_html => { :value => 'seller_modify_order' } %>
     <%= f.input :reason, as: :hidden,:input_html => { :value => params[:reason] } %>
   <%= f.error_notification %>
 	<% if current_user.sellers? %>
@@ -18,7 +18,7 @@
     </div>
     <div class="row mb-3">
       <div class="col-md-6 col-sm-12">
-      	<%= p.input :description,required: true, hint: 'Minimum 50 words required', placeholder: "Description", input_html: {rows: "3",value: @order.package.description},as: :text  %>
+      	<%= p.input :description,required: true,label: 'Reason',hint: 'Minimum 50 words required', placeholder: "Reason", input_html: {rows: "3",value: @order.package.description},as: :text  %>
       </div>
     </div>
     <div class="row mb-3">

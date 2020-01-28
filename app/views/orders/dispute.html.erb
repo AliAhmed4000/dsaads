@@ -8,29 +8,48 @@
               <h4>Disputed Order</h4>
       			  <p>Welcome! Here you can work things out resolve issues regarding your order.</p>
       			  <hr>
-              <!-- Package Comparison Table -->
+              <p>Buyer: <%= @dispute.order_item.order.user.full_name %></p>
+              <p>Seller: <%= @dispute.order_item.package.service.seller.full_name %></p>
               <div class="package-table">
                 <table class="table table-bordered">
                   <thead>
                     <tr class="table-secondary"><th scope="col" colspan="4" class="h3">Order #<%= @dispute.order_item.order.id %></th></tr>
                     <tr>
                       <th class="table-secondary" scope="col">Dispute Type</th>
-                      <th scope="col" class="text-center"><%= @dispute.level.split('_').map(&:capitalize).join(' ') %></th>
+                      <th scope="col" class="text-center">
+                        <% if @dispute.seller_modify_order? %>
+                          BUYER REQUEST TO MODIFY ORDER
+                        <% elsif @dispute.seller_extend_delivery_time? %>
+                          SELLER REQUEST TO EXTEND DELIVERY TIME
+                        <% elsif @dispute.seller_ask_buyer_to_cancel_order? %>
+                          SELLER REQUEST TO CANCEL ORDER
+                        <% elsif @dispute.buyer_ask_seller_to_cancel_order? %>
+                          BUYER REQUEST TO CANCEL ORDER
+                        <% elsif @dispute.buyer_seller_is_not_responding? %>
+                          BUYER REQUEST TO SELLER IS NOT RESPONDING 
+                        <% elsif @dispute.buyer_seller_did_late_delivery? %>
+                          BUYER REQUEST TO SELLER LATE DELIVERY 
+                        <% end %>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <th class="table-secondary" scope="row">Reason</th>
-                      <td class="text-center"><%= @dispute.reason.split('_').map(&:capitalize).join(' ') %></td>
-                    </tr>
-                    <tr>
-                      <th class="table-secondary" scope="row">Days</th>
-                      <td class="text-center"><%= @dispute.extend_delivery %></td>
-                    </tr>
-                    <tr>
-                      <th class="table-secondary" scope="row">Description</th>
                       <td class="text-center"><%= @dispute.description %></td>
                     </tr>
+                    <% unless @dispute.extend_delivery.blank? %>
+                      <tr>
+                        <th class="table-secondary" scope="row">Days</th>
+                        <td class="text-center"><%= @dispute.extend_delivery %></td>
+                      </tr>
+                    <% end %>
+                    <% unless @dispute.reason.blank? %>
+                      <tr>
+                        <th class="table-secondary" scope="row">Detail</th>
+                        <td class="text-center"><%= @dispute.reason.split('_').map(&:capitalize).join(' ') %></td>
+                      </tr>
+                    <% end %>
                     <tr>
                       <th class="table-secondary" scope="row">Created at</th>
                       <td class="text-center"><%= @dispute.created_at.strftime("%d %B %Y") %></td>
@@ -42,9 +61,13 @@
                     </tr>
                   </tbody>       
                 </table>
-                <% if current_user.buyers? && @dispute.pending? %>
-                  <%= render partial: 'orders/forms/order_cancel_reject_form' %>
-                  <%= render partial: 'orders/forms/order_cancel_approval_form' %>
+                <% if @dispute.pending? %>
+                  <% if @dispute.user.id == current_user.id %>
+                    <%#= link_to "WithDraw",root_path, class: "btn btn primary pull-right" %> 
+                  <% else %>
+                    <%= render partial: 'orders/forms/order_cancel_reject_form' %>
+                    <%= render partial: 'orders/forms/order_cancel_approval_form' %>
+                  <% end %>
                 <% end %>
               </div>
             </div>

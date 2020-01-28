@@ -10,19 +10,19 @@
       <% end %>
 	    <div class="underline">
 			  <p class="h5 pb-2">What can we help you do?</p>
-			  <div class="form-check">
+			  <!-- <div class="form-check">
 			    <label class="form-check-label radio" for="radio1">
-			      <%= f.radio_button :level,'modify_order',:value =>'modify_order',:class => "form-check-input radio-input",checked: "checked" %>Modify Order
+			      <%#= f.radio_button :level,'seller_modify_order',:value =>'seller_modify_order',:class => "form-check-input radio-input",checked: "checked" %>Modify Order
 			    </label>
-			  </div>
+			  </div> -->
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio2">
-			      <%= f.radio_button :level,'extend_delivery_time', :value => 'extend_delivery_time' ,:class => "form-check-input radio-input" %>Extend Delivery Time
+			      <%= f.radio_button :level,'seller_extend_delivery_time', :value => 'seller_extend_delivery_time' ,:class => "form-check-input radio-input" %>Extend Delivery Time
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio3">
-			      <%= f.radio_button :level,'ask_buyer_to_cancel_order', :value => 'ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Ask buyer to Cancel Order
+			      <%= f.radio_button :level,'seller_ask_buyer_to_cancel_order', :value => 'seller_ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Ask buyer to Cancel Order
 			    </label>
 			  </div>
 			</div>

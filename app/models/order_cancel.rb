@@ -1,7 +1,7 @@
 class OrderCancel < ApplicationRecord
  	belongs_to :order_item
   belongs_to :user
- 	enum level: ['modify_order','extend_delivery_time','ask_buyer_to_cancel_order']
+ 	enum level: ['seller_modify_order','seller_extend_delivery_time','seller_ask_buyer_to_cancel_order','buyer_ask_seller_to_cancel_order','buyer_seller_is_not_responding','buyer_seller_did_late_delivery']
   enum reason: [
                 'The_buyer_is_not_responding',
                 'The_will_order_again',
@@ -9,20 +9,32 @@ class OrderCancel < ApplicationRecord
                 'We_could_not_agree_ on_price',
                 'I_am_not_able_to_do_this_job',
                 'I_did_not_receive_enough_information_from_client',
-                'Due_to personal_technical_reason_I_could_not_complete_work',
-                'ask_seller_to_cancel_order',
-                'The_seller_is_not_responding',
-                'seller_did_late_delivery'
+                'Due_to personal_technical_reason_I_could_not_complete_work'
+                #'ask_seller_to_cancel_order',
+                #'The_seller_is_not_responding',
+                #'seller_did_late_delivery'
               ]
 	enum status: ['pending','approved','rejected']
- 	after_create :order_resolution_center_by_seller,if: lambda{|o| o.extend_delivery_time? || o.ask_buyer_to_cancel_order? || o.modify_order?}
-  after_create :order_resolution_center_by_buyer,if: lambda{|o| o.ask_seller_to_cancel_order? || o.The_seller_is_not_responding? || o.seller_did_late_delivery?}
+ 	after_create :order_resolution_center_by_seller,if: lambda{|o| o.seller_extend_delivery_time? || o.seller_ask_buyer_to_cancel_order? || o.seller_modify_order?}
+  after_create :order_resolution_center_by_buyer,if: lambda{|o| o.buyer_ask_seller_to_cancel_order? || o.buyer_seller_is_not_responding? || o.buyer_seller_did_late_delivery?}
   after_update :order_status_changes,if: lambda{|o| o.approved? || o.rejected?}
-  after_update :change_order_status_for_buyer,if: lambda{|o| o.approved? && o.ask_buyer_to_cancel_order?}
-  after_update :change_order_status_for_seller,if: lambda{|o| o.approved? && o.ask_seller_to_cancel_order?}
+  after_update :change_order_status_for_buyer,if: lambda{|o| o.approved? && o.seller_ask_buyer_to_cancel_order?}
+  after_update :change_order_status_for_seller,if: lambda{|o| o.approved? && o.buyer_ask_seller_to_cancel_order?}
+  after_update :set_ending_at,if: lambda{|o| o.approved? && o.seller_extend_delivery_time?}
+  after_update :seller_set_ending_at,if: lambda{|o| o.approved? && o.seller_modify_order?}
   attr_accessor :role
  	
   private 
+  def set_ending_at
+    order_item = OrderItem.find(self.order_item_id)
+    order_item.update_column('ending_at',self.order_item.ending_at + self.extend_delivery.days)
+  end
+
+  def seller_set_ending_at
+    order_item = OrderItem.find(self.order_item_id)
+    order_item.update('ending_at'=>self.order_item.ending_at + order_item.package.delivery_time.days)
+  end 
+
   def change_order_status_for_buyer
     order_item = OrderItem.find(self.order_item_id)
     order_item.update('status'=>OrderItem.statuses['cancelled'])
@@ -34,11 +46,11 @@ class OrderCancel < ApplicationRecord
   end
   
   def order_resolution_center_by_seller
-    if self.extend_delivery_time?
+    if self.seller_extend_delivery_time?
       level_status = "Order Extend Delivery"
-    elsif self.ask_buyer_to_cancel_order?
+    elsif self.seller_ask_buyer_to_cancel_order?
       level_status = "Order Cancel"
-    elsif self.modify_order?
+    elsif self.seller_modify_order?
       level_status = "Order Modify"
     end 
     ActionCable.server.broadcast("conversations_#{self.order_item.order.user.id}_channel",{
@@ -49,11 +61,11 @@ class OrderCancel < ApplicationRecord
   end
 
   def order_resolution_center_by_buyer
-      if self.ask_seller_to_cancel_order?
+      if self.buyer_ask_seller_to_cancel_order?
       level_status = "you Order Cancel"
-    elsif self.The_seller_is_not_responding?
+    elsif self.buyer_seller_is_not_responding?
       level_status = "Order Seller is not reponding"
-    elsif self.seller_did_late_delivery?
+    elsif self.buyer_seller_did_late_delivery?
       level_status = "Late Delivery"
     end 
     ActionCable.server.broadcast("conversations_#{self.order_item.package.service.user_id}_channel",{

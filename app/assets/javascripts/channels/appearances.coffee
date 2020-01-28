@@ -17,9 +17,7 @@ $ ->
     received: (messages) ->
       console.log(messages)
       if messages.chat_status == true
-        $("span#user-"+messages['user']).addClass("online")
-        $("span#user-"+messages['user']).text("Online")
+        $("span#user-"+messages['user']).addClass("dot-online")
       else
-        $("span#user-"+messages['user']).removeClass("online")
-        $("span#user-"+messages['user']).text("Offline")
+        $("span#user-"+messages['user']).removeClass("dot-online")
      

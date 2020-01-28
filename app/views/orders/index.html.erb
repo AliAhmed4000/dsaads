@@ -10,18 +10,36 @@
       <div class="col-md-12" id="documents">
       <div class="box-tab justified">
         <ul class="nav nav-tabs">
+          <% if current_user.sellers? %>
+            <li class="active nav-item">
+              <a class="nav-link active" href="#priority_orders" data-toggle="tab">Priority
+                <span class="badge badge-light"><%= @order_priority.count %></span>
+              </a>
+            </li>
+          <% end %>
           <li class="active nav-item">
-            <a class="nav-link active" href="#new_orders" data-toggle="tab">New Orders
-              <span class="badge badge-light"><%= @order_start.count %></span>
-            </a>
+            <% if current_user.sellers? %>
+              <a class="nav-link" href="#new_orders" data-toggle="tab">New
+                <span class="badge badge-light"><%= @order_start.count %></span>
+              </a>
+            <% else %>
+              <a class="nav-link active" href="#new_orders" data-toggle="tab">New
+                <span class="badge badge-light"><%= @order_start.count %></span>
+              </a>
+            <% end %>
           </li>
           <li class="active nav-item">
-            <a class="nav-link" href="#active_orders" data-toggle="tab">Active Orders
+            <a class="nav-link" href="#active_orders" data-toggle="tab">Active
               <span class="badge badge-light"><%= @order_active.count %></span>
             </a>
           </li>
           <li class="active nav-item">
-            <a class="nav-link" href="#disputed_orders" data-toggle="tab">Disputed Orders
+            <a class="nav-link" href="#late_orders" data-toggle="tab">late
+              <span class="badge badge-light"><%= @order_late.count %></span>
+            </a>
+          </li>
+          <li class="active nav-item">
+            <a class="nav-link" href="#disputed_orders" data-toggle="tab">Disputed
               <span class="badge badge-light"><%= @order_disputed.count %></span>
             </a>
           </li>
@@ -42,8 +60,12 @@
           </li>
         </ul>
         <div class="tab-content">
+          <% if current_user.sellers? %>
+            <%= render partial: "/orders/manage_orders/priority" %>
+          <% end %>
           <%= render partial: "/orders/manage_orders/new_orders" %>
           <%= render partial: "/orders/manage_orders/active_orders" %>
+          <%= render partial: "/orders/manage_orders/late_order" %>
           <%= render partial: "/orders/manage_orders/disputed" %>
           <% if current_user.buyers? %>
             <%= render partial: "/orders/manage_orders/awaiting_my_review" %>

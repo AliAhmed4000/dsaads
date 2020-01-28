@@ -1,15 +1,17 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :check_order_owners,only: [:show]
+  include ActionView::Helpers::SanitizeHelper
   def index
     if current_user.buyers?
-      @order_start = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:inactive])
-      @order_active = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:active])
-      @order_delivered = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:delivered])
-      @order_completed = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:completed])
-      @order_cancelled = OrderItem.joins(:order).where('orders.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:cancelled])
+      @order_start = OrderItem.inactive.joins(:order).where('orders.user_id=?',current_user.id)
+      @order_active = OrderItem.active.joins(:order).where('orders.user_id=?',current_user.id)
+      @order_delivered = OrderItem.delivered.joins(:order).where('orders.user_id=?',current_user.id)
+      @order_completed = OrderItem.completed.joins(:order).where('orders.user_id=?',current_user.id)
+      @order_cancelled = OrderItem.cancelled.joins(:order).where('orders.user_id=?',current_user.id)
       @order_disputed = OrderCancel.joins(order_item:[:order]).where('orders.user_id=?',current_user.id) 
       @order_review = @order_completed.select{|order| order.buyer_star_status.blank?}
+      @order_late = OrderItem.active.joins(:order).where('orders.user_id=?',current_user.id).where('order_items.ending_at <?',DateTime.now)
     else
       @order_start = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:inactive])
       @order_active = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:active])
@@ -17,7 +19,9 @@ class OrdersController < ApplicationController
       @order_completed = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:completed])
       @order_cancelled = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:cancelled])
       @order_disputed =  OrderCancel.joins(order_item:[package:[:service]]).where('services.user_id=?',current_user.id)
-      @order_review = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:review])
+      @order_review = OrderItem.review.joins(package:[:service]).where('services.user_id=?',current_user.id)
+      @order_priority = OrderItem.active.joins(package:[:service]).where('services.user_id=?',current_user.id).where('order_items.ending_at'=>DateTime.now..3.days.from_now)
+      @order_late = OrderItem.active.joins(package:[:service]).where('services.user_id=?',current_user.id).where('order_items.ending_at <?',DateTime.now)
     end 
   end
 
@@ -37,8 +41,10 @@ class OrdersController < ApplicationController
     if @order_item.update(status: params[:order_item][:status])
       if @order_item.inactive?
         flash[:notice] = "Order Successfully Created."
+        @order_item.update(description: params[:order_item][:description],file: params[:order_item][:file])
       elsif @order_item.active?
         flash[:notice] = "Order Successfully Active."
+        @order_item.update(description: params[:order_item][:description],file: params[:order_item][:file])
       elsif @order_item.completed?
         flash[:notice] = "Order Successfully Completed."
       elsif @order_item.delivered?
@@ -62,6 +68,17 @@ class OrdersController < ApplicationController
 
   def dispute
     @dispute = OrderCancel.find_by_id(params[:id])
+    if current_user.buyers? 
+      if @dispute.order_item.order.user_id != current_user.id
+        flash[:alert] = "You have no permission to access."
+        redirect_to root_path
+      end 
+    else  
+      if @dispute.order_item.package.service.seller.id != current_user.id
+        flash[:alert] = "You have no permission to access."
+        redirect_to root_path
+      end 
+    end 
     # @order_cancel = @order.order_cancels.build
     # @order = dispute.order_item
   end 

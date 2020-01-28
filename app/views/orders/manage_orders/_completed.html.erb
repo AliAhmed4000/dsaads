@@ -12,8 +12,8 @@
               <% end %>
             </th>
             <th>GIG</th>
-            <th>ORDER DATE</th>
-            <th>DUE DATE</th>
+            <th>Starting At</th>
+            <th>Ending At</th>
             <th>TOTAL</th>
             <th>STATUS</th>
           </tr>
@@ -31,8 +31,16 @@
               <td class="align-middle">
                 <%= link_to item.package.service.title,order_path(item.id) %>
               </td>
-              <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
-              <td class="align-middle"><%= (item.created_at + item.package.delivery_time.days).strftime("%d %B %Y") %></td>
+              <td class="align-middle">
+                <% unless item.starting_at.blank? %>
+                  <%= item.starting_at.strftime("%d %B %Y") %>
+                <% end %>
+              </td>
+              <td class="align-middle">
+                <% unless item.ending_at.blank? %>
+                  <%= item.ending_at.strftime("%d %B %Y") %>
+                <% end %>
+              </td>
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
                 <% if item.buyer_star_status.blank? %>

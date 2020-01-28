@@ -1,6 +1,6 @@
 <div class="underline seller-live">
   <p class="h4 pb-2">Seller Lives In</p>
-  <select class="form-control form-control-lg" name="q[seller_country_in][]" id="validationCustom03" onchange="my_submit(this)" required>
+  <select class="form-control form-control-lg" name="q[seller_country_in][]" id="validationCustom04" onchange="my_submit(this)" required>
     <option value="" selected disabled>Please select</option>
     <% Service.seller_countries(@category,@search).each do |key,value| %>
       <!-- <label class="Checkbox-form">
@@ -38,6 +38,9 @@
     $('#show-more-live').show();
     $('#show-less-live').hide();
   })
+  $("#validationCustom04").select2({
+    theme: "classic"
+  });
 </script>
 
 

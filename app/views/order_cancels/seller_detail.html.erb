@@ -6,9 +6,9 @@
           <div class="owl-stage-outer">
             <div class="owl-stage">
               <h4>
-                <% if params[:level] == "extend_delivery_time" %>
+                <% if params[:level] == "seller_extend_delivery_time" %>
                   Extend Delivery
-                <% elsif params[:level] == "modify_order" %>
+                <% elsif params[:level] == "seller_modify_order" %>
                   Modify your Order
                 <% else %>
                   Cancel Order Request
@@ -16,9 +16,9 @@
               </h4>
       			  <p>Welcome! Here you can work things out resolve issues regarding your order.</p>
       			  <hr>
-              <% if params[:level] == "extend_delivery_time" %>
+              <% if params[:level] == "seller_extend_delivery_time" %>
     				    <%= render partial: 'order_cancels/forms/cancel_extend_form'%>
-              <% elsif params[:level] == "modify_order" %>
+              <% elsif params[:level] == "seller_modify_order" %>
                 <%= render partial: 'order_cancels/forms/cancel_modify_form'%>
               <% else %>
                 <%= render partial: 'order_cancels/forms/cancel_request_form'%>

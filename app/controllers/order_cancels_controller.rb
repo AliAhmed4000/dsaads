@@ -2,9 +2,9 @@ class OrderCancelsController < ApplicationController
   before_action :authenticate_user!
   
   def create 
-  	@order = OrderCancel.new(order_cancel_params)
+    @order = OrderCancel.new(order_cancel_params)
     if @order.save
-      if @order.modify_order? 
+      if @order.seller_modify_order? 
         @order.order_item.package.update_columns(
           name: params[:order_cancel][:package][:name],
           description: params[:order_cancel][:package][:description],
@@ -40,7 +40,7 @@ class OrderCancelsController < ApplicationController
     if current_user.sellers?  
       redirect_to order_cancel_seller_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['level'],params['order_cancel']['reason'])
     else
-      redirect_to order_cancel_buyer_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['reason'])
+      redirect_to order_cancel_buyer_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['level'])
     end 
   end
 

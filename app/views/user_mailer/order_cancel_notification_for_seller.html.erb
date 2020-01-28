@@ -1,2 +1,2 @@
 <p>Hi <%= @order_item.package.service.seller.full_name %>!</p>
-<p><%= @order_item.order.user.full_name %> has sent you request of <%= @order_cancel.reason.split('_').map(&:capitalize).join(' ') %> <%= link_to 'Order',order_url(@order_item) %>.</p>
+<p><%= @order_item.order.user.full_name %> has sent you request of <%= @order_cancel.level.split('_').map(&:capitalize).join(' ') %> <%= link_to 'Order',order_url(@order_item) %>.</p>
