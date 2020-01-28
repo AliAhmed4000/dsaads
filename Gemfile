@@ -107,4 +107,4 @@ gem 'bootstrap-toggle-rails'
 gem 'pnotify-rails'
 gem "jquery-fileupload-rails"
 gem "select2-rails"
-gem 'ckeditor'
+gem 'ckeditor_rails'

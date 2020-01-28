@@ -32,6 +32,5 @@
 //= require jquery-fileupload/basic
 //= require datatables
 //= require select2
-//= require ckeditor/init
-//= require bootstrap_ckeditor
+//= require ckeditor-jquery
 

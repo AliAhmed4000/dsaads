@@ -11,8 +11,9 @@
         </div>
           <%= simple_form_for @review,url: reviews_path, method: 'post',remote: true,:html => {:class => 'form-horizontal'} do |f| %>
             <%= f.error_notification %>  
-            <%= f.cktext_area(:comment, class: "form-control", as: :ckeditor, input_html: { ckeditor: { toolbar: 'mini'}}, required: "required",placeholder: "Message #{@order.package.service.seller.full_name}") %>
-            <div class="image-upload" style="position: absolute; margin-top: -8%; margin-left: 1%">
+            <%= f.input :comment,label: 'Comments', required: true,input_html: {rows: "3",:class => 'ckeditor'}  %>
+            <%#= f.cktext_area(:comment, class: "form-control", as: :ckeditor, input_html: { ckeditor: { toolbar: 'mini'}}, required: "required",placeholder: "Message #{@order.package.service.seller.full_name}") %>
+            <div class="image-upload" style="position: absolute; margin-top: -9%; margin-left: 1%">
               <label for="file-input">
                 <i class="fa fa-paperclip"></i>
               </label>
