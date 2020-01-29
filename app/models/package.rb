@@ -25,7 +25,7 @@ class Package < ApplicationRecord
   BASIC_PRICE = ['5','10','20','50','100']
   STANDARD_PRICE = ['5','10','20','50','100'] 
   PREMIMUM_PRICE = ['5','10','20','50','100']
-
+  REVISION = ['1','2','3','4','5','6','7','8','9','Unlimited']
   belongs_to :service
   has_many :package_metrics
   has_many :order_items

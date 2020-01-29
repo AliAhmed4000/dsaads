@@ -7,6 +7,11 @@
       <td><%= premimum.input :description, hint: 'Maximum 100 words', required: true, input_html: {maxlength: 100}%></td>
     </tr>
     <tr>
+      <td>  
+        <%= premimum.input :revision_number,label: 'Revisions',collection: Package::REVISION,required: true %>
+      </td>
+    </tr>
+    <tr>
       <td><%= premimum.input :delivery_time,label: 'Delivery Time in Days',collection: Package::PREMIMUM_DELIVERY,required: true, input_html: {maxlength: 100} %></td>
     </tr>
     <tr>
