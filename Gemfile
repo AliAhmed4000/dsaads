@@ -108,3 +108,4 @@ gem 'pnotify-rails'
 gem "jquery-fileupload-rails"
 gem "select2-rails"
 gem 'ckeditor_rails'
+gem 'time_difference'

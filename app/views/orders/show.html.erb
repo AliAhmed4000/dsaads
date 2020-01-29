@@ -35,8 +35,27 @@
               <% end %>
               <% if @order.active? %>
                 <div class="row" id="order-remaining">
-                  <% date = @order.starting_at + @order.package.delivery_time.days %>
-                  <div class='countdown' data-date='<%= date.strftime("%Y-%m-%d") %>' data-time='<%= date.strftime("%H:%M:%S") %>'></div>
+                  <% if @order.ending_at > DateTime.now %>
+                    <div class='countdown' data-date='<%= @order.ending_at.strftime("%Y-%m-%d") %>' data-time='<%=  @order.ending_at.strftime("%H:%M:%S") %>'></div>
+                  <% else %>
+                    <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
+                      <div class="countdown-container days">
+                        <span class="countdown-heading days-top">Days</span>
+                        <span class="countdown-value days-bottom">00</span></div>
+                      <div class="countdown-container hours">
+                        <span class="countdown-heading hours-top">Hours</span>
+                        <span class="countdown-value hours-bottom">00</span>
+                      </div>
+                      <div class="countdown-container minutes">
+                        <span class="countdown-heading minutes-top">Minutes</span>
+                        <span class="countdown-value minutes-bottom">00</span>
+                      </div>
+                      <div class="countdown-container seconds">
+                        <span class="countdown-heading seconds-top">Seconds</span>
+                        <span class="countdown-value seconds-bottom">00</span>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
               <% end %>
             </div>
@@ -48,7 +67,6 @@
     </div>
     <div class="col-lg-3 col-md-12">
       <%= render partial: 'orders/resolution_center' %>
-      <%#= render partial: 'orders/resolution_center' %>
       <%= render partial: 'orders/changes/action' %>
     </div>
   </div>
@@ -72,7 +90,31 @@
   }
   .countdown-container .countdown-value {
     font-size: 50px;
-    background: #6273c9;
+    background: #b19cd9;
+    padding: 10px;
+    color: #fff;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.4)
+  }
+
+  .countdown1 {
+    font-family: 'Roboto';
+    text-transform: uppercase;
+    padding-left: 32%;
+  }
+  .countdown1 > div { display: inline-block; }
+  .countdown1 > div > span {
+    display: block;
+    text-align: center;
+  }
+  .countdown-container { margin: 0 3px; }
+  .countdown-container .countdown-heading {
+    font-size: 11px;
+    margin: 3px;
+    color: #666
+  }
+  .countdown-container .countdown-value {
+    font-size: 50px;
+    background: #b19cd9;
     padding: 10px;
     color: #fff;
     text-shadow: 2px 2px 2px rgba(0,0,0,0.4)

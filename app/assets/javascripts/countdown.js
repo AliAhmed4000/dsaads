@@ -34,7 +34,7 @@
 		    	html+="<span class='countdown-heading days-top'>Days</span>";
 		    	html+="<span class='countdown-value days-bottom'>"+pad(days)+"</span>";
 		    html+="</div>";
-		}
+		  }
 
 	    html+="<div class='countdown-container hours'>"
 	    	html+="<span class='countdown-heading hours-top'>Hours</span>";
@@ -70,6 +70,5 @@ jQuery(document).ready(function(){
 		jQuery(".countdown").each(function(){
 			jQuery(this).countdown();	
 		})
-		
 	}
 })

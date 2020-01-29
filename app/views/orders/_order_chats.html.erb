@@ -9,6 +9,8 @@
     				<%= render partial: '/orders/reviews', locals: {reviews: @order.reviews.order(created_at: :asc)} %>
           </ul>
         </div>
+          <h6>Order DeadLine Date: <%= @order.ending_at.strftime("%d %B %Y") %></h6>
+          <h6>Day Remaining: <%=  TimeDifference.between(DateTime.now,@order.ending_at).humanize %></h6>
           <%= simple_form_for @review,url: reviews_path, method: 'post',remote: true,:html => {:class => 'form-horizontal'} do |f| %>
             <%= f.error_notification %>  
             <%= f.input :comment,label: 'Comments', required: true,input_html: {rows: "3",:class => 'ckeditor'}  %>
