@@ -1,13 +1,14 @@
 class ServicesController < ApplicationController
-  before_action :authenticate_user!, except: [:index,:show]
-  before_action :check_seller_profile, except: [:index,:show]
+  before_action :authenticate_user!, except: [:index,:show,:search]
+  before_action :check_seller_profile, except: [:index,:show,:search]
   before_action :check_servie_owner, only: [:edit,:pricing,:description,:requirement,:gallery,:publish,:update]
   include ActionView::Helpers::UrlHelper
 
   def index
     params["choices-single-default"] = nil if params["choices-single-default"] == "Category" || params["choices-single-default"] == "All Categories"
     if params[:search].present? && params["choices-single-default"].present?
-      @category = Category.find_by_id(params["choices-single-default"])
+      @category = Category.find_by_id(params["choices-
+        -default"])
       @search = "%#{params[:search]}%"
       unless @category.blank?
         @services = Category.search_category(@category,@search).page(params[:page]).per(6)
