@@ -320,6 +320,10 @@ class ServicesController < ApplicationController
     custom_offer.destroy
   end 
 
+  def search
+    service = Service.where('title LIKE ?', "#{params['search']}%").pluck('title')
+    render json: service
+  end 
   private  
   def custom_offer_params 
     params.require(:service).permit(

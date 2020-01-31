@@ -33,4 +33,4 @@
 //= require datatables
 //= require select2
 //= require ckeditor-jquery
-
+//= require jquery-ui

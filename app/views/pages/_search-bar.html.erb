@@ -20,7 +20,7 @@
         </select>
       </div>
     </div>
-    <div class="input-field second-wrap">
+    <div class="input-field second-wrap ui-widget">
       <%= text_field_tag :search,nil,:placeholder=>"Search For Anything"  %>
     </div>
     <div class="input-field third-wrap">
@@ -45,6 +45,20 @@ $(function(){
     itemSelectText: '',
   });
 });
+
+$("#search").autocomplete({
+  source: function(request,response){
+    $.ajax({
+      url: "/services/search",
+      dataType: "json",
+      data: {search: request.term},
+      success: function(data){
+        response(data);
+      }
+    });
+  },
+  minLength: 1
+});
 </script>
 <style type="text/css">
   .s003 {
@@ -64,7 +78,7 @@ $(function(){
   padding: 15px;
 }
 .s003 form .inner-form .input-field.second-wrap{
-  width: 150px;
+  width: 190px;
   height: 40px;
 }
 
