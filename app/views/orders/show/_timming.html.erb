@@ -1,0 +1,23 @@
+<div class="row" id="order-remaining">
+  <% if @order.ending_at > DateTime.now %>
+    <div class='countdown' data-date='<%= @order.ending_at.strftime("%Y-%m-%d") %>' data-time='<%=  @order.ending_at.strftime("%H:%M:%S") %>'></div>
+  <% else %>
+    <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
+      <div class="countdown-container days">
+        <span class="countdown-heading days-top">Days</span>
+        <span class="countdown-value days-bottom">00</span></div>
+      <div class="countdown-container hours">
+        <span class="countdown-heading hours-top">Hours</span>
+        <span class="countdown-value hours-bottom">00</span>
+      </div>
+      <div class="countdown-container minutes">
+        <span class="countdown-heading minutes-top">Minutes</span>
+        <span class="countdown-value minutes-bottom">00</span>
+      </div>
+      <div class="countdown-container seconds">
+        <span class="countdown-heading seconds-top">Seconds</span>
+        <span class="countdown-value seconds-bottom">00</span>
+      </div>
+    </div>
+  <% end %>
+</div>
