@@ -6,9 +6,13 @@
       <% unless @order.delivered? %>
         <%= render partial: '/orders/forms/order_delivered_form' %>
       <% end %>
-    <% else %>
+    <% else %> 
       <% unless @order.completed? %>
         <%= render partial: '/orders/forms/order_complete_form' %>
+      <% end %>
+      <% if @order.delivered? %>
+      <% binding.pry %>
+        <%= render partial: '/orders/forms/revision_request_by_buyer' %>
       <% end %>
     <% end %>
   <% end %>

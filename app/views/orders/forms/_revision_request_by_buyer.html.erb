@@ -1,0 +1,6 @@
+<%= simple_form_for @order,url: order_path(@order), method: 'put' do |f| %>
+  <%= f.input :status, as: :hidden,:input_html => { :value => "completed" } %>
+  <label class="Checkbox-form" style="margin-top: 2%;margin-left: 22%; ">
+    <%= f.submit "Revision", class: "btn btn-info" %>
+  </label>
+<% end %>
