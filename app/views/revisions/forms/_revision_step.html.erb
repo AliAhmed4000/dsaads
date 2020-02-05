@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row bs-wizard" style="border-bottom:0;">
+    <% unless params[:level].blank? %>
+      <div class="col-xs-3 bs-wizard-step complete">
+    <% else %>
+      <div class="col-xs-3 bs-wizard-step active">
+    <% end %>
+      <div class="text-center bs-wizard-stepnum">Step 1</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <% unless params[:level].blank? %>
+        <%= link_to "", order_cancel_path(@order),class: "bs-wizard-dot" %>  
+      <% else %>
+        <%= link_to "","#",class: 'bs-wizard-dot' %>
+      <% end %>
+      <div class="bs-wizard-info text-center">Revision Order</div>
+    </div>
+    <% if params[:action] == "payment" %>
+    <div class="col-xs-3 bs-wizard-step active">
+    <% elsif !@order_item.blank? %>
+    <div class="col-xs-3 bs-wizard-step complete">
+    <% else %>
+    <div class="col-xs-3 bs-wizard-step disabled">
+    <% end %>
+      <div class="text-center bs-wizard-stepnum">Description</div>
+      <div class="progress"><div class="progress-bar"></div></div>
+      <%= link_to "","#",class: 'bs-wizard-dot' %>
+      <div class="bs-wizard-info text-center">Add Detail & Submit</div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+  .bs-wizard > .bs-wizard-step {padding: 0; position: relative; width: 50%;}
+</style>

@@ -18,11 +18,12 @@
             </li>
           <% end %>
           <li class="active nav-item">
-            <% if current_user.sellers? %>
-              <a class="nav-link" href="#new_orders" data-toggle="tab">New
-                <span class="badge badge-light"><%= @order_start.count %></span>
-              </a>
-            <% else %>
+            <%# if current_user.sellers? %>
+              <!-- <a class="nav-link" href="#new_orders" data-toggle="tab">New
+                <span class="badge badge-light"><%#= @order_start.count %></span>
+              </a> -->
+            <%# else %>
+            <% if current_user.buyers? && @order_start.count > 0 %>
               <a class="nav-link active" href="#new_orders" data-toggle="tab">New
                 <span class="badge badge-light"><%= @order_start.count %></span>
               </a>
@@ -34,7 +35,7 @@
             </a>
           </li>
           <li class="active nav-item">
-            <a class="nav-link" href="#late_orders" data-toggle="tab">late
+            <a class="nav-link" href="#late_orders" data-toggle="tab">Late
               <span class="badge badge-light"><%= @order_late.count %></span>
             </a>
           </li>
@@ -63,7 +64,9 @@
           <% if current_user.sellers? %>
             <%= render partial: "/orders/manage_orders/priority" %>
           <% end %>
-          <%= render partial: "/orders/manage_orders/new_orders" %>
+          <% if current_user.buyers? && @order_start.count > 0 %>
+            <%= render partial: "/orders/manage_orders/new_orders" %>
+          <% end %>
           <%= render partial: "/orders/manage_orders/active_orders" %>
           <%= render partial: "/orders/manage_orders/late_order" %>
           <%= render partial: "/orders/manage_orders/disputed" %>

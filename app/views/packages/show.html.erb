@@ -90,7 +90,7 @@
                 <div class="col">
                 <%= form_tag(packages_payment_path(@service,@package),method: :get) do %>
                   <%= hidden_field_tag 'quantity',1 %>
-                  <%= submit_tag "Order",class: "btn btn-primary" %>
+                  <%= submit_tag "Order #{number_to_currency(gig_fee + service_fee)}",class: "btn btn-primary", id: "order-id" %>
                 <% end %>
                 </div>
               </div>
@@ -111,6 +111,7 @@
     $("#sub-total").html(total);
     $('#service-fee').html(accounting.formatMoney(service_fee));
     $('#total').html(accounting.formatMoney(service_fee+qty*price));
-    $('#quantity').val(qty)
+    $('#quantity').val(qty);
+    $("#order-id").val("Order"  +  accounting.formatMoney(service_fee+qty*price));
   });
 </script>

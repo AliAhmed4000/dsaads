@@ -1,6 +1,6 @@
 <div class="tab-pane active in" id="basic">
   <div class="row py-2">
-    <div class="col"><h5>Basic Service</h5></div>
+    <div class="col font-weight-bold"><h5><strong>Basic Service</strong></h5></div>
     <div class="col"><h5><%= number_to_currency(@service.basic_package.price) %></h5></div>
   </div>
   <div class="row">
@@ -10,12 +10,16 @@
   </div>
   <div class="row">
     <div class="col">
-      <i class="fa fa-clock-o" aria-hidden="true"></i> 
-      <%= pluralize(@service.basic_package.delivery_time, 'Days') %> Delivery
+      <i class="fa fa-clock-o" aria-hidden="true"></i>
+      <strong> 
+        <%= pluralize(@service.basic_package.delivery_time, 'Days') %> Delivery
+      </strong>
     </div>
     <div class="col">
       <i class="fa fa-repeat" aria-hidden="true"></i>
-      <%= @service.basic_package.revision_number %> Revisions
+      <strong>
+        <%= @service.basic_package.revision_number %> Revisions
+      </strong>
     </div>
   </div>
   <div class="row py-2 text-center">

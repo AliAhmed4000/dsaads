@@ -18,6 +18,7 @@ class OrderItem < ApplicationRecord
   has_many   :reviews
   has_many   :order_cancels
   has_many   :payments
+  has_many   :revisions
   accepts_nested_attributes_for :order_cancels, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :reviews, reject_if: :all_blank, allow_destroy: true
   enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review,:disputed]

@@ -12,10 +12,10 @@
       </td>
     </tr>
     <tr>
-      <td><%= premimum.input :delivery_time,label: 'Delivery Time in Days',collection: Package::PREMIMUM_DELIVERY,required: true, input_html: {maxlength: 100} %></td>
+      <td><%= premimum.input :delivery_time,label: 'Delivery Time in Days',collection: Package::EXTEND_DELIVERY,required: true, input_html: {maxlength: 100} %></td>
     </tr>
     <tr>
-      <td><%= premimum.input :price,collection: Package::PREMIMUM_PRICE,required: true ,input_html: {maxlength: 100}%></td>
+      <td><%= premimum.number_field :price,required: true,class: "form-control" %></td>
     </tr>
   </table>
 <% end %>

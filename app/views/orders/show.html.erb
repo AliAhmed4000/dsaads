@@ -1,4 +1,30 @@
 <div class="container">
+  <div class="border border-light text-center" id="request">
+    <% if current_user.sellers? && !@order.revisions.blank? %>
+      <% if @order.revisions.last.pending? %>
+        <h3 style="margin-top: 10px;">
+          Your Buyer Request for Revision.
+          <span>
+            <%= link_to "Modify Order",revision_path(@order.revisions.last),class: "btn btn-info" %>
+          </span>
+        </h3>
+      <% end %>
+    <% end %>
+    <% if current_user.buyers? && !@order.revisions.blank? %>
+      <% if @order.revisions.last.pending? %>
+        <h3 style="margin-top: 10px;">
+          <% if @order.revisions.last.price.blank? %>
+            You have sent Revision Request to Seller.
+          <% else %>
+            Seller has modified revision request.
+            <span>
+              <%= link_to "Modified Order",revision_modified_path(@order.revisions.last),class: "btn btn-info" %>
+            </span>
+          <% end %>
+        </h3>
+      <% end %>
+    <% end %>
+  </div>
   <div class="border border-light text-center" style="margin-bottom: 10px;">
     <div class="box-tab justified ">
       <ul class="nav nav-tabs navbar-light bg-light mr-auto nav nav-pills nav-justified">
@@ -14,13 +40,13 @@
             <a class="nav-link" href="javascript:void(0)" id="requirement"><h6>Requirement</h6>
             </a>
           </li>
-          <% if @order.active? %>
+          <% unless @order.inactive? %>
             <li class="active nav-item">
               <a class="nav-link" href="javascript:void(0)" id="remaining"><h6>Time Remaining</h6>
               </a>
             </li>
           <% end %>
-      </ul>
+        </ul>
     </div>
   </div>
   <div class="row">
@@ -33,7 +59,7 @@
               <% if @order.inactive? && current_user.buyers? %>
                 <%= render partial: '/orders/forms/order_active_form' %>
               <% end %>
-              <% if @order.active? %>
+              <% unless @order.inactive? %>
                 <%= render partial: '/orders/show/timming' %>
               <% end %>
             </div>
@@ -96,6 +122,11 @@
     padding: 10px;
     color: #fff;
     text-shadow: 2px 2px 2px rgba(0,0,0,0.4)
+  }
+  #request{
+    margin-bottom: 10px; 
+    background-color: #b19cd9;
+    color: white;
   }
 </style>
 <script>

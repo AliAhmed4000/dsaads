@@ -12,10 +12,10 @@
       </td>
     </tr>
     <tr>
-      <td><%= standard.input :delivery_time,label: 'Delivery Time in Days',collection: Package::STANDARD_DELIVERY,required: true,input_html: {maxlength: 100} %></td>
+      <td><%= standard.input :delivery_time,label: 'Delivery Time in Days',collection: Package::EXTEND_DELIVERY,required: true,input_html: {maxlength: 100} %></td>
     </tr>
     <tr>
-      <td><%= standard.input :price,collection: Package::STANDARD_PRICE,required: true,input_html: {maxlength: 100} %></td>
+      <td><%= standard.number_field :price,required: true,class: "form-control" %></td>
     </tr>
   </table>
 <% end %>

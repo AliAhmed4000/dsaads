@@ -13,11 +13,11 @@
     </tr>
     <tr>
       <td>  
-        <%= basic.input :delivery_time,label: 'Delivery Time in Days',collection: Package::BASIC_DELIVERY,required: true %>
+        <%= basic.input :delivery_time,label: 'Delivery Time in Days',collection: Package::EXTEND_DELIVERY,required: true %>
       </td>
     </tr>
     <tr>
-      <td><%= basic.input :price,collection: Package::BASIC_PRICE,required: true %></td>
+      <td><%= basic.number_field :price,required: true,class: "form-control" %></td>
     </tr>
   </table>
 <% end %>

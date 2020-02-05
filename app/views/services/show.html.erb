@@ -32,10 +32,10 @@
               <% end %>
             </div>
           </div>
-          <div class="nav-options">
-            <%= image_tag 'next.png', class: 'am-next' %>
-            <%= image_tag 'back.png', class: 'am-prev' %>
-          </div>
+          <!-- <div class="nav-options">
+            <%#= image_tag 'next.png', class: 'am-next' %>
+            <%#= image_tag 'back.png', class: 'am-prev' %>
+          </div> -->
           <div class="owl-dots" id="carousel-custom-dots">
             <% @service.photos.each do |photo| %>
               <div class="doting"><span><%= image_tag photo.image_url(:thumb) %></span></div>
@@ -70,7 +70,7 @@
     loop:true,
     margin:10,
     responsiveClass:true,
-    navText: [$('.am-next'),$('.am-prev')],
+    // navText: [$('.am-next'),$('.am-prev')],
     dotsClass: 'owl-dots',
     dotsData: true,
     dots:false,

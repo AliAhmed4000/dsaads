@@ -58,7 +58,8 @@ class OrdersController < ApplicationController
 
   def show
     @order = OrderItem.find_by_id(params[:id])
-    @review = Review.new 
+    @revision = Revision.new
+    @review = Review.new
   end
 
   def feedback

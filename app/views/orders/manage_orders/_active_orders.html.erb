@@ -35,10 +35,10 @@
               <td class="align-middle"><%= item.ending_at.strftime("%d %B %Y") %></td>
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
-                <% if item.ending_at > DateTime.now %>
-                   <span class="badge badge-success">In-Progress</span>
-                <% else %>
-                  <span class="badge badge-primary">Over Due Date</span>
+                <% if current_user.buyers? %>
+                  <span class="badge badge-success">IN PROGRESS</span>
+                <% elsif current_user.sellers? %>
+                  <span class="badge badge-success">ACTIVE</span>
                 <% end %>
               </td>
             </tr>

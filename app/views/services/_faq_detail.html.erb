@@ -4,7 +4,7 @@
     <% @service.faqs.each do |faq| %>
 	    <div class="card-header" id="headingOne">
 	      <h5 class="mb-0">
-	        <button class="btn btn-link btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOne<%= faq.id %>" aria-expanded="true" aria-controls="collapseOne">
+	        <button class="btn btn-button" type="button" data-toggle="collapse" data-target="#collapseOne<%= faq.id %>" aria-expanded="true" aria-controls="collapseOne">
 	          <%= faq.question %>
 	        </button>
 	      </h5>
@@ -17,3 +17,17 @@
     <% end %>
   </div>
 </div>
+<style type="text/css">
+.btn-button {
+  background-color: purple;
+  border: purple;
+  color: white;
+}
+
+.btn-button:hover {
+  background-color: purple;
+  border: purple;
+  text-decoration: none;
+}
+
+</style>

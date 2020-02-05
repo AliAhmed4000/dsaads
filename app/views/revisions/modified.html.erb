@@ -1,0 +1,48 @@
+<div class="container-fluid px-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="SortBlufLink">
+          <h2>Modified Order</h2>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12" id="documents">
+      	<div class="box-tab justified">
+      		<div class="package-table">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="table-secondary"><th scope="col" colspan="4" class="h3">Order #<%= @revision.order_item.order.id %></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th class="table-secondary" scope="row">Delivery</th>
+                      <td class="text-center"><%= @revision.delivery %> Days</td>
+                    </tr>
+                    <tr>
+                      <th class="table-secondary" scope="row">Price</th>
+                      <td class="text-center"><%= number_to_currency(@revision.price) %></td>
+                    </tr>
+                    <tr>
+                      <th class="table-secondary" scope="row">Description</th>
+                      <td class="text-center"><%= @revision.description %></td>
+                    </tr>
+                    <tr>
+                      <th class="table-secondary" scope="row">Created At</th>
+                      <td class="text-center"><%= @revision.created_at.strftime("%d %B %Y") %></td>
+                    </tr>
+                  </tbody>       
+                </table>
+                <% if @revision.pending? %>
+                  <% if @revision.order_item.order.user.id == current_user.id %>
+                  	<%= link_to "Remove", revision_path(id: @revision.id), method: :delete, class: "btn btn-danger", "style"=>"margin-left: 86%" %>
+                  	<%= link_to "Accept", revision_status_path(id: @revision.id), method: :get, class: "pull-right btn btn-primary" %> 
+                  <% end %>
+                <% end %>
+              </div>
+      	</div>
+      </div>
+    </div>	
+</div>
