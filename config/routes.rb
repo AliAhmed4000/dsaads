@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   resources :photos, only: [:destroy]
   resources :videos, only: [:destroy]
   post '/services/:id/image', to: 'services#file_upload', as: "file_upload"
-  put '/services/:id/custom_offer_create', to: 'services#custom_offer_create', as: 'custom_offer_create'
+  post '/services/:id/custom_offer_create', to: 'services#custom_offer_create', as: 'custom_offer_create'
   get '/services/:id/custom_offer/:custom_offer_id', to: 'services#show_custom_details', as: 'show_custom_details'
   post '/services/:id/video', to: 'services#video_upload', as: "video_upload"
   get  '/services/:id/image/show', to: 'services#show_files', as: "show_files"

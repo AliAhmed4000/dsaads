@@ -294,13 +294,13 @@ class ServicesController < ApplicationController
   end 
   
   def custom_offer_create
-    @service = Service.find params[:id] 
-    if @service.update_attributes(custom_offer_params)
+    @service = Service.find params[:id]
+    @custom = @service.custom_packages.build(price: params['price'],description: params['description'],delivery_time: params['delivery_time'])
+    if @custom.save
       chat = Chat.create!(
         conversation_id: params[:service][:conversation_id],
         user_id: current_user.id,
-        message: "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['service']['custom_package']['price'] 
-        }</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Show Detail",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank' }</p>"
+        message: "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Show Detail",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank' }</p>"
       )
       chat.conversation.update_attributes(
         last_user_id: current_user.id,
@@ -328,7 +328,8 @@ class ServicesController < ApplicationController
   private  
   def custom_offer_params 
     params.require(:service).permit(
-      custom_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      :conversation_id,
+      custom_packages_attributes: [:id, :_destroy, :price, :description, :delivery_time],
     )  
   end 
   

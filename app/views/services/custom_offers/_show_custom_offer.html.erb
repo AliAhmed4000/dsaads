@@ -1,6 +1,6 @@
 <div id="show-custom-form-modal">
   <div class="modal" tabindex="-1" role="dialog" id="custom-form-gig">
-    <%= simple_form_for @service, url: custom_offer_create_path(@service),method: :put do  |f|%>
+    <%= simple_form_for @service, url: custom_offer_create_path(@service),method: :post do  |f|%>
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -17,11 +17,20 @@
             <% end %>
             <%= f.input :conversation_id, as: :hidden,:input_html => { :value => @conversation.id } %>
             <div class="card-body">
-              <%= f.simple_fields_for :custom_package do |custom| %>
-                <%= custom.input :description,label: 'Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Give some impressive description for your valuable service',:minlength=>"50", input_html: {rows: "3"}  %>
-                <%= custom.input :delivery_time,required: true %>
-                <%= custom.input :price,required: true %>
-              <% end %>
+              <div class="form-group text required service_custom_packages_description">
+                <label class="form-control-label text required" for="description">Description<abbr title="required">*</abbr>
+                </label>
+                <textarea class="form-control text required" rows="3" required="required" placeholder="Give some impressive description for your valuable service" minlength="50" name="description" id="description">
+                </textarea>
+                <small class="form-text text-muted">Minimum 50 words required</small>
+              </div>
+              <div class="form-group integer required service_custom_packages_delivery_time">
+                <label class="form-control-label integer required" for="delivery_time">Delivery time <abbr title="required">*</abbr></label>
+                <input class="form-control numeric integer required" required="required" aria-required="true" type="number" step="1" name="delivery_time" id="delivery_time">
+              </div>
+              <div class="custom_packages_price">
+                <label class="form-control-label integer required" for="price">Price <abbr title="required">*</abbr></label>
+                <input class="form-control numeric integer required" required="required" aria-required="true" type="number" step="1" name="price" id="price"></div>
             </div>
           </div>
         </div>

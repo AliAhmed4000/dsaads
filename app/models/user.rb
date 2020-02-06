@@ -188,14 +188,12 @@ class User < ApplicationRecord
   end
 
   def seller_level(seller)
-    if seller.services.active.count >= 7 && seller.order_items.where('status!=?',OrderItem.statuses['completed']).sum(:price) >= 5000 
+    if seller.services.active.count >= 7 && seller.services.joins(:custom_packages).sum(:price) >= 5000 
       return "New Seller"
-    elsif seller.services.active.count >= 10 && seller.order_items.where('status=?',OrderItem.statuses['completed']).sum(:price) >= 1000 && seller.order_items.where('status=?',OrderItem.statuses['completed']).count >= 25
+    elsif seller.services.active.count >= 10 && seller.order_items.completed.sum(:price) >= 1000 && seller.order_items.completed.count >= 25 && seller.services.joins(:custom_packages).sum(:price) >= 7000
       return "Pro Seller"
-    elsif seller.order_items.where('status=?',OrderItem.statuses['completed']).sum(:price) >= 15000 && seller.order_items.where('status=?',OrderItem.statuses['completed']).count >= 80 
+    elsif seller.order_items.completed.sum(:price) >= 15000 && seller.order_items.completed.count >= 80 
       return "Top Seller"
-    else
-      return "New Seller"
     end 
   end
 

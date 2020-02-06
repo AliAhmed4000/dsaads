@@ -42,6 +42,7 @@ class Package < ApplicationRecord
   # validates :price, numericality: { only_integer: true, greater_than: 1, less_than: 10000 }
   # validates :revision_number,  inclusion: { in: Package::REVISION_NUMBER }
   enum level: ['basic','standard','premimum','extra_basic','extra_standard','extra_premimum', 'custom_offer']
+  attr_accessor :conversation_id
   def seller_reviews
     SellerReview.where(package: self)
   end
