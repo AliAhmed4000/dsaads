@@ -82,7 +82,15 @@ class OrdersController < ApplicationController
     end 
     # @order_cancel = @order.order_cancels.build
     # @order = dispute.order_item
-  end 
+  end
+
+  def status
+    @order_item = OrderItem.find_by_id(params[:id])
+    if @order_item.update(status: "delivered")
+      flash[:notice] = "Order Successfully Delivered."
+      redirect_to seller_dashboard_path
+    end 
+  end  
   private 
   def order_params
     params.require(:order).permit(

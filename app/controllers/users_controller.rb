@@ -102,6 +102,12 @@ class UsersController < ApplicationController
     @conversation = Conversation.find(params[:id]) 
   end
 
+  def seller_dashboard
+    @seller = current_user
+    @services = @seller.services
+    @user = current_user
+  end 
+
   private
   def seller_params
     params.require(:user).permit(

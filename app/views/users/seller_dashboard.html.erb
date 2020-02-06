@@ -1,0 +1,42 @@
+<div class="show-container">
+  <div class="row">
+    <div class="col-sm-12 col-lg-4">
+      <%= render 'users/seller_profile_dashboard' %>
+    </div>
+    <div class="col-sm-12 col-lg-8">
+      <div class="border border-light" style="padding: 10px;">
+        <div class="box-tab justified">
+         <h5>Active Orders<span>-<%= @seller.active_orders.count %> (<%= number_to_currency(@seller.expected_coming) %>)</span></h5>
+        </div>
+      </div>
+      <% @seller.active_orders.each do |item| %>
+        <hr>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <%= link_to image_tag(item.package.service.primary_photo.image_url, width: '50%'), order_path(item), class: "card-img-top" %>
+              </div>
+              <div class="col">
+                Buyer: <%= link_to "#{item.order.user.full_name}",profile_path(item.order.user) %> <%#= time_ago_in_words(@order.buyer_star_status.created_at) %>
+              </div>
+              <div class="col">
+                Price: <%= number_to_currency(item.package.price) %>
+              </div>
+              <div class="col">
+                service viewed: <%= item.package.service.hits %>
+              </div>
+            </div>
+            <h5 class="card-title"><%= item.package.service.title %></h5>
+            <p class="card-text"><%= item.package.description %></p>
+            <% if item.delivered? %>
+              <p class="pull-right"><strong>Delivered</strong> <%= time_ago_in_words(item.delivered_at) %> ago</p>
+            <% else %>
+              <%= link_to "Delivery Now", order_status_path(item.id), method: :get,class: "btn btn-primary pull-right" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

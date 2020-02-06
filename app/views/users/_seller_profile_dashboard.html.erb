@@ -1,0 +1,64 @@
+<div class="border border-light text-center p-3">
+    <%= image_tag @seller.check_avatar, size: '150x150', class: 'img-fluid rounded-circle pt-2', alt: "Upload Photo" %>
+    <p class="h3 bold py-3"><%= @seller.full_name %></p>
+    <div class="mb-3" id="all-stars-<%= @seller.id %>"></div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary">Response Rate</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong>100%</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary">Delivered on Time</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong>100%</strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary">Order Completion</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong>100%</strong></p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary">Earned<%#= Date::MONTHNAMES[Date.today.month] %></p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong><%= number_to_currency(@seller.net_coming) %></strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 text-left">
+        <p class="text-secondary">Response Time</p>
+      </div>
+      <div class="col-sm-6 text-right">
+        <p class="text-secondary profile-icon-size"><strong>N/A</strong></p>
+      </div>
+    </div>
+</div>
+<script>
+  <% if @show.blank? %>
+    <% if @seller.sellers? %>
+      var star = <%= @seller.buyer_review_star %>
+    <% else %>
+      var star = <%= @seller.seller_review_star %>
+    <% end %>
+  <% else %>
+      var star = <%= @service.buyer_review_star %>
+  <% end %>
+  $('#all-stars-<%= @seller.id %>').raty({
+    path: '/assets',
+    readOnly: true,
+    size: 5,
+    score: star
+  });
+</script>

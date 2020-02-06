@@ -174,7 +174,9 @@ class User < ApplicationRecord
   end
 
   def expected_coming
-    OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:active]).sum(:price)
+    active = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:active]).sum(:price)
+    delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:delivered]).sum(:price)
+    active + delivered
   end
 
   def purchase
@@ -195,5 +197,11 @@ class User < ApplicationRecord
     else
       return "New Seller"
     end 
-  end     
+  end
+
+  def active_orders
+    active = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:active])
+    delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:delivered])
+    active + delivered
+  end      
 end

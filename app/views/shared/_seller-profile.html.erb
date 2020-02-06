@@ -1,6 +1,6 @@
 <div class="border border-light text-center p-3">
     <%= image_tag @seller.check_avatar, size: '150x150', class: 'img-fluid rounded-circle pt-2', alt: "Upload Photo" %>
-    <p class="h3 bold py-3"><%= @seller.user_name %></p>
+    <p class="h3 bold py-3"><%= @seller.full_name %></p>
     <div class="mb-3" id="all-stars-<%= @seller.id %>"></div>
     <% if user_signed_in? %>
       <% if current_user.id != @seller.id %>  

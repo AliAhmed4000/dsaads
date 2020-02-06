@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/revisions/:id/status', to: 'revisions#status', as: "revision_status"
   get '/orders/:id/feedback', to: 'orders#feedback', as: "order_feedback"
   get '/orders/:id/dispute', to: 'orders#dispute', as: "order_dispute"
+  get '/orders/:id/status', to: 'orders#status', as: "order_status"
   get '/categories/search', to: 'categories#search', as: "search_category"
   get '/category/:id/search/:search', to: 'categories#online_users'
   get '/services/:ids/order/:order', to: 'categories#sort_highest', as: "sort_highest"
@@ -64,6 +65,7 @@ Rails.application.routes.draw do
   get 'seller_onboarding/linked_accounts', to: 'users#seller_linked_accounts', as: "seller_linked_accounts"
   get 'seller_onboarding/account_security', to: 'users#seller_account_security', as: "seller_account_security"
   get 'seller_onboarding/conversation_id/:id', to: 'users#show_customer_offer', as: "show_customer_offer"
+  get 'seller_dashboard', to: 'users#seller_dashboard', as: "seller_dashboard"
     
   resources :users, only: [:show], as: "profile", path: "profile"
   get 'user/role', to: 'users#role', as: "user_role"
