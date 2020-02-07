@@ -4,9 +4,23 @@
 <div class="inbox_msg">
   <div class="inbox_people">
     <div class="headind_srch">
-      <div class="recent_heading">
-        <h4>Recent</h4>
-      </div>
+      <% #binding.pry %>
+      <% unless @conversation.blank? %>
+        <div class="recent_heading">
+          <div class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Conversations
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to "UNREAD (#{@conversation.chats_recipients.where('read=?',false).count})",conversations_unread_path(@conversation),class: "dropdown-item",method: 'get' %>
+              </li>
+              <li><%= link_to "ALL MESSSAGES",conversations_all_message_path(@conversation),class: "dropdown-item" ,method: 'get'%></li>
+              <li><%= link_to "STARRED",conversations_starred_path,class: "dropdown-item",method: 'get' %></li>
+              <li><%= link_to "CUSTOM OFFERS",conversations_customer_offer_path(@conversation),class: "dropdown-item",method: 'get' %></li>
+            </ul>
+          </div> 
+        </div>
+      <% end %>
       <div class="srch_bar">
         <div class="stylish-input-group">
           <%= form_tag( conversations_path, method: :get) do %>
@@ -14,7 +28,7 @@
             <span class="input-group-addon">
               <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
             </span>
-          <%end%>
+          <% end %>
         </div>
       </div>
     </div>
@@ -36,10 +50,16 @@
                   </div>
                   <div class="chat_ib">
                     <h5>
-                      <%= link_to conversation.sellers.full_name,profile_path(conversation.sellers),target: "_blank" %>
-                      <span class="chat_date"><%= online_status conversation.sellers %></span>
-                      <span class="chat_date">&nbsp;|&nbsp;</span>
-                      <span class="chat_date"><%= time_ago_in_words(conversation.sellers.last_sign_in_at) %> ago</span>
+                      <%= conversation.sellers.full_name %>
+                      <span class="chat_date">
+                        <% if conversation.starred? %>
+                          <span class="fa fa-star"></span>
+                        <% else %>
+                          <span class="fa fa-star-o"></span>
+                        <% end %>
+                      </span>
+                      <!-- <span class="chat_date">&nbsp;|&nbsp;</span>
+                      <span class="chat_date"><%#= time_ago_in_words(conversation.sellers.last_sign_in_at) %> ago</span> -->
                     </h5>
                     <p><%= conversation.sellers.seller_level(conversation.sellers) %> | From <%= conversation.sellers.country %></p>
                   </div>
@@ -58,10 +78,16 @@
                     <%= image_tag(conversation.buyers.check_avatar.present? ? conversation.buyers.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.buyers.full_name,class: "profile-img") %>
                   </div>
                   <div class="chat_ib">
-                    <h5><%= link_to conversation.buyers.full_name,profile_path(conversation.buyers),target: "_blank" %>
-                      <span class="chat_date"><%= online_status conversation.buyers %></span>
-                      <span class="chat_date">&nbsp;|&nbsp;</span>
-                      <span class="chat_date"><%= time_ago_in_words(conversation.buyers.last_sign_in_at) %> ago</span>
+                    <h5><%= conversation.buyers.full_name %>
+                      <span class="chat_date">
+                        <% if conversation.starred? %>
+                          <span class="fa fa-star"></span> 
+                        <% else %>
+                          <span class="fa fa-star-o"></span> 
+                        <% end %>
+                      </span>
+                      <!-- <span class="chat_date">&nbsp;|&nbsp;</span>
+                      <span class="chat_date"><%#= time_ago_in_words(conversation.buyers.last_sign_in_at) %> ago</span> -->
                     </h5>
                     <p>From <%= conversation.buyers.country %></p>
                   </div>
@@ -73,6 +99,57 @@
       </div>
     <% end %>
   </div>
+  <% unless @conversation.blank? %>
+    <div style="border-bottom: 1px solid #c4c4c4; padding:10px 29px 10px 20px; overflow:hidden;">
+      <div class="recent_heading">
+        <% if current_user.buyers? %>
+          <h4>
+            <span><%= online_status @conversation.sellers %></span>&nbsp;&nbsp;
+            <%= link_to @conversation.sellers.full_name,profile_path(@conversation.sellers) %>
+            <span>
+            <span class="chat_date">
+            <% if @conversation.starred? %>
+              <%= link_to "",starred_me_path(@conversation),class: "fa fa-star" %> 
+            <% else %>
+              <%= link_to "",starred_me_path(@conversation),class: "fa fa-star-o" %> 
+            <% end %>
+            </span>
+          </h4>
+          <span class="chat_date">
+            <% if @conversation.sellers.user_online? %>
+              Online
+            <% else %>
+              Offline
+            <% end %>
+            &nbsp;|&nbsp;
+            <%= time_ago_in_words(@conversation.sellers.last_sign_in_at) %> ago
+          </span>
+        <% else %>
+          <h4>
+            <span><%= online_status @conversation.buyers %></span>
+            &nbsp;&nbsp;
+            <%= link_to @conversation.buyers.full_name,profile_path(@conversation.buyers) %>
+            <span class="chat_date">
+              <% if @conversation.starred? %>
+                <%= link_to "",starred_me_path(@conversation),class: "fa fa-star" %> 
+              <% else %>
+                <%= link_to "",starred_me_path(@conversation),class: "fa fa-star-o" %> 
+              <% end %>
+            </span>
+          </h4>
+          <span class="chat_date">
+            <% if @conversation.buyers.user_online? %>
+              Online
+            <% else %>
+              Offline
+            <% end %>
+            &nbsp;|&nbsp;
+            <%= time_ago_in_words(@conversation.buyers.last_sign_in_at) %> ago
+          </span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
   <div class="mesgs">
     <% unless @conversation.blank? %>
       <div class="msg_history" id="messages" data-conversation-id="<%= @conversation.id %>">
@@ -168,6 +245,25 @@
   });
 </script>
 <% end %>
+<script type="text/javascript">
+  <% unless @conversations.blank? %>
+    $(function(){
+      var availableTags = [];
+      <% if current_user.buyers? %>
+        <% @conversations.each do |conversation| %>
+          availableTags.push('<%= conversation.sellers.full_name %>');
+        <% end %>
+      <% else %>
+        <% @conversations.each do |conversation| %>
+          availableTags.push('<%= conversation.buyers.full_name %>');
+        <% end %>
+      <% end %>
+      $( "#name" ).autocomplete({
+        source: availableTags
+      });
+    });
+  <% end %>
+</script>
 <style type="text/css">
   .online{
     width: 38px;
@@ -213,4 +309,10 @@
     position: absolute;
     left: 35px;
   }
+
+  <% if @conversation.blank? %>
+  .srch_bar {
+    margin-left: 165px;
+  }
+  <% end %>
 </style>

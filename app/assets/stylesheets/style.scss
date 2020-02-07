@@ -205,6 +205,22 @@ p { margin: 0; }
   line-height: 20px;
   text-align: center;
 }
+
+.profile-setting a #circle {
+  position: absolute;
+  top: -8px;
+  right: 36px;
+  width: 17px;
+  height: 17px;
+  background: blue;
+  font-size: 10px;
+  color: #fff;
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  line-height: 20px;
+  text-align: center;
+}
+
 .profile-setting .name {
   font-size: 18px;
   color: #fff;

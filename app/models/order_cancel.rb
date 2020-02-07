@@ -15,6 +15,7 @@ class OrderCancel < ApplicationRecord
                 #'seller_did_late_delivery'
               ]
 	enum status: ['pending','approved','rejected']
+  enum read: ['no','yes']
  	after_create :order_resolution_center_by_seller,if: lambda{|o| o.seller_extend_delivery_time? || o.seller_ask_buyer_to_cancel_order? || o.seller_modify_order?}
   after_create :order_resolution_center_by_buyer,if: lambda{|o| o.buyer_ask_seller_to_cancel_order? || o.buyer_seller_is_not_responding? || o.buyer_seller_did_late_delivery?}
   after_update :order_status_changes,if: lambda{|o| o.approved? || o.rejected?}

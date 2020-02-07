@@ -44,6 +44,11 @@
               <li class="nav-item"><%= link_to 'Switch as Seller',user_role_path,method: 'get'%></li>
             <% end %>
           <% end %>
+          <% if current_user.buyers? %>
+            <!-- <li class="nav-item">    
+              <span id="circle" onclick="window.location='<%#= my_shopping_path %>'"style="cursor: pointer;"></span>
+            </li> -->
+          <% end %>
           <li class="dropdown">
             <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
             <div class="profile-img" style="background: url(<%= current_user.check_avatar %>) no-repeat center; background-size: cover;"></div>

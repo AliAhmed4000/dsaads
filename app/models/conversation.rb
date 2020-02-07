@@ -4,4 +4,5 @@ class Conversation < ApplicationRecord
   # belongs_to :user, foreign_key: :last_user_id
   has_many :chats, dependent: :destroy
   has_many :chats_recipients, dependent: :destroy
+  enum star: ['notstarred','starred']
 end

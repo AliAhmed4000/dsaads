@@ -75,5 +75,10 @@ Rails.application.routes.draw do
         post :image
       end
   end
+  get 'conversations/:id/filter/all_messages', to: 'conversations#all_messages', as: "conversations_all_message"
+  get 'conversations/:id/filter/unread', to: 'conversations#unread', as: "conversations_unread"
+  get 'conversations/:id/filter/customer_offer', to: 'conversations#customer_offer', as: "conversations_customer_offer"
+  get 'conversations/:id/starred_me', to: 'conversations#starred_me', as: "starred_me"
+  get 'starred', to: 'conversations#starred', as: "conversations_starred"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
