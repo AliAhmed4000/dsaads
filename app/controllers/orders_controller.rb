@@ -31,8 +31,8 @@ class OrdersController < ApplicationController
       flash[:notice] = "Order Payment Successfully Done."
       redirect_to packages_requirement_path(@order.order_items.last.id)
     else
-      @package = Package.find_by_id(params[:order][:order_items_attributes]["0"]["package_id"])
-      render :template => 'packages/payment'
+      flash[:alert] = "Something went wrong."
+      redirect_back fallback_location: root_path
     end  
   end
 
