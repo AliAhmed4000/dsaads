@@ -34,3 +34,4 @@
 //= require select2
 //= require ckeditor-jquery
 //= require jquery-ui
+//= require local-time

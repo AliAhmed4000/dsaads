@@ -1,6 +1,6 @@
 class PackagesController < ApplicationController
 	before_action :authenticate_user!
-	before_action :check_user_role , only: [:show,:payment,:requirement]
+	before_action :check_user_role , only: [:show,:payment]
 	def show
 		@service = Service.find_by_id(params[:service_id])
 		@package = Package.find_by_id(params[:id])
@@ -26,7 +26,7 @@ class PackagesController < ApplicationController
 	private 
 	def check_user_role
 		service = Service.find_by_id(params[:service_id])
-	  if current_user.sellers?
+		if current_user.sellers?
 		  flash[:alert] = "Seller have no permission to access."
       redirect_to root_path
 	  elsif service.user_id == current_user.id

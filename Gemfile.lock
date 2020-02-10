@@ -1012,6 +1012,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
+    local_time (2.1.0)
     loofah (2.3.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -1252,6 +1253,7 @@ DEPENDENCIES
   language_list (~> 1.2, >= 1.2.1)
   letter_opener
   listen (>= 3.0.5, < 3.2)
+  local_time
   marginalia
   mini_magick
   mini_racer (~> 0.2.0)

@@ -110,3 +110,4 @@ gem "select2-rails"
 gem 'ckeditor_rails'
 gem 'time_difference'
 gem 'jquery-ui-rails'
+gem 'local_time'
