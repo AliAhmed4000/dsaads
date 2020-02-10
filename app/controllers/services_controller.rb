@@ -300,7 +300,8 @@ class ServicesController < ApplicationController
       chat = Chat.create!(
         conversation_id: params[:service][:conversation_id],
         user_id: current_user.id,
-        message: "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Show Detail",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank' }</p>"
+        message: "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Show Detail",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank' }</p>",
+        custom_offer: Chat.custom_offers['offered']
       )
       chat.conversation.update_attributes(
         last_user_id: current_user.id,

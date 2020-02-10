@@ -6,9 +6,17 @@ class ChatsController < ApplicationController
     @recipient = conversation.chats_recipients.find_by('chats_recipients.user_id=?', current_user.id)
 
     if params[:chat_id].present? && !params[:chat_id].blank?
-      chats = conversation.chats.where('id < ?', params[:chat_id]).order(created_at: :desc).limit(10)
+      if params['custom'] == "offered"
+        chats = conversation.chats.where('chats.custom_offer=?',Chat.custom_offers['offered']).where('id < ?', params[:chat_id]).order(created_at: :desc)
+      else
+        chats = conversation.chats.where('id < ?', params[:chat_id]).order(created_at: :desc).limit(10)
+      end
     else
-      chats = conversation.chats.order(created_at: :desc).limit(10)
+      if params['custom'] == "offered"
+        chats = conversation.chats.where('chats.custom_offer=?',Chat.custom_offers['offered']).order(created_at: :desc)
+      else
+        chats = conversation.chats.order(created_at: :desc).limit(10)
+      end 
     end
     current_user.chats_recipients.where('conversation_id = ? AND chat_id IN (?)', conversation.id, chats.pluck(:id)).update_all(read: true) unless chats.blank?
 

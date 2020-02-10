@@ -60,44 +60,44 @@ $(function(){
     });
   });
 
-  $('#user_date_of_birth_3i').removeClass('date');
-  $('#user_date_of_birth_1i').removeClass('date');
-  $('#user_date_of_birth_2i').removeClass('date');
+  // $('#user_date_of_birth_3i').removeClass('date');
+  // $('#user_date_of_birth_1i').removeClass('date');
+  // $('#user_date_of_birth_2i').removeClass('date');
 
-  $('#alert-notice').fadeOut( 10000, function() {
-    $('#alert-notice').remove()
-  });
-  jQuery.extend(jQuery.validator.messages, {
-    required:"can't be blank"
-  });
-  jQuery.validator.setDefaults({
-    errorPlacement: function(error, element) {
-      if (element.attr("name")== "user[image]") {
-        $("#image-preview").addClass("has-error")
-        error.appendTo("#image_error");
-      }else if(element.attr("name") == "user[term_and_condition]") {
-        $('.user_term_and_condition').addClass('has-error')
-        error.appendTo('#term_id');
-      }else if(element.attr("name") == "user[adult]") {
-        $('.user_adult').addClass('has-error')
-        error.appendTo('#adult_id');
-      }else{
-        error.insertAfter(element);
-      }
-    }
-  });
+  // $('#alert-notice').fadeOut( 10000, function() {
+  //   $('#alert-notice').remove()
+  // });
+  // jQuery.extend(jQuery.validator.messages, {
+  //   required:"can't be blank"
+  // });
+  // jQuery.validator.setDefaults({
+  //   errorPlacement: function(error, element) {
+  //     if (element.attr("name")== "user[image]") {
+  //       $("#image-preview").addClass("has-error")
+  //       error.appendTo("#image_error");
+  //     }else if(element.attr("name") == "user[term_and_condition]") {
+  //       $('.user_term_and_condition').addClass('has-error')
+  //       error.appendTo('#term_id');
+  //     }else if(element.attr("name") == "user[adult]") {
+  //       $('.user_adult').addClass('has-error')
+  //       error.appendTo('#adult_id');
+  //     }else{
+  //       error.insertAfter(element);
+  //     }
+  //   }
+  // });
   
-  $('#user_term_and_condition').on('change', function() { 
-    if (this.checked) {
-      $('.user_term_and_condition').removeClass('has-error')
-    }
-  });
+  // $('#user_term_and_condition').on('change', function() { 
+  //   if (this.checked) {
+  //     $('.user_term_and_condition').removeClass('has-error')
+  //   }
+  // });
 
-  $('#user_adult').on('change', function() { 
-      if (this.checked) {
-        $('.user_adult').removeClass('has-error')
-      }
-  });
+  // $('#user_adult').on('change', function() { 
+  //     if (this.checked) {
+  //       $('.user_adult').removeClass('has-error')
+  //     }
+  // });
 
   // $("#s3-uploader-user-image").S3Uploader({
   //   progress_bar_target: $('#user_image_progress_bar .js-progress-bars'),
@@ -133,10 +133,15 @@ $(function() {
 });
 
 var preventRefire = false;
-function get_messages(conversation_id, chat_id) {
+function get_messages(conversation_id,chat_id) {
+  if($('#offer').length){
+    var custom = 'offered'; 
+  }else{
+    var custom = 'notoffered';
+  }
   $.ajax({
     url: "/conversations/" + conversation_id + "/chats",
-    data: {conversation_id: conversation_id, chat_id: chat_id},
+    data: {conversation_id: conversation_id, chat_id: chat_id, custom: custom},
     success: function (messages) {
       // alert("here");
       if (messages.length > 0) {
@@ -397,13 +402,13 @@ function tip_message_show_for_member(message){
   }); 
 }
 
-$(document).ready(function() {
-  $.uploadPreview({
-    input_field: "#image-upload",
-    preview_box: "#image-preview",
-    label_field: "#image-label"
-  });
-});
+// $(document).ready(function() {
+//   $.uploadPreview({
+//     input_field: "#image-upload",
+//     preview_box: "#image-preview",
+//     label_field: "#image-label"
+//   });
+// });
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }

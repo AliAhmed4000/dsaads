@@ -12,7 +12,21 @@
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li>
-                <%= link_to "UNREAD (#{@conversation.chats_recipients.where('read=?',false).count})",conversations_unread_path(@conversation),class: "dropdown-item",method: 'get' %>
+                <% if current_user.sellers? %>
+                  <% if current_user.seller_unread_conversations_count > 0 %>
+                    <%= link_to "UNREAD (#{current_user.seller_unread_conversations_count})",conversations_unread_path(@conversation),class: "dropdown-item",method: 'get' %>
+                  <% else %>
+                    <%= link_to "UNREAD",conversations_unread_path(@conversation),class: "dropdown-item",
+                    method: 'get' %>
+                  <% end %>
+                <% else %>
+                  <% if current_user.buyer_unread_conversations_count > 0 %>
+                    <%= link_to "UNREAD (#{current_user.buyer_unread_conversations_count})",conversations_unread_path(@conversation),class: "dropdown-item",method: 'get' %>
+                  <% else %>
+                    <%= link_to "UNREAD",conversations_unread_path(@conversation),class: "dropdown-item",
+                    method: 'get' %>
+                  <% end %>
+                <% end %>
               </li>
               <li><%= link_to "ALL MESSSAGES",conversations_all_message_path(@conversation),class: "dropdown-item" ,method: 'get'%></li>
               <li><%= link_to "STARRED",conversations_starred_path,class: "dropdown-item",method: 'get' %></li>
@@ -156,6 +170,9 @@
   <% end %>
   <div class="mesgs">
     <% unless @conversation.blank? %>
+      <% unless @customer_offer.blank? %>
+        <div id="offer"></div>
+      <% end %>
       <div class="msg_history" id="messages" data-conversation-id="<%= @conversation.id %>">
       </div>
     <% end %>

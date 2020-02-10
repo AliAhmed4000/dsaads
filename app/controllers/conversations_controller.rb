@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
 	before_action :authenticate_user!
-  before_action :set_query, only: [:index, :show, :image,:all_messages,:unread]
+  before_action :set_query, only: [:index, :show, :image,:all_messages,:unread,:customer_offer]
 
 	def index 
 	end
@@ -29,6 +29,7 @@ class ConversationsController < ApplicationController
   end
 
   def unread
+    current_user.chats_recipients.where('conversation_id = ? AND read = ?', params['id'], false).update_all(read: true)
     render template: "conversations/index"
   end 
 
@@ -53,6 +54,7 @@ class ConversationsController < ApplicationController
   end 
 
   def customer_offer
+    @customer_offer = "filter"
     render template: "conversations/index"
   end 
 

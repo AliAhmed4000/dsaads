@@ -44,10 +44,7 @@ $ ->
           
         if message.hasOwnProperty('unread_conversations_count')
           if message['unread_conversations_count'] > 0
-            if $(".unread-conversations-count").length
-              $(".unread-conversations-count").text(message['unread_conversations_count'])
-            else
-              $("#conversations_counter_container a").html('<span class="unread-conversations-count">'+message["unread_conversations_count"]+'</span>')
+            $(".unread-conversations-count").text(message['unread_conversations_count'])
           else
             $(".unread-conversations-count").remove()      
 

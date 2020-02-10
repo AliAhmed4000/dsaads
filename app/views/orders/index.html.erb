@@ -30,9 +30,21 @@
             <% end %>
           </li>
           <li class="active nav-item">
-            <a class="nav-link" href="#active_orders" data-toggle="tab">Active
-              <span class="badge badge-light"><%= @order_active.count %></span>
-            </a>
+            <% if current_user.buyers? %>
+              <% if @order_start.count > 0 %>
+                <a class="nav-link" href="#active_orders" data-toggle="tab">Active
+                  <span class="badge badge-light"><%= @order_active.count %></span>
+                </a>
+              <% else %>
+                <a class="nav-link active" href="#active_orders" data-toggle="tab">Active
+                  <span class="badge badge-light"><%= @order_active.count %></span>
+                </a>
+              <% end %>
+            <% else %>
+              <a class="nav-link" href="#active_orders" data-toggle="tab">Active
+                <span class="badge badge-light"><%= @order_active.count %></span>
+              </a>
+            <% end %>
           </li>
           <li class="active nav-item">
             <a class="nav-link" href="#late_orders" data-toggle="tab">Late

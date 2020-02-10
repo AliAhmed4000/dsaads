@@ -1,79 +1,77 @@
 <div class="row" id="order-remaining">
-  <% if @order.ending_at > DateTime.now %>
+  <% if @order.active? && @order.ending_at > DateTime.now %>
     <div class='countdown' data-date='<%= @order.ending_at.strftime("%Y-%m-%d") %>' data-time='<%=  @order.ending_at.strftime("%H:%M:%S") %>'></div>
+  <% elsif @order.delivered? %>
+    <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
+      <div class="countdown-container days">
+        <span class="countdown-heading days-top">Days</span>
+        <span class="countdown-value days-bottom">De</span></div>
+      <div class="countdown-container hours">
+        <span class="countdown-heading hours-top">Hours</span>
+        <span class="countdown-value hours-bottom">li</span>
+      </div>
+      <div class="countdown-container minutes">
+        <span class="countdown-heading minutes-top">Minutes</span>
+        <span class="countdown-value minutes-bottom">ve</span>
+      </div>
+      <div class="countdown-container seconds">
+        <span class="countdown-heading seconds-top">Seconds</span>
+        <span class="countdown-value seconds-bottom">rd</span>
+      </div>
+    </div>
+  <% elsif @order.completed? %>
+    <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
+      <div class="countdown-container days">
+        <span class="countdown-heading days-top">Days</span>
+        <span class="countdown-value days-bottom">Co</span></div>
+      <div class="countdown-container hours">
+        <span class="countdown-heading hours-top">Hours</span>
+        <span class="countdown-value hours-bottom">om</span>
+      </div>
+      <div class="countdown-container minutes">
+        <span class="countdown-heading minutes-top">Minutes</span>
+        <span class="countdown-value minutes-bottom">pl</span>
+      </div>
+      <div class="countdown-container seconds">
+        <span class="countdown-heading seconds-top">Seconds</span>
+        <span class="countdown-value seconds-bottom">ted</span>
+      </div>
+    </div>
+  <% elsif @order.cancelled? %>
+    <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
+      <div class="countdown-container days">
+        <span class="countdown-heading days-top">Days</span>
+        <span class="countdown-value days-bottom">Ca</span></div>
+      <div class="countdown-container hours">
+        <span class="countdown-heading hours-top">Hours</span>
+        <span class="countdown-value hours-bottom">nc</span>
+      </div>
+      <div class="countdown-container minutes">
+        <span class="countdown-heading minutes-top">Minutes</span>
+        <span class="countdown-value minutes-bottom">el</span>
+      </div>
+      <div class="countdown-container seconds">
+        <span class="countdown-heading seconds-top">Seconds</span>
+        <span class="countdown-value seconds-bottom">led</span>
+      </div>
+    </div>
   <% else %>
-    <% if @order.delivered? %>
-      <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
-        <div class="countdown-container days">
-          <span class="countdown-heading days-top">Days</span>
-          <span class="countdown-value days-bottom">De</span></div>
-        <div class="countdown-container hours">
-          <span class="countdown-heading hours-top">Hours</span>
-          <span class="countdown-value hours-bottom">li</span>
-        </div>
-        <div class="countdown-container minutes">
-          <span class="countdown-heading minutes-top">Minutes</span>
-          <span class="countdown-value minutes-bottom">ve</span>
-        </div>
-        <div class="countdown-container seconds">
-          <span class="countdown-heading seconds-top">Seconds</span>
-          <span class="countdown-value seconds-bottom">rd</span>
-        </div>
+    <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
+      <div class="countdown-container days">
+        <span class="countdown-heading days-top">Days</span>
+        <span class="countdown-value days-bottom">L</span></div>
+      <div class="countdown-container hours">
+        <span class="countdown-heading hours-top">Hours</span>
+        <span class="countdown-value hours-bottom">a</span>
       </div>
-    <% elsif @order.completed? %>
-      <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
-        <div class="countdown-container days">
-          <span class="countdown-heading days-top">Days</span>
-          <span class="countdown-value days-bottom">Co</span></div>
-        <div class="countdown-container hours">
-          <span class="countdown-heading hours-top">Hours</span>
-          <span class="countdown-value hours-bottom">om</span>
-        </div>
-        <div class="countdown-container minutes">
-          <span class="countdown-heading minutes-top">Minutes</span>
-          <span class="countdown-value minutes-bottom">pl</span>
-        </div>
-        <div class="countdown-container seconds">
-          <span class="countdown-heading seconds-top">Seconds</span>
-          <span class="countdown-value seconds-bottom">ted</span>
-        </div>
+      <div class="countdown-container minutes">
+        <span class="countdown-heading minutes-top">Minutes</span>
+        <span class="countdown-value minutes-bottom">t</span>
       </div>
-    <% elsif @order.cancelled? %>
-      <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
-        <div class="countdown-container days">
-          <span class="countdown-heading days-top">Days</span>
-          <span class="countdown-value days-bottom">Ca</span></div>
-        <div class="countdown-container hours">
-          <span class="countdown-heading hours-top">Hours</span>
-          <span class="countdown-value hours-bottom">nc</span>
-        </div>
-        <div class="countdown-container minutes">
-          <span class="countdown-heading minutes-top">Minutes</span>
-          <span class="countdown-value minutes-bottom">el</span>
-        </div>
-        <div class="countdown-container seconds">
-          <span class="countdown-heading seconds-top">Seconds</span>
-          <span class="countdown-value seconds-bottom">led</span>
-        </div>
+      <div class="countdown-container seconds">
+        <span class="countdown-heading seconds-top">Seconds</span>
+        <span class="countdown-value seconds-bottom">e</span>
       </div>
-    <% else %>
-      <div class="countdown1" data-date="0000-00-00" data-time="00:00:00">
-        <div class="countdown-container days">
-          <span class="countdown-heading days-top">Days</span>
-          <span class="countdown-value days-bottom">L</span></div>
-        <div class="countdown-container hours">
-          <span class="countdown-heading hours-top">Hours</span>
-          <span class="countdown-value hours-bottom">a</span>
-        </div>
-        <div class="countdown-container minutes">
-          <span class="countdown-heading minutes-top">Minutes</span>
-          <span class="countdown-value minutes-bottom">t</span>
-        </div>
-        <div class="countdown-container seconds">
-          <span class="countdown-heading seconds-top">Seconds</span>
-          <span class="countdown-value seconds-bottom">e</span>
-        </div>
-      </div>
-    <% end %>
+    </div>
   <% end %>
 </div>
