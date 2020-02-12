@@ -1,0 +1,91 @@
+<div class="border border-light"> 
+  <div class="owl-carousel owl-theme owl-loaded">
+    <div class="owl-stage-outer">
+      <div class="owl-stage">
+        <% @service.photos.each do |photo| %>
+          <div class="owl-item" ><%= image_tag photo.image_url(:thumb) %></div>
+        <% end %>
+        <% unless @service.video.blank? %>
+          <div class="owl-item" >
+            <video width="100%" height="10%" controls>
+              <source src="<%= @service.video.video_url %>">
+            </video>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <!-- <div class="nav-options">
+      <%#= image_tag 'next.png', class: 'am-next' %>
+      <%#= image_tag 'back.png', class: 'am-prev' %>
+    </div> -->
+    <div class="owl-dots" id="carousel-custom-dots">
+      <% @service.photos.each do |photo| %>
+        <div class="doting"><span><%= image_tag photo.image_url(:thumb) %></span></div>
+      <% end %>
+      <% unless @service.video.blank? %>
+        <div class="doting">
+          <span><%= image_tag(@service.video.video.thumb.url) %></span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  var owl = $('.owl-carousel'); 
+  $('.owl-carousel').owlCarousel({
+    loop:true,
+    margin:10,
+    responsiveClass:true,
+    // navText: [$('.am-next'),$('.am-prev')],
+    dotsClass: 'owl-dots',
+    dotsData: true,
+    dots:false,
+    responsive:{
+        0:{
+            items:1,
+            nav:true
+        },
+        600:{
+            items:1,
+            nav:true
+        },
+        1000:{
+            items:1,
+            nav:true,
+            loop:false
+        }
+    }
+  });
+  owl.owlCarousel({
+    dotsContainer: '#carousel-custom-dots'
+  });
+  $('.doting').click(function() {
+    owl.trigger('to.owl.carousel', [$(this).index(), 300]);
+  })
+</script>
+<style type="text/css">
+ .am-next,.am-prev{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .am-prev{
+    left: -1rem;
+    height: 50px;
+    width: 50px;
+  }
+  .am-next{
+    right: -1rem;
+    height: 50px;
+    width: 50px;
+  }
+  .doting{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .owl-dots{
+    margin-top: 5px; 
+  }
+</style>

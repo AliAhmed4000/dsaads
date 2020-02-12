@@ -295,7 +295,11 @@ class ServicesController < ApplicationController
   
   def custom_offer_create
     @service = Service.find params[:id]
-    @custom = @service.custom_packages.build(price: params['price'],description: params['description'],delivery_time: params['delivery_time'])
+    @custom = @service.custom_packages.build(
+      price: params['price'],
+      description: params['description'],
+      delivery_time: params['delivery_time']
+    )
     if @custom.save
       chat = Chat.create!(
         conversation_id: params[:service][:conversation_id],
@@ -314,6 +318,7 @@ class ServicesController < ApplicationController
 
   def show_custom_details
     @service = Service.find params[:id]
+    @seller = @service.seller
     @custom_offer = Package.find params[:custom_offer_id]  
   end 
   
