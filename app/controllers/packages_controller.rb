@@ -23,6 +23,14 @@ class PackagesController < ApplicationController
 		@set_order_bar = "ok"
 	end
 
+	def status 
+		package = Package.find_by_id(params[:id])
+		if package.update_attributes(customstatus: params['status'])
+			flash[:notice] = "Custom Offer Succesfully Done."
+      redirect_to show_custom_details_path(package.service,package)
+		end 
+	end 
+	
 	private 
 	def check_user_role
 		service = Service.find_by_id(params[:service_id])

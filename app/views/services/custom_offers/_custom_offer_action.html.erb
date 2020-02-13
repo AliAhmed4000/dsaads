@@ -14,7 +14,13 @@
         </div>
         <div class="row">
           <div class="col">
-            <p>••• CONTACT ME BEFORE ORDERING •••</p>
+            <p>
+              <% if @custom_offer.by_seller? %>
+                Offer Created by Seller: <%= link_to "#{@custom_offer.user.full_name}",profile_path(@custom_offer.user) %>
+              <% elsif  @custom_offer.by_buyer? %>
+                Offer Created by Buyer: <%= link_to "#{@custom_offer.user.full_name}",profile_path(@custom_offer.user) %>
+              <% end %>
+            </p>
           </div>
         </div>
         <div class="row">
@@ -27,31 +33,60 @@
             <%= @custom_offer.revision_number %> Revision
           </div>
         </div>
-        <% if user_signed_in? && @service.user_id != current_user.id  %>
+        <% if current_user.sellers? && @custom_offer.by_buyer?  %>
           <% if @custom_offer.order_items.blank? %>
             <div class="row py-2 text-center">
               <div class="col">
-                <%= link_to "Continue #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+                <% if @custom_offer.pending? %>
+                  <%= link_to "Approve #{number_to_currency(@custom_offer.price)}",package_status_path(@custom_offer,'approved'), class: "btn btn-primary" %>
+                  <%= link_to "Reject #{number_to_currency(@custom_offer.price)}",package_status_path(@custom_offer,'rejected'), class: "btn btn-primary" %>
+                <% else %>
+                  <% if @custom_offer.approved? %>
+                    <button type="button" class="btn btn-success">You have approved buyer custom offer</button>
+                  <% else %>
+                    <button type="button" class="btn btn-info">You have rejected buyer custom offer</button>
+                  <% end %> 
+                <% end %>
               </div>
             </div>
           <% else %>
             <div class="row py-2 text-center">
               <div class="col">
-                Order has been Started
+                <button type="button" class="btn btn-success">Offer Approved</button>
               </div>
             </div>
           <% end %>
+        <% elsif current_user.buyers? && @custom_offer.by_seller? %>
+          <div class="row py-2 text-center">
+            <div class="col">
+              <%= link_to "Continue #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+            </div>
+          </div>
         <% else %>
-          <% if @custom_offer.order_items.blank? %>
+          <% if current_user.buyers? && @custom_offer.by_buyer? %>
             <div class="row py-2 text-center">
               <div class="col">
-                <%= link_to "With Draw #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+                <% if @custom_offer.order_items.blank? %>
+                  <% if @custom_offer.pending? %>
+                    <button type="button" class="btn btn-info">Offer Pending</button>
+                  <% elsif @custom_offer.rejected? %>
+                    <button type="button" class="btn btn-danger">Offer reject</button>
+                  <% else %>
+                    <%= link_to "Continue #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+                  <% end %>
+                <% else %>
+                  <button type="button" class="btn btn-success">Offer Approved</button>
+                <% end %>
               </div>
             </div>
-          <% else %>
+          <% elsif current_user.sellers? && @custom_offer.by_seller? %>
             <div class="row py-2 text-center">
               <div class="col">
-                Order has been Started
+                <% if @custom_offer.order_items.blank? %>
+                  <button type="button" class="btn btn-info">Offer Pending</button>
+                <% else %>  
+                  <button type="button" class="btn btn-success">Offer Approved By <%= @custom_offer.order_items.last.order.user.full_name %></button>
+                <% end %>
               </div>
             </div>
           <% end %>

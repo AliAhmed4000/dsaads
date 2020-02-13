@@ -198,9 +198,9 @@
                     <%#= f.file_field :image,id: "file-input",class: "" %>
                     <%= file_field_tag "conversation[image]", id: "file-input",data: { url: image_conversation_path(@conversation.id) } ,multiple: false %>
                   </div>
-                  <% if current_user.sellers? %>
+                  <% #if current_user.sellers? %>
                     <%= link_to "Custom Offer",show_customer_offer_path(@conversation.id),method: :get,class: "btn btn-success", id: 'customer-offer', remote: true %>  
-                  <% end %>
+                  <%# end %>
                 </div>
                 <div class="col">
                   <%= button_tag 'Send', type: 'Submit', class: "btn btn-success pull-right" %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_10_100946) do
+ActiveRecord::Schema.define(version: 2020_02_13_070034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -202,6 +202,9 @@ ActiveRecord::Schema.define(version: 2020_02_10_100946) do
     t.integer "delivery_time"
     t.boolean "publish"
     t.integer "level"
+    t.integer "sender"
+    t.integer "customstatus", default: 0
+    t.integer "user_id"
     t.index ["service_id"], name: "index_packages_on_service_id"
   end
 
@@ -362,6 +365,7 @@ ActiveRecord::Schema.define(version: 2020_02_10_100946) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.json "tokens"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -98,8 +98,8 @@ class UsersController < ApplicationController
   end
   
   def show_customer_offer
-    @cutom_services = current_user.services.active.where('publish=?',true)
-    @conversation = Conversation.find(params[:id]) 
+    @conversation = Conversation.find(params[:id])
+    @cutom_services = @conversation.sellers.services.active.where('publish=?',true) 
   end
 
   def seller_dashboard

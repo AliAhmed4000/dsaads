@@ -80,5 +80,6 @@ Rails.application.routes.draw do
   get 'conversations/:id/filter/customer_offer', to: 'conversations#customer_offer', as: "conversations_customer_offer"
   get 'conversations/:id/starred_me', to: 'conversations#starred_me', as: "starred_me"
   get 'starred', to: 'conversations#starred', as: "conversations_starred"
+  get '/package/:id/:status', to: 'packages#status', as: "package_status"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -27,6 +27,7 @@ class Package < ApplicationRecord
   PREMIMUM_PRICE = ['5','10','20','50','100']
   REVISION = ['1','2','3','4','5','6','7','8','9','Unlimited']
   belongs_to :service
+  belongs_to :user
   has_many :package_metrics
   has_many :order_items
   has_many :orders, through: :order_items
@@ -41,7 +42,10 @@ class Package < ApplicationRecord
   # validates :is_commercial, presence: true
   # validates :price, numericality: { only_integer: true, greater_than: 1, less_than: 10000 }
   # validates :revision_number,  inclusion: { in: Package::REVISION_NUMBER }
-  enum level: ['basic','standard','premimum','extra_basic','extra_standard','extra_premimum', 'custom_offer']
+  enum level: ['basic','standard','premimum','extra_basic','extra_standard','extra_premimum','custom_offer']
+  enum sender: ['by_seller','by_buyer']
+  enum customstatus: ['pending','approved','rejected']
+  
   attr_accessor :conversation_id
   def seller_reviews
     SellerReview.where(package: self)

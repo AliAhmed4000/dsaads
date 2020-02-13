@@ -295,10 +295,17 @@ class ServicesController < ApplicationController
   
   def custom_offer_create
     @service = Service.find params[:id]
+    if current_user.sellers?
+      request = Package.senders['by_seller']
+    else 
+      request = Package.senders['by_buyer']
+    end
     @custom = @service.custom_packages.build(
       price: params['price'],
       description: params['description'],
-      delivery_time: params['delivery_time']
+      delivery_time: params['delivery_time'],
+      sender: request,
+      user_id: current_user.id
     )
     if @custom.save
       chat = Chat.create!(
