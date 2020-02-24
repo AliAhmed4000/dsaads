@@ -1,26 +1,30 @@
 <div class="tab-pane" id="standard">
   <div class="row py-2">
-    <div class="col"><h5>Standard Service</h5></div>
-    <div class="col"><h5><%= number_to_currency(@service.standard_package.price) %></h5></div>
+    <div class="col"><h5><strong>Standard Service</strong></h5></div>
+    <div class="col"><h5><strong><%= number_to_currency(@service.standard_package.price) %></strong></h5></div>
   </div>
   <div class="row">
     <div class="col">
-      <p>••• CONTACT ME BEFORE ORDERING •••</p>
+      <h6>I can <%= @service.title %></h6>
     </div>
   </div>
   <div class="row">
     <div class="col">
       <i class="fa fa-clock-o" aria-hidden="true"></i> 
-      <%= pluralize(@service.standard_package.delivery_time, 'Days') %> Delivery
+      <strong>
+        <%= pluralize(@service.standard_package.delivery_time, 'Days') %> Delivery
+      </strong>
     </div>
     <div class="col">
       <i class="fa fa-repeat" aria-hidden="true"></i>
-      <%= @service.standard_package.revision_number %> Revisions
+      <strong>
+        <%= @service.standard_package.revision_number %> Revisions
+      </strong>
     </div>
   </div>
   <div class="row py-2 text-center">
     <div class="col">
-      <%= link_to "Continue #{number_to_currency(@service.standard_package.price)}",service_package_path(@service,@service.standard_package), class: "btn btn-primary" %>
+      <%= link_to "Start at #{number_to_currency(@service.standard_package.price)}",service_package_path(@service,@service.standard_package), class: "btn change-color" %>
     </div>
   </div>
 </div>

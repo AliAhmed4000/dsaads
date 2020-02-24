@@ -27,6 +27,10 @@
               <a class="nav-link active" href="#new_orders" data-toggle="tab">New
                 <span class="badge badge-light"><%= @order_start.count %></span>
               </a>
+            <% elsif current_user.sellers? && @order_start.count > 0 %>
+              <a class="nav-link" href="#new_orders" data-toggle="tab">New
+                <span class="badge badge-light"><%= @order_start.count %></span>
+              </a>
             <% end %>
           </li>
           <li class="active nav-item">
@@ -77,6 +81,8 @@
             <%= render partial: "/orders/manage_orders/priority" %>
           <% end %>
           <% if current_user.buyers? && @order_start.count > 0 %>
+            <%= render partial: "/orders/manage_orders/new_orders" %>
+          <% elsif current_user.sellers? && @order_start.count > 0 %>
             <%= render partial: "/orders/manage_orders/new_orders" %>
           <% end %>
           <%= render partial: "/orders/manage_orders/active_orders" %>

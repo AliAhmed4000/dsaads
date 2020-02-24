@@ -2,15 +2,15 @@
   <div class="box-tab justified">
     <ul class="nav nav-tabs navbar-light bg-light mr-auto nav nav-pills nav-justified">
       <li class="active nav-item">
-        <a class="nav-link active" href="#basic" data-toggle="tab"><h6>Custom Offer</h6>
+        <a class="nav-link active" href="#basic" data-toggle="tab"><h6><strong>Custom Offer</strong></h6>
         </a>
       </li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active in" id="basic">
         <div class="row py-2">
-          <div class="col"><h5>Custom Offer</h5></div>
-          <div class="col"><h5><%= number_to_currency(@custom_offer.price) %></h5></div>
+          <div class="col"><h5><strong>Custom Offer</strong></h5></div>
+          <div class="col"><h5><strong><%= number_to_currency(@custom_offer.price) %></strong></h5></div>
         </div>
         <div class="row">
           <div class="col">
@@ -26,11 +26,11 @@
         <div class="row">
           <div class="col">
             <i class="fa fa-clock-o" aria-hidden="true"></i> 
-            <%= pluralize(@custom_offer.delivery_time, 'Days') %> Delivery
+            <strong><%= pluralize(@custom_offer.delivery_time, 'Days') %> Delivery</strong>
           </div>
           <div class="col">
             <i class="fa fa-repeat" aria-hidden="true"></i>
-            <%= @custom_offer.revision_number %> Revision
+            <strong><%= @custom_offer.revision_number %> Revision</strong>
           </div>
         </div>
         <% if current_user.sellers? && @custom_offer.by_buyer?  %>
@@ -59,7 +59,7 @@
         <% elsif current_user.buyers? && @custom_offer.by_seller? %>
           <div class="row py-2 text-center">
             <div class="col">
-              <%= link_to "Continue #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+              <%= link_to "Start at #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
             </div>
           </div>
         <% else %>
@@ -72,7 +72,7 @@
                   <% elsif @custom_offer.rejected? %>
                     <button type="button" class="btn btn-danger">Offer reject</button>
                   <% else %>
-                    <%= link_to "Continue #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+                    <%= link_to "Start at #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
                   <% end %>
                 <% else %>
                   <button type="button" class="btn btn-success">Offer Approved</button>

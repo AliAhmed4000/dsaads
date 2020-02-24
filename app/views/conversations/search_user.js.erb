@@ -1,0 +1,5 @@
+<% if @conversations.blank? %>
+	$(".inbox_chat").html('<div class="chat_list text-center">No Result Found</div>')
+<% else %>
+	$(".inbox_chat").html("<%= j render(:partial => 'conversations/user_lists') %>")
+<% end %>

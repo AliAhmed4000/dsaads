@@ -11,12 +11,11 @@
               SELLER
               <% end %>
             </th>
-            <th>GIG</th>
+            <th>SERVICE</th>
             <th>Starting At</th>
             <th>Ending At</th>
             <th>TOTAL</th>
             <th>STATUS</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -45,16 +44,15 @@
               <td class="align-middle"><%= dispute.order_item.quantity %></td>
               <td class="align-middle">
                 <% if dispute.pending?  %>
-                  <span class="badge badge-danger">Pending</span>
+                  <%= link_to "Pending",order_dispute_path(dispute),class: "badge badge-danger" %>
                 <% else %>
                   <% if dispute.rejected? %>
-                    <span class="badge badge-info">Rejected</span>
+                    <%= link_to "Rejected",order_dispute_path(dispute),class: "badge badge-info" %>
                   <% elsif dispute.approved? %>
-                    <span class="badge badge-success">Approved</span>
+                    <%= link_to "Approved",order_dispute_path(dispute),class: "badge badge-success" %>
                   <% end %>
                 <% end %>
               </td>
-              <td><%= link_to "show",order_dispute_path(dispute) %></td>
             </tr>
           <% end %>
         </tbody>

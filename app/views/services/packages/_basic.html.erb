@@ -1,11 +1,11 @@
 <div class="tab-pane active in" id="basic">
   <div class="row py-2">
     <div class="col font-weight-bold"><h5><strong>Basic Service</strong></h5></div>
-    <div class="col"><h5><%= number_to_currency(@service.basic_package.price) %></h5></div>
+    <div class="col"><h5><strong><%= number_to_currency(@service.basic_package.price) %></strong></h5></div>
   </div>
   <div class="row">
     <div class="col">
-      <p>••• CONTACT ME BEFORE ORDERING •••</p>
+      <h6>I can <%= @service.title %></h6>
     </div>
   </div>
   <div class="row">
@@ -24,7 +24,7 @@
   </div>
   <div class="row py-2 text-center">
     <div class="col">
-      <%= link_to "Continue #{number_to_currency(@service.basic_package.price)}",service_package_path(@service,@service.basic_package), class: "btn btn-primary" %>
+      <%= link_to "Start at #{number_to_currency(@service.basic_package.price)}",service_package_path(@service,@service.basic_package), class: "btn change-color" %>
     </div>
   </div>
 </div>

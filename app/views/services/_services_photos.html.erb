@@ -8,7 +8,7 @@
   <% unless @service.last_photo.image_url.blank? %>
     <% sum = sum + 1; %>
   <% end %>
-  <p>Upload photos that describe or are related to your Gig.<span class="pull-right">(<%= sum %>/3)</span></p>
+  <p>Upload photos that describe or are related to your Service.<span class="pull-right">(<%= sum %>/3)</span></p>
   <div class="row">
     <div class="col-md-4">
       <% if @service.primary_photo.image_url.blank? %>

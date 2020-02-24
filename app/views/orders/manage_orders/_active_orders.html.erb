@@ -19,7 +19,7 @@
               SELLER
               <% end %>
             </th>
-            <th>GIG</th>
+            <th>SERVICE</th>
             <th>Starting At</th>
             <th>Ending At</th>
             <th>TOTAL</th>
@@ -44,9 +44,9 @@
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
                 <% if current_user.buyers? %>
-                  <span class="badge badge-success">IN PROGRESS</span>
+                  <%= link_to "IN PROGRESS",order_path(item.id),"class"=>"badge badge-success" %>
                 <% elsif current_user.sellers? %>
-                  <span class="badge badge-success">ACTIVE</span>
+                  <%= link_to "ACTIVE",order_path(item.id),"class"=>"badge badge-success" %>
                 <% end %>
               </td>
             </tr>

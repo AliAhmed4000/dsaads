@@ -60,6 +60,18 @@ module ApplicationHelper
         id: "user-#{user.id}"
     end
   end
+
+  def online_status_top(user)
+    if user.user_online?
+      content_tag :span, '',
+        class: "dot dot-online on-top",
+        id: "user-#{user.id}"
+    else
+      content_tag :span, '',
+        class: "dot dot-offline on-top",
+        id: "user-#{user.id}"
+    end
+  end
 end
 
 

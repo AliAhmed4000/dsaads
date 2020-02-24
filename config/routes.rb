@@ -81,5 +81,6 @@ Rails.application.routes.draw do
   get 'conversations/:id/starred_me', to: 'conversations#starred_me', as: "starred_me"
   get 'starred', to: 'conversations#starred', as: "conversations_starred"
   get '/package/:id/:status', to: 'packages#status', as: "package_status"
+  get '/search/:name', to: 'conversations#search_user', as: "search_user"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

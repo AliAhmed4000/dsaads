@@ -68,6 +68,29 @@ class ConversationsController < ApplicationController
     redirect_to conversation_path(conversation.id) 
   end
 
+  def search_user
+    respond_to do |formart|
+      if params['name'].blank? || params['name'] == 'null'
+        if current_user.buyers?
+          @conversations = Conversation.joins(:sellers).where(buyer_id: current_user.id).order("updated_at DESC")
+        elsif current_user.sellers?
+          @conversations = Conversation.joins(:buyers).where(seller_id: current_user.id).order("updated_at DESC")
+        end 
+      else
+        if current_user.buyers?
+          query = "true"
+          query << " AND users.first_name ILIKE '%#{params[:name].split.first.gsub("'", "''")}%'" unless params[:name].blank?
+          @conversations = Conversation.joins(:sellers).where(buyer_id: current_user.id).where(query).order("updated_at DESC")
+        elsif current_user.sellers?
+          query = "true"
+          query << " AND users.first_name ILIKE '%#{params[:name].split.first.gsub("'", "''")}%'" unless params[:name].blank?
+          @conversations = Conversation.joins(:buyers).where(seller_id: current_user.id).where(query).order("updated_at DESC")
+        end 
+      end
+      formart.js
+    end  
+  end 
+
 	private
 	def set_query
     if current_user.buyers?

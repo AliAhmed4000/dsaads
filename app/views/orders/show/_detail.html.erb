@@ -6,7 +6,7 @@
       <span class="h3">Order #<%= @order.id %></span>
       <span id="all-stars-22" class="pl-2"></span>
       <span class="pl-2 yellow">
-        <%= link_to "View Gig",service_path(@order.package.service) %> 
+        <%= link_to "View Service",service_path(@order.package.service) %> 
         <% if @order.completed? %>
           <span class="badge badge-info">completed</span>
         <% elsif @order.active? %>
