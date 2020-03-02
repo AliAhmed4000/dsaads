@@ -38,7 +38,8 @@ class OrderCancelsController < ApplicationController
 
   def reason
     if current_user.sellers?  
-      redirect_to order_cancel_seller_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['level'],params['order_cancel']['reason'])
+      # redirect_to order_cancel_seller_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['level'],params['order_cancel']['reason'])
+      redirect_to order_cancel_seller_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['level'])
     else
       redirect_to order_cancel_buyer_detail_path(params['order_cancel']['order_item_id'],params['order_cancel']['level'])
     end 

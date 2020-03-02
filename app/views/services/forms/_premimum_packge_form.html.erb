@@ -17,5 +17,6 @@
     <tr>
       <td><%= premimum.number_field :price,required: true,class: "form-control",min: "5" %></td>
     </tr>
+    <%= premimum.hidden_field :user_id,value: current_user.id %>
   </table>
 <% end %>

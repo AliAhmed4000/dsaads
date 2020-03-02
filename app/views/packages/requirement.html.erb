@@ -1,34 +1,26 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-md-12">
-      <div class="border border-light"> 
-        <div class="owl-carousel owl-theme owl-loaded">
-          <div class="owl-stage-outer">
-            <div class="owl-stage">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <h3>Submit Requiremnts</h3>
-            </nav><hr>
-            <%= simple_form_for @order_item,url: order_path(@order_item), method: 'put',:html => {:class => 'form-horizontal'} do |f| %>
-              <%= f.error_notification %>
-              <div style="padding: 5%;">  
-              <div><%= @service.requirements %></div>
-              <%= f.input :description,label: 'Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Description',:minlength=>"50", input_html: {rows: "3"}  %>
-              <%= f.input :file, as: :file,label: false,wrapper: false,input_html: {id: "file-input",class: ""} %>
-              <label class="Checkbox-form" style="margin-top: 2%;">
-                  <%= f.check_box :status,{},"active","inactive" %>  I have provided all the requirements
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <div>
-                <span class="inline-block float-right">
-                  <%= f.submit "Order Start", class: "btn btn-outline-success" %>
-                </span> 
-              </div>
-            <% end %>
-            </div>
-          </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h3>Submit Requiremnts</h3>
+      </nav><hr>
+      <%= simple_form_for @order_item,url: order_path(@order_item), method: 'put',:html => {:class => 'form-horizontal', id: 'requiremnts-form'} do |f| %>
+        <%= f.error_notification %>
+        <div style="padding: 5%;">  
+          <div><%= @service.requirements %></div>
+          <%= f.input :description,label: 'Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Description',:minlength=>"50", input_html: {rows: "3"},as: :text  %>
+          <%= f.input :file, as: :file,label: false,wrapper: false,input_html: {id: "file-input",class: ""} %>
+          <label class="Checkbox-form" style="margin-top: 2%;">
+            <%= f.check_box :status,{},"active","inactive" %>  I have provided all the requirements
+            <span class="checkmark"></span>
+          </label>
         </div>
-      </div>
+        <div>
+          <span class="inline-block float-right">
+            <%= f.submit "Order Start", class: "btn btn-outline-success" %>
+          </span> 
+        </div>
+      <% end %>
     </div>
     <div class="col-lg-3 col-md-12">
       <div class="border border-light"> 
@@ -77,5 +69,14 @@
     var price = '<%= @package.price %>';
     var total = accounting.formatMoney(qty*price);
     $("#price").html(total)
+  });
+
+  $('#requiremnts-form').submit(function(e){
+    if($('#order_item_status').is(':checked')){
+      this.submit();
+    }else{
+      alert("checked requirement");
+      return false;
+    }
   });
 </script>

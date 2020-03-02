@@ -8,10 +8,12 @@
               <h4>
                 <% if params[:level] == "seller_extend_delivery_time" %>
                   Extend Delivery
-                <% elsif params[:level] == "seller_modify_order" %>
-                  Modify your Order
-                <% else %>
+                <% elsif params[:level] == "seller_ask_buyer_to_cancel_order" || params[:level] =="buyer_ask_seller_to_cancel_order" %>
                   Cancel Order Request
+                <% elsif params[:level] == "buyer_seller_is_not_responding" || params[:level] == "seller_buyer_is_not_responding" %>
+                  Not Responding Request
+                <% elsif params[:level] == "buyer_seller_did_late_delivery" %>
+                  Late Delivery
                 <% end %>
               </h4>
       			  <p>Welcome! Here you can work things out resolve issues regarding your order.</p>

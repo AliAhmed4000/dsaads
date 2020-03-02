@@ -1,6 +1,7 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show,:search]
   before_action :check_seller_profile, except: [:index,:show,:search]
+  before_action :convert_to_seller, only: [:new] 
   before_action :check_servie_owner, only: [:edit,:pricing,:description,:requirement,:gallery,:publish,:update]
   include ActionView::Helpers::UrlHelper
 
@@ -73,7 +74,7 @@ class ServicesController < ApplicationController
 
   def create
     @service = current_user.services.build(service_params)
-    if @service.save
+    if @service.save 
       redirect_to services_pricing_path(@service)
       flash[:notice] = "Service Created Successfully"
     else
@@ -93,103 +94,78 @@ class ServicesController < ApplicationController
   end
 
   def pricing
-    if current_user.sellers?
-      @service = Service.find params[:id]
-      @set_bar = "ok"
-      @service.build_basic_package if @service.basic_package.blank?
-      @service.build_standard_package if @service.standard_package.blank?
-      @service.build_premimum_package if @service.premimum_package.blank?
-      @service.build_extra_basic_package if @service.extra_basic_package.blank?
-      @service.build_extra_standard_package if @service.extra_standard_package.blank?
-      @service.build_extra_premimum_package if @service.extra_premimum_package.blank?
-      if @service.title.blank?
-        flash[:alert] = "First Complete Your Service OwerView"
-        redirect_to edit_services_path(@service)
-      end
-    else
-      redirect_to root_path
-      flash[:alert] = "You have no access." 
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    @service.build_basic_package if @service.basic_package.blank?
+    @service.build_standard_package if @service.standard_package.blank?
+    @service.build_premimum_package if @service.premimum_package.blank?
+    # @service.build_extra_basic_package if @service.extra_basic_package.blank?
+    # @service.build_extra_standard_package if @service.extra_standard_package.blank?
+    # @service.build_extra_premimum_package if @service.extra_premimum_package.blank?
+    if @service.title.blank?
+      flash[:alert] = "First Complete Your Service OwerView"
+      redirect_to edit_services_path(@service)
     end
   end
 
   def description
-    if current_user.sellers?
-      @service = Service.find params[:id]
-      @set_bar = "ok"
-      @service.build_question1_faq if @service.question1_faq.blank?
-      @service.build_question2_faq if @service.question2_faq.blank?
-      @service.build_question3_faq if @service.question3_faq.blank?
-      @service.faqs.build
-      if @service.packages.blank?
-        flash[:alert] = "First Complete Your Service Packages"
-        redirect_to services_pricing_path(@service)
-      end
-    else 
-      redirect_to root_path
-      flash[:alert] = "You have no access."
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    @service.build_question1_faq if @service.question1_faq.blank?
+    @service.build_question2_faq if @service.question2_faq.blank?
+    @service.build_question3_faq if @service.question3_faq.blank?
+    @service.faqs.build
+    if @service.packages.blank?
+      flash[:alert] = "First Complete Your Service Packages"
+      redirect_to services_pricing_path(@service)
     end 
   end
 
   def requirement
-    if current_user.sellers?
-      @service = Service.find params[:id]
-      @set_bar = "ok"
-      if @service.packages.blank?
-        flash[:alert] = "First Complete Your Service Packages"
-        redirect_to services_pricing_path(@service)
-      elsif @service.description.blank?
-        flash[:alert] = "First Complete Your Service Description"
-        redirect_to services_pricing_path(@service)
-      end
-    else
-      redirect_to root_path
-      flash[:alert] = "You have no access."
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    if @service.packages.blank?
+      flash[:alert] = "First Complete Your Service Packages"
+      redirect_to services_pricing_path(@service)
+    elsif @service.description.blank?
+      flash[:alert] = "First Complete Your Service Description"
+      redirect_to services_pricing_path(@service)
     end 
   end
 
   def gallery
-    if current_user.sellers?
-      @service = Service.find params[:id]
-      @set_bar = "ok"
-      @service.build_primary_photo if @service.primary_photo.blank?
-      @service.build_secondary_photo if @service.secondary_photo.blank?
-      @service.build_last_photo if @service.last_photo.blank?
-      if @service.packages.blank?
-        flash[:alert] = "First Complete Your Service Packages"
-        redirect_to services_pricing_path(@service)
-      elsif @service.description.blank?
-        flash[:alert] = "First Complete Your Service Description"
-        redirect_to services_description_path(@service)
-      elsif @service.requirements.blank?
-        flash[:alert] = "First Complete Your Service Requirement"
-        redirect_to services_requirement_path(@service)
-      end
-    else
-      redirect_to root_path
-      flash[:alert] = "You have no access."
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    @service.build_primary_photo if @service.primary_photo.blank?
+    @service.build_secondary_photo if @service.secondary_photo.blank?
+    @service.build_last_photo if @service.last_photo.blank?
+    if @service.packages.blank?
+      flash[:alert] = "First Complete Your Service Packages"
+      redirect_to services_pricing_path(@service)
+    elsif @service.description.blank?
+      flash[:alert] = "First Complete Your Service Description"
+      redirect_to services_description_path(@service)
+    elsif @service.requirements.blank?
+      flash[:alert] = "First Complete Your Service Requirement"
+      redirect_to services_requirement_path(@service)
     end 
   end
 
   def publish
-    if current_user.sellers?
-      @service = Service.find params[:id]
-      @set_bar = "ok"
-      if @service.packages.blank?
-        flash[:alert] = "First Complete Your Service Packages"
-        redirect_to services_pricing_path(@service)
-      elsif @service.description.blank?
-        flash[:alert] = "First Complete Your Service Description"
-        redirect_to services_description_path(@service)
-      elsif @service.requirements.blank?
-        flash[:alert] = "First Complete Your Service Requirement"
-        redirect_to services_requirement_path(@service)
-      elsif @service.photos.blank?
-        flash[:alert] = "First Complete Your Service Gallery"
-        redirect_to services_gallery_path(@service)
-      end
-    else
-      redirect_to root_path
-      flash[:alert] = "You have no access."
+    @service = Service.find params[:id]
+    @set_bar = "ok"
+    if @service.packages.blank?
+      flash[:alert] = "First Complete Your Service Packages"
+      redirect_to services_pricing_path(@service)
+    elsif @service.description.blank?
+      flash[:alert] = "First Complete Your Service Description"
+      redirect_to services_description_path(@service)
+    elsif @service.requirements.blank?
+      flash[:alert] = "First Complete Your Service Requirement"
+      redirect_to services_requirement_path(@service)
+    elsif @service.photos.blank?
+      flash[:alert] = "First Complete Your Service Gallery"
+      redirect_to services_gallery_path(@service)
     end 
   end
 
@@ -209,7 +185,7 @@ class ServicesController < ApplicationController
   end
 
   def update
-    @service = Service.find params[:id]
+    @service = Service.find params[:id] 
     if @service.update_attributes(service_params)
       if params["service"]["wizard"] == "pricing"
         redirect_to services_pricing_path(@service)
@@ -356,12 +332,12 @@ class ServicesController < ApplicationController
       :sub_category,
       :publish,
       :wizard,
-      basic_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
-      standard_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
-      premimum_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
-      extra_basic_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
-      extra_standard_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
-      extra_premimum_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      basic_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level,:user_id,:sender],
+      standard_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level,:user_id,:sender],
+      premimum_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level,:user_id,:sender],
+      # extra_basic_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      # extra_standard_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
+      # extra_premimum_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level],
       photos_attributes: [:id,:image,:_destroy],
       faqs_attributes: [:id,:question,:answer,:_destroy],
       question1_faq_attributes: [:id,:question,:answer,:_destroy],
@@ -380,7 +356,7 @@ class ServicesController < ApplicationController
 
   def check_seller_profile
     if current_user.user_skills.blank? && current_user.user_languages.blank?
-      flash[:notice] = "Please Complete your profile"
+      flash[:alert] = "Please Complete your profile"
       redirect_to seller_personal_info_path
     end
   end
@@ -390,6 +366,16 @@ class ServicesController < ApplicationController
     if @service.blank? || @service.user_id != current_user.id
       flash[:alert] = "Record Not Found"
       redirect_back fallback_location: root_path
+    else
+      if current_user.buyers? 
+        current_user.update_column('role','sellers')
+      end  
+    end  
+  end
+
+  def convert_to_seller
+    if current_user.buyers?
+      current_user.update_column('role','sellers')
     end 
-  end 
+  end  
 end

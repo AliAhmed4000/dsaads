@@ -1,7 +1,7 @@
 class PackagesController < ApplicationController
 	before_action :authenticate_user!
 	before_action :check_user_role , only: [:show,:payment]
-	def show
+	def show 
 		@service = Service.find_by_id(params[:service_id])
 		@package = Package.find_by_id(params[:id])
 		@set_order_bar = "ok"
@@ -28,18 +28,17 @@ class PackagesController < ApplicationController
 		if package.update_attributes(customstatus: params['status'])
 			flash[:notice] = "Custom Offer Succesfully Done."
       redirect_to show_custom_details_path(package.service,package)
-		end 
+		end
 	end 
 	
 	private 
 	def check_user_role
 		service = Service.find_by_id(params[:service_id])
-		if current_user.sellers?
-		  flash[:alert] = "Seller have no permission to access."
+		if current_user.sellers? && service.user_id == current_user.id
+		  flash[:alert] = "you have no permission to access."
       redirect_to root_path
-	  elsif service.user_id == current_user.id
-	  	flash[:alert] = "You have no permission to access."
-      redirect_to root_path
+	  elsif current_user.sellers? && service.user_id != current_user.id
+	  	current_user.update_column('role','buyers')
 	  end        
   end
 end

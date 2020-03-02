@@ -35,7 +35,7 @@
             <li class="nav-item"><%= link_to 'Services', services_manage_path%></li>
             <li class="nav-item"><%= link_to 'Earning', balances_path%></li>
           <% end %>
-          <% if current_user.services.blank? %>
+          <% if current_user.user_skills.blank? && current_user.user_languages.blank? %>
             <li class="nav-item"><%= link_to 'Become a Seller', seller_personal_info_path%></li>
           <% else %>
             <% if current_user.sellers? %>

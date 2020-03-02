@@ -17,7 +17,7 @@
 			  </div> -->
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio2">
-			      <%= f.radio_button :level,'seller_extend_delivery_time', :value => 'seller_extend_delivery_time' ,:class => "form-check-input radio-input" %>Extend Delivery Time
+			      <%= f.radio_button :level,'seller_extend_delivery_time', :value => 'seller_extend_delivery_time' ,:class => "form-check-input radio-input",checked: "checked" %>Extend Delivery Time
 			    </label>
 			  </div>
 			  <div class="form-check">
@@ -25,49 +25,54 @@
 			      <%= f.radio_button :level,'seller_ask_buyer_to_cancel_order', :value => 'seller_ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Ask buyer to Cancel Order
 			    </label>
 			  </div>
+				<div class="form-check">
+			    <label class="form-check-label radio" for="radio2">
+			      <%= f.radio_button :level,'seller_buyer_is_not_responding', :value => 'seller_buyer_is_not_responding' ,:class => "form-check-input radio-input" %>Buyer is not responding
+			    </label>
+			  </div>
 			</div>
-			<div class="underline">
+			<!-- <div class="underline">
 			  <p class="h5 pb-2">Can you give us more detail on why?</p>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio1">
-			      <%= f.radio_button :reason,'The_buyer_is_not_responding',:value =>'The_buyer_is_not_responding',:class => "form-check-input radio-input",checked: "checked" %>The buyer is not responding
+			      <%#= f.radio_button :reason,'The_buyer_is_not_responding',:value =>'The_buyer_is_not_responding',:class => "form-check-input radio-input",checked: "checked" %>The buyer is not responding
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio2">
-			      <%= f.radio_button :reason,'The_will_order_again', :value => 'The_will_order_again' ,:class => "form-check-input radio-input" %>The will order again
+			      <%#= f.radio_button :reason,'The_will_order_again', :value => 'The_will_order_again' ,:class => "form-check-input radio-input" %>The will order again
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio3">
-			      <%= f.radio_button :reason,'I_am_too_busy_for_this_job', :value => 'I_am_too_busy_for_this_job' ,:class => "form-check-input radio-input" %>I am too busy for this job
+			      <%#= f.radio_button :reason,'I_am_too_busy_for_this_job', :value => 'I_am_too_busy_for_this_job' ,:class => "form-check-input radio-input" %>I am too busy for this job
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio3">
-			      <%= f.radio_button :reason,'We_could_not_agree_on_price', :value => 'We_could_not_ agree_on_price' ,:class => "form-check-input radio-input" %>We could not agree on price
+			      <%#= f.radio_button :reason,'We_could_not_agree_on_price', :value => 'We_could_not_ agree_on_price' ,:class => "form-check-input radio-input" %>We could not agree on price
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio3">
-			      <%= f.radio_button :reason,'I_am_not_able_to_do_this_job', :value => 'I_am_not_able to_do_this_job' ,:class => "form-check-input radio-input" %>I am not able to do this job
+			      <%#= f.radio_button :reason,'I_am_not_able_to_do_this_job', :value => 'I_am_not_able to_do_this_job' ,:class => "form-check-input radio-input" %>I am not able to do this job
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio3">
-			      <%= f.radio_button :reason,'I_did_not_receive_enough_information_from_client', :value => 'I_did_not_receive_enough_information_from_client' ,:class => "form-check-input radio-input" %>I did not receive enough information from client
+			      <%#= f.radio_button :reason,'I_did_not_receive_enough_information_from_client', :value => 'I_did_not_receive_enough_information_from_client' ,:class => "form-check-input radio-input" %>I did not receive enough information from client
 			    </label>
 			  </div>
 			  <div class="form-check">
 			    <label class="form-check-label radio" for="radio3">
-			      <%= f.radio_button :reason,'Due_to_personal_technical_reason_I_could_not_complete_ work', :value => 'Due_to_personal_technical_reason_I_could_not_complete_work' ,:class => "form-check-input radio-input" %>Due to personal technical reason I could not complete work
+			      <%#= f.radio_button :reason,'Due_to_personal_technical_reason_I_could_not_complete_ work', :value => 'Due_to_personal_technical_reason_I_could_not_complete_work' ,:class => "form-check-input radio-input" %>Due to personal technical reason I could not complete work
 			    </label>
 			  </div>
-			</div>
+			</div> -->
 	    <div class="form-group row mb-0">
         <div class="col-sm-9 offset-sm-3">
           <%= f.submit "Save & Continue", class: "btn btn-outline-success pull-right" %>
         </div>
-      </div>
+      </div> 
 	  <%# end %>
 <% end %>

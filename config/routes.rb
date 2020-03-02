@@ -29,7 +29,8 @@ Rails.application.routes.draw do
   resources :balances
   resources :order_cancels
   post '/order_cancels/:id',to: 'order_cancels#reason', as: "order_cancel_reason"
-  get '/order_cancels/:id/:level/:reason',to: 'order_cancels#seller_detail', as: "order_cancel_seller_detail"
+  # get '/order_cancels/:id/:level/:reason',to: 'order_cancels#seller_detail', as: "order_cancel_seller_detail"
+  get '/order_cancels/:id/:level',to: 'order_cancels#seller_detail', as: "order_cancel_seller_detail"
   get '/order_cancels/:id/:reason',to: 'order_cancels#buyer_detail', as: "order_cancel_buyer_detail"
   resources :wish_lists
   get '/wishlist/:wish_id',to: 'wish_lists#my_wishes', as: "my_wishes"

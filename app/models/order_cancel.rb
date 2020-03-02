@@ -1,7 +1,16 @@
 class OrderCancel < ApplicationRecord
  	belongs_to :order_item
   belongs_to :user
- 	enum level: ['seller_modify_order','seller_extend_delivery_time','seller_ask_buyer_to_cancel_order','buyer_ask_seller_to_cancel_order','buyer_seller_is_not_responding','buyer_seller_did_late_delivery']
+ 	enum level: [
+    'seller_modify_order',
+    'seller_extend_delivery_time',
+    'seller_ask_buyer_to_cancel_order',
+    'buyer_ask_seller_to_cancel_order',
+    'buyer_seller_is_not_responding',
+    'buyer_seller_did_late_delivery',
+    'seller_buyer_is_not_responding'
+  ]
+  
   enum reason: [
                 'The_buyer_is_not_responding',
                 'The_will_order_again',
