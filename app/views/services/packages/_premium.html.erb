@@ -5,7 +5,11 @@
       <h5>
         <strong>
         <% if current_user.blank? %>
-          <%= number_to_currency(@service.premimum_package.price) %>
+          <% if cookies['currency'].blank? || cookies['currency'] == "USD" %>
+            <%= number_to_currency(@service.premimum_package.price) %>
+          <% else %>
+            <%= number_to_currency((@service.premimum_package.price * @unit),:unit=> @symbol) %>
+          <% end %>
         <% else %>
           <% if current_user.currency == "USD" %>
             <%= number_to_currency(@service.premimum_package.price) %>
@@ -39,7 +43,11 @@
   <div class="row py-2 text-center">
     <div class="col">
       <% if current_user.blank? %>
-        <%= link_to "Start at #{number_to_currency(@service.premimum_package.price)}",service_package_path(@service,@service.premimum_package), class: "btn change-color" %>
+        <% if cookies['currency'].blank? || cookies['currency'] == "USD" %> 
+          <%= link_to "Start at #{number_to_currency(@service.premimum_package.price)}",service_package_path(@service,@service.  premimum_package), class: "btn change-color" %>
+        <% else %>
+          <%= link_to "Start at #{number_to_currency((@service.premimum_package.price * @unit),:unit=> @symbol)}",service_package_path(@service,@service.premimum_package), class: "btn change-color" %>
+        <% end %>
       <% else %>  
         <% if current_user.currency == "USD" %>
           <%= link_to "Start at #{number_to_currency(@service.premimum_package.price)}",service_package_path(@service,@service.premimum_package), class: "btn change-color" %>
