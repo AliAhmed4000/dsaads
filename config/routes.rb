@@ -67,7 +67,8 @@ Rails.application.routes.draw do
   get 'seller_onboarding/account_security', to: 'users#seller_account_security', as: "seller_account_security"
   get 'seller_onboarding/conversation_id/:id', to: 'users#show_customer_offer', as: "show_customer_offer"
   get 'seller_dashboard', to: 'users#seller_dashboard', as: "seller_dashboard"
-    
+  get 'set_coookie_curreny', to: 'users#set_coookie_curreny', as: "set_coookie_for_currency"  
+  
   resources :users, only: [:show], as: "profile", path: "profile"
   get 'user/role', to: 'users#role', as: "user_role"
   resources :conversations do

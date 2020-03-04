@@ -32,22 +32,37 @@
                 <div class="col">
                 SubTotal</div>
                 <div class="col">
-                <%= number_to_currency(@order_item.price*@order_item.quantity) %></div>
+                  <% if current_user.currency == "USD" %>
+                    <%= number_to_currency(@order_item.price*@order_item.quantity) %>
+                  <% else %>
+                    <%= number_to_currency((@order_item.price*current_user.currency_unit*@order_item.quantity),:unit=>current_user.symbol) %>
+                  <% end %>
+                </div>
               </div>
               <div class="row text-center">
                 <div class="col">
                 Service Fee</div>
                 <div class="col">
-                <%= number_to_currency(@order_item.price*ENV['SERVICE_FEE'].to_i/100) %></div>
-              </div>
+                  <% if current_user.currency == "USD" %>
+                    <%= number_to_currency(@order_item.price*ENV['SERVICE_FEE'].to_i/100) %></div>
+                  <% else %>
+                    <%= number_to_currency((@order_item.price*current_user.currency_unit*ENV['SERVICE_FEE'].to_i/100),:unit => current_user.symbol) %></div>
+                  <% end %>
+                </div>
                 <hr>
               <div class="row text-center">
                 <div class="col">
                 Total</div>
                 <div class="col">
-                  <% gig_fee = @order_item.price*@order_item.quantity %>
-                  <% service_fee = @order_item.price*@order_item.quantity*ENV['SERVICE_FEE'].to_i/100 %>
-                  <%= number_to_currency(gig_fee + service_fee) %>
+                  <% if current_user.currency == "USD" %>
+                    <% gig_fee = @order_item.price*@order_item.quantity %>
+                    <% service_fee = @order_item.price*@order_item.quantity*ENV['SERVICE_FEE'].to_i/100 %>
+                    <%= number_to_currency(gig_fee + service_fee) %>
+                  <% else %>
+                    <% gig_fee = @order_item.price*current_user.currency_unit*@order_item.quantity %>
+                    <% service_fee = @order_item.price*current_user.currency_unit*@order_item.quantity*ENV['SERVICE_FEE'].to_i/100 %>
+                    <%= number_to_currency((gig_fee + service_fee),:unit=>current_user.symbol) %>
+                  <% end %>
                 </div>
               </div>
               <div class="row text-center">
@@ -64,13 +79,6 @@
   </div>
 </div>
 <script type="text/javascript">
-  $("#quantity").change(function(){
-    var qty = $("#quantity").val();
-    var price = '<%= @package.price %>';
-    var total = accounting.formatMoney(qty*price);
-    $("#price").html(total)
-  });
-
   $('#requiremnts-form').submit(function(e){
     if($('#order_item_status').is(':checked')){
       this.submit();

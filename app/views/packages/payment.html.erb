@@ -96,12 +96,23 @@
 <script type="text/javascript">
   $( document ).ready(function(){
     var qty = $("#order_order_items_attributes_0_quantity").val();
-    var price = '<%= @package.price %>';
+    <% if current_user.currency == "USD" %>
+      var price = '<%= @package.price %>';
+    <% else %>
+      var price = '<%= @package.price * current_user.currency_unit %>';
+    <% end %>
     var service_fee = qty*price*'<%= ENV['SERVICE_FEE'].to_i %>'/100;
     var total = accounting.formatMoney(qty*price);
-    $("#price-id").html(total);
-    $("#sub-total").html(total);
-    $('#service-fee').html(accounting.formatMoney(service_fee));
-    $('#total').html(accounting.formatMoney(service_fee+qty*price));
+    <% if current_user.currency == "USD" %>
+      $("#price-id").html(total);
+      $("#sub-total").html(total);
+      $('#service-fee').html(accounting.formatMoney(service_fee));
+      $('#total').html(accounting.formatMoney(service_fee+qty*price));
+    <% else %>
+      $("#price-id").html(accounting.formatMoney(total,'<%= current_user.symbol %>'));
+      $("#sub-total").html(total,'<%= current_user.symbol %>');
+      $('#service-fee').html(accounting.formatMoney(service_fee,'<%= current_user.symbol %>'));
+      $('#total').html(accounting.formatMoney((service_fee+qty*price),'<%= current_user.symbol %>'));
+    <% end %>
   });
 </script>

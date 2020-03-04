@@ -1,0 +1,19 @@
+<span class="float-right small"><strong>STARTING AT</strong> 
+  <span>
+    <strong>
+    <% if current_user.blank? %>
+	  	<% if cookies['currency'] == "USD" %>
+	      <%= number_to_currency(service.minimum_price) %>
+	    <% else %>
+	      <%= number_to_currency((service.minimum_price * @unit),:unit=>@symbol) %>
+	    <% end %>
+	  <% else %>
+	    <% if current_user.currency == "USD" %>
+	      <%= number_to_currency(service.minimum_price) %>
+	    <% else %>
+	      <%= number_to_currency((service.minimum_price * @unit),:unit=>@symbol) %>
+	    <% end %>
+	  <% end %>
+    </strong>
+  </span>
+</span>

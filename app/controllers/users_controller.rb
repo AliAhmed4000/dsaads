@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: [:edit,:update]
+  before_action :authenticate_user!, except: [:edit,:update,:set_coookie_curreny]
   # before_action :redirect_user_sign_in, only: [:new, :update]
 
   def new
@@ -108,6 +108,16 @@ class UsersController < ApplicationController
     @user = current_user
   end 
 
+  def set_coookie_curreny
+    if current_user.blank?
+      cookies[:currency] = params['currency']
+      redirect_to root_path
+    else
+      current_user.update_column('currency',params['currency'])
+      redirect_to root_path 
+    end 
+  end
+
   private
   def seller_params
     params.require(:user).permit(
@@ -120,6 +130,7 @@ class UsersController < ApplicationController
       :language,
       :personal_web_link,
       :wizard,
+      :currency,
       user_skills_attributes: [:id,:skill_id,:level,:_destroy],
       user_educations_attributes: [:id,:country,:institution_name,:title,:major,:passing_year,:_destroy], 
       user_certificates_attributes: [:id,:title,:institution_name,:passing_year,:_destroy],

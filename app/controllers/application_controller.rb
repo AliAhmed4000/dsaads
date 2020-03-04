@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :set_global_search_variable, :get_category_list
   before_action :set_user_status, if: :devise_controller?
+  before_action :set_user_currency
   rescue_from PG::ForeignKeyViolation, :with => :unable_to_delete
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   
@@ -42,4 +43,36 @@ class ApplicationController < ActionController::Base
       current_user.update_column('role','buyers')
     end 
   end
+
+  def set_user_currency
+    if user_signed_in?
+      @unit = current_user.currency_unit
+      @symbol = current_user.symbol  
+    else
+      response = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_#{cookies['currency']}&compact=ultra&apiKey=#{ENV['MONEY']}")
+      json_response = JSON.parse(response.body_str)
+      @unit = json_response["USD_#{cookies['currency']}"]
+      @symbol = get_currency_symbol(cookies['currency'])
+    end 
+  end
+
+  def get_currency_symbol(currency)
+    if currency == "PKR"
+      return "Rs"
+    elsif currency == "EUR"
+      return "€"
+    elsif currency == "GBP"
+      return "£"
+    elsif currency == "AUD"
+      return "A$"
+    elsif currency == "CAD"
+      return "C$"
+    elsif currency == "ZAR"
+      return "R"
+    elsif currency == "NZD"
+      return "NZ$"
+    elsif currency == "CHF"
+      return "Fr"
+    end 
+  end  
 end

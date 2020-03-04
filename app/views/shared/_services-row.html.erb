@@ -50,7 +50,7 @@
         <% end %>
         <%= favorite_heart(current_user, service) %>
         <span><%= service.favorited_users.size %></span>
-        <span class="float-right small">STARTING AT <span class="h5">$<%= service.minimum_price %></span></span>
+        <%= render partial: 'shared/package_price', locals: {service: service} %>
       </div>    
     </div>   
   </div>

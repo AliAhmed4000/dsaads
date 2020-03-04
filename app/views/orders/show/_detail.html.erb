@@ -17,7 +17,13 @@
           <span class="badge badge-info">Cancelled</span>
         <% end %>
       </span>
-      <span class="pl-2 pull-right h3"><%= number_to_currency(@order.package.price) %></span>
+      <span class="pl-2 pull-right h3">
+        <% if current_user.currency == "USD" %>
+          <%= number_to_currency(@order.package.price) %>
+        <% else %>
+          <%= number_to_currency((@order.package.price*current_user.currency_unit),:unit=>current_user.symbol) %>
+        <% end %>
+      </span>
       <p>
         <% if current_user.sellers? %>
           buyer: <%= link_to @order.order.user.full_name,profile_path(@order.order.user) %>
@@ -42,7 +48,13 @@
             <th scope="row"><%= @order.package.name %></th>
             <td><%= @order.quantity %></td>
             <td><%= @order.package.delivery_time %> Days</td>
-            <td><%= number_to_currency(@order.package.price) %></td>
+            <td>
+              <% if current_user.currency == "USD" %>
+                <%= number_to_currency(@order.package.price) %>
+              <% else %>
+                <%= number_to_currency((@order.package.price*current_user.currency_unit),:unit=>current_user.symbol) %>
+              <% end %>
+            </td>
           </tr>
         </tbody>
       </table>

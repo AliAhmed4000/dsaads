@@ -45,7 +45,11 @@
               </select>
             </div>
             <div class="col-sm1" id="price-id">
-              <%= number_to_currency(@package.price) %>
+              <% if current_user.currency == "USD" %>
+                <%= number_to_currency(@service.basic_package.price) %>
+              <% else %>
+                <%= number_to_currency((@service.basic_package.price * current_user.currency_unit),:unit=> current_user.symbol) %>
+              <% end %>
             </div>
           </div>
         </div>
@@ -61,22 +65,38 @@
                 <div class="col">
                 SubTotal</div>
                 <div class="col" id="sub-total">
-                <%= number_to_currency(@package.price) %></div>
+                  <% if current_user.currency == "USD" %>
+                    <%= number_to_currency(@package.price) %>
+                  <% else %>
+                    <%= number_to_currency((@package.price * current_user.currency_unit),:unit=> current_user.symbol) %>
+                  <% end %>
+                </div>
               </div>
               <div class="row text-center">
                 <div class="col">
                 Service Fee</div>
                 <div class="col" id="service-fee">
-                <%= number_to_currency(@package.price*ENV['SERVICE_FEE'].to_i/100) %></div>
+                  <% if current_user.currency == "USD" %>
+                    <%= number_to_currency(@package.price*ENV['SERVICE_FEE'].to_i/100) %>
+                  <% else %>
+                    <%= number_to_currency((@package.price*current_user.currency_unit*ENV['SERVICE_FEE'].to_i/100),:unit=> current_user.symbol) %>
+                  <% end %>
+                </div>
               </div>
                 <hr>
               <div class="row text-center">
                 <div class="col">
                 Total</div>
                 <div class="col" id="total">
-                <% gig_fee = @package.price %>
-                <% service_fee = @package.price*ENV['SERVICE_FEE'].to_i/100 %>
-                <%= number_to_currency(gig_fee + service_fee) %>
+                <% if current_user.currency == "USD" %>
+                  <% gig_fee = @package.price %>
+                  <% service_fee = @package.price*ENV['SERVICE_FEE'].to_i/100 %>
+                  <%= number_to_currency(gig_fee + service_fee) %>
+                <% else %>
+                  <% gig_fee = @package.price*current_user.currency_unit %>
+                  <% service_fee = @package.price*current_user.currency_unit*ENV['SERVICE_FEE'].to_i/100 %>
+                  <%= number_to_currency((gig_fee + service_fee),:unit=> current_user.symbol) %>
+                <% end %>
                 </div>
               </div>
               <div class="row text-center">
@@ -87,10 +107,14 @@
               </div>
               <hr>
               <div class="row text-center">
-                <div class="col">
+                <div class="col py-2">
                 <%= form_tag(packages_payment_path(@service,@package),method: :get) do %>
                   <%= hidden_field_tag 'quantity',1 %>
-                  <%= submit_tag "Order #{number_to_currency(gig_fee + service_fee)}",class: "btn btn-primary", id: "order-id" %>
+                  <% if current_user.currency == "USD" %>
+                    <%= submit_tag "Order #{number_to_currency(gig_fee + service_fee)}",class: "btn change-color", id: "order-id" %>
+                  <% else %>
+                    <%= submit_tag "Order #{number_to_currency((gig_fee + service_fee),:unit=> current_user.symbol)}",class: "btn change-color", id: "order-id" %>
+                  <% end %>
                 <% end %>
                 </div>
               </div>
@@ -104,14 +128,39 @@
 <script type="text/javascript">
   $("#quantitys").change(function(){
     var qty = $("#quantitys").val();
-    var price = '<%= @package.price %>';
+    <% if current_user.currency == "USD" %>
+      var price = '<%= @package.price %>';
+    <% else %>
+      var price = '<%= @package.price*current_user.currency_unit %>';
+    <% end %>
     var service_fee = qty*price*'<%= ENV['SERVICE_FEE'].to_i %>'/100;
     var total = accounting.formatMoney(qty*price);
-    $("#price-id").html(total);
-    $("#sub-total").html(total);
-    $('#service-fee').html(accounting.formatMoney(service_fee));
-    $('#total').html(accounting.formatMoney(service_fee+qty*price));
-    $('#quantity').val(qty);
-    $("#order-id").val("Order"  +  accounting.formatMoney(service_fee+qty*price));
+    <% if current_user.currency == "USD" %>
+      $("#price-id").html(total);
+      $("#sub-total").html(total);
+      $('#service-fee').html(accounting.formatMoney(service_fee));
+      $('#total').html(accounting.formatMoney(service_fee+qty*price));
+      $('#quantity').val(qty);
+      $("#order-id").val("Order"  +  accounting.formatMoney(service_fee+qty*price));
+    <% else %>
+      $("#price-id").html(accounting.formatMoney(total,'<%= current_user.symbol %>'));
+      $("#sub-total").html(accounting.formatMoney(total,'<%= current_user.symbol %>'));
+      $('#service-fee').html(accounting.formatMoney(service_fee,'<%= current_user.symbol %>'));
+      $('#total').html(accounting.formatMoney((service_fee+qty*price),'<%= current_user.symbol %>'));
+      $('#quantity').val(qty);
+      $("#order-id").val("Order"  +  accounting.formatMoney((service_fee+qty*price),'<%= current_user.symbol %>'));
+    <% end %>
   });
 </script>
+<style type="text/css">
+  .change-color{
+    background-color: purple;
+    color: white;
+  }
+  .change-color:hover{
+    background-color: purple;
+  }
+  .change-color:active{
+    background-color: purple;
+  }
+</style>
