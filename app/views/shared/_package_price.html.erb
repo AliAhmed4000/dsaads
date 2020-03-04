@@ -2,7 +2,7 @@
   <span>
     <strong>
     <% if current_user.blank? %>
-	  	<% if cookies['currency'] == "USD" %>
+	  	<% if cookies['currency'].blank? || cookies['currency'] == "USD" %>
 	      <%= number_to_currency(service.minimum_price) %>
 	    <% else %>
 	      <%= number_to_currency((service.minimum_price * @unit),:unit=>@symbol) %>
