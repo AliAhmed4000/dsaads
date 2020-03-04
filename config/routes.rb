@@ -68,6 +68,7 @@ Rails.application.routes.draw do
   get 'seller_onboarding/conversation_id/:id', to: 'users#show_customer_offer', as: "show_customer_offer"
   get 'seller_dashboard', to: 'users#seller_dashboard', as: "seller_dashboard"
   get 'set_coookie_curreny', to: 'users#set_coookie_curreny', as: "set_coookie_for_currency"  
+  get 'paypal_detail', to: 'users#paypal_detail', as: "paypal_detail"  
   
   resources :users, only: [:show], as: "profile", path: "profile"
   get 'user/role', to: 'users#role', as: "user_role"

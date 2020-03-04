@@ -42,6 +42,7 @@ class User < ApplicationRecord
   has_many :user_languages, dependent: :destroy
   has_many :wishes, dependent: :destroy
   has_many :identities, class_name: "Identity", dependent: :destroy
+  has_many :payments
   enum role: [:buyers,:sellers]
 
   accepts_nested_attributes_for :user_occupations
@@ -215,7 +216,7 @@ class User < ApplicationRecord
   end
   
   def currency_unit
-    response = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_#{self.currency}&compact=ultra&apiKey=2f02440fe262bcfa65bd")
+    response = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_#{self.currency}&compact=ultra&apiKey=#{ENV['MONEY']}")
     json_response = JSON.parse(response.body_str)
     unit = json_response["USD_#{self.currency}"]
   end
@@ -238,5 +239,9 @@ class User < ApplicationRecord
     elsif self.currency == "CHF"
       return "Fr"
     end 
-  end       
+  end
+
+  def withdrawn_money
+    self.payments.sum(:amount)
+  end        
 end

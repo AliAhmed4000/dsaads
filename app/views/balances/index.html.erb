@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-12 col-lg-12">
       <div class="SortBlufLink">
         <h2>Earnings</h2>
-        <span> expected Icome: <%= number_to_currency(current_user.expected_coming) %></span>
+        <span> expected Income: <%= number_to_currency(current_user.expected_coming) %></span>
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Withdrawn</h5>
-        <h5 class="card-text">$0</h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.withdrawn_money) %></h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
@@ -35,8 +35,20 @@
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Available for Withdraw</h5>
-        <h5 class="card-text">$0</h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.net_coming - current_user.withdrawn_money) %></h5>
       </div>
+    </div>
+  </div>
+  <div class="row SortBlufLink py-2">
+    <div class="col">
+      <strong>WithDraw:<strong>
+      <strong> 
+        <% if (current_user.net_coming - current_user.withdrawn_money) == 0 %>
+          <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn btn-primary","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
+        <% else %>
+          <%= link_to "PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
+        <% end %>
+      </strong>
     </div>
   </div>
   <hr>
@@ -48,16 +60,16 @@
         <thead>
           <tr>
             <th>Date</th>
-            <th>For</th>
+            <th>Subject</th>
             <th>Amount</th>
           </tr>
         </thead>
         <tbody>
-          <% @order_completed.each do |item| %>
+          <% current_user.payments.each do |item| %>
             <tr>
-              <td class="align-middle"><%= item.updated_at.strftime("%d %B %Y") %></td>
-              <td class="align-middle"><%=  item.package.service.title %></td>
-              <td class="align-middle"><%= number_to_currency(item.price) %></td>
+              <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
+              <td class="align-middle"><%=  item.subject %></td>
+              <td class="align-middle"><%= number_to_currency(item.amount) %></td>
             </tr>
           <% end %>
         </tbody>
@@ -71,3 +83,16 @@
     $('table').DataTable();
   });
 </script>
+<div id="paypal-form-modal"></div>
+<style type="text/css">
+  .change-color{
+    background-color: purple;
+    color: white;
+  }
+  .change-color:hover{
+    background-color: purple;
+  }
+  .change-color:active{
+    background-color: purple;
+  }
+</style>
