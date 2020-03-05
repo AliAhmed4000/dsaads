@@ -65,7 +65,7 @@
           </tr>
         </thead>
         <tbody>
-          <% current_user.payments.each do |item| %>
+          <% current_user.payments.withdraw.each do |item| %>
             <tr>
               <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
               <td class="align-middle"><%=  item.subject %></td>

@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(version: 2020_03_05_060839) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "subject"
+    t.integer "status"
     t.index ["order_item_id"], name: "index_payments_on_order_item_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end

@@ -244,5 +244,9 @@ class User < ApplicationRecord
 
   def withdrawn_money
     self.payments.sum(:amount)
-  end        
+  end
+
+  def avaibale_for_refund
+    OrderItem.cancelled.joins(:order).where('orders.user_id=?',self).sum(:price)  
+  end         
 end

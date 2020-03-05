@@ -545,6 +545,16 @@ a.SortBlufDescriptionLink:hover{
   display: inline-block;
 }
 
+#dot-cancel {
+  height: 15px;
+  width: 15px;
+  background-color: blue;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 60px;
+  margin-top: 8px;
+}
+
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link{
   background-color: purple;
 }

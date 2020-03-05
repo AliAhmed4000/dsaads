@@ -13,6 +13,11 @@
             <%= f.error_notification %>
             <%= f.input :subject, required: true %>
             <%= f.input :amount, required: true, html: {min: "5"} %>
+            <% if current_user.sellers? %>
+              <%= f.hidden_field :status,value: 'withdraw' %>
+            <% else %>
+              <%= f.hidden_field :status,value: 'refund' %>
+            <% end %>
           </div>
           <div class="modal-footer">
             <%= f.submit "Submit", class: "btn btn-secondary" %>

@@ -41,7 +41,8 @@ class BalancesController < ApplicationController
 	def paypal_params
     params.require(:payment).permit(
       :subject,
-      :amount
+      :amount,
+      :status
     )
 	end     
 end
