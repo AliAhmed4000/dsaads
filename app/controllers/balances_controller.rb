@@ -8,30 +8,38 @@ class BalancesController < ApplicationController
 	end
 
 	def show
-		@payment = current_user.payments.build
+		if current_user.paypal_email.blank?
+			@user = current_user
+		else 
+			@payment = current_user.payments.build
+		end 
 	end
 
 	def create
-		response = PaypalGateway.transfer(params['payment']['amount'].to_i*100, params['payment']['paypal_email'] ,:subject => params['payment']['subject'] ) 
-		binding.pry 
-		if response.success?
-			@payment = current_user.payments.build(paypal_params)
-			if @payment.save
-				flash[:notice] = "Payment Successfully Done."
-      	redirect_to seller_dashboard_path
-			else 
-				flash[:alert] = "Something Went Wrong."
-      	redirect_to seller_dashboard_path
-			end
+		balanace = current_user.net_coming - current_user.withdrawn_money
+		if params['payment']['amount'].to_i > balanace.to_i
+			flash[:alert] = "Your Amount is greater the withdrawn money."
+      redirect_to balances_path
 		else
-			flash[:alert] = "Something Went Wrong."
-      redirect_to seller_dashboard_path 
-		end    
+			response = PaypalGateway.transfer(params['payment']['amount'].to_i*100, current_user.paypal_email ,:subject => params['payment']['subject'] ) 
+			if response.success?
+				@payment = current_user.payments.build(paypal_params)
+				if @payment.save
+					flash[:notice] = "Payment Successfully Done."
+	      	redirect_to balances_path
+				else 
+					flash[:alert] = "Something Went Wrong."
+	      	redirect_to balances_path
+				end
+			else
+				flash[:alert] = "Something Went Wrong."
+	      redirect_to balances_path 
+			end
+		end     
 	end
 	private 
 	def paypal_params
     params.require(:payment).permit(
-      :paypal_email,
       :subject,
       :amount
     )

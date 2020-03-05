@@ -1,0 +1,2 @@
+<p>Hi <%= @user.full_name %>!</p>
+<p>Please Click on Confirmation <%= link_to 'PayPal Confirmation',paypal_email_confirmation_url(@user.paypal_token) %></p>

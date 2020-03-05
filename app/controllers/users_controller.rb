@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: [:edit,:update,:set_coookie_curreny]
+  before_action :authenticate_user!, except: [:edit,:update,:set_coookie_curreny,:paypal_email_confirmation]
   # before_action :redirect_user_sign_in, only: [:new, :update]
 
   def new
@@ -118,6 +118,24 @@ class UsersController < ApplicationController
     end 
   end
 
+  def add_paypal_email
+    if current_user.update_column('paypal_email',params['user']['paypal_email']) 
+      current_user.regenerate_paypal_token
+      UserMailer.paypal_confirmation_email(current_user).deliver_now
+      flash[:notice] = "Confirmation Email Sent your account successfully."
+      redirect_to balances_path 
+    end 
+  end 
+
+  def paypal_email_confirmation
+    user = User.find_by_paypal_token(params['token'])
+    unless user.blank?
+      user.update_column('paypal_token_status',true)
+      flash[:notice] = "PayPal Email Successfully Confirmed."
+      redirect_to root_path 
+    end 
+  end 
+  
   private
   def seller_params
     params.require(:user).permit(
@@ -131,6 +149,7 @@ class UsersController < ApplicationController
       :personal_web_link,
       :wizard,
       :currency,
+      :paypal_emial,
       user_skills_attributes: [:id,:skill_id,:level,:_destroy],
       user_educations_attributes: [:id,:country,:institution_name,:title,:major,:passing_year,:_destroy], 
       user_certificates_attributes: [:id,:title,:institution_name,:passing_year,:_destroy],

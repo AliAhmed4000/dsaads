@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_04_094926) do
+ActiveRecord::Schema.define(version: 2020_03_05_060839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,7 +214,6 @@ ActiveRecord::Schema.define(version: 2020_03_04_094926) do
     t.float "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "paypal_email"
     t.string "subject"
     t.index ["order_item_id"], name: "index_payments_on_order_item_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
@@ -369,6 +368,9 @@ ActiveRecord::Schema.define(version: 2020_03_04_094926) do
     t.string "last_sign_in_ip"
     t.json "tokens"
     t.integer "currency", default: 0
+    t.string "paypal_email"
+    t.string "paypal_token"
+    t.boolean "paypal_token_status", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

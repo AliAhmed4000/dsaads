@@ -52,6 +52,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_languages
   validates :email, uniqueness: true, presence: true
   # validate :check_user_skill, on: :update
+  has_secure_token :paypal_token
   attr_accessor :wizard
   
   # def check_user_skill

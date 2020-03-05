@@ -69,7 +69,9 @@ Rails.application.routes.draw do
   get 'seller_dashboard', to: 'users#seller_dashboard', as: "seller_dashboard"
   get 'set_coookie_curreny', to: 'users#set_coookie_curreny', as: "set_coookie_for_currency"  
   get 'paypal_detail', to: 'users#paypal_detail', as: "paypal_detail"  
-  
+  get 'paypal_email_confirmation/:token', to: 'users#paypal_email_confirmation', as: "paypal_email_confirmation"  
+  put 'add_paypal_email', to: 'users#add_paypal_email', as: "add_paypal_email"
+
   resources :users, only: [:show], as: "profile", path: "profile"
   get 'user/role', to: 'users#role', as: "user_role"
   resources :conversations do

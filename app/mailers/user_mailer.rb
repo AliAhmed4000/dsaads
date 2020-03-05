@@ -80,5 +80,10 @@ class UserMailer < ApplicationMailer
     @review = arguments
     @order_item = arguments.order_item
     mail(:to => @order_item.order.user.email, :subject => "Order Review.")
+  end 
+
+  def paypal_confirmation_email(arguments)
+    @user = arguments
+    mail(:to => @user.email, :subject => "Paypal Email Confirmation.")
   end  
 end

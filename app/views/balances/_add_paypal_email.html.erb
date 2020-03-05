@@ -1,7 +1,7 @@
 <div id="paypal-form-modal">
   <div class="modal" tabindex="-1" role="dialog" id="paypal-modal">
     <div class="modal-dialog" role="document">
-      <%= simple_form_for @payment, url: balances_path,method: :post do  |f|%>
+      <%= simple_form_for @user, url: add_paypal_email_path, method: 'put' do  |f|%>
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">PayPal Transfer</h5>
@@ -11,8 +11,7 @@
           </div>
           <div class="modal-body">
             <%= f.error_notification %>
-            <%= f.input :subject, required: true %>
-            <%= f.input :amount, required: true, html: {min: "5"} %>
+            <%= f.input :paypal_email, required: true %>
           </div>
           <div class="modal-footer">
             <%= f.submit "Submit", class: "btn btn-secondary" %>

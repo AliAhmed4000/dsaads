@@ -1,2 +1,8 @@
-$("#paypal-form-modal").html("<%= j render(:partial => 'balances/paypal_form') %>")
+<% if current_user.paypal_email.blank? %>
+	$("#paypal-form-modal").html("<%= j render(:partial => 'balances/add_paypal_email') %>")
+<% elsif (current_user.paypal_token_status == false) && !current_user.paypal_token.blank? %>
+	$("#paypal-form-modal").html("<%= j render(:partial => 'balances/paypal_email_notification') %>")
+<% else %>
+	$("#paypal-form-modal").html("<%= j render(:partial => 'balances/paypal_form') %>")
+<% end %>
 $("#paypal-modal").modal('show')
