@@ -311,7 +311,12 @@ class ServicesController < ApplicationController
   end 
 
   def search
-    service = Service.active.where('publish=? and title LIKE ?','true',"#{params['search']}%").pluck('title')
+    search_word = ['I can',"I CAN","CAN",'can','Can','I Can','I','i','i can']
+    if search_word.include?(params['search'])
+      service = Service.active.where('publish=?','true').pluck('title')
+    else 
+      service = Service.active.where('publish=? and title LIKE ?','true',"#{params['search']}%").pluck('title')
+    end   
     render json: service
   end 
   private  

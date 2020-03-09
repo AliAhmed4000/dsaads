@@ -35,3 +35,4 @@
 //= require ckeditor-jquery
 //= require jquery-ui
 //= require local-time
+//= require typehead.js
