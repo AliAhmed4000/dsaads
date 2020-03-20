@@ -29,10 +29,8 @@
             <% unless current_user.orders.blank? %>
               <li class="nav-item"><%= link_to 'My Shopping', my_shopping_path%></li>
             <% end %>
-            <li>    
-              <%= image_tag('small_dollar-circle.png', width: '40%', heigth: '40%',"data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"Your Refund Amount is #{number_to_currency(current_user.payments.refund.sum(:amount))}") %>
-            <!-- <span id="circle" onclick="window.location='<%#= my_shopping_path %>'"style="cursor: pointer;"></span>
-             -->
+            <li class="nav-item">    
+              <strong>Balance: <%= number_to_currency(current_user.payments.refund.sum(:amount)) %></strong>
             </li> 
           <% else %>
             <li class="nav-item"><%= link_to 'Dashboard', seller_dashboard_path %></li>

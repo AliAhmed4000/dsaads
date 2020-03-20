@@ -9,7 +9,7 @@
             </div>
             <div class="review-header pt-3 row text-center">
               <div class="col" style="padding-bottom: 5%">
-                <%= link_to "Resolve Me", order_dispute_path(order_cancel),class: "btn btn-info" %>  
+                <%= link_to "Resolve Me", order_dispute_path(order_cancel),class: "btn change-color" %>  
               </div>
             </div>
           <% end %>
@@ -19,11 +19,10 @@
         </div>
         <div class="review-header pt-3 row text-center">
           <div class="col" style="padding-bottom: 5%">
-            <%= link_to "Visit Resolution Center", order_cancel_path(@order),class: "btn btn-info" %>  
+            <%= link_to "Visit Order Help Center", order_cancel_path(@order),class: "btn change-color" %>  
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-  

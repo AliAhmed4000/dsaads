@@ -3,6 +3,6 @@
   <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
   <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
   <label class="Checkbox-form" style="margin-top: 2%;margin-left: 22%; ">
-    <%= f.submit "Revision", class: "btn btn-info" %>
+    <%= f.submit "Revision", class: "btn change-color" %>
   </label>
 <% end %>

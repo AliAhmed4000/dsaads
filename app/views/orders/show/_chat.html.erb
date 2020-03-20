@@ -68,6 +68,16 @@
 </style>
 <script type="text/javascript">
   $('.ckeditor').ckeditor({
-  // optional config
-});
+    // optional config
+  });
+  $('#new_review').submit(function(e){
+    var text = $("#new_review iframe").contents().find("body").text();
+    var file = $('#file-input').val()
+    if(text == "" && file == ""){
+      return false;
+    }else{
+      return true;
+    }
+  });
+
 </script>

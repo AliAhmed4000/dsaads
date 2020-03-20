@@ -39,12 +39,12 @@
       </div>
     </div>
   </div>
-  <div class="row SortBlufLink py-2">
+  <div class="row py-2">
     <div class="col">
       <strong>WithDraw:<strong>
       <strong> 
         <% if (current_user.net_coming - current_user.withdrawn_money) == 0 %>
-          <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn btn-primary","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
+          <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
         <% else %>
           <%= link_to "PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
         <% end %>

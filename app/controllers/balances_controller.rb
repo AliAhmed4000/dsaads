@@ -19,21 +19,37 @@ class BalancesController < ApplicationController
 		balanace = current_user.net_coming - current_user.withdrawn_money
 		if params['payment']['amount'].to_i > balanace.to_i
 			flash[:alert] = "Your Amount is greater the withdrawn money."
-      redirect_to balances_path
+      if current_user.sellers?
+	      redirect_to balances_path
+				else 
+				redirect_to my_shopping_path
+			end
 		else
 			response = PaypalGateway.transfer(params['payment']['amount'].to_i*100, current_user.paypal_email ,:subject => params['payment']['subject'] ) 
 			if response.success?
 				@payment = current_user.payments.build(paypal_params)
 				if @payment.save
 					flash[:notice] = "Payment Successfully Done."
-	      	redirect_to balances_path
+	      	if current_user.sellers?
+	      		redirect_to balances_path
+					else 
+						redirect_to my_shopping_path
+					end 
 				else 
 					flash[:alert] = "Something Went Wrong."
-	      	redirect_to balances_path
+	      	if current_user.sellers?
+	      		redirect_to balances_path
+					else 
+						redirect_to my_shopping_path
+					end
 				end
 			else
 				flash[:alert] = "Something Went Wrong."
-	      redirect_to balances_path 
+	      if current_user.sellers?
+	      	redirect_to balances_path
+				else 
+					redirect_to my_shopping_path
+				end 
 			end
 		end     
 	end

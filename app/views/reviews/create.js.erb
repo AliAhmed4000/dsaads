@@ -1,2 +1,3 @@
 document.getElementById("new_review").reset()
+$("#new_review iframe").contents().find("body").text('');
 $("#my-comments").html("<%= j render(:partial => 'orders/reviews',locals:{reviews: @reviews}) %>")
