@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_05_060839) do
+ActiveRecord::Schema.define(version: 2020_03_24_214641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,13 @@ ActiveRecord::Schema.define(version: 2020_03_05_060839) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "star", default: 0
+  end
+
+  create_table "currencies", force: :cascade do |t|
+    t.string "country"
+    t.float "currency"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "faqs", force: :cascade do |t|
@@ -256,15 +263,16 @@ ActiveRecord::Schema.define(version: 2020_03_05_060839) do
 
   create_table "revisions", force: :cascade do |t|
     t.bigint "order_item_id"
-    t.bigint "user_id"
+    t.bigint "buyer_id"
     t.integer "delivery"
     t.integer "price"
     t.integer "status"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "seller_id"
+    t.index ["buyer_id"], name: "index_revisions_on_buyer_id"
     t.index ["order_item_id"], name: "index_revisions_on_order_item_id"
-    t.index ["user_id"], name: "index_revisions_on_user_id"
   end
 
   create_table "services", force: :cascade do |t|

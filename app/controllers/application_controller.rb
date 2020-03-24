@@ -49,30 +49,21 @@ class ApplicationController < ActionController::Base
       @unit = current_user.currency_unit
       @symbol = current_user.symbol  
     else
-      response = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_#{cookies['currency']}&compact=ultra&apiKey=#{ENV['MONEY']}")
-      json_response = JSON.parse(response.body_str)
-      @unit = json_response["USD_#{cookies['currency']}"]
-      @symbol = get_currency_symbol(cookies['currency'])
+      if !cookies['currency'].blank? && cookies['currency'] != "USD"
+        current_currency = Currency.find_by_country("USD_#{cookies['currency']}")
+        @unit =  current_currency.currency
+        @symbol = get_currency_symbol(cookies['currency'])
+      end   
     end 
   end
 
   def get_currency_symbol(currency)
-    if currency == "PKR"
-      return "Rs"
-    elsif currency == "EUR"
+    if currency == "EUR"
       return "€"
     elsif currency == "GBP"
       return "£"
-    elsif currency == "AUD"
-      return "A$"
     elsif currency == "CAD"
       return "C$"
-    elsif currency == "ZAR"
-      return "R"
-    elsif currency == "NZD"
-      return "NZ$"
-    elsif currency == "CHF"
-      return "Fr"
     end 
   end  
 end

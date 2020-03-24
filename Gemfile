@@ -112,3 +112,4 @@ gem 'time_difference'
 gem 'jquery-ui-rails'
 gem 'local_time'
 gem 'curb'
+gem 'whenever', :require => false

@@ -10,7 +10,7 @@
       <% unless @order.completed? %>
         <%= render partial: '/orders/forms/order_complete_form' %>
       <% end %>
-      <% if @order.delivered? %>
+      <% if @order.delivered? && !@order.revisions.pluck(:status).include?("pending")%>
         <%= render partial: '/orders/forms/revision_request_by_buyer' %>
       <% end %>
     <% end %>

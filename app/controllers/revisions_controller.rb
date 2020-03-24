@@ -2,7 +2,7 @@ class RevisionsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-  	@revision = Revision.new(revision_params) 
+  	@revision = Revision.new(revision_params)
   	if @revision.save
       flash[:notice] = "Revision Request Successfully Sent."
       redirect_to order_path(@revision.order_item)
@@ -51,10 +51,11 @@ class RevisionsController < ApplicationController
   	params.require(:revision).permit(
       :status,
       :order_item_id,
-      :user_id,
+      :buyer_id,
       :delivery,
       :description,
-      :price
+      :price,
+      :seller_id
     ) 
   end  
 end

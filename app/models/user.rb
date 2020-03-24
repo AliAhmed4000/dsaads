@@ -62,17 +62,12 @@ class User < ApplicationRecord
   # end
   
   after_create :set_username
-  enum currency: ['USD','EUR','GBP','AUD','CAD','PKR','ZAR','NZD','CHF']
+  enum currency: ['USD','EUR','GBP','CAD']
   CURRENCY_LIST = [
     ['$ - US DOLLAR','USD'],
     ['€ - EURO','EUR'],
     ['£ - GBP','GBP'],
-    ['$ - AUS DOLLAR','AUD'],
-    ['$ - CAN DOLLAR','CAD'],
-    ['Rs - PAKISTAN RUPEE','PKR'],
-    ['R - SOUTH AFRICA RAND','ZAR'],
-    ['$ - NEWZEALAND DOLLAR','NZD'],
-    ['FR - SWISS FRANC','CHF']
+    ['$ - CAN DOLLAR','CAD']
   ]
   def set_username 
     self.update_column('user_name',self.email.split("@").first)
@@ -217,28 +212,20 @@ class User < ApplicationRecord
   end
   
   def currency_unit
-    response = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_#{self.currency}&compact=ultra&apiKey=#{ENV['MONEY']}")
-    json_response = JSON.parse(response.body_str)
-    unit = json_response["USD_#{self.currency}"]
+    if self.currency != "USD" 
+      current_currency = Currency.find_by_country("USD_#{self.currency}")
+      unit =  current_currency.currency
+      return unit
+    end 
   end
 
   def symbol
-    if self.currency == "PKR"
-      return "Rs"
-    elsif self.currency == "EUR"
+    if self.currency == "EUR"
       return "€"
     elsif self.currency == "GBP"
       return "£"
-    elsif self.currency == "AUD"
-      return "A$"
     elsif self.currency == "CAD"
       return "C$"
-    elsif self.currency == "ZAR"
-      return "R"
-    elsif self.currency == "NZD"
-      return "NZ$"
-    elsif self.currency == "CHF"
-      return "Fr"
     end 
   end
 

@@ -1,6 +1,6 @@
 class Revision < ApplicationRecord
   belongs_to :order_item
-  belongs_to :user
+  # belongs_to :user
   enum status: ['pending','approved']
   after_update :set_order_start_date, if: lambda{|o| o.approved?}
   

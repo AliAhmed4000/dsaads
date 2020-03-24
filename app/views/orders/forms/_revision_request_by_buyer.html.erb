@@ -1,7 +1,8 @@
 <%= simple_form_for @revision,url: revisions_path, method: 'post' do |f| %>
   <%= f.input :status, as: :hidden,:input_html => { :value => "pending" } %>
   <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
-  <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
+  <%= f.input :buyer_id, as: :hidden,:input_html => { :value => current_user.id } %>
+  <%= f.input :seller_id, as: :hidden,:input_html => { :value => @order.package.service.user_id } %>
   <label class="Checkbox-form" style="margin-top: 2%;margin-left: 22%; ">
     <%= f.submit "Revision", class: "btn change-color" %>
   </label>

@@ -70,6 +70,9 @@
             <a class="nav-link" href="#delivered" data-toggle="tab">Delivered <span class="badge badge-light"><%= @order_delivered.count %></span></a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#revision" data-toggle="tab">Revision <span class="badge badge-light"><%= @order_revision.count %></span></a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#completed" data-toggle="tab">Completed <span class="badge badge-light"><%= @order_completed.count %></span></a>
           </li>
           <li class="nav-item">
@@ -92,6 +95,7 @@
             <%= render partial: "/orders/manage_orders/awaiting_my_review" %>
           <% end %>
           <%= render partial: "/orders/manage_orders/delivered" %>
+          <%= render partial: "/orders/manage_orders/revision" %>
           <%= render partial: "/orders/manage_orders/completed" %>
           <%= render partial: "/orders/manage_orders/cancelled" %>
         </div>
