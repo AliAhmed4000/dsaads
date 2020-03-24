@@ -15,7 +15,7 @@
       <td><%= standard.input :delivery_time,label: 'Delivery Time in Days',collection: Package::EXTEND_DELIVERY,required: true,input_html: {maxlength: 100} %></td>
     </tr>
     <tr>
-      <td><%= standard.number_field :price,required: true,class: "form-control",min: "5" %></td>
+      <td><%= standard.input :price,required: true,input_html: { min: 5 } %></td>
     </tr>
     <%= standard.hidden_field :user_id,value: current_user.id %>
   </table>

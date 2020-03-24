@@ -17,7 +17,7 @@
       </td>
     </tr>
     <tr>
-      <td><%= basic.number_field :price,required: true,class: "form-control",min: "5"  %></td>
+      <td><%= basic.input :price,required: true,input_html: { min: 5 } %></td>
     </tr>
     <%= basic.hidden_field :user_id,value: current_user.id %>
   </table>
