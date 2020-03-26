@@ -13,7 +13,7 @@
             </th>
             <th>SERVICE</th>
             <th>Starting At</th>
-            <th>Ending At</th>
+            <th>Completed At</th>
             <th>TOTAL</th>
             <th>STATUS</th>
           </tr>
@@ -37,19 +37,23 @@
                 <% end %>
               </td>
               <td class="align-middle">
-                <% unless item.ending_at.blank? %>
-                  <%= item.ending_at.strftime("%d %B %Y") %>
+                <% unless item.updated_at.blank? %>
+                  <%= item.updated_at.strftime("%d %B %Y") %>
                 <% end %>
               </td>
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
-                <% if item.buyer_star_status.blank? %>
-                  <%= link_to order_feedback_path(item) do %>
-                    <span class="badge badge-info">Enter Review</span>
-                  <% end %>
+                <% if item.completed_at >=  DateTime.now %>
+                  <span class="badge badge-danger">Pending Clearance</span>
                 <% else %>
-                  <%= link_to order_feedback_path(item) do %>
-                    <span class="badge badge-success">Completed</span>
+                  <% if item.buyer_star_status.blank? %>
+                    <%= link_to order_feedback_path(item) do %>
+                      <span class="badge badge-info">Enter Review</span>
+                    <% end %>
+                  <% else %>
+                    <%= link_to order_feedback_path(item) do %>
+                      <span class="badge badge-success">Completed</span>
+                    <% end %>
                   <% end %>
                 <% end %>
               </td>

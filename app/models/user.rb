@@ -62,13 +62,15 @@ class User < ApplicationRecord
   # end
   
   after_create :set_username
-  enum currency: ['USD','EUR','GBP','CAD']
+  enum currency: ['USD','EUR','GBP','CAD','PKR']
   CURRENCY_LIST = [
     ['$ - US DOLLAR','USD'],
     ['€ - EURO','EUR'],
     ['£ - GBP','GBP'],
-    ['$ - CAN DOLLAR','CAD']
+    ['$ - CAN DOLLAR','CAD'],
+    ['Rs - PAKISTAN RUPEE','PKR']
   ]
+
   def set_username 
     self.update_column('user_name',self.email.split("@").first)
   end 
@@ -173,7 +175,7 @@ class User < ApplicationRecord
   end
 
   def net_coming
-    OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:completed]).sum(:price)
+    OrderItem.completed.joins(package:[:service]).where('services.user_id=? and order_items.completed_at<?',self.id,DateTime.now).sum(:price)
   end
 
   def buying_amount
@@ -185,6 +187,10 @@ class User < ApplicationRecord
     active = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:active]).sum(:price)
     delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:delivered]).sum(:price)
     active + delivered
+  end
+
+  def pending_clearance
+    OrderItem.completed.joins(package:[:service]).where('services.user_id=? and order_items.completed_at>?',self.id,DateTime.now).sum(:price)
   end
 
   def purchase

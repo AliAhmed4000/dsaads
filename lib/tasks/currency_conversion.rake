@@ -13,6 +13,10 @@ namespace :currency_conversion do
 		json_response3 = JSON.parse(response3.body_str)
 		unit3 = json_response3["USD_CAD"]
 		Currency.find_by_country('USD_CAD').update_column('currency',unit3)
+		response4 = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_PKR&compact=ultra&apiKey=#{ENV['MONEY']}")
+		json_response4 = JSON.parse(response4.body_str)
+		unit4 = json_response4["USD_PKR"]
+		Currency.find_by_country('USD_CAD').update_column('currency',unit4)
 	end
 
 	desc "Country Currency"
@@ -35,5 +39,9 @@ namespace :currency_conversion do
 		json_response3 = JSON.parse(response3.body_str)
 		unit3 = json_response3["USD_CAD"]
 		Currency.find_by_country('USD_CAD').update_column('currency',unit3)
+		response4 = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_PKR&compact=ultra&apiKey=#{ENV['MONEY']}")
+		json_response4 = JSON.parse(response4.body_str)
+		unit4 = json_response4["USD_PKR"]
+		Currency.find_by_country('USD_CAD').update_column('currency',unit4)
   end
 end

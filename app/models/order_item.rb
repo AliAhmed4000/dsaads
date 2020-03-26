@@ -23,10 +23,14 @@ class OrderItem < ApplicationRecord
   accepts_nested_attributes_for :reviews, reject_if: :all_blank, allow_destroy: true
   enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review,:disputed]
   # enum role: [:user, :"Application Administrator" ]
-  after_update :order_completed_notification_counter,:order_completed_notification_seller,:order_completed_notification_buyer, if: lambda{|o| o.completed?}
+  after_update :set_clearance_date,:order_completed_notification_counter,:order_completed_notification_seller,:order_completed_notification_buyer, if: lambda{|o| o.completed?}
   after_update :order_inactivation_notification_counter,:order_inactive_notification_seller,:order_inactive_notification_buyer, if: lambda{|o| o.inactive?}
   after_update :set_order_start_date,:order_activation_notification_counter,:order_active_notification_seller,:order_active_notification_buyer, if: lambda{|o| o.active?}
   after_update :set_delivered_date,:order_delivered_notification_counter,:order_deliver_notification_seller,:order_deliver_notification_buyer, if: lambda{|o| o.delivered?}
+
+  def set_clearance_date
+    self.update_column('completed_at',(DateTime.now + 14.days))
+  end
 
   def set_order_start_date
     self.update_column('starting_at',DateTime.now)

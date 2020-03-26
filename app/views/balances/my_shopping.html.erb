@@ -7,31 +7,25 @@
       </div>
     </div>
     <div class="row">
-      <div class="card" style="width: 15rem;">
+      <div class="card" style="width: 20rem;">
         <div class="card-body text-center">
           <h5 class="card-title">Net Amount</h5>
           <h5 class="card-text"><%= number_to_currency(current_user.buying_amount - current_user.payments.refund.sum(:amount)) %></h5>
         </div>
       </div>
-      <div class="card" style="width: 15rem;">
+      <div class="card" style="width: 20rem;">
         <div class="card-body text-center">
           <h5 class="card-title">Withdrawn</h5>
           <h5 class="card-text"><%= number_to_currency(current_user.payments.refund.sum(:amount)) %></h5>
         </div>
       </div>
-      <div class="card" style="width: 15rem;">
+      <div class="card" style="width: 18rem;">
         <div class="card-body text-center">
           <h5 class="card-title">Refund</h5>
           <h5 class="card-text"><%= number_to_currency(current_user.payments.refund.sum(:amount)) %></h5>
         </div>
       </div>
-      <div class="card" style="width: 15rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Pending Clearance</h5>
-          <h5 class="card-text">$0</h5>
-        </div>
-      </div>
-      <div class="card" style="width: 15rem;">
+      <div class="card" style="width: 18rem;">
         <div class="card-body text-center">
           <h5 class="card-title">Available for Withdraw</h5>
           <h5 class="card-text"><%= number_to_currency(current_user.avaibale_for_refund - current_user.payments.refund.sum(:amount)) %></h5>

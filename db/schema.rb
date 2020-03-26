@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_24_214641) do
+ActiveRecord::Schema.define(version: 2020_03_26_105721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 2020_03_24_214641) do
     t.datetime "starting_at"
     t.datetime "ending_at"
     t.datetime "delivered_at"
+    t.datetime "completed_at"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["package_id"], name: "index_order_items_on_package_id"
   end
