@@ -27,6 +27,14 @@ class OrderItem < ApplicationRecord
   after_update :order_inactivation_notification_counter,:order_inactive_notification_seller,:order_inactive_notification_buyer, if: lambda{|o| o.inactive?}
   after_update :set_order_start_date,:order_activation_notification_counter,:order_active_notification_seller,:order_active_notification_buyer, if: lambda{|o| o.active?}
   after_update :set_delivered_date,:order_delivered_notification_counter,:order_deliver_notification_seller,:order_deliver_notification_buyer, if: lambda{|o| o.delivered?}
+  attr_accessor :purchase
+  after_create :set_purchase, unless: lambda{|i| i.purchase.blank?}
+  
+  def set_purchase
+    service_fee = self.price*self.quantity*ENV['SERVICE_FEE'].to_i/100
+    total_fee = service_fee + self.price*self.quantity
+    Payment.create(order_item_id: self.id,user_id: self.order.user_id, amount: total_fee,status: 'purchase')
+  end
 
   def set_clearance_date
     self.update_column('completed_at',(DateTime.now + 14.days))

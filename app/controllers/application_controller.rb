@@ -64,6 +64,8 @@ class ApplicationController < ActionController::Base
       return "£"
     elsif currency == "CAD"
       return "C$"
+    elsif currency == "PKR"
+      return "Rs"
     end 
   end  
 end

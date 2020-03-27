@@ -232,12 +232,18 @@ class User < ApplicationRecord
       return "£"
     elsif self.currency == "CAD"
       return "C$"
+    elsif self.currency == "PKR"
+      return "Rs"
     end 
   end
 
   def withdrawn_money
     self.payments.sum(:amount)
   end
+
+  def net_purchases
+    self.payments.purchase.sum(:amount)
+  end 
 
   def avaibale_for_refund
     OrderItem.cancelled.joins(:order).where('orders.user_id=?',self).sum(:price)  

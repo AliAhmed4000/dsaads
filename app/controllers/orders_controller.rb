@@ -104,7 +104,7 @@ class OrdersController < ApplicationController
       :first_name,
       :last_name,
       :ip,
-      order_items_attributes: [:id, :_destroy, :quantity, :price, :package_id, :buyer_order_requirement]
+      order_items_attributes: [:id, :_destroy, :quantity, :price, :package_id, :buyer_order_requirement, :purchase]
     )
   end
 

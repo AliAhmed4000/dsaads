@@ -23,7 +23,7 @@
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Used For Purchases</h5>
-        <h5 class="card-text">$0</h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.net_purchases) %></h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
