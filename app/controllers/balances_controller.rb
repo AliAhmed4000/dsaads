@@ -1,10 +1,12 @@
 class BalancesController < ApplicationController
 	before_action :authenticate_user!
+	before_action :seller_set_user_role,only: [:index]
+	before_action :buyer_set_user_role,only: [:my_shopping]
 	def index
 		@order_completed = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:completed])
   end
 	
-	def my_shpping
+	def my_shopping
 	end
 
 	def show
@@ -60,5 +62,15 @@ class BalancesController < ApplicationController
       :amount,
       :status
     )
-	end     
+	end
+	def seller_set_user_role
+		if current_user.buyers?
+			current_user.update_column('role','sellers')
+		end 
+	end
+	def buyer_set_user_role
+		if current_user.sellers?
+			current_user.update_column('role','buyers')
+		end 
+	end      
 end
