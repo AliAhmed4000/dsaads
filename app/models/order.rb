@@ -16,7 +16,7 @@
 
 class Order < ApplicationRecord
   belongs_to :user
-  has_many :order_items
+  has_many :order_items, dependent: :destroy
   accepts_nested_attributes_for :order_items
   attr_accessor :provided,:card_number, :security_code, :exp_month, :exp_year, :card_type, :ip, :subscription, :payment_type,:first_name,:last_name
   validate :check_payment, on: :create, :unless => lambda{|u| u.card_number.blank? && u.security_code.blank?}

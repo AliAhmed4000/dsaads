@@ -17,7 +17,7 @@ class Service < ApplicationRecord
   belongs_to :seller, class_name: "User", foreign_key: :user_id
   has_many   :photos
   has_one  :video 
-  has_many :packages
+  has_many :packages,dependent: :destroy
   has_many :faqs
   has_one  :basic_package, -> {where(level: "basic")}, :class_name => 'Package', dependent: :destroy
   has_one  :standard_package,-> {where(level: "standard")}, :class_name => 'Package', dependent: :destroy

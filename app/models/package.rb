@@ -29,11 +29,11 @@ class Package < ApplicationRecord
   belongs_to :service
   belongs_to :user
   has_many :package_metrics
-  has_many :order_items
+  has_many :order_items, dependent: :destroy
   has_many :orders, through: :order_items
   has_many :buyers, through: :orders, source: :user
   has_many :buyer_reviews, through: :buyers
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
   has_many :cart_items
   accepts_nested_attributes_for :order_items, reject_if: :all_blank, allow_destroy: true
   
