@@ -16,7 +16,7 @@ namespace :currency_conversion do
 		response4 = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_PKR&compact=ultra&apiKey=#{ENV['MONEY']}")
 		json_response4 = JSON.parse(response4.body_str)
 		unit4 = json_response4["USD_PKR"]
-		Currency.find_by_country('USD_CAD').update_column('currency',unit4)
+		Currency.find_by_country('USD_PKR').update_column('currency',unit4)
 	end
 
 	desc "Country Currency"
@@ -27,6 +27,8 @@ namespace :currency_conversion do
 	  country2.save
 	  country3 = Currency.new(country: 'USD_GBP')
 	  country3.save
+	  country4 = Currency.new(country: 'USD_PKR')
+	  country4.save
 	  response1 = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_EUR&compact=ultra&apiKey=#{ENV['MONEY']}")
 	  json_response1 = JSON.parse(response1.body_str)
 		unit1 = json_response1["USD_EUR"] 
@@ -42,6 +44,6 @@ namespace :currency_conversion do
 		response4 = Curl.get("https://free.currconv.com/api/v7/convert?q=USD_PKR&compact=ultra&apiKey=#{ENV['MONEY']}")
 		json_response4 = JSON.parse(response4.body_str)
 		unit4 = json_response4["USD_PKR"]
-		Currency.find_by_country('USD_CAD').update_column('currency',unit4)
+		Currency.find_by_country('USD_PKR').update_column('currency',unit4)
   end
 end
