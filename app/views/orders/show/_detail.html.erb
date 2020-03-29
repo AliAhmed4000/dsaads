@@ -19,9 +19,9 @@
       </span>
       <span class="pl-2 pull-right h3">
         <% if current_user.currency == "USD" %>
-          <%= number_to_currency(@order.package.price) %>
+          <%= number_to_currency(@order.price) %>
         <% else %>
-          <%= number_to_currency((@order.package.price*current_user.currency_unit),:unit=>current_user.symbol) %>
+          <%= number_to_currency((@order.price*current_user.currency_unit),:unit=>current_user.symbol) %>
         <% end %>
       </span>
       <p>
@@ -50,9 +50,9 @@
             <td><%= @order.package.delivery_time %> Days</td>
             <td>
               <% if current_user.currency == "USD" %>
-                <%= number_to_currency(@order.package.price) %>
+                <%= number_to_currency(@order.price) %>
               <% else %>
-                <%= number_to_currency((@order.package.price*current_user.currency_unit),:unit=>current_user.symbol) %>
+                <%= number_to_currency((@order.price*current_user.currency_unit),:unit=>current_user.symbol) %>
               <% end %>
             </td>
           </tr>

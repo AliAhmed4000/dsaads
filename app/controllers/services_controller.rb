@@ -311,7 +311,7 @@ class ServicesController < ApplicationController
   end 
 
   def search
-    search_word = ['I can',"I CAN","CAN",'can','Can','I Can','I','i','i can']
+    search_word = ['I can',"I CAN","CAN",'can','Can','I Can','I','i','i can','c','a','n','C','A','N']
     if search_word.include?(params['search'])
       service = Service.active.where('publish=?','true').pluck('title')
     else 
