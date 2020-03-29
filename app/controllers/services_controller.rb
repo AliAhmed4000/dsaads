@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show,:search]
   before_action :check_seller_profile, except: [:index,:show,:search]
-  before_action :convert_to_seller, only: [:new] 
+  before_action :convert_to_seller, only: [:new,:manage_services] 
   before_action :check_servie_owner, only: [:edit,:pricing,:description,:requirement,:gallery,:publish,:update]
   include ActionView::Helpers::UrlHelper
 

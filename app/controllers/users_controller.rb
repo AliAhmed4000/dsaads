@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:edit,:update,:set_coookie_curreny,:paypal_email_confirmation]
   # before_action :redirect_user_sign_in, only: [:new, :update]
-
+  before_action :seller_set_user_role,only: [:seller_dashboard]
   def new
     @user = current_user
   end
@@ -165,5 +165,11 @@ class UsersController < ApplicationController
     if !user_signed_in?
       redirect_to new_user_session_path
     end
+  end
+  
+  def seller_set_user_role
+    if current_user.buyers?
+      current_user.update_column('role','sellers')
+    end 
   end
 end

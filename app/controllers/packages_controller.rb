@@ -1,6 +1,7 @@
 class PackagesController < ApplicationController
 	before_action :authenticate_user!
-	before_action :check_user_role , only: [:show,:payment]
+	before_action :convert_to_buyer, only: [:show,:payment,:requirement]
+	before_action :no_access_for_service_owner , only: [:show,:payment]
 	def show 
 		@service = Service.find_by_id(params[:service_id])
 		@package = Package.find_by_id(params[:id])
@@ -31,14 +32,18 @@ class PackagesController < ApplicationController
 		end
 	end 
 	
-	private 
-	def check_user_role
+	private
+	def convert_to_buyer
+    if current_user.sellers?
+      current_user.update_column('role','buyers')
+    end 
+  end
+
+	def no_access_for_service_owner
 		service = Service.find_by_id(params[:service_id])
-		if current_user.sellers? && service.user_id == current_user.id
+		if service.user_id == current_user.id
 		  flash[:alert] = "you have no permission to access."
       redirect_to root_path
-	  elsif current_user.sellers? && service.user_id != current_user.id
-	  	current_user.update_column('role','buyers')
 	  end        
   end
 end
