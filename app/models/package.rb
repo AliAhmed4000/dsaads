@@ -30,7 +30,7 @@ class Package < ApplicationRecord
   belongs_to :user
   has_many :package_metrics
   has_many :order_items, dependent: :destroy
-  has_many :orders, through: :order_items
+  has_many :orders, through: :order_items, dependent: :destroy
   has_many :buyers, through: :orders, source: :user
   has_many :buyer_reviews, through: :buyers
   has_many :reviews, dependent: :destroy
