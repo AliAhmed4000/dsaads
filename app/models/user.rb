@@ -212,9 +212,9 @@ class User < ApplicationRecord
   end
 
   def active_orders
-    active = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:active])
-    delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:delivered])
-    active + delivered
+    OrderItem.joins(package:[:service]).where('services.user_id=?',self.id)
+    # delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:delivered])
+    # active + delivered
   end
   
   def currency_unit

@@ -6,7 +6,7 @@
     <div class="col-sm-12 col-lg-8">
       <div class="border border-light" style="padding: 10px;">
         <div class="box-tab justified">
-         <h5>Active Orders<span>-<%= @seller.active_orders.count %> (<%= number_to_currency(@seller.expected_coming) %>)</span></h5>
+         <h5>Active Orders<span>-<%= @seller.order_items.active.delivered.count %> (<%= number_to_currency(@seller.expected_coming) %>)</span></h5>
         </div>
       </div>
       <% @seller.active_orders.each do |item| %>
@@ -21,7 +21,7 @@
                 Buyer: <%= link_to "#{item.order.user.full_name}",profile_path(item.order.user) %> <%#= time_ago_in_words(@order.buyer_star_status.created_at) %>
               </div>
               <div class="col">
-                Price: <%= number_to_currency(item.package.price) %>
+                Price: <%= number_to_currency(item.price) %>
               </div>
               <div class="col">
                 service viewed: <%= item.package.service.hits %>
@@ -29,10 +29,24 @@
             </div>
             <h5 class="card-title"><%= item.package.service.title %></h5>
             <p class="card-text"><%= item.package.description %></p>
-            <% if item.delivered? %>
-              <p class="pull-right"><strong>Delivered</strong> <%= time_ago_in_words(item.delivered_at) %> ago</p>
+            <% if item.inactive? %>
+              <%= link_to "Waiting for requirement", order_path(item.id), method: :get,class: "btn btn-primary pull-right" %>
+            <% elsif item.completed? %>
+              <p class="pull-right"><strong>Completed</strong> <%= time_ago_in_words(item.updated_at) %> ago</p>
+            <% elsif item.delivered? %>
+              <% if  item.revisions.pluck(:status).include?('pending') %>
+                <%= link_to "Revision Request", order_path(item.id), method: :get,class: "btn btn-danger pull-right" %>
+              <% else %>
+                <p class="pull-right"><strong>Delivered</strong> <%= time_ago_in_words(item.delivered_at) %> ago</p>
+              <% end %>
+            <% elsif item.cancelled? %>
+              <p class="pull-right"><strong>Cancelled</strong> <%= time_ago_in_words(item.updated_at) %> ago</p>
             <% else %>
-              <%= link_to "Delivery Now", order_status_path(item.id), method: :get,class: "btn btn-primary pull-right" %>
+              <% if  item.order_cancels.pluck(:status).include?('pending') %>
+                <%= link_to "Dispute", order_dispute_path(item.order_cancels.last), method: :get,class: "btn btn-danger pull-right" %>
+              <% else %>
+                <%= link_to "Delivery Now", order_status_path(item.id), method: :get,class: "btn btn-primary pull-right" %>
+              <% end %>
             <% end %>
           </div>
         </div>
