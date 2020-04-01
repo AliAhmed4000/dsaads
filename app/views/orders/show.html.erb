@@ -5,7 +5,7 @@
         <h3 style="margin-top: 10px;">
           Your Buyer Request for Revision.
           <span>
-            <%= link_to "Modify Order",revision_path(@order.revisions.last),class: "btn btn-info" %>
+            <%= link_to "Modify Order",revision_path(@order.revisions.last),class: "btn change-color" %>
           </span>
         </h3>
       <% end %>
@@ -18,7 +18,7 @@
           <% else %>
             Seller has modified revision request.
             <span>
-              <%= link_to "Modified Order",revision_modified_path(@order.revisions.last),class: "btn btn-info" %>
+              <%= link_to "Modified Order",revision_modified_path(@order.revisions.last),class: "btn change-color" %>
             </span>
           <% end %>
         </h3>
