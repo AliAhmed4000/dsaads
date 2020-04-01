@@ -25,7 +25,7 @@
       <% end %>
     <% end %>
   </div>
-  <div class="border border-light text-center" style="margin-bottom: 10px;">
+  <!-- <div class="border border-light text-center" style="margin-bottom: 10px;">
     <div class="box-tab justified ">
       <ul class="nav nav-tabs navbar-light bg-light mr-auto nav nav-pills nav-justified">
         <li class="active nav-item">
@@ -40,33 +40,48 @@
             <a class="nav-link" href="javascript:void(0)" id="requirement"><h6>BUYER REQUIREMENTS</h6>
             </a>
           </li>
-          <% unless @order.inactive? %>
+          <%# unless @order.inactive? %>
             <li class="active nav-item">
               <a class="nav-link" href="javascript:void(0)" id="remaining"><h6>COUNTDOWN</h6>
               </a>
             </li>
-          <% end %>
+          <%# end %>
         </ul>
     </div>
-  </div>
+  </div> -->
   <div class="row">
     <div class="col-lg-9 col-md-12">
-      <div class="border border-light"> 
+      <!-- <div class="border border-light"> --> 
         <div class="owl-carousel owl-theme owl-loaded">
           <div class="owl-stage-outer">
             <div class="owl-stage">
-              <%= render partial: '/orders/show/detail' %>
-              <% if @order.inactive? && current_user.buyers? %>
-                <%= render partial: '/orders/forms/order_active_form' %>
-              <% end %>
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#detail" data-toggle="tab">
+                    Receipt Information
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#requirement" data-toggle="tab">
+                    Buyer Requirements
+                  </a>
+                </li>
+              </ul> 
+              <div class="tab-content">
+                <%= render '/orders/show/detail' %>
+                <%= render partial: '/orders/show/requirement' %>
+              </div>
+              <%#= render partial: '/orders/show/detail' %>
+              <%# if @order.inactive? && current_user.buyers? %>
+                <%#= render partial: '/orders/forms/order_active_form' %>
+              <%# end %>
               <% unless @order.inactive? %>
                 <%= render partial: '/orders/show/timming' %>
               <% end %>
             </div>
           </div>
         </div>
-      </div>   
-      <%= render partial: '/orders/show/requirement' %>
+      <!-- </div> -->   
       <%= render partial: '/orders/show/chat' %>
     </div>
     <div class="col-lg-3 col-md-12">

@@ -42,7 +42,7 @@ class PackagesController < ApplicationController
 	def no_access_for_service_owner
 		service = Service.find_by_id(params[:service_id])
 		if service.user_id == current_user.id
-		  flash[:alert] = "you have no permission to access."
+		  flash[:alert] = "SELLERS SHOULD NOT BUY THEIR OWN SERVICES."
       redirect_to root_path
 	  end        
   end

@@ -1,24 +1,19 @@
-<div class="p-3 border border-light">
-  <div class="py-3">
-    <p><%= @order.package.service.requirements %></p>
-    <%= simple_form_for @order,url: order_path(@order), method: 'put',:html => {:class => 'form-horizontal',id: "requiremnts-form"} do |f| %>
-    <%= f.error_notification %>
-    <div class="review-header pt-3">
-      <%= f.input :description,label: 'Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Description',:minlength=>"50", input_html: {rows: "3"},as: :text  %>
-      <label>
-        <%= f.input :file, as: :file,label: false,wrapper: false,input_html: {id: "file-input",class: ""} %>
-      </label>
-      <label class="Checkbox-form">
-        <%= f.check_box :status,{},"active","inactive" %>  I have provided all the requirements
-        <span class="checkmark"></span>
-      </label>
-      <label class="Checkbox-form text-center" style="margin-bottom: 2% ">
-        <%= f.submit "Order Start", class: "btn btn-info" %>
-      </label>
-    </div>
-  <% end %>
+<%= simple_form_for @order,url: order_path(@order), method: 'put',:html => {:class => 'form-horizontal',id: "requiremnts-form"} do |f| %>
+  <%= f.error_notification %>
+  <div class="review-header pt-3">
+    <%= f.input :description,label: 'Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Description',:minlength=>"50", input_html: {rows: "3"},as: :text  %>
+    <label>
+      <%= f.input :file, as: :file,label: false,wrapper: false,input_html: {id: "file-input",class: ""} %>
+    </label>
+    <label class="Checkbox-form">
+      <%= f.check_box :status,{},"active","inactive" %>  I have provided all the requirements
+      <span class="checkmark"></span>
+    </label>
+    <label class="Checkbox-form text-center" style="margin-bottom: 2% ">
+      <%= f.submit "Order Start", class: "btn btn-info" %>
+    </label>
   </div>
-</div>
+<% end %>
 <script type="text/javascript">
   $('#requiremnts-form').submit(function(e){
     if($('#order_item_status').is(':checked')){

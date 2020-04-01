@@ -1,4 +1,4 @@
-<div class="py-3 border border-light container-fluid"  id="order-requirement">
+<div class="py-3 border border-light container-fluid tab-pane"  id="requirement">
   <div class="py-3">
     <h6>Buyer Requirement</h6>
     <hr>
@@ -13,4 +13,7 @@
       <% end %>
     </div>
   </div>
+  <% if @order.inactive? && current_user.buyers? %>
+    <%= render '/orders/forms/order_active_form' %>
+  <% end %>
 </div>

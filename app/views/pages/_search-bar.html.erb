@@ -8,29 +8,29 @@
 </script>
 <section id="showcase">
   <div class="s003">
-<%= form_tag services_path,:id => 'elm_id', method: :get do %>
-  <div class="inner-form ui-widget">
-    <div class="input-field first-wrap">
-      <div class="input-select">
-        <select data-trigger="" name="choices-single-default" >
-          <option placeholder="">Categories</option>
-          <%= @categories.each do |category| %>
-            <option value="<%= category.id %>"><%= category.title %></option>
-          <% end %>
-        </select>
+    <%= form_tag services_path,:id => 'elm_id', method: :get do %>
+      <div class="inner-form ui-widget">
+        <div class="input-field first-wrap">
+          <div class="input-select">
+            <select data-trigger="" name="choices-single-default" >
+              <option placeholder="">Categories</option>
+              <%= @categories.each do |category| %>
+                <option value="<%= category.id %>"><%= category.title %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="input-field second-wrap ui-widget">
+          <%= text_field_tag :search,nil,:placeholder=>"Search For Anything"  %>
+        </div>
+        <div class="input-field third-wrap">
+          <button class="btn-search" type="button" id="search-button">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="input-field second-wrap ui-widget">
-      <%= text_field_tag :search,nil,:placeholder=>"Search For Anything"  %>
-    </div>
-    <div class="input-field third-wrap">
-      <button class="btn-search" type="button" id="search-button">
-        <i class="fa fa-search" aria-hidden="true"></i>
-      </button>
-    </div>
+    <% end %>
   </div>
-<% end %>
-</div>
 </section>
 <script type="text/javascript">
   $("#search-button").click(function() {
