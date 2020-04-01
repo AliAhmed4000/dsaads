@@ -28,7 +28,7 @@
                 <% end %>
               </td>
               <td class="align-middle">
-                <%= link_to revision.order_item.package.service.title,order_path(revision.order_item.id) %>
+                <%= link_to revision.order_item.package.service.title,order_path(revision.order_item.id),method: 'get' %>
               </td>
               <td class="align-middle">
                 <% unless revision.order_item.starting_at.blank? %>
