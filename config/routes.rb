@@ -8,9 +8,6 @@ Rails.application.routes.draw do
   resources :reviews
   resources :orders
   resources :revisions
-  get '/revisions/:id/description', to: 'revisions#description', as: "revision_description"
-  get '/revisions/:id/modified', to: 'revisions#modified', as: "revision_modified"
-  get '/revisions/:id/status', to: 'revisions#status', as: "revision_status"
   get '/orders/:id/feedback', to: 'orders#feedback', as: "order_feedback"
   get '/orders/:id/dispute', to: 'orders#dispute', as: "order_dispute"
   get '/orders/:id/status', to: 'orders#status', as: "order_status"

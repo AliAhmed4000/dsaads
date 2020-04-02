@@ -1,30 +1,4 @@
 <div class="container">
-  <div class="border border-light text-center" id="request">
-    <% if current_user.sellers? && !@order.revisions.blank? %>
-      <% if @order.revisions.last.pending? %>
-        <h3 style="margin-top: 10px;">
-          Your Buyer Request for Revision.
-          <span>
-            <%= link_to "Modify Order",revision_path(@order.revisions.last),class: "btn change-color" %>
-          </span>
-        </h3>
-      <% end %>
-    <% end %>
-    <% if current_user.buyers? && !@order.revisions.blank? %>
-      <% if @order.revisions.last.pending? %>
-        <h3 style="margin-top: 10px;">
-          <% if @order.revisions.last.price.blank? %>
-            You have sent Revision Request to Seller.
-          <% else %>
-            Seller has modified revision request.
-            <span>
-              <%= link_to "Modified Order",revision_modified_path(@order.revisions.last),class: "btn change-color" %>
-            </span>
-          <% end %>
-        </h3>
-      <% end %>
-    <% end %>
-  </div>
   <!-- <div class="border border-light text-center" style="margin-bottom: 10px;">
     <div class="box-tab justified ">
       <ul class="nav nav-tabs navbar-light bg-light mr-auto nav nav-pills nav-justified">

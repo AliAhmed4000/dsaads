@@ -6,12 +6,20 @@
       <% unless @order.delivered? %>
         <%= render partial: '/orders/forms/order_delivered_form' %>
       <% end %>
+      <% if @order.revisions.pluck(:status).include?('pending') %>
+        <label class="Checkbox-form text-center">
+          <%= link_to "Deliver Again", revision_path(id: @order.revisions.last), method: :patch, class: "btn change-color" %>
+        </label>
+      <% end %>
     <% else %> 
       <% unless @order.completed? %>
         <%= render partial: '/orders/forms/order_complete_form' %>
       <% end %>
       <% if @order.delivered? && !@order.revisions.pluck(:status).include?("pending")%>
-        <%= render partial: '/orders/forms/revision_request_by_buyer' %>
+        <% if @order.revisions.count ==  @order.package.revision_number.to_i %>
+        <% else %>
+          <%= render partial: '/orders/forms/revision_request_by_buyer' %>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>

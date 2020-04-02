@@ -10,7 +10,11 @@
         <% elsif @order.active? %>
           <span class="badge badge-success">active</span>
         <% elsif @order.delivered? %>
-          <span class="badge badge-info">delivered</span>
+          <% if @order.revisions.pluck(:status).include?('pending') %>
+            <span class="badge badge-info">In Revision</span>
+          <% else %>
+            <span class="badge badge-info">delivered</span>
+          <% end %>
         <% elsif @order.cancelled? %>
           <span class="badge badge-info">Cancelled</span>
         <% end %>
