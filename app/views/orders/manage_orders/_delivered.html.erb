@@ -44,11 +44,11 @@
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
                 <% if current_user.buyers? %>
-                  <%= link_to order_path(item) do %>
+                  <%= link_to order_path(item),method: 'get' do %>
                     <span class="badge badge-info">Approve me</span>
                   <% end %>
                 <% else %>
-                  <%= link_to order_path(item) do %>
+                  <%= link_to order_path(item),method: 'get' do %>
                     <span class="badge badge-info">Delivered</span>
                   <% end %>
                 <% end %>

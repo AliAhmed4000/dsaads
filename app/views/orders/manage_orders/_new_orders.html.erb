@@ -48,9 +48,9 @@
                   <!-- <span class="badge badge-primary">Over Due Date</span> -->
                 <%# end %>
                 <% if current_user.buyers? %>
-                  <%= link_to "Enter Requirements Here",order_path(item.id),class: "badge badge-info" %>
+                  <%= link_to "Enter Requirements Here",order_path(item.id),method: 'get',class: "badge badge-info" %>
                 <% else %>
-                  <%= link_to "Waiting for Requirements",order_path(item.id),class: "badge badge-info" %>
+                  <%= link_to "Waiting for Requirements",order_path(item.id),method: 'get',class: "badge badge-info" %>
                 <% end %>
               </td>
             </tr>

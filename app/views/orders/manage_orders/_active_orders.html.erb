@@ -44,9 +44,9 @@
               <td class="align-middle"><%= item.quantity %></td>
               <td class="align-middle">
                 <% if current_user.buyers? %>
-                  <%= link_to "IN PROGRESS",order_path(item.id),"class"=>"badge badge-success" %>
+                  <%= link_to "IN PROGRESS",order_path(item.id),method: 'get',"class"=>"badge badge-success" %>
                 <% elsif current_user.sellers? %>
-                  <%= link_to "ACTIVE",order_path(item.id),"class"=>"badge badge-success" %>
+                  <%= link_to "ACTIVE",order_path(item.id),method: 'get',"class"=>"badge badge-success" %>
                 <% end %>
               </td>
             </tr>

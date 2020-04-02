@@ -42,11 +42,11 @@
               </td>
               <td class="align-middle">
                 <% if revision.pending? %>
-                  <%= link_to order_path(revision.order_item) do %>
+                  <%= link_to order_path(revision.order_item),method: 'get' do %>
                     <span class="badge badge-danger">Pending</span>
                   <% end %>
                 <% else %>
-                  <%= link_to order_path(revision.order_item) do %>
+                  <%= link_to order_path(revision.order_item),method: 'get' do %>
                     <span class="badge badge-info">Approved</span>
                   <% end %>
                 <% end %>
