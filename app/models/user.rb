@@ -200,7 +200,11 @@ class User < ApplicationRecord
   def refund_amount 
     self.order_items.cancelled.joins(:order_cancels).where('order_cancels.status=? and order_cancels.level=?',OrderCancel.statuses['approved'],OrderCancel.levels['ask_buyer_to_cancel_order']).sum(:price)
   end
-
+  
+  def total_refund_balance
+    OrderItem.cancelled.joins(:order).where('orders.user_id=?',self.id).sum(:price)
+  end 
+  
   def seller_level(seller)
     if seller.services.active.count >= 7 && seller.services.joins(:custom_packages).sum(:price) >= 5000 
       return "New Seller"

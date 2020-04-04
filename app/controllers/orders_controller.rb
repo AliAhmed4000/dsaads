@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_order_owners,only: [:show]
+  before_action :check_is_order_seller_and_buyer, only: [:show]
   include ActionView::Helpers::SanitizeHelper
   def index
     if current_user.buyers?
@@ -106,16 +106,20 @@ class OrdersController < ApplicationController
       :ip,
       order_items_attributes: [:id, :_destroy, :quantity, :price, :package_id, :buyer_order_requirement, :purchase]
     )
-  end
+  end 
 
-  def check_order_owners
-    order_item = OrderItem.find_by_id(params[:id])
-    if !current_user.buyers? && order_item.order.user_id == current_user.id
-      flash[:alert] = "You have no permission to access."
-      redirect_to root_path
-    elsif !current_user.sellers? && order_item.package.service.seller.id == current_user.id
-      flash[:alert] = "You have no permission to access."
-      redirect_to root_path
-    end
-  end     
+  def check_is_order_seller_and_buyer
+    orderitem  = OrderItem.find_by_id(params[:id])
+    if current_user.buyers? 
+      if orderitem.order.user_id != current_user.id 
+        flash[:alert] = "You have no permission to access."
+        redirect_to root_path
+      end
+    elsif current_user.sellers?
+      if orderitem.package.service.user_id != current_user.id
+        flash[:alert] = "You have no permission to access."
+        redirect_to root_path
+      end
+    end 
+  end    
 end

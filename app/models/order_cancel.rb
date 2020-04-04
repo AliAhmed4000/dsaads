@@ -37,7 +37,11 @@ class OrderCancel < ApplicationRecord
   private 
   def set_ending_at
     order_item = OrderItem.find(self.order_item_id)
-    order_item.update_column('ending_at',self.order_item.ending_at + self.extend_delivery.days)
+    if self.order_item.ending_at >= DateTime.now
+      order_item.update_column('ending_at',self.order_item.ending_at + self.extend_delivery.days)
+    else 
+      order_item.update_column('ending_at',DateTime.now + self.extend_delivery.days) 
+    end 
   end
 
   def seller_set_ending_at

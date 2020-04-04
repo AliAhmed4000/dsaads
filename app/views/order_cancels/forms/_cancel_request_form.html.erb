@@ -2,12 +2,12 @@
   <%= f.input :order_item_id, as: :hidden,:input_html => { :value => @order.id } %>
   <%= f.input :user_id, as: :hidden,:input_html => { :value => current_user.id } %>
   <%= f.input :status, as: :hidden,:input_html => { :value => 'pending' } %>
-  <% if current_user.sellers? %>
+  <%# if current_user.sellers? %>
     <%= f.input :level, as: :hidden,:input_html => { :value =>  params[:level] } %>
-    <%= f.input :reason, as: :hidden,:input_html => { :value => params[:reason] } %>
-  <% else %>
-    <%= f.input :level, as: :hidden,:input_html => { :value =>  params[:reason] } %>
-  <% end %>
+    <%#= f.input :reason, as: :hidden,:input_html => { :value => params[:reason] } %>
+  <%# else %>
+    <%#= f.input :level, as: :hidden,:input_html => { :value =>  params[:reason] } %>
+  <%# end %>
   <%= f.error_notification %>
 	<% if current_user.sellers? %>
     <%= f.input :role, as: :hidden,:input_html => { :value => "seller" } %>

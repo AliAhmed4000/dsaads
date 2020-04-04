@@ -32,9 +32,9 @@
             <% unless current_user.orders.blank? %>
               <li class="nav-item"><%= link_to 'My Shopping', my_shopping_path%></li>
             <% end %>
-            <% if current_user.payments.refund.sum(:amount) > 0 %>
+            <% if current_user.total_refund_balance > 0 %>
               <li class="nav-item">    
-                <strong>Balance: <%= number_to_currency(current_user.payments.refund.sum(:amount)) %></strong>
+                <strong>Balance: <%= number_to_currency(current_user.total_refund_balance) %></strong>
               </li>
             <% end %> 
           <% else %>
