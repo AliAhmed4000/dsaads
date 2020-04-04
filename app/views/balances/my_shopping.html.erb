@@ -36,7 +36,7 @@
       <div class="col">
         <strong>Refund Request:<strong>
         <strong> 
-          <% if (current_user.net_coming - current_user.withdrawn_money) == 0 %>
+          <% if (current_user.avaibale_for_refund - current_user.withdrawn_money) == 0 %>
             <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn btn-primary","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
           <% else %>
             <%= link_to "PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>

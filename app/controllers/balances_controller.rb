@@ -18,7 +18,11 @@ class BalancesController < ApplicationController
 	end
 
 	def create
-		balanace = current_user.net_coming - current_user.withdrawn_money
+		if current_user.sellers? 
+			balanace = current_user.net_coming - current_user.withdrawn_money
+		else
+			balanace = current_user.avaibale_for_refund - current_user.withdrawn_money
+		end 
 		if params['payment']['amount'].to_i > balanace.to_i
 			flash[:alert] = "Your Amount is greater the withdrawn money."
       if current_user.sellers?
