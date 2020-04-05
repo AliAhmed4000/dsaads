@@ -3,7 +3,7 @@
     <div class="col-sm-12 col-md-12 col-lg-12">
       <div class="SortBlufLink">
         <h2>Earnings</h2>
-        <span> expected Income: <%= number_to_currency(current_user.expected_coming) %></span>
+        <span> expected Income: <%= number_to_currency(current_user.seller_expected_income) %></span>
       </div>
     </div>
   </div>
@@ -11,31 +11,31 @@
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Net Income</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.net_coming) %></h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.seller_net_income) %></h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Withdrawn</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.withdrawn_money) %></h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.seller_withdrawn_money) %></h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Used For Purchases</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.net_purchases) %></h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.seller_used_for_purchases) %></h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Pending Clearance</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.pending_clearance) %></h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.seller_pending_clearance_amount) %></h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Available for Withdraw</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.net_coming - current_user.withdrawn_money) %></h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.seller_available_for_withdraw_amount) %></h5>
       </div>
     </div>
   </div>
@@ -43,10 +43,10 @@
     <div class="col">
       <strong>WithDraw:<strong>
       <strong> 
-        <% if (current_user.net_coming - current_user.withdrawn_money) == 0 %>
-          <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
-        <% else %>
+        <% if current_user.seller_available_for_withdraw_amount > 0 %>
           <%= link_to "PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
+        <% else %>
+          <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
         <% end %>
       </strong>
     </div>

@@ -1,4 +1,4 @@
-<div class="row" id="order-remaining">
+<div class="row tab-pane" id="order-remaining">
   <% if @order.active? && @order.ending_at > DateTime.now %>
     <div class='countdown' data-date='<%= @order.ending_at.strftime("%Y-%m-%d") %>' data-time='<%=  @order.ending_at.strftime("%H:%M:%S") %>'></div>
   <% elsif @order.delivered? %>

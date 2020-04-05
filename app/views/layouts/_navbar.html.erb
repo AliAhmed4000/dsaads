@@ -4,6 +4,7 @@
       <%= link_to image_tag('test-logo.png', width: '50%'), root_path, class: "" %>
       <%= render 'pages/search-bar' %>
     </div>
+    
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -32,9 +33,9 @@
             <% unless current_user.orders.blank? %>
               <li class="nav-item"><%= link_to 'My Shopping', my_shopping_path%></li>
             <% end %>
-            <% if current_user.total_refund_balance > 0 %>
+            <% if current_user.buyer_total_balance > 0 %>
               <li class="nav-item">    
-                <strong>Balance: <%= number_to_currency(current_user.total_refund_balance) %></strong>
+                <strong>Balance: <%= number_to_currency(current_user.buyer_total_balance) %></strong>
               </li>
             <% end %> 
           <% else %>

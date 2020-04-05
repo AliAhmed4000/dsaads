@@ -10,6 +10,15 @@
       			  <hr>
               <p>Buyer: <%= @dispute.order_item.order.user.full_name %></p>
               <p>Seller: <%= @dispute.order_item.package.service.seller.full_name %></p>
+              <p>Status:
+                <% if @dispute.pending?  %>
+                  <%= link_to "Pending",order_dispute_path(@dispute),class: "badge badge-danger" %>
+                <% elsif @dispute.rejected? %>
+                  <%= link_to "Rejected",order_dispute_path(@dispute),class: "badge badge-info" %>
+                <% elsif @dispute.approved? %>
+                  <%= link_to "Approved",order_dispute_path(@dispute),class: "badge badge-success" %>
+                <% end %>   
+              </p>
               <div class="package-table">
                 <table class="table table-bordered">
                   <thead>

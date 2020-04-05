@@ -40,23 +40,35 @@
                     Buyer Requirements
                   </a>
                 </li>
+                <% unless @order.inactive? %>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#order-remaining" data-toggle="tab">
+                      Time Remaining
+                    </a>
+                  </li>
+                <% end %>
+                <li class="nav-item">
+                  <a class="nav-link" href="#chat-tab" data-toggle="tab">
+                    Order Chat
+                  </a>
+                </li>
               </ul> 
               <div class="tab-content">
-                <%= render '/orders/show/detail' %>
+                <%= render partial: '/orders/show/detail' %>
                 <%= render partial: '/orders/show/requirement' %>
+                <% unless @order.inactive? %>
+                  <%= render partial: '/orders/show/timming' %>
+                <% end %>
+                <%= render partial: '/orders/show/chat' %>
               </div>
               <%#= render partial: '/orders/show/detail' %>
               <%# if @order.inactive? && current_user.buyers? %>
                 <%#= render partial: '/orders/forms/order_active_form' %>
               <%# end %>
-              <% unless @order.inactive? %>
-                <%= render partial: '/orders/show/timming' %>
-              <% end %>
             </div>
           </div>
         </div>
       <!-- </div> -->   
-      <%= render partial: '/orders/show/chat' %>
     </div>
     <div class="col-lg-3 col-md-12">
       <%= render partial: 'orders/resolution_center' %>

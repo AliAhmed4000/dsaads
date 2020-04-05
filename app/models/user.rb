@@ -173,37 +173,6 @@ class User < ApplicationRecord
       user_name 
     end 
   end
-
-  def net_coming
-    OrderItem.completed.joins(package:[:service]).where('services.user_id=? and order_items.completed_at<?',self.id,DateTime.now).sum(:price)
-  end
-
-  def buying_amount
-    fiver_service_fee = self.orders.joins(:order_items).sum(:price)*ENV['SERVICE_FEE'].to_i/100
-    total_amount = fiver_service_fee + self.orders.joins(:order_items).sum(:price)
-  end
-
-  def expected_coming
-    active = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:active]).sum(:price)
-    delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:delivered]).sum(:price)
-    active + delivered
-  end
-
-  def pending_clearance
-    OrderItem.completed.joins(package:[:service]).where('services.user_id=? and order_items.completed_at>?',self.id,DateTime.now).sum(:price)
-  end
-
-  def purchase
-    OrderItem.joins(:order).where('orders.user_id=?',self.id)
-  end
-
-  def refund_amount 
-    self.order_items.cancelled.joins(:order_cancels).where('order_cancels.status=? and order_cancels.level=?',OrderCancel.statuses['approved'],OrderCancel.levels['ask_buyer_to_cancel_order']).sum(:price)
-  end
-  
-  def total_refund_balance
-    OrderItem.cancelled.joins(:order).where('orders.user_id=?',self.id).sum(:price)
-  end 
   
   def seller_level(seller)
     if seller.services.active.count >= 7 && seller.services.joins(:custom_packages).sum(:price) >= 5000 
@@ -241,15 +210,55 @@ class User < ApplicationRecord
     end 
   end
 
-  def withdrawn_money
-    self.payments.sum(:amount)
+  def seller_withdrawn_money
+    self.payments.withdraw.sum(:amount)
   end
 
-  def net_purchases
+  def seller_used_for_purchases
     self.payments.purchase.sum(:amount)
+  end
+
+  def seller_pending_clearance_amount
+    OrderItem.completed.joins(package:[:service]).where('services.user_id=? and order_items.completed_at>?',self.id,DateTime.now).sum(:price)
+  end
+  
+  def seller_net_income
+    OrderItem.completed.joins(package:[:service]).where('services.user_id=? and order_items.completed_at<?',self.id,DateTime.now).sum(:price)
+  end
+
+  def seller_expected_income
+    active = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:active]).sum(:price)
+    delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:delivered]).sum(:price)
+    active + delivered
+  end
+  
+  def seller_available_for_withdraw_amount
+    self.seller_net_income - self.seller_withdrawn_money
+  end
+
+  def buyer_available_for_withdraw_amount
+    self.buyer_refunded_amount - self.buyer_withdrawn_amount
   end 
 
-  def avaibale_for_refund
-    OrderItem.cancelled.joins(:order).where('orders.user_id=?',self).sum(:price)  
-  end         
+  def buyer_refunded_amount
+    OrderItem.cancelled.joins(:order).where('orders.user_id=?',self.id).sum(:price)
+  end 
+  
+  def buyer_withdrawn_amount
+    self.payments.refund.sum(:amount)
+  end 
+
+  def buyrer_purchase_amount
+    fiver_service_fee = self.orders.joins(:order_items).sum(:price)*ENV['SERVICE_FEE'].to_i/100
+    total_amount = fiver_service_fee + self.orders.joins(:order_items).sum(:price)
+  end
+
+  def buyer_total_balance
+    self.buyrer_purchase_amount - self.payments.refund.sum(:amount) 
+  end
+
+  def buyer_purchases_services
+    OrderItem.joins(:order).where('orders.user_id=?',self.id)
+  end
+   
 end

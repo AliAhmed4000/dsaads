@@ -9,26 +9,26 @@
     <div class="row">
       <div class="card" style="width: 20rem;">
         <div class="card-body text-center">
-          <h5 class="card-title">Net Amount</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.buying_amount - current_user.payments.refund.sum(:amount)) %></h5>
+          <h5 class="card-title">Purchase Amount</h5>
+          <h5 class="card-text"><%= number_to_currency(current_user.buyer_total_balance) %></h5>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body text-center">
+          <h5 class="card-title">Refunded</h5>
+          <h5 class="card-text"><%= number_to_currency(current_user.buyer_refunded_amount) %></h5>
         </div>
       </div>
       <div class="card" style="width: 20rem;">
         <div class="card-body text-center">
           <h5 class="card-title">Withdrawn</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.payments.refund.sum(:amount)) %></h5>
-        </div>
-      </div>
-      <div class="card" style="width: 18rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Refund</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.total_refund_balance) %></h5>
+          <h5 class="card-text"><%= number_to_currency(current_user.buyer_withdrawn_amount) %></h5>
         </div>
       </div>
       <div class="card" style="width: 18rem;">
         <div class="card-body text-center">
           <h5 class="card-title">Available for Withdraw</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.total_refund_balance - current_user.payments.refund.sum(:amount)) %></h5>
+          <h5 class="card-text"><%= number_to_currency(current_user.buyer_available_for_withdraw_amount) %></h5>
         </div>
       </div>
     </div>
@@ -36,10 +36,10 @@
       <div class="col">
         <strong>Refund Request:<strong>
         <strong> 
-          <% if (current_user.avaibale_for_refund - current_user.withdrawn_money) == 0 %>
-            <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn btn-primary","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
-          <% else %>
+          <% if current_user.buyer_available_for_withdraw_amount > 0 %>
             <%= link_to "PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
+          <% else %>
+            <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn btn-primary","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
           <% end %>
         </strong>
       </div>
@@ -60,7 +60,7 @@
           </tr>
         </thead>
         <tbody>
-          <% current_user.purchase.each do |item| %>
+          <% current_user.buyer_purchases_services.each do |item| %>
           	<tr>
               <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
               <td class="align-middle"><%= link_to item.package.service.title,order_path(item.id) %></td>
