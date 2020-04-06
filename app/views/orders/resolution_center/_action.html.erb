@@ -18,7 +18,10 @@
       <% if @order.delivered? && !@order.revisions.pluck(:status).include?("pending")%>
         <% if @order.revisions.count ==  @order.package.revision_number.to_i %>
         <% else %>
-          <%= render partial: '/orders/forms/revision_request_by_buyer' %>
+          <label class="Checkbox-form" style="margin-top: 2%;margin-left: 22%; ">
+            <%= link_to "Revision",revision_description_modal_path(@order),class: "btn change-color",remote: true %>
+          </label>
+          <%#= render partial: '/orders/forms/revision_request_by_buyer' %>
         <% end %>
       <% end %>
     <% end %>

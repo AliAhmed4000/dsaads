@@ -11,7 +11,9 @@
           <span class="badge badge-success">active</span>
         <% elsif @order.delivered? %>
           <% if @order.revisions.pluck(:status).include?('pending') %>
-            <span class="badge badge-info">In Revision</span>
+            <%= link_to revision_path(@order.revisions.last) do %>
+              <span class="badge badge-info">In Revision</span>
+            <% end %>
           <% else %>
             <span class="badge badge-info">delivered</span>
           <% end %>

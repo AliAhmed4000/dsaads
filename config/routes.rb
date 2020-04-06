@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/category/:id/search/:search', to: 'categories#online_users'
   get '/services/:ids/order/:order', to: 'categories#sort_highest', as: "sort_highest"
   get '/services/search', to: 'services#search', as: "search_service"
+  get '/revision_modal/:id', to: 'revisions#description', as: "revision_description_modal"
   resources :categories do
     member do
       get :services

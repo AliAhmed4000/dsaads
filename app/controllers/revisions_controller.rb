@@ -8,17 +8,22 @@ class RevisionsController < ApplicationController
       redirect_to order_path(@revision.order_item)
     end 
   end
-
+  
   def show
     @revision = Revision.find_by_id(params[:id])  
-  end
+  end 
 
-  def update 
+  def update
     revision = Revision.find_by_id(params[:id])
     if revision.update(status: 'approved')
       flash[:notice] = "Revision Delivered Successfully."
       redirect_to order_path(revision.order_item)
     end  
+  end
+
+  def description
+    @revision = Revision.new
+    @order = OrderItem.find(params[:id])
   end
   private 
   def revision_params
