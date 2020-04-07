@@ -12,6 +12,9 @@
       <!-- Collect the nav links, forms, and other content for toggling -->  
       <ul class="navbar-nav ml-auto profile-setting">
         <!-- Other Nav Tags -->
+        <li>
+          <%= render partial: '/pages/currency' %>
+        </li>
         <% if user_signed_in? %>
           <li id="conversations_counter_container">
             <%= link_to conversations_path, class: "msg" do %>

@@ -1,19 +1,6 @@
 <section id="footer">
   <footer class="container-fluid mt-5">
-    <div class="row pull-right">
-      <%= form_tag set_coookie_for_currency_path,:id => 'currencies', method: :get do %>
-        <% if current_user.blank? %>
-          <% if cookies['currency'].blank? %>
-            <%= select_tag "currency", options_for_select(User::CURRENCY_LIST) %>
-          <% else %>
-            <%= select_tag "currency", options_for_select(User::CURRENCY_LIST,cookies['currency']) %>
-          <% end %>
-        <% else %>
-          <%= select_tag "currency", options_for_select(User::CURRENCY_LIST,current_user.currency) %>
-        <% end %>
-      <% end %>
-    </div>
-    <!-- <div class="row">
+    <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
           <ul class="list-unstyled list-inline social text-center">
             <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
@@ -24,7 +11,7 @@
           </ul>
         </div>
         </hr>
-    </div> -->
+    </div>
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
         <p>Testing is a MarketPlace to bridge You and the Talented </p>

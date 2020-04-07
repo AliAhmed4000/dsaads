@@ -13,22 +13,16 @@
               <p>Status:
                 <% if @revision.pending?  %>
                   <%= link_to "Pending",revision_path(@revision),class: "badge badge-danger" %>
-                <% elsif @revision.rejected? %>
-                  <%= link_to "Rejected",revision_path(@revision),class: "badge badge-info" %>
                 <% elsif @revision.approved? %>
-                  <%= link_to "Approved",revision_path(@revision),class: "badge badge-success" %>
+                  <%= link_to "delivered",revision_path(@revision),class: "badge badge-success" %>
                 <% end %>   
               </p>
+              <p>Order: <%= link_to "View",order_path(@revision.order_item),class: "badge badge-info" %></p>
               <div class="package-table">
                 <h6>Buyer Revision Requirements</h6><hr>
                 <p><%= @revision.description %></p>
-                <% if @revision.pending? %>
-                  <%# if @revision.user.id == current_user.id %>
-                    <%#= link_to "WithDraw",root_path, class: "btn btn primary pull-right" %> 
-                  <%# else %>
-                    <%#= render partial: 'orders/forms/order_cancel_reject_form' %>
-                    <%#= render partial: 'orders/forms/order_cancel_approval_form' %>
-                  <%# end %>
+                <% if @revision.pending? && @revision.seller_id == current_user.id %>
+                  <%= link_to "Deliver Again", revision_path(id: @revision), method: :patch, class: "btn change-color pull-right" %>
                 <% end %>
               </div>
             </div>
@@ -40,3 +34,15 @@
       <%#= render partial: 'orders/order_sidebar_detail', locals: {"@order": @dispute.order_item} %>
     </div>
 </div>
+<style type="text/css">
+  .change-color{
+    background-color: purple;
+    color: white;
+  }
+  .change-color:hover{
+    background-color: purple;
+  }
+  .change-color:active{
+    background-color: purple;
+  }
+</style>

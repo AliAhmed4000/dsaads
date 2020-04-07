@@ -64,11 +64,11 @@ class User < ApplicationRecord
   after_create :set_username
   enum currency: ['USD','EUR','GBP','CAD','PKR']
   CURRENCY_LIST = [
-    ['$ - US DOLLAR','USD'],
-    ['€ - EURO','EUR'],
-    ['£ - GBP','GBP'],
-    ['$ - CAN DOLLAR','CAD'],
-    ['Rs - PAKISTAN RUPEE','PKR']
+    ['USD','USD'],
+    ['EURO','EUR'],
+    ['GBP','GBP'],
+    ['CAD','CAD'],
+    ['RKR','PKR']
   ]
 
   def set_username 

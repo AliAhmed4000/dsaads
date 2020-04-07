@@ -1,0 +1,11 @@
+<%= form_tag set_coookie_for_currency_path,:id => 'currencies', method: :get do %>
+  <% if current_user.blank? %>
+    <% if cookies['currency'].blank? %>
+      <%= select_tag "currency", options_for_select(User::CURRENCY_LIST) %>
+    <% else %>
+      <%= select_tag "currency", options_for_select(User::CURRENCY_LIST,cookies['currency']) %>
+    <% end %>
+  <% else %>
+    <%= select_tag "currency", options_for_select(User::CURRENCY_LIST,current_user.currency) %>
+  <% end %>
+<% end %>
