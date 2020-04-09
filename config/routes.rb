@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/orders/:id/feedback', to: 'orders#feedback', as: "order_feedback"
   get '/orders/:id/dispute', to: 'orders#dispute', as: "order_dispute"
   get '/orders/:id/status', to: 'orders#status', as: "order_status"
+  get '/orders/:id/buyer_requirements', to: 'orders#buyer_requirements', as: "order_buyer_requirements"
   get '/categories/search', to: 'categories#search', as: "search_category"
   get '/category/:id/search/:search', to: 'categories#online_users'
   get '/services/:ids/order/:order', to: 'categories#sort_highest', as: "sort_highest"
@@ -35,6 +36,7 @@ Rails.application.routes.draw do
   get '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#list', as: "wish_list_status"
   delete '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#wish_list_delete', as: "wish_list_delete"
   get '/my_shopping', to: 'balances#my_shopping', as: "my_shopping"
+  get '/my_balance', to: 'balances#buyer_balance', as: "buyer_balance"
   get '/manage_services', to: 'services#manage_services', as: "services_manage"
   get '/service/:service_id/status/:status',to: 'services#change_status', as: "change_status"
   get '/services/:service_id/packages/:id/payment',to: 'packages#payment', as: "packages_payment"
@@ -73,7 +75,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show], as: "profile", path: "profile"
   get 'user/role', to: 'users#role', as: "user_role"
   resources :conversations do
-    resources :chats, only: [:index]
+    resources :chats, only: [:index,:show]
       member do
         post :image
       end

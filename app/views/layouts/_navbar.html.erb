@@ -38,7 +38,7 @@
             <% end %>
             <% if current_user.buyer_total_balance > 0 %>
               <li class="nav-item">    
-                <strong>Balance: <%= number_to_currency(current_user.buyer_total_balance) %></strong>
+                <%= link_to 'Balance', buyer_balance_path, remote: true%>
               </li>
             <% end %> 
           <% else %>
@@ -74,4 +74,4 @@
     </div> 
   </div>
 </nav>
-
+<div id="buyer-balance-modal"></div>

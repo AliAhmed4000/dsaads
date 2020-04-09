@@ -13,7 +13,4 @@
       <% end %>
     </div>
   </div>
-  <% if @order.inactive? && current_user.buyers? %>
-    <%= render '/orders/forms/order_active_form' %>
-  <% end %>
 </div>

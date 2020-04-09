@@ -1,19 +1,39 @@
-<%= simple_form_for @order,url: order_path(@order), method: 'put',:html => {:class => 'form-horizontal',id: "requiremnts-form"} do |f| %>
-  <%= f.error_notification %>
-  <div class="review-header pt-3">
-    <%= f.input :description,label: 'Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Description',:minlength=>"50", input_html: {rows: "3"},as: :text  %>
-    <label>
-      <%= f.input :file, as: :file,label: false,wrapper: false,input_html: {id: "file-input",class: ""} %>
-    </label>
-    <label class="Checkbox-form">
-      <%= f.check_box :status,{},"active","inactive" %>  I have provided all the requirements
-      <span class="checkmark"></span>
-    </label>
-    <label class="Checkbox-form text-center" style="margin-bottom: 2% ">
-      <%= f.submit "Order Start", class: "btn btn-info" %>
-    </label>
+<div id="buyer-form-modal">
+  <div class="modal" tabindex="-1" role="dialog" id="buyer-modal">
+    <%= simple_form_for @order,url: order_path(@order), method: 'put',:html => {:class => 'form-horizontal',id: "requiremnts-form"} do |f| %>
+      <%= f.error_notification %>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Buyer Requirements</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="review-header pt-3">
+              <h6>Requiremnts</h6>
+              <p>
+                <%= @order.package.service.requirements %>
+              </p>
+              <%= f.input :description,label: 'Description', required: true, hint: 'Minimum 50 words required', placeholder: 'Description',:minlength=>"50", input_html: {rows: "3"},as: :text  %>
+              <label>
+                <%= f.input :file, as: :file,label: false,wrapper: false,input_html: {id: "file-input",class: ""} %>
+              </label>
+              <label class="Checkbox-form">
+                <%= f.check_box :status,{},"active","inactive" %>  I have provided all the requirements
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <%= f.submit "Order Start", class: "btn btn-info" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
 <script type="text/javascript">
   $('#requiremnts-form').submit(function(e){
     if($('#order_item_status').is(':checked')){

@@ -47,6 +47,9 @@ class BalancesController < ApplicationController
 		end
 	end
 
+	def buyer_balance
+	end 
+
 	private 
 	def paypal_params
     params.require(:payment).permit(

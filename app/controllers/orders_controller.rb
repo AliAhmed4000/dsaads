@@ -92,7 +92,12 @@ class OrdersController < ApplicationController
       flash[:notice] = "Order Successfully Delivered."
       redirect_to seller_dashboard_path
     end 
-  end  
+  end
+
+  def buyer_requirements
+    @order = OrderItem.find_by_id(params[:id])
+  end 
+  
   private 
   def order_params
     params.require(:order).permit(
