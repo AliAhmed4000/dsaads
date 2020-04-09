@@ -16,10 +16,13 @@
         <%= render partial: '/orders/forms/order_complete_form' %>
       <% end %>
       <% if @order.delivered? && !@order.revisions.pluck(:status).include?("pending")%>
-        <% if @order.revisions.count ==  @order.package.revision_number.to_i %>
-        <% else %>
-          <label class="Checkbox-form" style="margin-top: 2%;margin-left: 22%; ">
-            <%= link_to "Revision",revision_description_modal_path(@order),class: "btn change-color",remote: true %>
+        <% if @order.unlimited? %>
+          <label class="Checkbox-form" style="margin-top: 2%;margin-left: 0%; ">
+            <%= link_to "REQUEST A REVISION ON YOUR  DELIVERY",revision_description_modal_path(@order),class: "btn change-color",remote: true %>
+          </label>
+        <% elsif @order.revisions.count <  @order.revision_no_integer %>
+          <label class="Checkbox-form" style="margin-top: 2%;margin-left: 0%; ">
+            <%= link_to "REQUEST A REVISION ON YOUR  DELIVERY",revision_description_modal_path(@order),class: "btn change-color",remote: true %>
           </label>
           <%#= render partial: '/orders/forms/revision_request_by_buyer' %>
         <% end %>

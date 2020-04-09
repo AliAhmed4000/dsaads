@@ -25,9 +25,21 @@ class Package < ApplicationRecord
   BASIC_PRICE = ['5','10','20','50','100']
   STANDARD_PRICE = ['5','10','20','50','100'] 
   PREMIMUM_PRICE = ['5','10','20','50','100']
-  REVISION = ['1','2','3','4','5','6','7','8','9','Unlimited']
+  REVISION = [
+    ['1','one'],
+    ['2','two'],
+    ['3','three'],
+    ['4','four'],
+    ['5','five'],
+    ['6','six'],
+    ['7','seven'],
+    ['8','eight'],
+    ['9','nine'],
+    ['Unlimited','unlimited']
+  ]
   belongs_to :service
   belongs_to :user
+  has_one :chat
   has_many :package_metrics
   has_many :order_items, dependent: :destroy
   has_many :orders, through: :order_items, dependent: :destroy
@@ -45,6 +57,7 @@ class Package < ApplicationRecord
   enum level: ['basic','standard','premimum','extra_basic','extra_standard','extra_premimum','custom_offer']
   enum sender: ['by_seller','by_buyer']
   enum customstatus: ['pending','approved','rejected']
+  enum revision_number: ['one','two','three','four','five','six','seven','eight','nine','unlimited']
   
   attr_accessor :conversation_id
   def seller_reviews

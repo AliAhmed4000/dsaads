@@ -13,4 +13,18 @@ namespace :orders do
 			p.destroy
 		end 
 	end
+
+	task packages_revision: :environment do
+		packages = Package.all
+		packages.each do |p|
+			p.update_column('revision_number',Package.revision_numbers['unlimited'])
+		end 
+	end
+
+	task order_revision: :environment do
+		orders = OrderItem.all
+		orders.each do |o|
+			o.update_column('revision_no',Package.revision_numbers['unlimited'])
+		end 
+	end
 end

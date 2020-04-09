@@ -31,13 +31,18 @@
             <div class="owl-stage">
               <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#detail" data-toggle="tab">
-                    Receipt Information
+                  <a class="nav-link active" href="#chat-tab" data-toggle="tab">
+                    Order Chat
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#requirement" data-toggle="tab">
                     Buyer Requirements
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#detail" data-toggle="tab">
+                    Receipt Information
                   </a>
                 </li>
                 <% unless @order.inactive? %>
@@ -47,19 +52,14 @@
                     </a>
                   </li>
                 <% end %>
-                <li class="nav-item">
-                  <a class="nav-link" href="#chat-tab" data-toggle="tab">
-                    Order Chat
-                  </a>
-                </li>
               </ul> 
               <div class="tab-content">
-                <%= render partial: '/orders/show/detail' %>
+                <%= render partial: '/orders/show/chat' %>
                 <%= render partial: '/orders/show/requirement' %>
+                <%= render partial: '/orders/show/detail' %>
                 <% unless @order.inactive? %>
                   <%= render partial: '/orders/show/timming' %>
                 <% end %>
-                <%= render partial: '/orders/show/chat' %>
               </div>
               <%#= render partial: '/orders/show/detail' %>
               <%# if @order.inactive? && current_user.buyers? %>

@@ -22,6 +22,7 @@ class OrderItem < ApplicationRecord
   accepts_nested_attributes_for :order_cancels, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :reviews, reject_if: :all_blank, allow_destroy: true
   enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review,:disputed]
+  enum revision_no: ['one','two','three','four','five','six','seven','eight','nine','unlimited']
   # enum role: [:user, :"Application Administrator" ]
   after_update :set_clearance_date,:order_completed_notification_counter,:order_completed_notification_seller,:order_completed_notification_buyer, if: lambda{|o| o.completed?}
   after_update :order_inactivation_notification_counter,:order_inactive_notification_seller,:order_inactive_notification_buyer, if: lambda{|o| o.inactive?}
@@ -29,6 +30,11 @@ class OrderItem < ApplicationRecord
   after_update :set_delivered_date,:order_delivered_notification_counter,:order_deliver_notification_seller,:order_deliver_notification_buyer, if: lambda{|o| o.delivered?}
   attr_accessor :purchase
   after_create :set_purchase, unless: lambda{|i| i.purchase.blank?}
+  after_create :set_revision
+
+  def set_revision
+    self.update_column('revision_no',self.package.revision_number)
+  end
   
   def set_purchase
     service_fee = self.price*self.quantity*ENV['SERVICE_FEE'].to_i/100
@@ -88,6 +94,28 @@ class OrderItem < ApplicationRecord
   def order_deliver_notification_buyer
     UserMailer.order_deliver_notification_for_buyer(self).deliver_now
   end
+
+  def revision_no_integer
+    if self.one?
+      return 1
+    elsif self.two?
+      return 2
+    elsif self.three?
+      return 3
+    elsif self.four?
+      return 4
+    elsif self.five?
+      return 5
+    elsif self.six?
+      return 6
+    elsif self.seven?
+      return 7
+    elsif self.eight?
+      return 8
+    elsif self.nine?
+      return 9
+    end
+  end 
 
   private
   def order_activation_notification_counter

@@ -9,18 +9,24 @@
           </button>
         </div>
         <div class="modal-body">
-          <% @cutom_services.each do |s| %>
-            <%= link_to services_custom_offer_path(s,@conversation),method: "get", remote: true do %>  
-              <div class="card mb-3">
-                <% unless s.primary_photo.blank? %>
-                  <%= image_tag s.primary_photo.image_url %>
-                <% end %>
-                <div class="card-body">
-                  <h5 class="card-title"><%= s.title %></h5>
-                  <p class="card-text"><%= s.description %></p>
-                  <p class="card-text"><small class="text-muted"><%= s.created_at.strftime("%d %B %Y") %></small></p>
+          <% if @cutom_services.blank? %>
+            <div class="alert alert-info">
+              <strong>Sorry!</strong> You have no services.
+            </div>
+          <% else %>  
+            <% @cutom_services.each do |s| %>
+              <%= link_to services_custom_offer_path(s,@conversation),method: "get", remote: true do %>  
+                <div class="card mb-3">
+                  <% unless s.primary_photo.blank? %>
+                    <%= image_tag s.primary_photo.image_url %>
+                  <% end %>
+                  <div class="card-body">
+                    <h5 class="card-title"><%= s.title %></h5>
+                    <p class="card-text"><%= s.description %></p>
+                    <p class="card-text"><small class="text-muted"><%= s.created_at.strftime("%d %B %Y") %></small></p>
+                  </div>
                 </div>
-              </div>
+              <% end %>
             <% end %>
           <% end %>
         </div>

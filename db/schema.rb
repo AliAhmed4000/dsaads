@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_26_105721) do
+ActiveRecord::Schema.define(version: 2020_04_09_092049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 2020_03_26_105721) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "custom_offer", default: 0
+    t.integer "package_id"
   end
 
   create_table "chats_recipients", force: :cascade do |t|
@@ -172,6 +173,7 @@ ActiveRecord::Schema.define(version: 2020_03_26_105721) do
     t.datetime "ending_at"
     t.datetime "delivered_at"
     t.datetime "completed_at"
+    t.integer "revision_no"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["package_id"], name: "index_order_items_on_package_id"
   end
@@ -206,13 +208,13 @@ ActiveRecord::Schema.define(version: 2020_03_26_105721) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_commercial"
-    t.string "revision_number"
     t.integer "delivery_time"
     t.boolean "publish"
     t.integer "level"
     t.integer "sender"
     t.integer "customstatus", default: 0
     t.integer "user_id"
+    t.integer "revision_number"
     t.index ["service_id"], name: "index_packages_on_service_id"
   end
 
