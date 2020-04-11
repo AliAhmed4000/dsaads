@@ -1,9 +1,15 @@
 <% if current_user.buyers? %>
   <% @conversations.each do |conversation| %>
     <%#= link_to conversation_path(conversation),method: "get" do %> 
-      <div class="chat_list active_chat" onclick="window.location='<%= conversation_path(conversation)%>'"
-      style="cursor: pointer;"
-      tabindex="1">
+      <% if !@conversation.blank? && conversation.id == @conversation.id %>
+        <div class="chat_list active_chat" onclick="window.location='<%= conversation_path(conversation)%>'"
+        style="cursor: pointer; border-color:purple;"
+        tabindex="1">
+      <% else %>
+        <div class="chat_list active_chat" onclick="window.location='<%= conversation_path(conversation)%>'"
+        style="cursor: pointer;"
+        tabindex="1">
+      <% end %>
         <div class="chat_people">
           <div class="chat_img">
             <%= image_tag(conversation.sellers.check_avatar.present? ? conversation.sellers.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.sellers.full_name,class: "profile-img") %>
@@ -22,7 +28,14 @@
               <!-- <span class="chat_date">&nbsp;|&nbsp;</span>
               <span class="chat_date"><%#= time_ago_in_words(conversation.sellers.last_sign_in_at) %> ago</span> -->
             </h5>
-            <p><%= conversation.sellers.seller_level(conversation.sellers) %> | From <%= conversation.sellers.country %></p>
+            <p>
+              <% unless conversation.sellers.seller_level(conversation.sellers).blank? %>
+                <%= conversation.sellers.seller_level(conversation.sellers) %> | 
+                From <%= conversation.sellers.country %>
+              <% else %>
+                From <%= conversation.sellers.country %>
+              <% end %>  
+            </p>
           </div>
         </div>
       </div>

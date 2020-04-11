@@ -7,6 +7,7 @@
 //     });
 //   }
 // }
+var data = "";
 $(function(){
   if ($("#messages").length > 0) {
     setTimeout(function() {
@@ -183,7 +184,22 @@ function show_messages(messages) {
 }
 
 function show_message(message) {
-  console.log(message)
+  // console.log(message);
+  if(message['custom_offer'] == "1" && message['package_id'] != null){
+    if(current_user_role == "seller" && message['sender'] == "by_buyer"){
+      message['message'] = message['message_for_seller']
+    }
+    if(current_user_role == "buyer" && message['sender'] == "by_buyer"){
+      message['message'] = message['message_for_buyer']
+    }
+
+    if(current_user_role == "seller" && message['sender'] == "by_seller"){
+      message['message'] = message['message_for_seller']
+    }
+    if(current_user_role == "buyer" && message['sender'] == "by_seller"){
+      message['message'] = message['message_for_buyer']
+    }
+  }
   $('.conversation-holder').show();
   $('.vid-rating').hide();
   var url = message['message'].split("<<image>>");

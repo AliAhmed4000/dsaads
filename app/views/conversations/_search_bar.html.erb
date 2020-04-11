@@ -55,9 +55,16 @@
     }else{
       name = name
     }
+    <% unless @conversation.blank? %>
+      var conversation = '<%= @conversation.id %>';
+    <% else %>
+      var conversation = 0;
+    <% end %>
+    
     $.ajax({
       url:  "/search/" + name,
       type: "get",
+      data: {conversation_id: conversation},
       dataType: 'script',
       success: function(response){
         // document.getElementById("new_review").reset();

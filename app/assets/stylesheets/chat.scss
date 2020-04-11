@@ -55,9 +55,10 @@ img{ max-width:100%;}
 
 .chat_people{ overflow:hidden; clear:both;}
 .chat_list {
-  border-bottom: 1px solid #c4c4c4;
+  // border-bottom: 1px solid #c4c4c4;
   margin: 0;
   padding: 18px 16px 10px;
+  border : 1px solid #c4c4c4;
 }
 .inbox_chat { height: 550px; overflow-y: scroll;}
 
@@ -76,7 +77,7 @@ img{ max-width:100%;}
   margin-top: 5px;
  }
  .received_withd_msg p {
-  background: #ebebeb none repeat scroll 0 0;
+  // background: #ebebeb none repeat scroll 0 0;
   border-radius: 3px;
   color: #646464;
   font-size: 14px;

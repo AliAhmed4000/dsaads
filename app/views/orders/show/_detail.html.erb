@@ -28,15 +28,6 @@
           <%= number_to_currency((@order.price*current_user.currency_unit),:unit=>current_user.symbol) %>
         <% end %>
       </span>
-      <p>
-        <% if current_user.sellers? %>
-          buyer: <%= link_to @order.order.user.full_name,profile_path(@order.order.user) %>
-          <%= online_status @order.order.user %>
-        <% else %>
-          seller: <%= link_to @order.package.service.seller.full_name,profile_path(@order.package.service.seller) %>
-          <%= online_status @order.package.service.seller %>
-        <% end %>
-      </p>
       <div class="underline p-3"></div>
       <table class="table table-striped">
         <thead>

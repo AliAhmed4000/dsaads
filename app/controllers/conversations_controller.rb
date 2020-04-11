@@ -70,6 +70,9 @@ class ConversationsController < ApplicationController
 
   def search_user
     respond_to do |formart|
+      unless params['conversation_id'].blank? 
+        @conversation = Conversation.find_by_id(params['conversation_id'])
+      end 
       if params['name'].blank? || params['name'] == 'null'
         if current_user.buyers?
           @conversations = Conversation.joins(:sellers).where(buyer_id: current_user.id).order("updated_at DESC")

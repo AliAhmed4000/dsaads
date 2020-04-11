@@ -47,7 +47,8 @@ Rails.application.routes.draw do
   resources :videos, only: [:destroy]
   post '/services/:id/image', to: 'services#file_upload', as: "file_upload"
   post '/services/:id/custom_offer_create', to: 'services#custom_offer_create', as: 'custom_offer_create'
-  get '/services/:id/custom_offer/:custom_offer_id', to: 'services#show_custom_details', as: 'show_custom_details'
+  get '/custom_offer/:id/:status', to: 'services#custom_offer_update', as: 'custom_offer_update'
+  get  '/services/:id/custom_offer/:custom_offer_id', to: 'services#show_custom_details', as: 'show_custom_details'
   post '/services/:id/video', to: 'services#video_upload', as: "video_upload"
   get  '/services/:id/image/show', to: 'services#show_files', as: "show_files"
   get  '/services/:id/edit/pricing', to: 'services#pricing', as: "services_pricing"
@@ -75,7 +76,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show], as: "profile", path: "profile"
   get 'user/role', to: 'users#role', as: "user_role"
   resources :conversations do
-    resources :chats, only: [:index,:show]
+    resources :chats, only: [:index]
       member do
         post :image
       end

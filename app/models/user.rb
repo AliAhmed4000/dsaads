@@ -68,7 +68,7 @@ class User < ApplicationRecord
     ['EURO','EUR'],
     ['GBP','GBP'],
     ['CAD','CAD'],
-    ['RKR','PKR']
+    ['PKR','PKR']
   ]
 
   def set_username 

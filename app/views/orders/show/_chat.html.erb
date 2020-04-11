@@ -4,7 +4,6 @@
       <div class="panel panel-info">
         <div class="panel-body">
         	<div class="clearfix"></div>
-          <hr>
           <ul class="media-list" id="my-comments">
     				<%= render partial: '/orders/reviews', locals: {reviews: @order.reviews.order(created_at: :asc)} %>
           </ul>
@@ -55,7 +54,7 @@
     border:2px solid #e5e7e8;
   }
 	.comment-wrapper .media-list .media {
-    border-bottom:1px dashed #efefef;
+    /*border-bottom:1px dashed #efefef;*/
     margin:25px;
   }
   .image-upload > input{

@@ -284,11 +284,23 @@ class ServicesController < ApplicationController
       user_id: current_user.id
     )
     if @custom.save
+      if @custom.by_buyer?
+        message_for_seller = "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Accept",custom_offer_update_path(@custom,'approved'),'class'=>'btn change-color'}#{link_to "Reject",custom_offer_update_path(@custom,'rejected'),'class'=>'btn change-color'}</p>"
+        message_for_buyer = "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Pending",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank','class'=>'btn btn-info' }</p>"
+      else
+        message_for_buyer = "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Accept",custom_offer_update_path(@custom,'approved'),'class'=>'btn change-color'}#{link_to "Reject",custom_offer_update_path(@custom,'rejected'),'class'=>'btn change-color' }</p>"
+        message_for_seller = "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Pending",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank','class'=>'btn btn-info' }</p>"
+      end 
       chat = Chat.create!(
         conversation_id: params[:service][:conversation_id],
         user_id: current_user.id,
-        message: "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Show Detail",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank' }</p>",
-        custom_offer: Chat.custom_offers['offered']
+        message: "",
+        custom_offer: Chat.custom_offers['offered'],
+        package_id: @custom.id,
+        custom_status: 'pending',
+        message_for_seller: message_for_seller,   
+        message_for_buyer: message_for_buyer,
+        sender: @custom.sender
       )
       chat.conversation.update_attributes(
         last_user_id: current_user.id,
@@ -298,6 +310,32 @@ class ServicesController < ApplicationController
       flash[:notice] = "Custom Offer Successfully Send."
     end 
   end
+
+  def custom_offer_update
+    package = Package.find_by_id(params[:id])
+    if package.update_attributes(customstatus: params['status'])
+      if package.approved? 
+        if package.by_buyer?
+          message_for_seller = "<h4>I will #{package.service.title}<span class='pull-right'>$ #{package.price}</span></h4><a target='_blank' href='#{package.service.primary_photo.image_url}'><img class='thumb' src='#{package.service.primary_photo.image_url}'></a><p>#{link_to "Offer Accepted by You.",show_custom_details_path(package.service,package),:target=>'_blank','class'=>'btn change-color'}</p>"
+          message_for_buyer = "<h4>I will #{package.service.title}<span class='pull-right'>$ #{package.price}</span></h4><a target='_blank' href='#{package.service.primary_photo.image_url}'><img class='thumb' src='#{package.service.primary_photo.image_url}'></a><p>#{link_to "Your Offer Accepted",show_custom_details_path(package.service,package),:target=>'_blank','class'=>'btn change-color' }</p>"
+        else
+          message_for_buyer = "<h4>I will #{package.service.title}<span class='pull-right'>$ #{package.price}</span></h4><a target='_blank' href='#{package.service.primary_photo.image_url}'><img class='thumb' src='#{package.service.primary_photo.image_url}'></a><p>#{link_to "Offer Accepted by You.",show_custom_details_path(package.service,package),:target=>'_blank','class'=>'btn change-color'}</p>"
+          message_for_seller = "<h4>I will #{package.service.title}<span class='pull-right'>$ #{package.price}</span></h4><a target='_blank' href='#{package.service.primary_photo.image_url}'><img class='thumb' src='#{package.service.primary_photo.image_url}'></a><p>#{link_to "Your Offer Accepted",show_custom_details_path(package.service,package),:target=>'_blank','class'=>'btn change-color' }</p>"
+        end
+        package.chat.update_columns(custom_status: package.customstatus, message_for_seller: message_for_seller,message_for_buyer: message_for_buyer)
+      elsif package.rejected? 
+          if package.by_buyer?
+            message_for_seller = "<h4>I will #{package.service.title}<span class='pull-right'>$ #{package.price}</span></h4><a target='_blank' href='#{package.service.primary_photo.image_url}'><img class='thumb' src='#{package.service.primary_photo.image_url}'></a><p>#{link_to "Offer Rejected by You.",show_custom_details_path(package.service,package),:target=>'_blank','class'=>'btn change-color'}</p>"
+            message_for_buyer = "<h4>I will #{package.service.title}<span class='pull-right'>$ #{package.price}</span></h4><a target='_blank' href='#{package.service.primary_photo.image_url}'><img class='thumb' src='#{package.service.primary_photo.image_url}'></a><p>#{link_to "Your Offer Rejected",show_custom_details_path(package.service,package),:target=>'_blank','class'=>'btn change-color' }</p>"
+          else
+            message_for_buyer = "<h4>I will #{package.service.title}<span class='pull-right'>$ #{package.price}</span></h4><a target='_blank' href='#{package.service.primary_photo.image_url}'><img class='thumb' src='#{package.service.primary_photo.image_url}'></a><p>#{link_to "Offer Rejected by You.",show_custom_details_path(package.service,package),:target=>'_blank','class'=>'btn change-color'}</p>"
+            message_for_seller = "<h4>I will #{package.service.title}<span class='pull-right'>$ #{package.price}</span></h4><a target='_blank' href='#{package.service.primary_photo.image_url}'><img class='thumb' src='#{package.service.primary_photo.image_url}'></a><p>#{link_to "Your Offer Rejected",show_custom_details_path(package.service,package),:target=>'_blank','class'=>'btn change-color' }</p>"
+          end
+        package.chat.update_columns(custom_status: package.customstatus, message_for_seller: message_for_seller,message_for_buyer: message_for_buyer)
+      end 
+    end
+    redirect_to conversation_path(package.chat.conversation_id)
+  end 
 
   def show_custom_details
     @service = Service.find params[:id]

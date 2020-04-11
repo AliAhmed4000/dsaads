@@ -126,6 +126,11 @@
   <script type="text/javascript">
     var current_conversation_id = <%= @conversation.id %>;
     var current_user_id = <%= current_user.id %>;
+    <% if current_user.sellers? %>
+      var current_user_role = "seller";
+    <% else %>
+      var current_user_role = "buyer";
+    <% end %> 
     var user_name = $("#user_name").val();
     var conversation_url = '<%= conversation_url(@conversation) %>';
     var chats_recipients = new Object();
@@ -250,4 +255,15 @@
     position: relative;
     top: -45px;
   }
+  .change-color{
+    background-color: purple;
+    color: white;
+  }
+  .change-color:hover{
+    background-color: purple;
+  }
+  .change-color:active{
+    background-color: purple;
+  }
 </style>
+

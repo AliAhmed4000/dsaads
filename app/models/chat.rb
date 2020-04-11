@@ -2,6 +2,7 @@ class Chat < ApplicationRecord
   mount_uploader :image, ChatUploader
   belongs_to :user
   belongs_to :conversation
+  belongs_to :package
   has_many :chats_recipients, dependent: :destroy
 
   after_create_commit :after_create_update
