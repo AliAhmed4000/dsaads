@@ -25,37 +25,59 @@ class ConversationsController < ApplicationController
   end
 
   def all_messages
-    render template: "conversations/index"
+    respond_to do |formart|
+      if current_user.buyers?
+        @conversations = Conversation.joins(:sellers).where(buyer_id: current_user.id).order("updated_at DESC")
+      elsif current_user.sellers?
+        @conversations = Conversation.joins(:buyers).where(seller_id: current_user.id).order("updated_at DESC")
+      end 
+      formart.js
+    end
   end
 
   def unread
-    current_user.chats_recipients.where('conversation_id = ? AND read = ?', params['id'], false).update_all(read: true)
-    render template: "conversations/index"
+    respond_to do |formart|
+      if current_user.buyers?
+        conversations = Conversation.joins(sellers:[:chats_recipients]).where('conversations.buyer_id=? and chats_recipients.read=?',current_user.id,false).order("updated_at DESC")
+      elsif current_user.sellers?
+        conversations = Conversation.joins(buyers:[:chats_recipients]).where('conversations.seller_id=? and chats_recipients.read=?',current_user.id,false).order("updated_at DESC")
+      end
+      @conversations = conversations.uniq
+      formart.js
+    end
   end 
 
   def starred
-    if current_user.buyers?
-      query = "true"
-      query << " AND users.first_name ILIKE '%#{params[:name].split.first.gsub("'", "''")}%'" unless params[:name].blank?
-      @conversations = Conversation.starred.joins(:sellers).where(buyer_id: current_user.id).where(query).order("updated_at DESC")
-    elsif current_user.sellers?
-      query = "true"
-      query << " AND users.first_name ILIKE '%#{params[:name].split.first.gsub("'", "''")}%'" unless params[:name].blank?
-      @conversations = Conversation.starred.joins(:buyers).where(seller_id: current_user.id).where(query).order("updated_at DESC")
+    respond_to do |formart|
+      if current_user.buyers?
+        query = "true"
+        query << " AND users.first_name ILIKE '%#{params[:name].split.first.gsub("'", "''")}%'" unless params[:name].blank?
+        @conversations = Conversation.starred.joins(:sellers).where(buyer_id: current_user.id).where(query).order("updated_at DESC")
+      elsif current_user.sellers?
+        query = "true"
+        query << " AND users.first_name ILIKE '%#{params[:name].split.first.gsub("'", "''")}%'" unless params[:name].blank?
+        @conversations = Conversation.starred.joins(:buyers).where(seller_id: current_user.id).where(query).order("updated_at DESC")
+      end 
+      unless params[:id].blank?
+        @conversation = Conversation.find(params[:id])
+      end
+      if @conversation.present?
+        @recipient = @conversation.chats_recipients.find_by('chats_recipients.user_id=?', current_user.id)
+      end
+      formart.js
     end 
-    unless params[:id].blank?
-      @conversation = Conversation.find(params[:id])
-    end
-    if @conversation.present?
-      @recipient = @conversation.chats_recipients.find_by('chats_recipients.user_id=?', current_user.id)
-    end
-    @chat = Chat.new
-    render template: "conversations/index"
   end 
 
   def customer_offer
-    @customer_offer = "filter"
-    render template: "conversations/index"
+    respond_to do |formart|
+      if current_user.buyers?
+        conversations = Conversation.joins(:sellers,:chats).where('conversations.buyer_id=? and chats.sender=?',current_user.id,'by_seller').order("updated_at DESC")
+      elsif current_user.sellers?
+        conversations = Conversation.joins(:buyers,:chats).where('conversations.seller_id=? and chats.sender=?',current_user.id,'by_buyer').order("updated_at DESC")
+      end
+      @conversations = conversations.uniq
+      formart.js
+    end
   end 
 
   def starred_me

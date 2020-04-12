@@ -44,9 +44,15 @@
 <% elsif current_user.sellers? %>
   <% @conversations.each do |conversation| %>
     <%#= link_to conversation_path(conversation),method: "get" do %>
-      <div class="chat_list active_chat" onclick="window.location='<%= conversation_path(conversation)%>'"
-      style="cursor: pointer;"
-      tabindex="1">
+      <% if !@conversation.blank? && conversation.id == @conversation.id %>
+        <div class="chat_list active_chat" onclick="window.location='<%= conversation_path(conversation)%>'"
+        style="cursor: pointer; border-color:purple;"
+        tabindex="1">
+      <% else %>
+        <div class="chat_list active_chat" onclick="window.location='<%= conversation_path(conversation)%>'"
+        style="cursor: pointer;"
+        tabindex="1">
+      <% end %>
         <div class="chat_people">
           <div class="chat_img"> 
             <%= image_tag(conversation.buyers.check_avatar.present? ? conversation.buyers.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.buyers.full_name,class: "profile-img") %>

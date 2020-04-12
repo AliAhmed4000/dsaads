@@ -5,33 +5,10 @@
         <a class="dropdown-toggle" data-toggle="dropdown">Conversations
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <% unless @conversation.blank? %>
-            <li>
-              <% if current_user.sellers? %>
-                <% if current_user.seller_unread_conversations_count > 0 %>
-                  <%= link_to "UNREAD (#{current_user.seller_unread_conversations_count})",conversations_unread_path(@conversation),class: "dropdown-item",method: 'get' %>
-                <% else %>
-                  <%= link_to "UNREAD",conversations_unread_path(@conversation),class: "dropdown-item",
-                  method: 'get' %>
-                <% end %>
-              <% else %>
-                <% if current_user.buyer_unread_conversations_count > 0 %>
-                  <%= link_to "UNREAD (#{current_user.buyer_unread_conversations_count})",conversations_unread_path(@conversation),class: "dropdown-item",method: 'get' %>
-                <% else %>
-                  <%= link_to "UNREAD",conversations_unread_path(@conversation),class: "dropdown-item",
-                  method: 'get' %>
-                <% end %>
-              <% end %>
-            </li>
-          <li><%= link_to "ALL MESSSAGES",conversations_all_message_path(@conversation),class: "dropdown-item" ,method: 'get'%></li>
-          <li><%= link_to "STARRED",conversations_starred_path,class: "dropdown-item",method: 'get' %></li>
-          <li><%= link_to "CUSTOM OFFERS",conversations_customer_offer_path(@conversation),class: "dropdown-item",method: 'get' %></li>
-        <% else %>
-          <li><%= link_to "UNREAD","javascript:void(0)",class: "dropdown-item" %></li>
-          <li><%= link_to "ALL MESSSAGES","javascript:void(0)",class: "dropdown-item"%></li>
-          <li><%= link_to "STARRED",conversations_starred_path,class: "dropdown-item",method: 'get' %></li>
-          <li><%= link_to "CUSTOM OFFERS","javascript:void(0)",class: "dropdown-item" %></li>
-        <% end %>
+          <li><%= link_to "ALL MESSSAGES",conversations_all_message_path,class: "dropdown-item" ,method: 'get', remote: true %></li>
+          <li><%= link_to "UNREAD",conversations_unread_path,class: "dropdown-item",method: 'get', remote: true  %></li>
+          <li><%= link_to "STARRED",conversations_starred_path,class: "dropdown-item",method: 'get', remote: true %></li>
+          <li><%= link_to "CUSTOM OFFERS",conversations_customer_offer_path,class: "dropdown-item",method: 'get', remote: true %></li>
         </ul>
       </div> 
     </div>
