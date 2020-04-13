@@ -36,3 +36,4 @@
 //= require jquery-ui
 //= require local-time
 //= require typehead.js
+//= require bootstrap-select

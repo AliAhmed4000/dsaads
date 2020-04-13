@@ -113,3 +113,4 @@ gem 'jquery-ui-rails'
 gem 'local_time'
 gem 'curb'
 gem 'whenever', :require => false
+gem 'bootstrap-select-rails'

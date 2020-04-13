@@ -865,6 +865,7 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
+    bootstrap-select-rails (1.13.8)
     bootstrap-toggle-rails (2.2.1.0)
     builder (3.2.3)
     byebug (11.0.1)
@@ -1230,6 +1231,7 @@ DEPENDENCIES
   aws-sdk (~> 3)
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.1, >= 4.1.3)
+  bootstrap-select-rails
   bootstrap-toggle-rails
   byebug
   capybara (>= 2.15)

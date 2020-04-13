@@ -1,16 +1,18 @@
 <div class="headind_srch">
   <% unless @conversations.blank? %>
     <div class="recent_heading">
-      <div class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown">Conversations
+      <select class="my-select" data-width="115%">
+       <!--  <a class="dropdown-toggle" data-toggle="dropdown">Conversations
         <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><%= link_to "ALL MESSSAGES",conversations_all_message_path,class: "dropdown-item" ,method: 'get', remote: true %></li>
-          <li><%= link_to "UNREAD",conversations_unread_path,class: "dropdown-item",method: 'get', remote: true  %></li>
-          <li><%= link_to "STARRED",conversations_starred_path,class: "dropdown-item",method: 'get', remote: true %></li>
-          <li><%= link_to "CUSTOM OFFERS",conversations_customer_offer_path,class: "dropdown-item",method: 'get', remote: true %></li>
-        </ul>
-      </div> 
+        <ul class="dropdown-menu"> -->
+          <option value="<%= conversations_all_message_path %>">ALL MESSSAGES</option>
+          <option value="<%= conversations_unread_path %>">UNREAD</option>
+          <option value="<%= conversations_starred_path %>">STARRED</option>
+          <option value="<%= conversations_customer_offer_path %>">CUSTOM OFFERS</option>
+        <!-- </ul>
+        </div> 
+      </div> -->
+      </select>
     </div>
   <% end %>
   <div class="srch_bar">
@@ -25,6 +27,7 @@
   </div>
 </div>
 <script type="text/javascript">
+  $('.my-select').selectpicker();
   $("#name").keyup(function(){
     var name = $('#name').val();
     if(name == "" || name == null){
@@ -48,4 +51,26 @@
       },
     })
   });
+  $('.my-select').change(function (e) {
+     var url_hit  = $(e.target).val();
+     $.ajax({
+      url:  url_hit,
+      type: "get",
+      data: {},
+      dataType: 'script',
+      success: function(response){
+        // document.getElementById("new_review").reset();
+      },
+    })
+  });
 </script>
+<style type="text/css">
+  .dropdown-item:hover, .dropdown-item:focus{
+    background-color: purple;
+    color: white;
+  }
+  .dropdown-item.active, .dropdown-item:active{
+    background-color: purple;
+    color: white;
+  }
+</style>
