@@ -54,6 +54,3 @@ namespace :orders do
 	# 	end 
 	# end
 end
-
-
-reviews orderitems revisions
