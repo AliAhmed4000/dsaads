@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_170043) do
+ActiveRecord::Schema.define(version: 2020_04_14_100406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -266,6 +266,8 @@ ActiveRecord::Schema.define(version: 2020_04_10_170043) do
     t.integer "package_id"
     t.integer "order_item_id"
     t.string "attachment"
+    t.integer "revision_id"
+    t.integer "order_cancel_id"
   end
 
   create_table "revisions", force: :cascade do |t|

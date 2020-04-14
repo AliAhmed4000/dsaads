@@ -16,6 +16,8 @@
 class Review < ApplicationRecord
   mount_uploader :attachment, ReviewUploader
   belongs_to :package
+  belongs_to :revision
+  belongs_to :order_cancel
   belongs_to :order_item
   attr_accessor :feedback
   # validates :star,presence: true

@@ -1,6 +1,7 @@
 class OrderCancel < ApplicationRecord
  	belongs_to :order_item
   belongs_to :user
+  has_many :reviews
  	enum level: [
     'seller_modify_order',
     'seller_extend_delivery_time',
@@ -25,6 +26,7 @@ class OrderCancel < ApplicationRecord
               ]
 	enum status: ['pending','approved','rejected']
   enum read: ['no','yes']
+  after_create :set_review
  	after_create :order_resolution_center_by_seller,if: lambda{|o| o.seller_extend_delivery_time? || o.seller_ask_buyer_to_cancel_order? || o.seller_modify_order?}
   after_create :order_resolution_center_by_buyer,if: lambda{|o| o.buyer_ask_seller_to_cancel_order? || o.buyer_seller_is_not_responding? || o.buyer_seller_did_late_delivery?}
   after_update :order_status_changes,if: lambda{|o| o.approved? || o.rejected?}
@@ -32,9 +34,26 @@ class OrderCancel < ApplicationRecord
   after_update :change_order_status_for_seller,if: lambda{|o| o.approved? && o.buyer_ask_seller_to_cancel_order?}
   after_update :set_ending_at,if: lambda{|o| o.approved? && o.seller_extend_delivery_time?}
   after_update :seller_set_ending_at,if: lambda{|o| o.approved? && o.seller_modify_order?}
+
   attr_accessor :role
  	
-  private 
+  private
+  def set_review
+    if role == "seller"
+      type = "SellerReview"
+    else
+      type = "BuyerReview"
+    end 
+    review = self.reviews.build(
+      :order_item_id => self.order_item_id,
+      :buyer_id => self.order_item.order.user_id,
+      :seller_id => self.order_item.package.service.user_id,
+      :package_id => self.order_item.package.id,
+      :type => type
+    )
+    review.save(:validate => false) 
+  end
+
   def set_ending_at
     order_item = OrderItem.find(self.order_item_id)
     if self.order_item.ending_at >= DateTime.now

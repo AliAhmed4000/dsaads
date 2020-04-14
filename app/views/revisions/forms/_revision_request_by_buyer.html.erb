@@ -16,6 +16,7 @@
           <div class="modal-body">
             <%= f.error_notification %>
             <%= f.input :description, required: true , placeholder: "Describe Requirments", input_html: {rows: "3"},as: :text %>
+            <%= f.input :type,as: :hidden, :input_html => { :value => current_user.buyers? ? "BuyerReview" : "SellerReview"} %>
           </div>
           <div class="modal-footer">
             <%= f.submit "Submit", class: "btn btn-secondary" %>

@@ -34,7 +34,8 @@ class RevisionsController < ApplicationController
       :delivery,
       :description,
       :price,
-      :seller_id
+      :seller_id,
+      :type
     ) 
   end
 end

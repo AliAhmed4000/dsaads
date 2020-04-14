@@ -27,6 +27,12 @@
           <% end %>
         </strong>
         <p>
+          <% unless review.revision.blank? %>
+            <%= link_to "Revision",revision_path(review.revision),:target => "_blank",class: "btn change-color"  %>
+          <% end %>
+          <% unless review.order_cancel.blank? %>
+            <%= link_to "Dispute",order_dispute_path(review.order_cancel),:target => "_blank",class: "btn change-color"  %>
+          <% end %>
           <%= strip_tags(review.comment) %>
           <% unless review.attachment.blank? %>
             <span>

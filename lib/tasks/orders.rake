@@ -27,4 +27,33 @@ namespace :orders do
 			o.update_column('revision_no',Package.revision_numbers['unlimited'])
 		end 
 	end
+
+	# task review_revision: :environment do
+	# 	revisions = Revision.all
+	# 	revisions.each do |r|
+	# 		r.reviews.build(
+	# 			:order_item_id => r.order_item_id,
+	# 			:buyer_id => r.order_item.order.user_id,
+	# 			:seller_id => r.order_item.package.service.user_id,
+	# 			:packge_id => r.order_item.package.id,
+	# 			:type => "SellerReview"
+	# 		)
+	# 	end 
+	# end
+
+	# task order_cancel_revision: :environment do
+	# 	orders = OrderCancel.all
+	# 	orders.each do |o|
+	# 			o.reviews.build(
+	# 			:order_item_id => o.order_item_id,
+	# 			:buyer_id => o.order_item.order.user_id,
+	# 			:seller_id => o.order_item.package.service.user_id,
+	# 			:packge_id => o.order_item.package.id,
+	# 			:type => 
+	# 		)
+	# 	end 
+	# end
 end
+
+
+reviews orderitems revisions
