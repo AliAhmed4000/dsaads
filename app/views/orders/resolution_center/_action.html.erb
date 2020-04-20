@@ -1,31 +1,29 @@
 <div class="py-3">
   <% if @order.cancelled? %>
     <%#= render partial: '/orders/forms/order_cancel_approval_form' %>
-  <% elsif @order.active? || @order.delivered? %>
+  <% elsif @order.active? || @order.delivered? ||  @order.revision?%>
     <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
-      <% unless @order.delivered? %>
+      <% if !@order.delivered? && !@order.revision? %>
         <%= render partial: '/orders/forms/order_delivered_form' %>
       <% end %>
       <% if @order.revisions.pluck(:status).include?('pending') %>
-        <label class="Checkbox-form text-center">
-          <%= link_to "Deliver Again", revision_path(id: @order.revisions.last), method: :patch, class: "btn change-color" %>
-        </label>
+        <div class="py-3">
+          <%= link_to "REVISIONS HAS BEEN MADE, DELIVERING AGAIN", revision_path(id: @order.revisions.last), method: :patch, class: "btn change-color" %>
+        </div>
       <% end %>
     <% else %> 
       <% unless @order.completed? %>
         <%= render partial: '/orders/forms/order_complete_form' %>
       <% end %>
       <% if @order.delivered? && !@order.revisions.pluck(:status).include?("pending")%>
-        <% if @order.unlimited? %>
-          <label class="Checkbox-form" style="margin-top: 2%;margin-left: 0%; ">
+        <div class="py-3">
+          <% if @order.unlimited? %>
             <%= link_to "REQUEST A REVISION ON YOUR  DELIVERY",revision_description_modal_path(@order),class: "btn change-color",remote: true %>
-          </label>
-        <% elsif @order.revisions.count <  @order.revision_no_integer %>
-          <label class="Checkbox-form" style="margin-top: 2%;margin-left: 0%; ">
-            <%= link_to "REQUEST A REVISION ON YOUR  DELIVERY",revision_description_modal_path(@order),class: "btn change-color",remote: true %>
-          </label>
-          <%#= render partial: '/orders/forms/revision_request_by_buyer' %>
-        <% end %>
+          <% elsif @order.revisions.count <  @order.revision_no_integer %>
+             <%= link_to "REQUEST A REVISION ON YOUR  DELIVERY",revision_description_modal_path(@order),class: "btn change-color",remote: true %>
+            <%#= render partial: '/orders/forms/revision_request_by_buyer' %>
+          <% end %>
+        </div>
       <% end %>
     <% end %>
   <% end %>

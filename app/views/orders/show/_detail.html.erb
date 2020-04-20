@@ -10,12 +10,14 @@
         <% elsif @order.active? %>
           <span class="badge badge-success">active</span>
         <% elsif @order.delivered? %>
-          <% if @order.revisions.pluck(:status).include?('pending') %>
-            <%= link_to revision_path(@order.revisions.last) do %>
-              <span class="badge badge-info">In Revision</span>
-            <% end %>
+          <% if current_user.buyers? %>
+            <span class="badge badge-info">delivery in</span>
           <% else %>
             <span class="badge badge-info">delivered</span>
+          <% end %>
+        <% elsif @order.revision? %>
+          <%= link_to revision_path(@order.revisions.last) do %>
+            <span class="badge badge-info">In Revision</span>
           <% end %>
         <% elsif @order.cancelled? %>
           <span class="badge badge-info">Cancelled</span>

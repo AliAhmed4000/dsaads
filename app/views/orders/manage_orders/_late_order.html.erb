@@ -14,7 +14,7 @@
             <th>SERVICE</th>
             <th>Starting At</th>
             <th>Ending At</th>
-            <!-- <th>TOTAL</th> -->
+            <th>STATUS</th>
           </tr>
         </thead>
         <tbody>
@@ -32,7 +32,14 @@
             </td>
             <td class="align-middle"><%= item.starting_at.strftime("%d %B %Y") %></td>
             <td class="align-middle"><%= (item.starting_at + item.package.delivery_time.days).strftime("%d %B %Y") %></td>
-            <!-- <td class="align-middle"><%#= item.quantity %></td> -->
+            <td class="align-middle">
+              <% if current_user.buyers? %>
+                <%= link_to "Option to Cancel",order_path(id: item, status: 'cancelled'),class: "badge badge-info","data-confirm"=>"Order is late do you want to cancel?", method: 'put'%>
+              <% else %>
+                <%= link_to "May be Canceled",order_path(item),class: "badge badge-danger" %>
+              <% end %>
+              <%#= item.quantity %>
+            </td>
           </tr>
           <% end %>
         </tbody>

@@ -21,7 +21,7 @@ class OrderItem < ApplicationRecord
   has_many   :revisions, dependent: :destroy
   accepts_nested_attributes_for :order_cancels, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :reviews, reject_if: :all_blank, allow_destroy: true
-  enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review,:disputed]
+  enum status: [:inactive,:active,:delivered,:completed,:cancelled,:review,:disputed,:revision]
   enum revision_no: ['one','two','three','four','five','six','seven','eight','nine','unlimited']
   # enum role: [:user, :"Application Administrator" ]
   after_update :set_clearance_date,:order_completed_notification_counter,:order_completed_notification_seller,:order_completed_notification_buyer, if: lambda{|o| o.completed?}

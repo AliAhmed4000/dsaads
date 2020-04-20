@@ -11,7 +11,8 @@ class Revision < ApplicationRecord
   #   self.order_item.update_column('status','active')
   # end
   attr_accessor :type
-  after_create :set_review 
+  after_create :set_review,:change_order_status
+  after_update :change_order_status_delivered  
   def set_review
   	review = self.reviews.build(
 			:order_item_id => self.order_item_id,
@@ -21,5 +22,13 @@ class Revision < ApplicationRecord
 			:type => type
 		)
 		review.save(:validate => false) 
-  end 
+  end
+
+  def change_order_status
+    self.order_item.update_column('status','revision')
+  end
+
+  def change_order_status_delivered
+    self.order_item.update_column('status','delivered')
+  end  
 end

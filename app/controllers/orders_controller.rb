@@ -40,7 +40,9 @@ class OrdersController < ApplicationController
 
   def update
     @order_item = OrderItem.find_by_id(params[:id])
-    if @order_item.update(status: params[:order_item][:status])
+    status = params[:status] unless params[:status].blank?
+    status = params[:order_item][:status] unless params[:order_item].blank?
+    if @order_item.update(status: status)
       if @order_item.inactive?
         flash[:notice] = "Order Successfully Created."
         @order_item.update(description: params[:order_item][:description],file: params[:order_item][:file])

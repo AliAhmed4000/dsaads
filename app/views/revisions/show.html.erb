@@ -22,7 +22,7 @@
                 <h6>Buyer Revision Requirements</h6><hr>
                 <p><%= @revision.description %></p>
                 <% if @revision.pending? && @revision.seller_id == current_user.id %>
-                  <%= link_to "Deliver Again", revision_path(id: @revision), method: :patch, class: "btn change-color pull-right" %>
+                  <%= link_to "REVISIONS HAS BEEN MADE, DELIVERING AGAIN", revision_path(id: @revision), method: :patch, class: "btn change-color pull-right" %>
                 <% end %>
               </div>
             </div>
