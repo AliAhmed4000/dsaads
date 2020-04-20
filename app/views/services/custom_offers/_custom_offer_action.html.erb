@@ -38,13 +38,13 @@
             <div class="row py-2 text-center">
               <div class="col">
                 <% if @custom_offer.pending? %>
-                  <%= link_to "Approve #{number_to_currency(@custom_offer.price)}",package_status_path(@custom_offer,'approved'), class: "btn btn-primary" %>
-                  <%= link_to "Reject #{number_to_currency(@custom_offer.price)}",package_status_path(@custom_offer,'rejected'), class: "btn btn-primary" %>
+                  <%= link_to "Approve #{number_to_currency(@custom_offer.price)}",package_status_path(@custom_offer,'approved'), class: "btn change-color" %>
+                  <%= link_to "Reject #{number_to_currency(@custom_offer.price)}",package_status_path(@custom_offer,'rejected'), class: "btn change-color" %>
                 <% else %>
                   <% if @custom_offer.approved? %>
-                    <button type="button" class="btn btn-success">You have approved buyer custom offer</button>
+                    <button type="button" class="btn change-color">You have approved buyer custom offer</button>
                   <% else %>
-                    <button type="button" class="btn btn-info">You have rejected buyer custom offer</button>
+                    <button type="button" class="btn change-color">You have rejected buyer custom offer</button>
                   <% end %> 
                 <% end %>
               </div>
@@ -52,14 +52,14 @@
           <% else %>
             <div class="row py-2 text-center">
               <div class="col">
-                <button type="button" class="btn btn-success">Offer Approved</button>
+                <button type="button" class="btn change-color">Offer Approved</button>
               </div>
             </div>
           <% end %>
         <% elsif current_user.buyers? && @custom_offer.by_seller? %>
           <div class="row py-2 text-center">
             <div class="col">
-              <%= link_to "Start at #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+              <%= link_to "Start at #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn change-color" %>
             </div>
           </div>
         <% else %>
@@ -68,14 +68,14 @@
               <div class="col">
                 <% if @custom_offer.order_items.blank? %>
                   <% if @custom_offer.pending? %>
-                    <button type="button" class="btn btn-info">Offer Pending</button>
+                    <button type="button" class="btn change-color">Offer Pending</button>
                   <% elsif @custom_offer.rejected? %>
-                    <button type="button" class="btn btn-danger">Offer reject</button>
+                    <button type="button" class="btn change-color">Offer reject</button>
                   <% else %>
-                    <%= link_to "Start at #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn btn-primary" %>
+                    <%= link_to "Start at #{number_to_currency(@custom_offer.price)}",service_package_path(@service,@custom_offer), class: "btn change-color" %>
                   <% end %>
                 <% else %>
-                  <button type="button" class="btn btn-success">Offer Approved</button>
+                  <button type="button" class="btn change-color">Offer Approved</button>
                 <% end %>
               </div>
             </div>
@@ -83,9 +83,9 @@
             <div class="row py-2 text-center">
               <div class="col">
                 <% if @custom_offer.order_items.blank? %>
-                  <button type="button" class="btn btn-info">Offer Pending</button>
+                  <button type="button" class="btn change-color">Offer Pending</button>
                 <% else %>  
-                  <button type="button" class="btn btn-success">Offer Approved By <%= @custom_offer.order_items.last.order.user.full_name %></button>
+                  <button type="button" class="btn change-color">Offer Approved By <%= @custom_offer.order_items.last.order.user.full_name %></button>
                 <% end %>
               </div>
             </div>
