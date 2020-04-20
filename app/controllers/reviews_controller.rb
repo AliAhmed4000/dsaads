@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
   
   def create
     @review = Review.new(reviews_params)
-    if @review.save
+    if @review.save(:validate => false)
       @order  = OrderItem.find_by_id(@review.order_item_id)  
       @reviews = @order.reviews.order(created_at: :asc)
       respond_to do |format|
