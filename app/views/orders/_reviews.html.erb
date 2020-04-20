@@ -31,7 +31,9 @@
             <%= link_to "Revision",revision_path(review.revision),:target => "_blank",class: "btn change-color"  %>
           <% end %>
           <% unless review.order_cancel.blank? %>
-            <%= link_to "Dispute",order_dispute_path(review.order_cancel),:target => "_blank",class: "btn change-color"  %>
+            <% if review.order_cancel.seller_extend_delivery_time? && review.order_cancel.approved? %>
+              <%= link_to "Delivery extend by #{review.order_cancel.extend_delivery} days.",order_dispute_path(review.order_cancel),:target => "_blank",class: "btn change-color"  %>
+            <% end %>
           <% end %>
           <%= strip_tags(review.comment) %>
           <% unless review.attachment.blank? %>
