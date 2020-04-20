@@ -14,7 +14,7 @@
             <th>SERVICE</th>
             <th>Starting At</th>
             <th>Ending At</th>
-            <th>TOTAL</th>
+            <!-- <th>TOTAL</th> -->
             <th>STATUS</th>
           </tr>
         </thead>
@@ -41,11 +41,11 @@
                   <%= item.ending_at.strftime("%d %B %Y") %>
                 <% end %>
               </td>
-              <td class="align-middle"><%= item.quantity %></td>
+              <!-- <td class="align-middle"><%#= item.quantity %></td> -->
               <td class="align-middle">
                 <% if current_user.buyers? %>
                   <%= link_to order_path(item),method: 'get' do %>
-                    <span class="badge badge-info">Approve me</span>
+                    <span class="badge badge-info">Delivery in</span>
                   <% end %>
                 <% else %>
                   <%= link_to order_path(item),method: 'get' do %>

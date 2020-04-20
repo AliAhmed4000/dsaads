@@ -14,7 +14,7 @@
             <th>SERVICE</th>
             <th>Starting At</th>
             <th>Completed At</th>
-            <th>TOTAL</th>
+            <!-- <th>TOTAL</th> -->
             <th>STATUS</th>
           </tr>
         </thead>
@@ -41,20 +41,23 @@
                   <%= item.updated_at.strftime("%d %B %Y") %>
                 <% end %>
               </td>
-              <td class="align-middle"><%= item.quantity %></td>
+              <!-- <td class="align-middle"><%#= item.quantity %></td> -->
               <td class="align-middle">
-                <% if item.completed_at >=  DateTime.now %>
-                  <span class="badge badge-danger">Pending Clearance</span>
-                <% else %>
-                  <% if item.buyer_star_status.blank? %>
-                    <%= link_to order_feedback_path(item) do %>
-                      <span class="badge badge-info">Enter Review</span>
-                    <% end %>
-                  <% else %>
-                    <%= link_to order_feedback_path(item) do %>
-                      <span class="badge badge-success">Completed</span>
-                    <% end %>
-                  <% end %>
+                <%# if item.completed_at >=  DateTime.now %>
+                  <!-- <span class="badge badge-danger">Pending Clearance</span> -->
+                <%# else %>
+                  <%# if item.buyer_star_status.blank? %>
+                    <%#= link_to order_feedback_path(item) do %>
+                      <!-- <span class="badge badge-info">Enter Review</span> -->
+                    <%# end %>
+                  <%# else %>
+                    <%#= link_to order_feedback_path(item) do %>
+                      <!-- <span class="badge badge-success">Completed</span> -->
+                    <%# end %>
+                  <%# end %>
+                <%# end %>
+                <%= link_to order_path(item) do %>
+                  <span class="badge badge-success">Completed</span>
                 <% end %>
               </td>
             </tr>

@@ -8,11 +8,12 @@ class ConversationsChannel < ApplicationCable::Channel
   end
 
   def send_message(data)
-    chat = Chat.create!(
+    chat = Chat.new(
       conversation_id: data['conversation_id'],
       user_id: data['user_id'],
       message: data['message']
     )
+    chat.save(:validate => false)
     chat.conversation.update_attributes(
       last_user_id: data['user_id'],
       message: data['message']

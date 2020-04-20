@@ -14,7 +14,7 @@
             <th>SERVICE</th>
             <th>Starting At</th>
             <th>Ending At</th>
-            <th>TOTAL</th>
+            <!-- <th>TOTAL</th> -->
           </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@
             </td>
             <td class="align-middle"><%= item.starting_at.strftime("%d %B %Y") %></td>
             <td class="align-middle"><%= (item.starting_at + item.package.delivery_time.days).strftime("%d %B %Y") %></td>
-            <td class="align-middle"><%= item.quantity %></td>
+            <!-- <td class="align-middle"><%#= item.quantity %></td> -->
           </tr>
           <% end %>
         </tbody>

@@ -18,7 +18,7 @@
             <th>SERVICE</th>
             <th>ORDER DATE</th>
             <!-- <th>DUE DATE</th> -->
-            <th>TOTAL</th>
+            <!-- <th>TOTAL</th> -->
             <th>STATUS</th>
           </tr>
         </thead>
@@ -39,7 +39,7 @@
               <!-- <td class="align-middle"> -->
                 <%#= (item.created_at + item.package.delivery_time.days).strftime("%d %B %Y") %>
               <!-- </td> -->
-              <td class="align-middle"><%= item.quantity %></td>
+              <!-- <td class="align-middle"><%#= item.quantity %></td> -->
               <td class="align-middle">
                 <% due_date = item.created_at + item.package.delivery_time.days %>
                 <%# if due_date > DateTime.now %>

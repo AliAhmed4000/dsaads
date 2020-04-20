@@ -29,11 +29,15 @@
               <span class="chat_date"><%#= time_ago_in_words(conversation.sellers.last_sign_in_at) %> ago</span> -->
             </h5>
             <p>
-              <% unless conversation.sellers.seller_level(conversation.sellers).blank? %>
-                <%= conversation.sellers.seller_level(conversation.sellers) %> | 
-                From <%= conversation.sellers.country %>
+              <% if conversation.chat_last_message(current_user.id).blank? %>
+                <% unless conversation.sellers.seller_level(conversation.sellers).blank? %>
+                  <%= conversation.sellers.seller_level(conversation.sellers) %> | 
+                  From <%= conversation.sellers.country %>
+                <% else %>
+                  From <%= conversation.sellers.country %>
+                <% end %>
               <% else %>
-                From <%= conversation.sellers.country %>
+                <%= conversation.chat_last_message(current_user.id).last.message %>
               <% end %>  
             </p>
           </div>
@@ -70,7 +74,13 @@
               <!-- <span class="chat_date">&nbsp;|&nbsp;</span>
               <span class="chat_date"><%#= time_ago_in_words(conversation.buyers.last_sign_in_at) %> ago</span> -->
             </h5>
-            <p>From <%= conversation.buyers.country %></p>
+            <p>
+              <% if conversation.chat_last_message(current_user.id).blank? %>
+                From <%= conversation.buyers.country %>
+              <% else %>
+                <%= conversation.chat_last_message(current_user.id).last.message %> 
+              <% end %>
+            </p>
           </div>
         </div>
       </div>

@@ -14,7 +14,7 @@
             <th>SERVICE</th>
             <th>Starting At</th>
             <th>Ending At</th>
-            <th>TOTAL</th>
+            <!-- <th>TOTAL</th> -->
             <th>STATUS</th>
           </tr>
         </thead>
@@ -41,7 +41,7 @@
                   <%= dispute.order_item.ending_at.strftime("%d %B %Y") %>
                 <% end %>
               </td>
-              <td class="align-middle"><%= dispute.order_item.quantity %></td>
+              <!-- <td class="align-middle"><%#= dispute.order_item.quantity %></td> -->
               <td class="align-middle">
                 <% if dispute.pending?  %>
                   <%= link_to "Pending",order_dispute_path(dispute),class: "badge badge-danger" %>
