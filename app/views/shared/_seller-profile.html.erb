@@ -34,6 +34,18 @@
         <p class="text-secondary profile-icon-size"><strong><%= @seller.created_at.strftime("%F") %></strong></p>
       </div>
     </div>
+    <% if !@seller.seller_level(@seller).blank? %>
+      <% if @seller.seller_level(@seller) == "Pro Seller" || @seller.seller_level(@seller) == "Top Seller" %> 
+        <div class="row">
+          <div class="col-sm-6 text-left">
+            <p class="text-secondary profile-icon-size">Seller Level</p>
+          </div>
+          <div class="col-sm-6 text-right">
+            <p class="text-secondary profile-icon-size"><strong><%= @seller.seller_level(@seller) %></strong></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
 </div>
 <div class="border border-light p-3 mt-3">
   <p class="h3 bold">Description</p>
