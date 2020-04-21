@@ -53,4 +53,11 @@ namespace :orders do
 	# 		)
 	# 	end 
 	# end
-end
+
+	task services_title: :environment do
+		services = Service.all
+		services.each do |s|
+			s.update_column('search_title','I can ' + s.title)
+		end
+	end 
+end  
