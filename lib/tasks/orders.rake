@@ -59,5 +59,12 @@ namespace :orders do
 		services.each do |s|
 			s.update_column('search_title','I can ' + s.title)
 		end
+	end
+
+	task remove_custom_offers: :environment do
+		chats = Chat.where('custom_offer=?',1)
+		chats.each do |c|
+			c.destroy
+		end
 	end 
-end  
+end

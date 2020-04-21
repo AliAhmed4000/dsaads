@@ -11,7 +11,8 @@
           </div>
           <div class="modal-body">
             <%= f.error_notification %>
-            <%= f.input :paypal_email, required: true %>
+            <%= f.input :paypal_email, required: true, :input_html => { :value => current_user.email }%>
+            <span>you can use other email for paypal</span>
           </div>
           <div class="modal-footer">
             <%= f.submit "Submit", class: "btn change-color" %>

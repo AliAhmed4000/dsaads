@@ -120,10 +120,15 @@ class UsersController < ApplicationController
 
   def add_paypal_email
     if current_user.update_column('paypal_email',params['user']['paypal_email']) 
-      current_user.regenerate_paypal_token
-      UserMailer.paypal_confirmation_email(current_user).deliver_now
-      flash[:notice] = "Confirmation Email Sent your account successfully."
-      redirect_to balances_path 
+      if current_user.email == current_user.paypal_email
+        flash[:notice] = "Paypal Email successfully done."
+        redirect_to balances_path
+      else 
+        current_user.regenerate_paypal_token
+        UserMailer.paypal_confirmation_email(current_user).deliver_now
+        flash[:notice] = "Confirmation Email Sent your account successfully."
+        redirect_to balances_path
+      end 
     end 
   end 
 
