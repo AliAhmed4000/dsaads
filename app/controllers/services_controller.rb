@@ -349,7 +349,8 @@ class ServicesController < ApplicationController
   end 
 
   def search
-    service = Service.active.where('publish=? and search_title LIKE ?','true',"#{params['search']}%").pluck('search_title')
+    services_table = Service.arel_table
+    service = Service.active.where('publish=?',true).where(services_table[:search_title].matches("#{params['search']}%")).pluck('search_title') 
     render json: service
   end
 

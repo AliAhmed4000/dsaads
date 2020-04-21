@@ -77,7 +77,8 @@ class Service < ApplicationRecord
   end
 
   def self.search(keyword)
-    where('description LIKE ? OR search_title LIKE ?',keyword,keyword).where('services.publish=?',true).order(created_at: :desc)
+    services_table = Service.arel_table
+    where('services.publish=?',true).where(services_table[:search_title].matches("#{keyword}%")).order(created_at: :desc)
   end
 
   def minimum_price
@@ -113,12 +114,13 @@ class Service < ApplicationRecord
   end
 
   def self.user_online(category,keyword)
+    services_table = Service.arel_table
     if !category.blank? && !keyword.blank?
-      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where('services.description LIKE ? OR services.search_title LIKE ?',keyword,keyword).order(created_at: :desc)
+      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where(services_table[:search_title].matches("#{keyword}%")).order(created_at: :desc)
     elsif !category.blank? && keyword.blank?
       services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).order(created_at: :desc)
     elsif category.blank? && !keyword.blank?
-      services = Service.where('description LIKE ? OR search_title LIKE ?',keyword,keyword).where('services.publish=?',true).order(created_at: :desc)
+      services = Service.where(services_table[:search_title].matches("#{keyword}%")).where('services.publish=?',true).order(created_at: :desc)
     end
     online = []
     services.each do |service|
@@ -131,12 +133,13 @@ class Service < ApplicationRecord
   end
 
   def self.new_seller_services(category,keyword)
+    services_table = Service.arel_table
     if !category.blank? && !keyword.blank?
-      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where('services.description LIKE ? OR services.search_title LIKE ?',keyword,keyword).order(created_at: :desc)
+      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where(services_table[:search_title].matches("#{keyword}%")).order(created_at: :desc)
     elsif !category.blank? && keyword.blank?
       services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).order(created_at: :desc)
     elsif category.blank? && !keyword.blank?
-      services = Service.where('description LIKE ? OR search_title LIKE ?',keyword,keyword).where('services.publish=?',true).order(created_at: :desc)
+      services = Service.where(services_table[:search_title].matches("#{keyword}%")).where('services.publish=?',true).order(created_at: :desc)
     end
     new_service = []
     services.each do |s| 
@@ -148,12 +151,13 @@ class Service < ApplicationRecord
   end
 
   def self.pro_seller_services(category,keyword)
+    services_table = Service.arel_table
     if !category.blank? && !keyword.blank?
-      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where('services.description LIKE ? OR services.search_title LIKE ?',keyword,keyword).order(created_at: :desc)
+      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where(services_table[:search_title].matches("#{keyword}%")).order(created_at: :desc)
     elsif !category.blank? && keyword.blank?
       services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).order(created_at: :desc)
     elsif category.blank? && !keyword.blank?
-      services = Service.where('description LIKE ? OR search_title LIKE ?',keyword,keyword).where('services.publish=?',true).order(created_at: :desc)
+      services = Service.where(services_table[:search_title].matches("#{keyword}%")).where('services.publish=?',true).order(created_at: :desc)
     end
     new_service = []
     services.each do |s| 
@@ -165,12 +169,13 @@ class Service < ApplicationRecord
   end
 
   def self.top_seller_services(category,keyword)
+    services_table = Service.arel_table
     if !category.blank? && !keyword.blank?
-      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where('services.description LIKE ? OR services.search_title LIKE ?',keyword,keyword).order(created_at: :desc)
+      services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).where(services_table[:search_title].matches("#{keyword}%")).order(created_at: :desc)
     elsif !category.blank? && keyword.blank?
       services = Service.joins(:category).where('categories.sub_category_id=? and services.publish=?',category.id,true).order(created_at: :desc)
     elsif category.blank? && !keyword.blank?
-      services = Service.where('description LIKE ? OR search_title LIKE ?',keyword,keyword).where('services.publish=?',true).order(created_at: :desc)
+      services = Service.where(services_table[:search_title].matches("#{keyword}%")).where('services.publish=?',true).order(created_at: :desc)
     end
     new_service = []
     services.each do |s| 
@@ -182,22 +187,24 @@ class Service < ApplicationRecord
   end
 
   def self.seller_languages(category,keyword)
+    services_table = Service.arel_table
     if !category.blank? && !keyword.blank?
-      Service.joins(:category,:seller).where('categories.sub_category_id=? and services.publish=?',category.id,true).where('services.description LIKE ? OR services.search_title LIKE ?',keyword,keyword).group("users.language").order('count_all desc').limit(10).count
+      Service.joins(:category,:seller).where('categories.sub_category_id=? and services.publish=?',category.id,true).where(services_table[:search_title].matches("#{keyword}%")).group("users.language").order('count_all desc').limit(10).count
     elsif !category.blank? && keyword.blank?
       Service.joins(:category,:seller).where('categories.sub_category_id=? and services.publish=?',category.id,true).group("users.language").order('count_all desc').limit(10).count
     elsif category.blank? && !keyword.blank?
-      Service.joins(:seller).where('services.description LIKE ? OR services.search_title LIKE ?',keyword,keyword).where('services.publish=?',true).group("users.language").order('count_all desc').limit(10).count
+      Service.joins(:seller).where(services_table[:search_title].matches("#{keyword}%")).where('services.publish=?',true).group("users.language").order('count_all desc').limit(10).count
     end 
   end
 
   def self.seller_countries(category,keyword)
+    services_table = Service.arel_table
     if !category.blank? && !keyword.blank?
-      Service.joins(:category,:seller).where('categories.sub_category_id=? and services.publish=?',category.id,true).where('services.description LIKE ? OR services.search_title LIKE ?',keyword,keyword).group("users.country").order('count_all desc').limit(10).count
+      Service.joins(:category,:seller).where('categories.sub_category_id=? and services.publish=?',category.id,true).where(services_table[:search_title].matches("#{keyword}%")).group("users.country").order('count_all desc').limit(10).count
     elsif !category.blank? && keyword.blank?
       Service.joins(:category,:seller).where('categories.sub_category_id=? and services.publish=?',category.id,true).group("users.country").order('count_all desc').limit(10).count
     elsif category.blank? && !keyword.blank?
-      Service.joins(:seller).where('services.description LIKE ? OR services.search_title LIKE ?',keyword,keyword).where('services.publish=?',true).group("users.country").order('count_all desc').limit(10).count
+      Service.joins(:seller).where(services_table[:search_title].matches("#{keyword}%")).where('services.publish=?',true).group("users.country").order('count_all desc').limit(10).count
     end 
   end
 end

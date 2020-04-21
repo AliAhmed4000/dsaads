@@ -29,7 +29,8 @@ class Category < ApplicationRecord
   end
 
   def self.search_category(category,keyword)
-    Service.joins(:category).where('services.description LIKE ? OR services.search_title LIKE ?',keyword,keyword).where('categories.sub_category_id=? and services.publish=?',category,true).order(created_at: :desc)
+    services_table = Service.arel_table
+    Service.joins(:category).where(services_table[:search_title].matches("#{keyword}%")).where('categories.sub_category_id=? and services.publish=?',category,true).order(created_at: :desc)
     # services.where('description LIKE ? OR search_title LIKE ?', keyword, keyword).order(created_at: :desc)
   end
 

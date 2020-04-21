@@ -37,7 +37,14 @@
                   From <%= conversation.sellers.country %>
                 <% end %>
               <% else %>
-                <%= conversation.chat_last_message(current_user.id).last.message %>
+                <% msg = conversation.chat_last_message(current_user.id).last %>
+                <% if msg.message.include?('<<image>>') && msg.custom_offer == 0 %>
+                  attachment
+                <% elsif msg.custom_offer == 1 %>
+                  custom offer
+                <% else %>
+                  <%= msg.message %>
+                <% end %>
               <% end %>  
             </p>
           </div>
@@ -78,7 +85,14 @@
               <% if conversation.chat_last_message(current_user.id).blank? %>
                 From <%= conversation.buyers.country %>
               <% else %>
-                <%= conversation.chat_last_message(current_user.id).last.message %> 
+                <% msg = conversation.chat_last_message(current_user.id).last %>
+                <% if msg.message.include?('<<image>>') && msg.custom_offer == 0 %>
+                  attachment
+                <% elsif msg.custom_offer == 1 %>
+                  custom offer
+                <% else %>
+                  <%= msg.message %>
+                <% end %>
               <% end %>
             </p>
           </div>
