@@ -37,7 +37,7 @@
               <div>
                 <h6><%= @order.package.service.seller.full_name %> last seen <%= time_ago_in_words(@order.package.service.seller.last_sign_in_at) %> ago </h6> 
               </div>
-              <%= f.submit "Post", class: "btn btn-info pull-right", id: "post-reset" %>
+              <%= f.submit "Post", class: "btn change-color pull-right", id: "post-reset" %>
             <% end %>
           <% end %>
       </div>
