@@ -14,10 +14,22 @@
             <%= f.input :paypal_email, required: true %>
           </div>
           <div class="modal-footer">
-            <%= f.submit "Submit", class: "btn btn-secondary" %>
+            <%= f.submit "Submit", class: "btn change-color" %>
           </div>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+<style type="text/css">
+  .change-color{
+    background-color: purple;
+    color: white;
+  }
+  .change-color:hover{
+    background-color: purple;
+  }
+  .change-color:active{
+    background-color: purple;
+  }
+</style>
