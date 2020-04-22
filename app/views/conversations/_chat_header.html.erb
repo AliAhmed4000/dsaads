@@ -1,0 +1,61 @@
+<% unless @conversation.blank? %>
+    <div style="border-bottom: 1px solid #c4c4c4; padding:10px 29px 10px 20px; overflow:hidden;">
+      <div class="">
+        <% if current_user.buyers? %>
+          <h4>
+            <span><%= online_status @conversation.sellers %></span>&nbsp;&nbsp;
+            <%= link_to @conversation.sellers.full_name,profile_path(@conversation.sellers) %>
+            <span>
+            <span class="chat_date">
+            <% if @conversation.starred? %>
+              <%= link_to "",starred_me_path(@conversation),class: "fa fa-star" %> 
+            <% else %>
+              <%= link_to "",starred_me_path(@conversation),class: "fa fa-star-o" %> 
+            <% end %>
+            </span>
+          </h4>
+          <span class="chat_date">
+            <% if @conversation.sellers.user_online? %>
+              Online
+            <% else %>
+              Offline
+            <% end %>
+            &nbsp;|&nbsp;
+            Last Seen <%=  time_ago_in_words(local_time(@conversation.sellers.last_sign_in_at)) %> ago
+            &nbsp;|&nbsp;
+            Local Time <%= local_time(@conversation.sellers.last_sign_in_at) %> 
+          </span>
+        <% else %>
+          <h4>
+            <span><%= online_status @conversation.buyers %></span>
+            &nbsp;&nbsp;
+            <%= link_to @conversation.buyers.full_name,profile_path(@conversation.buyers) %>
+            <span class="chat_date">
+              <% if @conversation.starred? %>
+                <%= link_to "",starred_me_path(@conversation),class: "fa fa-star" %> 
+              <% else %>
+                <%= link_to "",starred_me_path(@conversation),class: "fa fa-star-o" %> 
+              <% end %>
+            </span>
+          </h4>
+          <span class="chat_date">
+            <% if @conversation.buyers.user_online? %>
+              Online
+            <% else %>
+              Offline
+            <% end %>
+            &nbsp;|&nbsp;
+            Last Seen <%= time_ago_in_words(local_time(@conversation.buyers.last_sign_in_at)) %> ago
+            &nbsp;|&nbsp;
+            Local Time <%= local_time(@conversation.buyers.last_sign_in_at) %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div style="border-bottom: 1px solid #c4c4c4; padding:10px 29px 10px 20px; overflow:hidden;">
+      <div class="text-center">
+        Select a conversation to read it here.
+      </div>
+    </div>
+  <% end %>

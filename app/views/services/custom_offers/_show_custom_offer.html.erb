@@ -1,6 +1,6 @@
 <div id="show-custom-form-modal">
   <div class="modal" tabindex="-1" role="dialog" id="custom-form-gig">
-    <%= simple_form_for @service, url: custom_offer_create_path(@service),method: :post do  |f|%>
+    <%= simple_form_for @service, url: custom_offer_create_path(@service),method: :post,remote: true do  |f|%>
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

@@ -1,0 +1,8 @@
+<% unless @conversation.blank? %>
+  <% unless @customer_offer.blank? %>
+    <div id="offer"></div>
+  <% end %>
+  <div class="msg_history" id="messages" data-conversation-id="<%= @conversation.id %>">
+  </div>
+<% end %>
+

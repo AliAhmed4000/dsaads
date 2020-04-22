@@ -1,0 +1,35 @@
+<div class="type_msg">
+  <div class="input_msg_write">
+    <% if !@conversation.blank? %>
+      <%= form_for @chat,url: "#" do |f| %>
+        <% if current_user.sellers? %>
+          <%= hidden_field_tag :user_name, @conversation.buyers.full_name %> 
+        <% else %>
+          <%= hidden_field_tag :user_name, @conversation.sellers.full_name %>
+        <% end %>
+        <%= hidden_field_tag :user_id, current_user.id %> 
+        <%= f.text_field :message, class: 'message-input write_msg', data: {emojiable: true } %>
+        <div class="conversation-file-container"></div>
+        <div class="py-3">
+          <div class="row">
+            <div class="col">
+              <div class="image-upload" id="abc" >
+                <label for="file-input">
+                  <i class="fa fa-paperclip"></i>
+                </label>
+                <%#= f.file_field :image,id: "file-input",class: "" %>
+                <%= file_field_tag "conversation[image]", id: "file-input",data: { url: image_conversation_path(@conversation.id) } ,multiple: false %>
+              </div>
+              <% #if current_user.sellers? %>
+                <%= link_to "Custom Offer",show_customer_offer_path(@conversation.id),method: :get,class: "btn change-color", id: 'customer-offer', remote: true %>  
+              <%# end %>
+            </div>
+            <div class="col">
+              <%= button_tag 'Send', type: 'Submit', class: "btn change-color pull-right" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

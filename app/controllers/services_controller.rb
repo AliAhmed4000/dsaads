@@ -242,9 +242,6 @@ class ServicesController < ApplicationController
     render json: @service.photos
   end
 
-  def remove_image
-  end
-
   def manage_services
     @active_gigs = current_user.services.active.where('publish=?',true)
     @inactive_gigs = current_user.services.inactive.where('publish=?',true)
@@ -269,7 +266,7 @@ class ServicesController < ApplicationController
     @service.custom_packages.build 
   end 
   
-  def custom_offer_create
+  def custom_offer_create 
     @service = Service.find params[:id]
     if current_user.sellers?
       request = Package.senders['by_seller']
@@ -290,7 +287,7 @@ class ServicesController < ApplicationController
       else
         message_for_buyer = "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Accept",custom_offer_update_path(@custom,'approved'),'class'=>'btn change-color'}#{link_to "Reject",custom_offer_update_path(@custom,'rejected'),'class'=>'btn change-color' }</p>"
         message_for_seller = "<h4>I will #{@service.title}<span class='pull-right'>$ #{params['price']}</span></h4><a target='_blank' href='#{@service.primary_photo.image_url}'><img class='thumb' src='#{@service.primary_photo.image_url}'></a><p>#{link_to "Pending",show_custom_details_path(@service,@service.custom_packages.last),:target=>'_blank','class'=>'btn change-color' }</p>"
-      end 
+      end
       chat = Chat.create!(
         conversation_id: params[:service][:conversation_id],
         user_id: current_user.id,
@@ -306,8 +303,10 @@ class ServicesController < ApplicationController
         last_user_id: current_user.id,
         message: ""
       )
-      redirect_to conversation_path(params[:service][:conversation_id])
-      flash[:notice] = "Custom Offer Successfully Send."
+      # @conversation = Conversation.find(params[:service][:conversation_id])
+      # @recipient = @conversation.chats_recipients.find_by('chats_recipients.user_id=?', current_user.id)
+      # redirect_to conversation_path(params[:service][:conversation_id])
+      # flash[:notice] = "Custom Offer Successfully Send."
     end 
   end
 
