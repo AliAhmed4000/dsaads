@@ -62,9 +62,11 @@ namespace :orders do
 	end
 
 	task remove_custom_offers: :environment do
-		chats = Chat.where('custom_offer=?',1)
+		chats = Chat.all
 		chats.each do |c|
-			c.destroy
+			if c.message.include?("Show Detail")
+				c.delete
+			end 
 		end
 	end 
 end
