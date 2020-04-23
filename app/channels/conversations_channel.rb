@@ -33,15 +33,14 @@ class ConversationsChannel < ApplicationCable::Channel
     })
   end
 
-  def video_conversation(data)
-    unless data["message"]["starting_at"].blank? && data["message"]["ending_at"].blank?
-      ActionCable.server.broadcast("conversations_#{data["message"]["model_id"]}_channel", {
-        video_start_end_timing: data["message"] 
-      })
-      ActionCable.server.broadcast("conversations_#{data["message"]["visitor_id"]}_channel", {
-        video_start_end_timing: data["message"] 
-      })
-    end
-  end
-
+  # def video_conversation(data)
+  #   unless data["message"]["starting_at"].blank? && data["message"]["ending_at"].blank?
+  #     ActionCable.server.broadcast("conversations_#{data["message"]["model_id"]}_channel", {
+  #       video_start_end_timing: data["message"] 
+  #     })
+  #     ActionCable.server.broadcast("conversations_#{data["message"]["visitor_id"]}_channel", {
+  #       video_start_end_timing: data["message"] 
+  #     })
+  #   end
+  # end
 end
