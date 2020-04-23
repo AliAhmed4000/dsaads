@@ -221,7 +221,7 @@ function show_message(message) {
     html += '<div class="incoming_msg_img">';
     html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" class="profile-img"><span id="s_name">Me </span><span class="">' + message_date.toLocaleString() + '</span></div>';
     html += '<div class="received_msg">';
-    html += '<div class="received_withd_msg">';
+    html += '<div class="received_withd_msg" id="' + message['id'] +'">';
     html += '<p>' + message_body + '</p>';
     html += '</div>';
     html += '</div>';
@@ -230,12 +230,16 @@ function show_message(message) {
     html += '<div class="incoming_msg_img">';
     html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" class="profile-img"><span id="s_name">' + user_name  + '</span><span class="">' + message_date.toLocaleString() + '</span></div>';
     html += '<div class="received_msg">';
-    html += '<div class="received_withd_msg">';
+    html += '<div class="received_withd_msg" id="' + message['id'] +'">';
     html += '<p>' + message_body + '</p>';
     html += '</div>';
     html += '</div>';
   }
   return html;
+}
+
+function show_custom_message(message){
+  $('#' +  message['package_id']).html(message['message'])
 }
 
 messages_to_bottom = function() {

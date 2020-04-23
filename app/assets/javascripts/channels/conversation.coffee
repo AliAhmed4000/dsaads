@@ -59,8 +59,11 @@ $ ->
         if message.hasOwnProperty('message') && messages.length > 0 && message['conversation_id'] == current_conversation_id
           messages.append(show_message(message))
           App.global_conversation.update_read(messages.data('conversation-id'), user_id.val(), message['id'])
-          messages_to_bottom()  
+          messages_to_bottom()
 
+        if message.hasOwnProperty('package_id') 
+          show_custom_message(message)
+          
       send_message: (message, conversation_id, user_id) ->
         @perform 'send_message', message: message, conversation_id: conversation_id, user_id: user_id
 

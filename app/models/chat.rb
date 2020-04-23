@@ -64,22 +64,12 @@ class Chat < ApplicationRecord
 
   def after_create_updates
   	ActionCable.server.broadcast("conversations_#{self.conversation.seller_id}_channel", {
-		  id: id,
-		  conversation_id: self.conversation_id,
-		  user_id: self.user_id,
+		  package_id: self.id,
 		  message: self.message_for_seller,
-		  created_at: created_at,
-		  unread_conversations_count: self.conversation.sellers.unread_conversations_count,
-		  unread_conversation_count: self.conversation.sellers.unread_conversation_count(self.conversation_id),
 		})
 		ActionCable.server.broadcast("conversations_#{self.conversation.buyer_id}_channel", {
-		  id: id,
-		  conversation_id: self.conversation_id,
-		  user_id: user_id,
+		  package_id: self.id,
 		  message: self.message_for_buyer,
-		  created_at: created_at,
-		  unread_conversations_count: self.conversation.buyers.unread_conversations_count,
-		  unread_conversation_count: self.conversation.buyers.unread_conversation_count(self.conversation_id),
 		}) 
   end
 end
