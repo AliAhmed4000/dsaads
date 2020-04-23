@@ -81,13 +81,21 @@ class ConversationsController < ApplicationController
   end 
 
   def starred_me
-    conversation = Conversation.find_by_id(params['id'])  
-    if conversation.starred?
-      conversation.update_column('star','notstarred')
+    @conversation = Conversation.find_by_id(params['id'])
+    if current_user.buyers?
+      if @conversation.seller_starred?
+        @conversation.update_column('seller_star','seller_not_starred')
+      else
+        @conversation.update_column('seller_star','seller_starred')
+      end
     else
-      conversation.update_column('star','starred')
-    end
-    redirect_to conversation_path(conversation.id) 
+      if @conversation.buyer_starred?
+        @conversation.update_column('buyer_star','buyer_not_starred')
+      else
+        @conversation.update_column('buyer_star','buyer_starred')
+      end
+    end 
+    # redirect_to conversation_path(conversation.id) 
   end
 
   def search_user

@@ -18,8 +18,8 @@
           <div class="chat_ib">
             <h5>
               <%= conversation.sellers.full_name %>
-              <span class="chat_date">
-                <% if conversation.starred? %>
+              <span class="chat_date" id="<%= conversation.sellers.id %>">
+                <% if conversation.seller_starred? %>
                   <span class="fa fa-star"></span>
                 <% else %>
                   <span class="fa fa-star-o"></span>
@@ -71,8 +71,8 @@
           </div>
           <div class="chat_ib">
             <h5><%= conversation.buyers.full_name %>
-              <span class="chat_date">
-                <% if conversation.starred? %>
+              <span class="chat_date" id="<%= conversation.buyers.id %>">
+                <% if conversation.buyer_starred? %>
                   <span class="fa fa-star"></span> 
                 <% else %>
                   <span class="fa fa-star-o"></span> 

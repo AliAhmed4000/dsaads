@@ -3,7 +3,7 @@
 <div class="messaging">
 <div class="inbox_msg">
   <div class="inbox_people">
-    <%= render partial: '/conversations/search_bar' %>
+    <%= render partial: '/conversations/chats/search_bar' %>
     <% if @conversations.blank? %>
       <div class="heading-holder">
         <h4 class="text-center" style="padding-top: 5%">No conversation found</h4>
@@ -14,10 +14,12 @@
       </div>
     <% end %>
   </div>
-  <%= render partial: '/conversations/chat_header' %>
+  <div class="chat-header">
+    <%= render partial: '/conversations/chats/chat_header' %>
+  </div>
   <div class="<%= @conversation.blank? ? '' : 'mesgs' %>">
-    <%= render partial: '/conversations/chat' %>
-    <%= render partial: '/conversations/chat_form' %>
+    <%= render partial: '/conversations/chats/chat' %>
+    <%= render partial: '/conversations/chats/chat_form' %>
   </div>
 </div>
 <div id="customer-form-modal"></div>
@@ -166,4 +168,3 @@
     background-color: purple;
   }
 </style>
-
