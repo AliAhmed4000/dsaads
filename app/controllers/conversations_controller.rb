@@ -52,11 +52,11 @@ class ConversationsController < ApplicationController
       if current_user.buyers?
         query = "true"
         query << " AND users.first_name ILIKE '%#{params[:name].split.first.gsub("'", "''")}%'" unless params[:name].blank?
-        @conversations = Conversation.starred.joins(:sellers).where(buyer_id: current_user.id).where(query).order("updated_at DESC")
+        @conversations = Conversation.seller_starred.joins(:sellers).where(buyer_id: current_user.id).where(query).order("updated_at DESC")
       elsif current_user.sellers?
         query = "true"
         query << " AND users.first_name ILIKE '%#{params[:name].split.first.gsub("'", "''")}%'" unless params[:name].blank?
-        @conversations = Conversation.starred.joins(:buyers).where(seller_id: current_user.id).where(query).order("updated_at DESC")
+        @conversations = Conversation.buyer_starred.joins(:buyers).where(seller_id: current_user.id).where(query).order("updated_at DESC")
       end 
       unless params[:id].blank?
         @conversation = Conversation.find(params[:id])
@@ -82,17 +82,22 @@ class ConversationsController < ApplicationController
 
   def starred_me
     @conversation = Conversation.find_by_id(params['id'])
+    @user = params['user_id']
     if current_user.buyers?
       if @conversation.seller_starred?
         @conversation.update_column('seller_star','seller_not_starred')
+        @star = "<span class='fa fa-star-o'><span>".html_safe
       else
         @conversation.update_column('seller_star','seller_starred')
+        @star = "<span class='fa fa-star'><span>".html_safe
       end
     else
       if @conversation.buyer_starred?
         @conversation.update_column('buyer_star','buyer_not_starred')
+        @star = "<span class='fa fa-star-o'><span>".html_safe
       else
         @conversation.update_column('buyer_star','buyer_starred')
+        @star = "<span class='fa fa-star'><span>".html_safe
       end
     end 
     # redirect_to conversation_path(conversation.id) 

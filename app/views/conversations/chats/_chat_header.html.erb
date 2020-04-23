@@ -7,10 +7,10 @@
           <%= link_to @conversation.sellers.full_name,profile_path(@conversation.sellers) %>
           <span>
           <span class="chat_date">
-          <% if @conversation.starred? %>
-            <%= link_to "",starred_me_path(@conversation),class: "fa fa-star",remote: true %> 
+          <% if @conversation.seller_starred? %>
+            <%= link_to "",starred_me_path(@conversation,@conversation.sellers.id),class: "fa fa-star",remote: true %> 
           <% else %>
-            <%= link_to "",starred_me_path(@conversation),class: "fa fa-star-o",remote: true %> 
+            <%= link_to "",starred_me_path(@conversation,@conversation.sellers.id),class: "fa fa-star-o",remote: true %> 
           <% end %>
           </span>
         </h4>
@@ -31,10 +31,10 @@
           &nbsp;&nbsp;
           <%= link_to @conversation.buyers.full_name,profile_path(@conversation.buyers) %>
           <span class="chat_date">
-            <% if @conversation.starred? %>
-              <%= link_to "",starred_me_path(@conversation),class: "fa fa-star",remote: true %> 
+            <% if @conversation.buyer_starred? %>
+              <%= link_to "",starred_me_path(@conversation,@conversation.buyers.id),class: "fa fa-star",remote: true %> 
             <% else %>
-              <%= link_to "",starred_me_path(@conversation),class: "fa fa-star-o",remote: true %> 
+              <%= link_to "",starred_me_path(@conversation,@conversation.buyers.id),class: "fa fa-star-o",remote: true %> 
             <% end %>
           </span>
         </h4>

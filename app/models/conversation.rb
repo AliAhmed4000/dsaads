@@ -4,7 +4,8 @@ class Conversation < ApplicationRecord
   # belongs_to :user, foreign_key: :last_user_id
   has_many :chats, dependent: :destroy
   has_many :chats_recipients, dependent: :destroy
-  enum star: ['notstarred','starred']
+  enum seller_star: ['seller_not_starred','seller_starred']
+  enum buyer_star: ['buyer_not_starred','buyer_starred']
 
   def chat_last_message(user)
   	self.chats.where('user_id=?',user)
