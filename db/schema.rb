@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_23_120602) do
+ActiveRecord::Schema.define(version: 2020_04_28_063857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,6 +221,13 @@ ActiveRecord::Schema.define(version: 2020_04_23_120602) do
     t.integer "user_id"
     t.integer "revision_number"
     t.index ["service_id"], name: "index_packages_on_service_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "payments", force: :cascade do |t|
