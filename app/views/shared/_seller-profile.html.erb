@@ -15,7 +15,7 @@
         <p class="text-secondary profile-icon-size"><i class="fa fa-map-marker profile-icon-size pr-3"></i> From</p>
       </div>
       <div class="col-sm-6 text-right">
-        <p class="text-secondary profile-icon-size"><strong><%= @seller.country %></strong></p>
+        <p class="text-secondary profile-icon-size"><strong><%= @seller.country_name(@seller.country) %></strong></p>
       </div>
     </div>
     <div class="row">

@@ -1,28 +1,4 @@
 <div class="container">
-  <!-- <div class="border border-light text-center" style="margin-bottom: 10px;">
-    <div class="box-tab justified ">
-      <ul class="nav nav-tabs navbar-light bg-light mr-auto nav nav-pills nav-justified">
-        <li class="active nav-item">
-            <a class="nav-link" href="javascript:void(0)" id="chat"><h6>ORDER CHAT</h6>
-            </a>
-          </li>
-          <li class="active nav-item">
-            <a class="nav-link" href="javascript:void(0)" id="detail"><h6>RECIEPT INFORMATION</h6>
-            </a>
-          </li>
-          <li class="active nav-item">
-            <a class="nav-link" href="javascript:void(0)" id="requirement"><h6>BUYER REQUIREMENTS</h6>
-            </a>
-          </li>
-          <%# unless @order.inactive? %>
-            <li class="active nav-item">
-              <a class="nav-link" href="javascript:void(0)" id="remaining"><h6>COUNTDOWN</h6>
-              </a>
-            </li>
-          <%# end %>
-        </ul>
-    </div>
-  </div> -->
   <div class="row">
     <div class="col-lg-9 col-md-12">
       <!-- <div class="border border-light"> --> 
@@ -45,15 +21,9 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <% if @order.inactive? %>  
-                    <a class="nav-link" href="#requirement" data-toggle="tab" data-confirm="Waiting for Requirement">
-                      Buyer Requirements
-                    </a>
-                  <% else %>
-                    <a class="nav-link" href="#requirement" data-toggle="tab">
-                      Buyer Requirements
-                    </a>
-                  <% end %>
+                  <a class="nav-link" href="#requirement" data-toggle="tab">
+                    Buyer Requirements
+                  </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#detail" data-toggle="tab">

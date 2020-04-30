@@ -100,6 +100,10 @@ class OrdersController < ApplicationController
     @order = OrderItem.find_by_id(params[:id])
   end 
   
+  def late_cancel
+    @order = OrderItem.find_by_id(params[:id])
+  end
+
   private 
   def order_params
     params.require(:order).permit(

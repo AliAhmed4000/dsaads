@@ -44,7 +44,7 @@
                 <% if revision.pending? %>
                   <%= link_to "Pending",revision_path(revision),class: "badge badge-danger" %>
                 <% else %>
-                  <%= link_to "Delivered",revision_path(revision),class: "badge badge-success" %>
+                  <%= link_to "delivery in",revision_path(revision),class: "badge badge-success" %>
                 <% end %>
               </td>
             </tr>

@@ -8,7 +8,7 @@
       <% end %>
       <% if @order.revisions.pluck(:status).include?('pending') %>
         <div class="py-3">
-          <%= link_to "REVISIONS HAS BEEN MADE, DELIVERING AGAIN", revision_path(id: @order.revisions.last), method: :patch, class: "btn change-color" %>
+          <%= link_to "REVISION HAS BEEN MADE, DELIVERING AGAIN", revision_path(id: @order.revisions.last), method: :patch, class: "btn change-color",'data-confirm' => "REVISION HAS BEEN MADE, DELIVERING AGAIN" %>
         </div>
       <% end %>
     <% else %> 

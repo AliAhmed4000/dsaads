@@ -32,9 +32,9 @@
               <% if conversation.chat_last_message(current_user.id).blank? %>
                 <% unless conversation.sellers.seller_level(conversation.sellers).blank? %>
                   <%= conversation.sellers.seller_level(conversation.sellers) %> | 
-                  From <%= conversation.sellers.country %>
+                  From <%= conversation.sellers.country_name(conversation.sellers.country) %>
                 <% else %>
-                  From <%= conversation.sellers.country %>
+                  From <%= conversation.sellers.country_name(conversation.sellers.country) %>
                 <% end %>
               <% else %>
                 <% msg = conversation.chat_last_message(current_user.id).last %>
@@ -83,7 +83,7 @@
             </h5>
             <p>
               <% if conversation.chat_last_message(current_user.id).blank? %>
-                From <%= conversation.buyers.country %>
+                From <%= conversation.buyers.country_name(conversation.sellers.country) %>
               <% else %>
                 <% msg = conversation.chat_last_message(current_user.id).last %>
                 <% if msg.message.include?('<<image>>') && msg.custom_offer == 0 %>

@@ -10,11 +10,7 @@
         <% elsif @order.active? %>
           <span class="badge badge-success">active</span>
         <% elsif @order.delivered? %>
-          <% if current_user.buyers? %>
-            <span class="badge badge-info">delivery in</span>
-          <% else %>
-            <span class="badge badge-info">delivered</span>
-          <% end %>
+          <span class="badge badge-info">delivery in</span>
         <% elsif @order.revision? %>
           <%= link_to revision_path(@order.revisions.last) do %>
             <span class="badge badge-info">In Revision</span>

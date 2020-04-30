@@ -1,5 +1,8 @@
 <div class="py-3 border border-light container-fluid tab-pane"  id="requirement">
   <div class="py-3">
+    <% if @order.inactive? %>
+      <div class="alert alert-info" role="alert">WAITING FOR REQUIREMENT</div>
+    <% end %>
     <h6>Buyer Requirement</h6>
     <hr>
     <div class="review-header pt-3"> 

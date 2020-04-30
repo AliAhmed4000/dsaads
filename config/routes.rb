@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/orders/:id/feedback', to: 'orders#feedback', as: "order_feedback"
   get '/orders/:id/dispute', to: 'orders#dispute', as: "order_dispute"
   get '/orders/:id/status', to: 'orders#status', as: "order_status"
+  get '/orders/:id/late_cancel', to: 'orders#late_cancel', as: "late_cancel"
   get '/orders/:id/buyer_requirements', to: 'orders#buyer_requirements', as: "order_buyer_requirements"
   get '/categories/search', to: 'categories#search', as: "search_category"
   get '/category/:id/search/:search', to: 'categories#online_users'

@@ -46,20 +46,20 @@ $(function(){
   });
 });
 
-$("#search").autocomplete({
-  source: function(request,response){
-    $.ajax({
-      url: "/services/search",
-      dataType: "json",
-      data: {search: request.term},
-      success: function(data){
-        console.log(data)
-        response(data);
-      }
-    });
-  },
-  minLength: 1
-});
+// $("#search").autocomplete({
+//   source: function(request,response){
+//     $.ajax({
+//       url: "/services/search",
+//       dataType: "json",
+//       data: {search: request.term},
+//       success: function(data){
+//         console.log(data)
+//         response(data);
+//       }
+//     });
+//   },
+//   minLength: 1
+// });
 </script>
 <style type="text/css">
   .s003 {
