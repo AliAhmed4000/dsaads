@@ -46,9 +46,9 @@
             </div>
             <div class="col-sm1" id="price-id">
               <% if current_user.currency == "USD" %>
-                <%= number_to_currency(@service.basic_package.price) %>
+                <%= number_to_currency(@package.price) %>
               <% else %>
-                <%= number_to_currency((@service.basic_package.price * current_user.currency_unit),:unit=> current_user.symbol) %>
+                <%= number_to_currency((@package.price * current_user.currency_unit),:unit=> current_user.symbol) %>
               <% end %>
             </div>
           </div>

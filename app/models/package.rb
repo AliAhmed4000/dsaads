@@ -56,7 +56,7 @@ class Package < ApplicationRecord
   # validates :revision_number,  inclusion: { in: Package::REVISION_NUMBER }
   enum level: ['basic','standard','premimum','extra_basic','extra_standard','extra_premimum','custom_offer']
   enum sender: ['by_seller','by_buyer']
-  enum customstatus: ['pending','approved','rejected']
+  enum customstatus: ['pending','approved','rejected','cancelled']
   enum revision_number: ['one','two','three','four','five','six','seven','eight','nine','unlimited']
   
   attr_accessor :conversation_id
@@ -87,6 +87,4 @@ class Package < ApplicationRecord
   def buyer_reviews
     BuyerReview.where(package: self)
   end
-
-
 end
