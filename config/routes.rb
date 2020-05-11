@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   delete '/service/:service_id/wishlist/:wish_id',to: 'wish_lists#wish_list_delete', as: "wish_list_delete"
   get '/my_shopping', to: 'balances#my_shopping', as: "my_shopping"
   get '/my_balance', to: 'balances#buyer_balance', as: "buyer_balance"
+  get '/refund_request', to: 'balances#refund_request', as: "refund_request"
   get '/manage_services', to: 'services#manage_services', as: "services_manage"
   get '/service/:service_id/status/:status',to: 'services#change_status', as: "change_status"
   get '/services/:service_id/packages/:id/payment',to: 'packages#payment', as: "packages_payment"
@@ -89,5 +90,6 @@ Rails.application.routes.draw do
   get 'starred', to: 'conversations#starred', as: "conversations_starred"
   get '/package/:id/:status', to: 'packages#status', as: "package_status"
   get '/search/:name', to: 'conversations#search_user', as: "search_user"
+  post '/create_refund_request', to: 'balances#create_refund_request', as: "create_refund_request"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

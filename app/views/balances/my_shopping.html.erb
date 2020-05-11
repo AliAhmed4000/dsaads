@@ -1,86 +1,79 @@
 <div class="container-fluid px-5">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="SortBlufLink">
-          <h3>My Shopping</h3>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="card" style="width: 20rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Purchase Amount</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.buyer_total_balance) %></h5>
-        </div>
-      </div>
-      <div class="card" style="width: 18rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Refunded</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.buyer_refunded_amount) %></h5>
-        </div>
-      </div>
-      <div class="card" style="width: 20rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Withdrawn</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.buyer_withdrawn_amount) %></h5>
-        </div>
-      </div>
-      <div class="card" style="width: 18rem;">
-        <div class="card-body text-center">
-          <h5 class="card-title">Available for Withdraw</h5>
-          <h5 class="card-text"><%= number_to_currency(current_user.buyer_available_for_withdraw_amount) %></h5>
-        </div>
-      </div>
-    </div>
-    <div class="row py-2">
-      <div class="col">
-        <strong>Refund Request:<strong>
-        <strong> 
-          <% if current_user.buyer_available_for_withdraw_amount > 0 %>
-            <%= link_to "PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
-          <% else %>
-            <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No balance or refund To Withdraw"%>
-          <% end %>
-        </strong>
-      </div>
-    </div>
-    <hr>
-    <div class="">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
       <div class="SortBlufLink">
-        <h2>Transaction</h2>
+        <h3>My Shopping</h3>
       </div>
-      <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>For</th>
-            <th>Sub Total</th>
-            <th>Service Fee</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% current_user.buyer_purchases_services.each do |item| %>
-          	<tr>
-              <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
-              <td class="align-middle"><%= link_to item.package.service.title,order_path(item.id) %></td>
-              <td class="align-middle"><%= number_to_currency(item.price) %></td>
-              <td class="align-middle"><%= number_to_currency(item.price*ENV['SERVICE_FEE'].to_i/100) %></td>
-              <td class="align-middle"><%= number_to_currency(item.price + item.price*ENV['SERVICE_FEE'].to_i/100) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
     </div>
   </div>
+  <div class="row">
+    <div class="card" style="width: 20rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title">Purchase Amount</h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.buyer_total_balance) %></h5>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title">Refunded</h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.buyer_refunded_amount) %></h5>
+      </div>
+    </div>
+    <div class="card" style="width: 20rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title">Withdrawn</h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.buyer_withdrawn_amount) %></h5>
+      </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body text-center">
+        <h5 class="card-title">Available for Withdraw</h5>
+        <h5 class="card-text"><%= number_to_currency(current_user.buyer_available_for_withdraw_amount) %></h5>
+      </div>
+    </div>
   </div>
-</section>
+  <div class="row py-2">
+    <div class="col">
+      <strong>WithDraw:<strong>
+      <strong> 
+        <% if current_user.buyer_available_for_withdraw_amount > 0 %>
+          <%= link_to "PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
+        <% else %>
+          <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No balance or refund To Withdraw"%>
+        <% end %>
+      </strong>
+      <strong> 
+        <%= link_to "Request a Refund",refund_request_path,:class=>"btn change-color" ,remote: true %>
+      </strong>
+    </div>
+  </div>
+  <hr>
+  <div class="">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" href="#buyer_transaction" data-toggle="tab">
+          Transaction
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#buyers_refunds" data-toggle="tab">
+          Refund Request
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <%= render partial: 'balances/transactions/buyer_transaction'%>
+      <%= render partial: 'balances/refunds/buyer_refund_requests'%>
+    </div>
+  </div>
+</div>
 <script>
   $(function(){
     $('table').DataTable();
   });
 </script>
 <div id="paypal-form-modal"></div>
+<div id="refund-balance-modal"></div>
 <style type="text/css">
   .change-color{
     background-color: purple;

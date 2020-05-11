@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_28_063857) do
+ActiveRecord::Schema.define(version: 2020_05_08_081517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,6 +181,15 @@ ActiveRecord::Schema.define(version: 2020_04_28_063857) do
     t.integer "revision_no"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["package_id"], name: "index_order_items_on_package_id"
+  end
+
+  create_table "order_refunds", force: :cascade do |t|
+    t.integer "order_item_id"
+    t.string "user_reason"
+    t.string "admin_reason"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "orders", force: :cascade do |t|
