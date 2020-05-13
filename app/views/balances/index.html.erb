@@ -49,31 +49,24 @@
           <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
         <% end %>
       </strong>
+      <strong> 
+        <%= link_to "Contact us about an order",order_request_path,:class=>"btn change-color" ,remote: true %>
+      </strong>
     </div>
   </div>
   <hr>
   <div class="">
-      <div class="SortBlufLink">
-        <h3>Transactions</h3>
-      </div>
-      <table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Subject</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% current_user.payments.withdraw.each do |item| %>
-            <tr>
-              <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>
-              <td class="align-middle"><%=  item.subject %></td>
-              <td class="align-middle"><%= number_to_currency(item.amount) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" href="#seller_transaction" data-toggle="tab">Transaction</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#seller_orders" data-toggle="tab">Order Request</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <%= render partial: 'balances/transactions/seller_transaction'%>
+      <%= render partial: 'balances/refunds/seller_refund_requests'%>
     </div>
   </div>
 </div>
@@ -83,7 +76,6 @@
     $('table').DataTable();
   });
 </script>
-<div id="paypal-form-modal"></div>
 <style type="text/css">
   .change-color{
     background-color: purple;
@@ -96,3 +88,5 @@
     background-color: purple;
   }
 </style>
+<div id="paypal-form-modal"></div>
+<div id="seller-order-modal"></div>

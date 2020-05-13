@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   get '/my_shopping', to: 'balances#my_shopping', as: "my_shopping"
   get '/my_balance', to: 'balances#buyer_balance', as: "buyer_balance"
   get '/refund_request', to: 'balances#refund_request', as: "refund_request"
+  get '/order_request', to: 'balances#order_request', as: "order_request"
   get '/manage_services', to: 'services#manage_services', as: "services_manage"
   get '/service/:service_id/status/:status',to: 'services#change_status', as: "change_status"
   get '/services/:service_id/packages/:id/payment',to: 'packages#payment', as: "packages_payment"

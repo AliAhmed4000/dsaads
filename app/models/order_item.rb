@@ -17,6 +17,7 @@ class OrderItem < ApplicationRecord
   belongs_to :order
   has_many   :reviews, dependent: :destroy
   has_many   :order_cancels, dependent: :destroy
+  has_many   :order_refunds, dependent: :destroy
   has_many   :payments, dependent: :destroy
   has_many   :revisions, dependent: :destroy
   accepts_nested_attributes_for :order_cancels, reject_if: :all_blank, allow_destroy: true

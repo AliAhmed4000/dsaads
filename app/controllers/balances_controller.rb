@@ -5,11 +5,12 @@ class BalancesController < ApplicationController
 	before_action :check_withdraw_amount,only: [:create]
 	def index
 		@order_completed = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:completed])
+  	@order_refunds = OrderRefund.where('order_refunds.user_id=?',current_user.id)
   end
 	
 	def my_shopping
-		@order_refunds = OrderRefund.all
-	end
+		@order_refunds = OrderRefund.where('order_refunds.user_id=?',current_user.id)
+  end
 
 	def show
 		if current_user.paypal_email.blank?
@@ -56,9 +57,14 @@ class BalancesController < ApplicationController
 		@order_disputed = OrderCancel.rejected.buyer_ask_seller_to_cancel_order.joins(order_item:[:order]).where('orders.user_id=? and order_items.status!=?',current_user.id,OrderItem.statuses['cancelled'])
 	end
 
+	def order_request
+		@payment = OrderRefund.new
+		@order_disputed =  OrderCancel.rejected.seller_ask_buyer_to_cancel_order.joins(order_item:[package:[:service]]).where('services.user_id=? and order_items.status!=?',current_user.id,OrderItem.statuses['cancelled'])
+  end 
+
 	def create_refund_request
-		order_refund = OrderRefund.new(refund_params)
-		if order_refund.save
+		order_refund = OrderRefund.new(refund_params) 
+		if order_refund.save(:validate => false)
 			flash[:notice] = "Refund Request Successfully Done."
 			redirect_to balances_path
 		end 
@@ -76,6 +82,7 @@ class BalancesController < ApplicationController
 	end
 	def refund_params 
 		params.require(:order_refund).permit(
+			:user_id,
       :order_item_id,
       :user_reason,
       :status
