@@ -291,6 +291,7 @@ Devise.setup do |config|
   config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"],
     scope: 'email',
     secure_image_url: true,
+    display: "popup",
     auth_type: 'https',
     info_fields: 'email,name,first_name,last_name',
     client_options: {
@@ -300,6 +301,6 @@ Devise.setup do |config|
     token_params: {
         parse: :json
     }
-  config.omniauth :twitter, ENV["TWITTER_CLIENT_ID"], ENV["TWITTER_CLIENT_SECRET"]
-  config.omniauth :gplus, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"],access_type: "online"
+  # config.omniauth :twitter, ENV["TWITTER_CLIENT_ID"], ENV["TWITTER_CLIENT_SECRET"]
+  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"],access_type: "online"
 end

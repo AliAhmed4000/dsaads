@@ -24,7 +24,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,:trackable,
-         :recoverable, :rememberable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :twitter, :gplus]
+         :recoverable, :rememberable, :validatable, :confirmable, :omniauthable, :omniauth_providers => [:facebook, :twitter, :google_oauth2]
   mount_uploader :avatar, AvatarUploader
   has_many :services, dependent: :destroy
   has_many :favorites, dependent: :destroy
@@ -50,7 +50,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_educations
   accepts_nested_attributes_for :user_certificates
   accepts_nested_attributes_for :user_languages
-  validates :email, uniqueness: true, presence: true
+  validates :email,uniqueness: true, presence: true
+  validates :user_name, uniqueness: true, unless: lambda{|u| u.user_name.blank?}
   # validate :check_user_skill, on: :update
   has_secure_token :paypal_token
   attr_accessor :wizard
@@ -61,7 +62,7 @@ class User < ApplicationRecord
   #   end  
   # end
   
-  after_create :set_username
+  # before_save :set_username
   enum currency: ['USD','EUR','GBP','CAD','PKR']
   CURRENCY_LIST = [
     ['USD','USD'],
@@ -71,9 +72,10 @@ class User < ApplicationRecord
     ['PKR','PKR']
   ]
 
-  def set_username 
-    self.update_column('user_name',self.email.split("@").first)
-  end 
+  # def set_username 
+    # binding.pry 
+    # self.update_column('user_name',self.email.split("@").first)
+  # end 
   
   def check_avatar
     if self.avatar.blank?

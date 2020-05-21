@@ -12,9 +12,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
           redirect_to new_user_registration_url, alert: @user.errors.full_messages.first
         end
       end
-    }   
+    }  
   end
-  [:facebook,:twitter,:gplus].each do |provider|
+  [:facebook,:twitter,:google_oauth2].each do |provider|
     provides_callback_for provider
   end
 end

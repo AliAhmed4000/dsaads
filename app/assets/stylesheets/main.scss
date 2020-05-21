@@ -152,14 +152,14 @@ section#home-category i {
 
 /* line 127, app/assets/stylesheets/main.scss */
 .nav-link:hover {
-  color: green;
+  color: purple;
   border-bottom: solid 2px;
-  border-bottom-color: green;
+  border-bottom-color: purple;
 }
 
 /* line 133, app/assets/stylesheets/main.scss */
 .nav-link:active {
-  color: green;
+  color: purple;
   border-bottom: solid 2px;
   border-bottom-color: pink;
 }
@@ -200,7 +200,7 @@ section#home-category i {
 
 /* line 168, app/assets/stylesheets/main.scss */
 #footer {
-  background: #007b5e !important;
+  background: purple !important;
   width: 100%;
   height: 200px;
   left: 0;
@@ -605,4 +605,17 @@ ul.ui-autocomplete {
       background-color: #0088cc;
     }
   }
+}
+.btn{
+  background-color: purple !important;
+  border-color: purple !important;
+  color: white !important;
+}
+
+.btn:hover,
+.btn:active,
+.btn:visited,
+.btn:focus {
+  background-color: purple !important;
+  border-color: purple !important;
 }

@@ -10,7 +10,7 @@
         <% elsif @order.active? %>
           <span class="badge badge-success">active</span>
         <% elsif @order.delivered? %>
-          <span class="badge badge-info">delivery in</span>
+          <span class="badge badge-info">delivery in</span>_
         <% elsif @order.revision? %>
           <%= link_to revision_path(@order.revisions.last) do %>
             <span class="badge badge-info">In Revision</span>
@@ -34,6 +34,8 @@
             <th scope="col">Qunatity</th>
             <th scope="col">Duration</th>
             <th scope="col">Amount</th>
+            <th scope="col">Service Fee</th>
+            <th scope="col">Total Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +48,20 @@
                 <%= number_to_currency(@order.price) %>
               <% else %>
                 <%= number_to_currency((@order.price*current_user.currency_unit),:unit=>current_user.symbol) %>
+              <% end %>
+            </td>
+            <td>
+              <% if current_user.currency == "USD" %>
+                <%= number_to_currency(@order.service_fee) %>
+              <% else %>
+                <%= number_to_currency((@order.service_fee*current_user.currency_unit),:unit=>current_user.symbol) %>
+              <% end %>
+            </td>
+            <td>
+              <% if current_user.currency == "USD" %>
+                <%= number_to_currency(@order.total_amount) %>
+              <% else %>
+                <%= number_to_currency((@order.total_amount*current_user.currency_unit),:unit=>current_user.symbol) %>
               <% end %>
             </td>
           </tr>

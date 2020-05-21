@@ -32,10 +32,17 @@ class OrderItem < ApplicationRecord
   attr_accessor :purchase
   after_create :set_purchase, unless: lambda{|i| i.purchase.blank?}
   after_create :set_revision
+  after_create :set_amount
 
   def set_revision
     self.update_column('revision_no',self.package.revision_number)
   end
+  
+  def set_amount
+    service_fee = self.price*ENV['SERVICE_FEE'].to_i/100
+    total_amount = service_fee + self.price
+    self.update_columns('service_fee'=>service_fee,'total_amount'=>total_amount)
+  end   
   
   def set_purchase
     service_fee = self.price*self.quantity*ENV['SERVICE_FEE'].to_i/100

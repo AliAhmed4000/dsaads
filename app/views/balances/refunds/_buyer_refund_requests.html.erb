@@ -4,7 +4,7 @@
 	    <tr>
 	      <th>Order No</th>
 	      <th>Reason</th>
-	      <th>Admin Reason</th>
+	      <!-- <th>Admin Reason</th> -->
 	      <th>status</th>
 	      <th>Created at</th>
 	    </tr>
@@ -14,7 +14,7 @@
 	    	<tr>
 	        <td class="align-middle"><%= link_to item.order_item_id,order_path(item.order_item_id),'target' => '_blank' %></td>
 	        <td class="align-middle"><%= item.user_reason %></td>
-	        <td class="align-middle"><%= item.admin_reason %></td>
+	        <!-- <td class="align-middle"><%#= item.admin_reason %></td> -->
 	        <td class="align-middle">
 	        	<% if item.pending? %>
 	        		<div class="badge badge-info">pending</div>

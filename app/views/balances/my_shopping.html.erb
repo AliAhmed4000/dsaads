@@ -34,17 +34,17 @@
   </div>
   <div class="row py-2">
     <div class="col">
-      <strong>WithDraw:<strong>
-      <strong> 
+      <!-- <strong>WithDraw:<strong> -->
+      <!-- <strong> --> 
         <% if current_user.buyer_available_for_withdraw_amount > 0 %>
-          <%= link_to "PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
+          <%= link_to "WithDraw Refund to PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
         <% else %>
-          <%= link_to "PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No balance or refund To Withdraw"%>
+          <%= link_to "WithDraw Refund to PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No balance or refund To Withdraw"%>
         <% end %>
-      </strong>
-      <strong> 
+      <!-- </strong> -->
+      <!-- <strong> --> 
         <%= link_to "Request a Refund",refund_request_path,:class=>"btn change-color" ,remote: true %>
-      </strong>
+      <!-- </strong> -->
     </div>
   </div>
   <hr>

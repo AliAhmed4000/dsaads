@@ -1,9 +1,8 @@
 <div class="row bootstrap snippets">
   <div class="col-md-12 col-md-offset-2 col-sm-12">
-    <div class="comment-wrapper">
-      <div class="panel panel-info">
-        <div class="panel-body">
-          <div class="clearfix"></div>
+    <!-- <div class="comment-wrapper"> -->
+      <!-- <div class="panel panel-info">
+       -->  <!-- <div class="panel-body"> -->
           <hr>
           <%= simple_form_for @review,url: reviews_path, method: 'post',:html => {:class => 'form-horizontal'} do |f| %>
             <%= f.error_notification %>
@@ -32,8 +31,8 @@
             <%= f.input :feedback,as: :hidden, :input_html => { :value => "feedback" } %>
             <%= f.submit "Post", class: "btn btn-info pull-right", id: "post-reset" %>
           <% end %>
-        </div>
-      </div>
-    </div>
+        <!-- </div> -->
+      <!-- </div> -->
+    <!-- </div> -->
   </div>
 </div>

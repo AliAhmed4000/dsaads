@@ -1,10 +1,19 @@
 class ApplicationController < ActionController::Base
+  
   before_action :set_global_search_variable, :get_category_list
+  before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_user_status, if: :devise_controller?
   before_action :set_user_currency
   rescue_from PG::ForeignKeyViolation, :with => :unable_to_delete
   rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
-  
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [
+      :user_name,
+      :email,
+      :password,
+      :password_confirmation
+    ])
+  end
   private
   def set_global_search_variable
     id = params[:id] unless params[:id].blank?

@@ -9,20 +9,21 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
           <div class="form-group">
-            <%= f.email_field :email, required: true, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control" %>
+            <%= f.input :user_name, required: true %>
           </div>
           <div class="form-group">
-            <%= f.password_field :password, required: true, autocomplete: "new-password", placeholder: "Password", class: "form-control" %>
+            <%= f.input :email, required: true, autofocus: true, autocomplete: "email" %>
           </div>
           <div class="form-group">
-            <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Password", class: "form-control" %>
+            <%= f.input :password, required: "required" %>
           </div>
- 
-          <br/><br/>
+          <div class="form-group">
+            <%= f.input :password_confirmation, required: "required" %>
+          </div>
           <div class="actions">
-            <%= f.submit "Sign Up", class: "btn btn-info btn-block" %>
+            <%= f.submit "Sign Up", class: "btn btn-purple btn-block" %>
           </div>
         <% end %>
       </div>
