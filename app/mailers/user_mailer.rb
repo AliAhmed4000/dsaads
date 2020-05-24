@@ -85,5 +85,10 @@ class UserMailer < ApplicationMailer
   def paypal_confirmation_email(arguments)
     @user = arguments
     mail(:to => @user.email, :subject => "Paypal Email Confirmation.")
-  end  
+  end
+
+  def order_refund_notification(arguments)
+    @refund = arguments 
+    mail(:to => @refund.user.email, :subject => "Order Refund.")
+  end 
 end

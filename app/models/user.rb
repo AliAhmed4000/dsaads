@@ -43,6 +43,7 @@ class User < ApplicationRecord
   has_many :wishes, dependent: :destroy
   has_many :identities, class_name: "Identity", dependent: :destroy
   has_many :payments
+  has_many :order_refunds
   enum role: [:buyers,:sellers]
 
   accepts_nested_attributes_for :user_occupations
@@ -180,9 +181,9 @@ class User < ApplicationRecord
     if seller.services.active.count >= 7 && seller.services.joins(:custom_packages).sum(:price) >= 5000 
       return "New Seller"
     elsif seller.services.active.count >= 10 && seller.order_items.completed.sum(:price) >= 1000 && seller.order_items.completed.count >= 25 && seller.services.joins(:custom_packages).sum(:price) >= 7000
-      return "Pro Seller"
-    elsif seller.order_items.completed.sum(:price) >= 15000 && seller.order_items.completed.count >= 80 
       return "Top Seller"
+    elsif seller.order_items.completed.sum(:price) >= 15000 && seller.order_items.completed.count >= 80 
+      return "Excellent Seller"
     end 
   end
 

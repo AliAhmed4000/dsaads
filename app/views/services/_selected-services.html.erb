@@ -19,5 +19,22 @@
 <div class="pagination text-success justify-content-center mt-5">
   <% unless @services.blank? %>
     <%= paginate @services %>
+    <style type="text/css">
+      .page-link {
+        color: purple;
+        background-color: #fff;
+        border: 1px solid purple;
+      }
+      .page-link:hover {
+        color: purple;
+        background-color: #e9ecef;
+        border-color: purple;
+      }
+      .page-item.active .page-link {
+        color: #fff;
+        background-color: purple;
+        border-color: purple;
+      }
+    </style>
   <% end %>
 </div>

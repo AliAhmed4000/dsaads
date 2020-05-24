@@ -1,6 +1,6 @@
 <h4>FAQ</h4>
 <div class="accordion" id="accordionExample">
-  <div class="card">
+  <div class="">
     <% @service.faqs.each do |faq| %>
 	    <div class="card-header" id="headingOne">
 	      <h5 class="mb-0">
@@ -23,11 +23,27 @@
   border: purple;
   color: white;
 }
-
 .btn-button:hover {
   background-color: purple;
   border: purple;
   text-decoration: none;
 }
-
+.card-header{
+	background-color: white;
+}
 </style>
+<script type="text/javascript">
+	// $(".card-header").click(function() {
+ //  	$('.collapse').collapse('show')
+ //  	// $("#myCollapsible").collapse('show');
+	// });
+	$(document).ready(function(){
+		$('.accordion').on('shown.bs.collapse', function () {
+	   	$(".collapse").addClass('show');
+		});
+
+		// $('.accordion').on('hidden.bs.collapse', function () {
+	 //   	alert("Closed")
+		// });
+	});
+</script>

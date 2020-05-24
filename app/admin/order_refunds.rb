@@ -23,7 +23,7 @@ ActiveAdmin.register OrderRefund do
 
   form do |f|
     f.inputs do
-      f.input :admin_reason, label: "Reason"
+      f.input :admin_reason, label: "Reason", as: :text
       f.input :status
     end
     f.actions
