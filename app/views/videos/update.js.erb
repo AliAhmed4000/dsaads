@@ -1,0 +1,7 @@
+$("#video_errors").html('')
+<% unless @service.valid?  %>
+	$("#video_errors").append("<div class='alert alert-danger'>" +
+    "<% @service.errors.full_messages.each do |msg| %><div><%= msg.gsub('"', "'") %></div><%end%>"+
+  "</div>")
+   $("#video_errors").show();
+<% end %>

@@ -9,18 +9,33 @@
 <div class="container font-weight-bold">
   <h6>Service Video</h6>
   <p>Add a relevant, high quality video that best showcases your Service.<span class="pull-right">(0/1)</span></p>
-  <p>Please choose a video shorter than 75 seconds and smaller than 50MB</p>
-  <% unless @service.video.blank? %>
+  <!-- <p>Please choose a video shorter than 75 seconds and smaller than 50MB</p> -->
+  <p>Please add youtube embeded link.</p>
+  <% unless @service.video_link.blank? %>
     <div id="my-video">
-      <video height="300" controls>
-        <source src="<%= @service.video.video_url %>">
-      </video>
-      <div><%= link_to "Remove Video",video_path(@service.video), method: 'delete' %></div>
+      <!-- <video height="300" controls> -->
+        <!-- <source src="<%#= @service.video_link %>"> -->
+          <iframe width="420" height="315"
+            src="<%= @service.video_link %>">
+          </iframe> 
+      <!-- </video> -->
+      <div><%= link_to "Remove Video",video_path(@service), method: 'delete' %></div>
     </div>
   <% else %>
-    <%= simple_form_for @service,url: video_upload_path(@service),method: 'post',html: {class: "dropzone",id: "myDropzoneVideo" } do |f|  %>
-    <% end %>
+    <%= link_to "Add Video Link",edit_video_path(@service),:class=>"btn change-color" ,remote: true, method: 'get' %>
   <% end %>
+
+  <%# unless @service.video.blank? %>
+    <!-- <div id="my-video">
+      <video height="300" controls>
+        <source src="<%#= @service.video.video_url %>">
+      </video>
+      <div><%#= link_to "Remove Video",video_path(@service.video), method: 'delete' %></div>
+    </div> -->
+  <%# else %>
+    <%#= simple_form_for @service,url: video_upload_path(@service),method: 'post',html: {class: "dropzone",id: "myDropzoneVideo" } do |f|  %>
+    <%# end %>
+  <%# end %>
   <div>
     <span class="inline-block float-right">
       <% if @service.publish? %>
@@ -31,7 +46,8 @@
     </span> 
   </div>
 </div>
-<script type="text/javascript">  
+<div id="video-modal"></div>
+<!-- <script type="text/javascript">  
   Dropzone.options.myDropzoneVideo = {
     acceptedFiles: 'video/*',
     maxFilesize: 50,
@@ -47,7 +63,7 @@
     }   
   };
   $("#myDropzoneVideo").dropzone();
-</script>
+</script> -->
 <style type="text/css">
 .dz-image { border: 1px solid #000 }
 .dz-default {

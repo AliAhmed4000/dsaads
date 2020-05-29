@@ -57,6 +57,8 @@ class Service < ApplicationRecord
   # validates :title, length: {minimum: 50, maximum: 700}
   # validates :description, length: {minimum: 50, maximum: 700}
   # validates :requirements, length: {minimum: 50, maximum: 700}
+  YT_LINK_FORMAT = /\A.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/i
+  validates :video_link, format: YT_LINK_FORMAT, unless: lambda{|s| s.video_link.blank?}
 
   enum status: ['active','inactive']
   attr_accessor :sub_category, :wizard, :new_seller, :top_seller, :pro_seller, :conversation_id

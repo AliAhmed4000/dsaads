@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   resources :skills, only: [:destroy]
   resources :languages, only: [:destroy]
   resources :photos, only: [:destroy]
-  resources :videos, only: [:destroy]
+  resources :videos
   post '/services/:id/image', to: 'services#file_upload', as: "file_upload"
   post '/services/:id/custom_offer_create', to: 'services#custom_offer_create', as: 'custom_offer_create'
   get '/custom_offer/:id/:status', to: 'services#custom_offer_update', as: 'custom_offer_update'
