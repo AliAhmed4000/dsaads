@@ -1,15 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-light sticky-top p-3 navbar-light" style="position: relative">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top navbar-light">
+  <!-- <div class="container-fluid"> -->
     <div class="navbar-brand">
       <%= link_to image_tag('test-logo.png', width: '50%'), root_path, class: "" %>
-      <%= render 'pages/search-bar' %>
     </div>
-    
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- Collect the nav links, forms, and other content for toggling -->  
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <%= render 'pages/search-bar' %>
       <ul class="navbar-nav ml-auto profile-setting">
         <!-- Other Nav Tags -->
         <li>
@@ -31,7 +30,7 @@
             <% end %>
           </li>    
           <% if current_user.buyers? %>
-            <li><%= link_to 'Orders', orders_path%></li>
+            <li class="nav-item"><%= link_to 'Orders', orders_path%></li>
             <li class="nav-item"><%= link_to 'Saved', favorites_path%></li>
             <% unless current_user.orders.blank? %>
               <li class="nav-item"><%= link_to 'My Shopping', my_shopping_path%></li>
@@ -72,6 +71,11 @@
         <% end %>
       </ul>  
     </div> 
-  </div>
+  <!-- </div> -->
 </nav>
 <div id="buyer-balance-modal"></div>
+<style type="text/css">
+  .navbar-brand {
+  margin-right: -6rem;
+}
+</style>

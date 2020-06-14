@@ -6,9 +6,9 @@
     itemSelectText: '',
   });
 </script>
-<section id="showcase">
+<!-- <section id=""> -->
   <div class="s003">
-    <%= form_tag services_path,:id => 'elm_id', method: :get do %>
+    <%= form_tag services_path,:id => 'elm_id',class: "form-inline my-2 my-lg-0", method: :get do %>
       <div class="inner-form ui-widget">
         <div class="input-field first-wrap">
           <div class="input-select">
@@ -31,7 +31,7 @@
       </div>
     <% end %>
   </div>
-</section>
+<!-- </section> -->
 <script type="text/javascript">
   $("#search-button").click(function() {
     $("#elm_id").submit();
@@ -63,8 +63,8 @@ $(function(){
 </script>
 <style type="text/css">
   .s003 {
-  position: absolute;
-  height: 40px;
+  /*position: absolute;*/
+  /*height: 40px;*/
   top: 15px;
   left: 115px;
   display: -ms-flexbox;
