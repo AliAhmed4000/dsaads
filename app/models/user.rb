@@ -56,7 +56,7 @@ class User < ApplicationRecord
   # validate :check_user_skill, on: :update
   has_secure_token :paypal_token
   attr_accessor :wizard
-  
+  after_create :send_email_become_seller
   # def check_user_skill
   #   if self.user_skill_ids.blank? || self.user_language_ids.blank?
   #     errors.add(:base, 'Select Atleast One Professional Body Type')
@@ -77,7 +77,10 @@ class User < ApplicationRecord
     # binding.pry 
     # self.update_column('user_name',self.email.split("@").first)
   # end 
-  
+  def send_email_become_seller
+    UserMailer.send_seller_profile_completion_notifiction(self).deliver_now
+  end
+
   def check_avatar
     if self.avatar.blank?
       gravatar_id = Digest::MD5::hexdigest(email).downcase

@@ -1,5 +1,5 @@
 <div class="container">
-  <h4>Personal Information</h4>
+  <h4>Profile Information</h4>
   <%= simple_form_for @user, url: onboarding_path(@user.id), wrapper: :horizontal_form, 
   defaults: { input_html: { class: 'mt-3' },label_html: { class: 'mt-3' }}, 
   wrapper_mappings: {
@@ -12,6 +12,7 @@
     range:         :horizontal_range,
     time:          :horizontal_multi_select} do |f|  %> 
     <%= f.error_notification %>
+    <%= f.input :user_name,input_html: {disabled: "disabled"}, required: true %>
     <%= f.input :first_name, required: true %>
     <%= f.input :last_name, required: true %>
     <%= f.input :email, input_html: {disabled: "disabled"}, required: true %>
@@ -23,7 +24,8 @@
     <%= f.input :country, as: :country, required: true , prompt: true %>
     <%= f.input :language, collection: LanguageList::COMMON_LANGUAGES, required: true ,prompt: true %>
     <%= f.input :description ,required: true, hint: 'Minimum 150 words required', input_html: {rows: "5"} %> 
-    <%= f.input :wizard, :as => :hidden, :input_html => {:value => "seller_personal_info"} %> 
+    <%= f.input :wizard, :as => :hidden, :input_html => {:value => "seller_personal_info"} %>
+    <p>TO REQUEST CHANGES TO ACCOUNT INFORMATION CONTACT CUSTOMER SERVICE</p> 
     <div class="form-group row mb-0">
       <div class="col-sm-9 offset-sm-3">
         <%= f.button :submit, class: "btn-success pull-right", value: 'Continue' %>

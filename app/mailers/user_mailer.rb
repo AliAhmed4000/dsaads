@@ -90,5 +90,10 @@ class UserMailer < ApplicationMailer
   def order_refund_notification(arguments)
     @refund = arguments 
     mail(:to => @refund.user.email, :subject => "Order Refund.")
+  end
+
+  def send_seller_profile_completion_notifiction(arguments)
+    @user = arguments
+    mail(:to => @user.email, :subject => "Become Seller")
   end 
 end
