@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
       @order_disputed = OrderCancel.joins(order_item:[:order]).where('orders.user_id=?',current_user.id) 
       @order_review = @order_completed.select{|order| order.buyer_star_status.blank?}
       @order_late = OrderItem.active.joins(:order).where('orders.user_id=?',current_user.id).where('order_items.ending_at <?',DateTime.now)
-      @order_revision = Revision.joins(:order_item).where('revisions.buyer_id=?',current_user.id)
+      @order_revision = Revision.pending.joins(:order_item).where('revisions.buyer_id=?',current_user.id)
     else
       @order_start = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:inactive])
       @order_active = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:active])
@@ -23,7 +23,7 @@ class OrdersController < ApplicationController
       @order_review = OrderItem.review.joins(package:[:service]).where('services.user_id=?',current_user.id)
       @order_priority = OrderItem.active.joins(package:[:service]).where('services.user_id=?',current_user.id).where('order_items.ending_at'=>DateTime.now..3.days.from_now)
       @order_late = OrderItem.active.joins(package:[:service]).where('services.user_id=?',current_user.id).where('order_items.ending_at <?',DateTime.now)
-      @order_revision = Revision.joins(:order_item).where('revisions.seller_id=?',current_user.id)
+      @order_revision = Revision.pending.joins(:order_item).where('revisions.seller_id=?',current_user.id)
     end 
   end
 

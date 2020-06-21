@@ -8,7 +8,26 @@
       <% end %>
       <% if @order.revisions.pluck(:status).include?('pending') %>
         <div class="py-3">
-          <%= link_to "REVISION HAS BEEN MADE, DELIVERING AGAIN", revision_path(id: @order.revisions.last), method: :patch, class: "btn change-color",'data-confirm' => "REVISION HAS BEEN MADE, DELIVERING AGAIN" %>
+          <button type="btn change-color" class="btn btn-primary" data-toggle="modal" data-target="#deilvery_again">REVISION HAS BEEN MADE, DELIVERING AGAIN</button>
+        </div>
+        <div class="modal fade" id="deilvery_again" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Deliver Again</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                REVISION HAS BEEN MADE, DELIVERING AGAIN
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <%= link_to "yes", revision_path(id: @order.revisions.last), method: :patch, class: "btn change-color" %>
+              </div>
+            </div>
+          </div>
         </div>
       <% end %>
     <% else %> 
@@ -28,3 +47,4 @@
     <% end %>
   <% end %>
 </div>
+

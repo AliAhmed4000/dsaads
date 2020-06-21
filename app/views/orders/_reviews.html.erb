@@ -27,15 +27,12 @@
           <% end %>
         </strong>
         <p>
-          <% unless review.revision.blank? %>
-            <%= link_to "Revision",revision_path(review.revision),:target => "_blank",class: "btn change-color"  %>
-          <% end %>
           <% unless review.order_cancel.blank? %>
             <% if review.order_cancel.seller_extend_delivery_time? && review.order_cancel.approved? %>
               <%= link_to "Delivery extend by #{review.order_cancel.extend_delivery} days.",order_dispute_path(review.order_cancel),:target => "_blank",class: "btn change-color"  %>
             <% end %>
           <% end %>
-          <%= strip_tags(review.comment) %>
+          <%= review.comment.to_s.html_safe %>
           <% unless review.attachment.blank? %>
             <span>
               <%= link_to review.attachment_url,:target => "_blank" do  %>

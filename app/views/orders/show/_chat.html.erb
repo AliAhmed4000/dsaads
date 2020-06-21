@@ -37,7 +37,15 @@
               <div>
                 <h6><%= @order.package.service.seller.full_name %> last seen <%= time_ago_in_words(@order.package.service.seller.last_sign_in_at) %> ago </h6> 
               </div>
-              <%= f.submit "Post", class: "btn change-color pull-right", id: "post-reset" %>
+              <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
+                <% if !@order.revisions.blank? && @order.revisions.pluck(:status).include?('pending') %>
+                  <button type="btn change-color" class="btn change-color pull-right" data-toggle="modal" data-target="#deilvery_again">Post</button>
+                <% else %>
+                  <%= f.submit "Post", class: "btn change-color pull-right", id: "post-reset" %>
+                <% end %>
+              <% else %>
+                <%= f.submit "Post", class: "btn change-color pull-right", id: "post-reset" %>
+              <% end %>
             <% end %>
           <% end %>
       </div>

@@ -50,7 +50,7 @@
                 <% if current_user.buyers? %>
                   <%= link_to "Enter Requirements Here",order_buyer_requirements_path(item.id),method: 'get',class: "badge badge-info",remote: true %>
                 <% else %>
-                  <%= link_to "Waiting for Requirements",order_path(item.id),method: 'get',class: "badge badge-info","data-confirm"=>"Waiting for Requirement" %>
+                  <%= link_to "Waiting for Requirements",order_path(item.id),method: 'get',class: "badge badge-info" %>
                 <% end %>
               </td>
             </tr>
