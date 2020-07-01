@@ -32,19 +32,19 @@
           <% if current_user.buyers? %>
             <li class="nav-item"><%= link_to 'Orders', orders_path%></li>
             <li class="nav-item"><%= link_to 'Saved', favorites_path%></li>
-            <% unless current_user.orders.blank? %>
+            <%# unless current_user.orders.blank? %>
               <li class="nav-item"><%= link_to 'My Shopping', my_shopping_path%></li>
-            <% end %>
-            <% if current_user.buyer_total_balance > 0 %>
+            <%# end %>
+            <%# if current_user.buyer_total_balance > 0 %>
               <li class="nav-item">    
                 <%= link_to 'Balance', buyer_balance_path, remote: true%>
               </li>
-            <% end %> 
+            <%# end %> 
           <% else %>
             <!-- <li class="nav-item"><%#= link_to 'Dashboard', seller_dashboard_path %></li> -->
             <li class="nav-item"><%= link_to 'Orders', orders_path %></li>
             <li class="nav-item"><%= link_to 'Services', services_manage_path%></li>
-            <li class="nav-item"><%= link_to 'Earning', balances_path%></li>
+            <li class="nav-item"><%= link_to 'Earnings', balances_path%></li>
           <% end %>
           <% if current_user.user_skills.blank? && current_user.user_languages.blank? %>
             <li class="nav-item"><%= link_to 'Become a Seller', seller_personal_info_path%></li>
