@@ -8,7 +8,15 @@
 </div>
 <div class="container font-weight-bold">
   <h6>Service Video</h6>
-  <p>Add a relevant, high quality video that best showcases your Service.<span class="pull-right">(0/1)</span></p>
+  <p>Add a relevant, high quality video that best showcases your Service.
+    <span class="pull-right">
+    <% unless @service.video_link.blank? %>
+      (0/1)
+    <% else %>
+      (1/1)
+    <% end %>
+    </span>
+  </p>
   <!-- <p>Please choose a video shorter than 75 seconds and smaller than 50MB</p> -->
   <p>Please add youtube embeded link.</p>
   <% unless @service.video_link.blank? %>
@@ -22,7 +30,12 @@
       <div><%= link_to "Remove Video",video_path(@service), method: 'delete' %></div>
     </div>
   <% else %>
-    <%= link_to "Add Video Link",edit_video_path(@service),:class=>"btn change-color" ,remote: true, method: 'get' %>
+    <%= simple_form_for @service, url: video_path,method: :put, remote: true do  |f|%>
+      <%= f.error_notification %>
+      <%= f.input :video_link,required: true %>
+      <%= f.submit "Submit", class: "btn change-color" %>
+    <% end %>
+    <%#= link_to "Add Video Link",edit_video_path(@service),:class=>"btn change-color" ,remote: true, method: 'get' %>
   <% end %>
 
   <%# unless @service.video.blank? %>
