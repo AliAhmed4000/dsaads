@@ -39,7 +39,7 @@
               </div>
               <% if current_user.sellers? && @order.package.service.user_id == current_user.id %>
                 <% if !@order.revisions.blank? && @order.revisions.pluck(:status).include?('pending') %>
-                  <button type="btn change-color" class="btn change-color pull-right" data-toggle="modal" data-target="#deilvery_again">Post</button>
+                  <button type="btn change-color" class="btn change-color pull-right" data-toggle="modal" data-target="#deilvery_again" id="post-data">Post</button>
                 <% else %>
                   <%= f.submit "Post", class: "btn change-color pull-right", id: "post-reset" %>
                 <% end %>
@@ -81,12 +81,15 @@
   });
   $('#new_review').submit(function(e){
     var text = $("#new_review iframe").contents().find("body").text();
-    var file = $('#file-input').val()
+    var file = $('#file-input').val();
     if(text == "" && file == ""){
       return false;
-    }else{
+    }else if($('#post-data').length == 1){
+      $("#new_review iframe").contents().find("body").text("");
+      return false;
+    }
+    else{
       return true;
     }
   });
-
 </script>

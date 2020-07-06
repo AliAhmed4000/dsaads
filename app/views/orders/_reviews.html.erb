@@ -37,6 +37,7 @@
             <span>
               <%= link_to review.attachment_url,:target => "_blank" do  %>
                 <i class="fa fa-paperclip" aria-hidden="true"></i>
+                <%= review.attachment.file.filename %>
               <% end %>
             <%#= image_tag review.attachment_url(:medium), class: 'img-circle', alt: "" %>
             </span>

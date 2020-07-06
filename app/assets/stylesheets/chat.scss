@@ -3,7 +3,8 @@ img{ max-width:100%;}
 .inbox_people {
   float: left;
   overflow: hidden;
-  width: 40%; border-right:1px solid #c4c4c4;
+  // width: 40%; 
+  border-right:1px solid #c4c4c4;
 }
 .inbox_msg {
   border: 1px solid #c4c4c4;
@@ -61,7 +62,9 @@ img{ max-width:100%;}
 }
 .inbox_chat { height: 550px; overflow-y: scroll;}
 
-.active_chat{ background:#ebebeb;}
+.active_chat{ 
+  // background:#ebebeb;
+}
 
 .incoming_msg_img {
   display: inline-block;
