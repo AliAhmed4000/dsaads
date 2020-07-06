@@ -51,8 +51,9 @@
   }
 
   $( document ).ready(function() {
-    /*var category = $('#service_category_id').val();
-     $.ajax({
+    var category = "<%= @service.category.sub_category.id %>";
+    $("#service_category_id option[value=<%= @service.category.sub_category.id %>]").attr('selected', 'selected');
+    $.ajax({
       url:  "/categories/search/",
       type: "get",
       data: {id: category},
@@ -72,7 +73,7 @@
           $('#sub1').append(sub_data);
         }
       },
-    })*/
+    })
   });
 </script>
 
