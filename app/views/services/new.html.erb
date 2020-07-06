@@ -9,10 +9,10 @@
     </div>
     <div class="row mb-3">
       <div class="col-md-6 col-sm-12">
-        <%= f.input :category_id, label: 'Category', collection: Category.get_categories, prompt: 'Select Category', :input_html => {:onchange => "get_sub_category(this)"},required: true %>
+        <%= f.input :category_id, label: 'Category', collection: Category.get_categories, :input_html => {:onchange => "get_sub_category(this)"},required: true %>
       </div>
       <div class="col-md-6 col-sm-12">
-        <%= f.input :sub_category, label: 'Sub Category',collection: [],prompt: 'Select Sub Category',include_blank: true, :input_html => {:id => "sub1"},required: true %>
+        <%= f.input :sub_category, label: 'Sub Category',collection: [], :input_html => {:id => "sub1"},required: true %>
       </div>
     </div>    
     <div class ="form-group row mb-0">
@@ -32,9 +32,9 @@
       success: function(response){
         $('#sub1').html("")
         if(response.data == 0){
-          $('#sub1').append("<option>Select Sub Category</option>");
+          // $('#sub1').append("<option>Select Sub Category</option>");
         }else{
-          html = "<option>Select Sub Category</option>";
+          // html = "<option>Select Sub Category</option>";
           var sub_data = new Array();    
           for(var i in response.data){
             html  = '<option value='+response.data[i].id+'>';

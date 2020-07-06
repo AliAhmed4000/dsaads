@@ -204,7 +204,8 @@ class ServicesController < ApplicationController
         flash[:notice] = "Service Created Successfully"
       end
     else
-      render :new
+      @set_bar = "ok"
+      render :edit
       flash[:notice] = @service.errors.full_messages
     end
   end
@@ -380,6 +381,7 @@ class ServicesController < ApplicationController
       :sub_category,
       :publish,
       :wizard,
+      :owerview,
       basic_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level,:user_id,:sender],
       standard_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level,:user_id,:sender],
       premimum_package_attributes: [:id, :_destroy, :name, :price, :description, :is_commercial, :revision_number, :delivery_time, :publish, :level,:user_id,:sender],

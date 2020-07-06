@@ -53,7 +53,8 @@ class Service < ApplicationRecord
   accepts_nested_attributes_for :question2_faq, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :question3_faq, reject_if: :all_blank, allow_destroy: true
   acts_as_punchable
-  # validates :title, :category_id, presence: true
+  
+  validates :title,:sub_category, :category_id, presence: true, unless: lambda {|s| s.owerview.blank?}
   # validates :title, length: {minimum: 50, maximum: 700}
   # validates :description, length: {minimum: 50, maximum: 700}
   # validates :requirements, length: {minimum: 50, maximum: 700}
@@ -61,7 +62,7 @@ class Service < ApplicationRecord
   validates :video_link, format: YT_LINK_FORMAT, unless: lambda{|s| s.video_link.blank?}
 
   enum status: ['active','inactive']
-  attr_accessor :sub_category, :wizard, :new_seller, :top_seller, :pro_seller, :conversation_id
+  attr_accessor :sub_category, :wizard, :new_seller, :top_seller, :pro_seller, :conversation_id, :owerview
   after_create :set_sub_category
   after_update :set_sub_category_on_change,if: lambda{|s| s.sub_category.present?}
   after_save :set_i_can

@@ -36,6 +36,9 @@ class UsersController < ApplicationController
           render "seller_linked_accounts"
         elsif params[:user][:wizard] == "seller_finish_info"
           render "seller_account_security"
+        elsif params[:user][:wizard] == "buyer_info"
+          @seller = @user
+          render template: "users/show"
         end
       end   
     else
@@ -144,6 +147,7 @@ class UsersController < ApplicationController
   private
   def seller_params
     params.require(:user).permit(
+      :user_name,
       :first_name,
       :last_name, 
       :avatar, 
