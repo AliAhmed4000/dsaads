@@ -9,7 +9,7 @@
 	        </button>
 	      </h5>
 	    </div>
-	    <div id="collapseOne<%= faq.id %>" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+	    <div id="collapseOne<%= faq.id %>" class="collapse">
 	      <div class="card-body">
           <%= faq.answer %>
 	      </div>
@@ -33,14 +33,19 @@
 }
 </style>
 <script type="text/javascript">
+	// function show_accordion(x){
+	// 	$("").show()
+	// }
 	// $(".card-header").click(function() {
  //  	$('.collapse').collapse('show')
  //  	// $("#myCollapsible").collapse('show');
 	// });
 	$(document).ready(function(){
-		$('.accordion').on('shown.bs.collapse', function () {
-	   	$(".collapse").addClass('show');
-		});
+		        // $( ".myaccordion" ).accordion({ collapsible: true });
+		// $('.accordion').on('shown.bs.collapse',function () {
+	   		// alert("FF");
+	   		// $(".collapse").addClass('show');
+		// });
 
 		// $('.accordion').on('hidden.bs.collapse', function () {
 	 //   	alert("Closed")
