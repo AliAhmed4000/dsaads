@@ -54,7 +54,8 @@ class Service < ApplicationRecord
   accepts_nested_attributes_for :question3_faq, reject_if: :all_blank, allow_destroy: true
   acts_as_punchable
   
-  validates :title,:sub_category, :category_id, presence: true, unless: lambda {|s| s.owerview.blank?}
+  validates :title, :category_id, presence: true, unless: lambda {|s| s.owerview.blank?}
+  # validates :sub_category
   # validates :title, length: {minimum: 50, maximum: 700}
   # validates :description, length: {minimum: 50, maximum: 700}
   # validates :requirements, length: {minimum: 50, maximum: 700}
@@ -63,21 +64,21 @@ class Service < ApplicationRecord
 
   enum status: ['active','inactive']
   attr_accessor :sub_category, :wizard, :new_seller, :top_seller, :pro_seller, :conversation_id, :owerview
-  after_create :set_sub_category
-  after_update :set_sub_category_on_change,if: lambda{|s| s.sub_category.present?}
+  # after_create :set_sub_category
+  # after_update :set_sub_category_on_change,if: lambda{|s| s.sub_category.present?}
   after_save :set_i_can
 
   def set_i_can
     self.update_column('search_title','I can ' + self.title)
   end
   
-  def set_sub_category
-    self.update_column('category_id',sub_category)
-  end
+  # def set_sub_category
+  #   self.update_column('category_id',sub_category)
+  # end
 
-  def set_sub_category_on_change
-    self.update_column('category_id',sub_category)
-  end
+  # def set_sub_category_on_change
+  #   self.update_column('category_id',sub_category)
+  # end
 
   def self.search(keyword)
     services_table = Service.arel_table

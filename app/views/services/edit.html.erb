@@ -6,15 +6,15 @@
         <%= f.input :title,label: 'Title', required: true, hint: 'MAXIMUM 100 CHARACTERS', placeholder: "do something I'm really good at",:maxlength=>"100", input_html: {rows: "3"},as: :text  %>
       </div>
       <div style="position: absolute; padding-left: 20px; padding-top: 40px;"><h5>I can</h5></div>
-    </div>
-    <div class="row mb-3">
       <div class="col-md-6 col-sm-12">
         <%= f.input :category_id, label: 'Category', collection: Category.get_categories, prompt: 'Select Category', :input_html => {:onchange => "get_sub_category(this)"},required: true %>
       </div>
-      <div class="col-md-6 col-sm-12">
-        <%= f.input :sub_category, label: 'Sub Category',collection: [], :input_html => {:id => "sub1"},required: true %>
-      </div>
-    </div>    
+    </div>
+    <!-- <div class="row mb-3"> -->
+      <!-- <div class="col-md-6 col-sm-12">
+        <%#= f.input :sub_category, label: 'Sub Category',collection: [], :input_html => {:id => "sub1"},required: true %>
+      </div> -->
+    <!-- </div> -->    
     <div>
       <span class="inline-block float-right">
         <%= f.input :owerview,as: :hidden, :input_html => { :value => "owerview" } %>
@@ -25,56 +25,56 @@
   <% end %>
 </div>
 <script type="text/javascript">
-  var html = "";
-  function get_sub_category(category){
-    $.ajax({
-      url:  "/categories/search/",
-      type: "get",
-      data: {id: category.value},
-      success: function(response){
-        $('#sub1').html("")
-        if(response.data == 0){
-          // $('#sub1').append("<option>Select Sub Category</option>");
-        }else{
-          // html = "<option>Select Sub Category</option>";
-          var sub_data = new Array();    
-          for(var i in response.data){
-            html  = '<option value='+response.data[i].id+'>';
-            html +=  response.data[i].title;
-            html += '</option>';
-            sub_data.push(html)
-          }
-          $('#sub1').append(sub_data);
-        }
-      },
-    })
-  }
+  // var html = "";
+  // function get_sub_category(category){
+  //   $.ajax({
+  //     url:  "/categories/search/",
+  //     type: "get",
+  //     data: {id: category.value},
+  //     success: function(response){
+  //       $('#sub1').html("")
+  //       if(response.data == 0){
+  //         // $('#sub1').append("<option>Select Sub Category</option>");
+  //       }else{
+  //         // html = "<option>Select Sub Category</option>";
+  //         var sub_data = new Array();    
+  //         for(var i in response.data){
+  //           html  = '<option value='+response.data[i].id+'>';
+  //           html +=  response.data[i].title;
+  //           html += '</option>';
+  //           sub_data.push(html)
+  //         }
+  //         $('#sub1').append(sub_data);
+  //       }
+  //     },
+  //   })
+  // }
 
-  $( document ).ready(function() {
-    var category = "<%= @service.category.sub_category.id %>";
-    $("#service_category_id option[value=<%= @service.category.sub_category.id %>]").attr('selected', 'selected');
-    $.ajax({
-      url:  "/categories/search/",
-      type: "get",
-      data: {id: category},
-      success: function(response){
-        $('#sub1').html("")
-        if(response.data == 0){
-          // $('#sub1').append("<option>Select Sub Category</option>");
-        }else{
-          // html = "<option>Select Sub Category</option>";
-          var sub_data = new Array();    
-          for(var i in response.data){
-            html  = '<option value='+response.data[i].id+'>';
-            html +=  response.data[i].title;
-            html += '</option>';
-            sub_data.push(html)
-          }
-          $('#sub1').append(sub_data);
-        }
-      },
-    })
-  });
+  // $( document ).ready(function() {
+  //   var category = "<%#= @service.category.sub_category.id %>";
+  //   $("#service_category_id option[value=<%#= @service.category.sub_category.id %>]").attr('selected', 'selected');
+  //   $.ajax({
+  //     url:  "/categories/search/",
+  //     type: "get",
+  //     data: {id: category},
+  //     success: function(response){
+  //       $('#sub1').html("")
+  //       if(response.data == 0){
+  //         // $('#sub1').append("<option>Select Sub Category</option>");
+  //       }else{
+  //         // html = "<option>Select Sub Category</option>";
+  //         var sub_data = new Array();    
+  //         for(var i in response.data){
+  //           html  = '<option value='+response.data[i].id+'>';
+  //           html +=  response.data[i].title;
+  //           html += '</option>';
+  //           sub_data.push(html)
+  //         }
+  //         $('#sub1').append(sub_data);
+  //       }
+  //     },
+  //   })
+  // });
 </script>
 
 <style type="text/css">
