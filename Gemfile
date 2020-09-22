@@ -9,7 +9,7 @@ gem 'rails', '~> 5.2.1'
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
-# Use Uglifier as compressor for JavaScript assets
+# Use Uglifzier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
@@ -56,7 +56,7 @@ gem 'language_list', '~> 1.2', '>= 1.2.1'
 gem 'cocoon', '~> 1.2', '>= 1.2.12'
 gem 'carrierwave'
 gem 'mini_magick'
-gem "rmagick"
+# gem "rmagick"
 gem 'pg'
 
 gem 'panda', '~> 1.6.0'
@@ -111,7 +111,7 @@ gem 'ckeditor_rails'
 gem 'time_difference'
 gem 'jquery-ui-rails'
 gem 'local_time'
-gem 'curb'
+# gem 'curb'
 gem 'whenever', :require => false
 gem 'bootstrap-select-rails'
 gem 'activeadmin_quill_editor'

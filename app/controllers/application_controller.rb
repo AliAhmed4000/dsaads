@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     else
       if !cookies['currency'].blank? && cookies['currency'] != "USD"
         current_currency = Currency.find_by_country("USD_#{cookies['currency']}")
-        @unit =  current_currency.currency
+        @unit =  current_currency
         @symbol = get_currency_symbol(cookies['currency'])
       end   
     end 
