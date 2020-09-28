@@ -199,7 +199,7 @@ class User < ApplicationRecord
   def currency_unit
     if self.currency != "USD" 
       current_currency = Currency.find_by_country("USD_#{self.currency}")
-      unit =  current_currency
+      unit =  current_currency.currency
       return unit
     end 
   end
