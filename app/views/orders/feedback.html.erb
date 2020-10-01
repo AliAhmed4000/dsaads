@@ -41,9 +41,10 @@
       </div>
     </div>
   </div>
-  <% if @order.seller_star_status.blank? && current_user.sellers? %>
-    <%= render partial: '/orders/forms/feedback_form' %>
-  <% elsif @order.buyer_star_status.blank? %>
+  <%# if @order.seller_star_status.blank? && current_user.sellers?
+   %>
+    <%#= render partial: '/orders/forms/feedback_form' %>
+  <% if @order.buyer_star_status.blank? && current_user.buyers?  %>
     <%= render partial: '/orders/forms/feedback_form' %>
   <% end %>
 </div>

@@ -1,12 +1,13 @@
 <div class="py-3 border border-light container-fluid tab-pane"  id="requirement">
   <div class="py-3">
     <% if @order.inactive? %>
-      <div class="alert alert-info" role="alert">WAITING FOR REQUIREMENT</div>
-    <% end %>
+      <div class="alert alert-info change-color" role="alert">WAITING FOR REQUIREMENT</div>
+    <% else %>
     <h6>Buyer Requirement</h6>
     <hr>
+    <p><%= @order.package.service.requirements %></p>
+    <% end %>
     <div class="review-header pt-3"> 
-      <p><%= @order.package.service.requirements %></p>
       <% unless @order.description.blank? %>
         <h5>Description</h5>
         <p><%= @order.description %></p>

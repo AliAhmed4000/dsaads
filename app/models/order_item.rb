@@ -34,6 +34,19 @@ class OrderItem < ApplicationRecord
   after_create :set_revision
   after_create :set_amount
 
+  scope :active, -> { where(status: 'active') }
+  
+  # scope :has_no_refund, -> { 
+  #   joins(:order_refunds)
+  #   .where.not('order_refunds.order_item_id = order_item.id') 
+  #}
+  
+  scope :for_user, -> (user) { 
+    active
+    .includes(order: :user)
+    .where(orders: { users: { id: user.id } })
+  }
+
   def set_revision
     self.update_column('revision_no',self.package.revision_number)
   end
