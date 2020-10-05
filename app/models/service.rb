@@ -89,8 +89,16 @@ class Service < ApplicationRecord
     self.packages.minimum(:price)
   end
 
+  def buyer_reviews_count
+    count = BuyerReview.where(package: self.packages)
+    size_buyer_reviews = count.where.not(star: 'nill')
+    return size_buyer_reviews    
+  end
+
   def buyer_reviews
+
     BuyerReview.where(package: self.packages)
+
   end
 
   def seller_reviews
@@ -106,7 +114,7 @@ class Service < ApplicationRecord
   end
 
   def buyer_review_count
-    self.buyer_reviews.size
+      self.buyer_reviews_count.size
   end
 
   def is_favorited?(user)

@@ -37,13 +37,40 @@
       <!-- <strong>WithDraw:<strong> -->
       <!-- <strong> --> 
         <% if current_user.buyer_available_for_withdraw_amount > 0 %>
-          <%= link_to "WithDraw Refund to PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
+          <%= link_to "Withdraw Refund to PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
         <% else %>
-          <%= link_to "WithDraw Refund to PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No balance or refund To Withdraw"%>
+          <%= link_to "Withdraw Refund to PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No balance or refund To Withdraw"%>
         <% end %>
       <!-- </strong> -->
       <!-- <strong> --> 
-        <%= link_to "Request a Refund",refund_request_path,:class=>"btn change-color" ,remote: true %>
+        <%#= link_to "Request a Refund",refund_request_path,:class=>"btn change-color" ,remote: true %>
+
+        <!-- <button  id='request-refund' class= "btn change-color" >Request Refund</button>
+        
+        <span class="hidden" id = "options-container">
+         <%#= link_to 'Order',refund_request_path,:class=>"btn change-color" ,remote: true %>
+         <%#= link_to 'Balance', buyer_balance_path, :class=>"btn change-color", remote: true%>
+       </span> -->
+       <button type="button" class= "btn change-color" data-toggle="modal" data-target="#myModal" >Request A Refund</button>
+       <div class="modal fade bd-example-modal-sm" id = "myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Request A Refund</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <%= link_to 'Order',refund_request_path,:class=>"btn change-color" , 'data-dismiss' => "modal" ,remote: true %>
+              <%= link_to 'Balance', buyer_balance_path, :class=>"btn change-color" , 'data-dismiss' => "modal", remote: true%>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- </strong> -->
     </div>
   </div>
@@ -52,12 +79,12 @@
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" href="#buyer_transaction" data-toggle="tab">
-          All Orders Purchased
+          Balance
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#buyers_refunds" data-toggle="tab">
-          Refund Request
+          Refunded
         </a>
       </li>
     </ul>

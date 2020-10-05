@@ -16,12 +16,19 @@
 	        <td class="align-middle"><%= item.user_reason %></td>
 	        <!-- <td class="align-middle"><%#= item.admin_reason %></td> -->
 	        <td class="align-middle">
+	        	<%# if item.pending? %>
+	        		<!-- <div class="badge badge-info">pending</div> -->
+	        	<%# elsif item.rejected? %>
+	        		<!-- <div class="badge badge-danger">rejected</div> -->
+	        	<%# elsif item.approved? %>
+	        		<!-- <div class="badge badge-success">approved</div> -->
+	        	<%# end %>
 	        	<% if item.pending? %>
 	        		<div class="badge badge-info">pending</div>
-	        	<% elsif item.rejected? %>
-	        		<div class="badge badge-danger">rejected</div>
-	        	<% elsif item.approved? %>
-	        		<div class="badge badge-success">approved</div>
+	        	<% elsif item.more_information_requested? %>
+	        		<div class="badge badge-danger">More Information Requested</div>
+	        	<% elsif item.resolved? %>
+	        		<div class="badge badge-success">Resolved</div>
 	        	<% end %>	
 	        </td>
 	        <td class="align-middle"><%= item.created_at.strftime("%d %B %Y") %></td>

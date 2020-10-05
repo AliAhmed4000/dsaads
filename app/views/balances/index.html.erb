@@ -44,9 +44,9 @@
       <!-- <strong>WithDraw:<strong> -->
       <!-- <strong> --> 
         <% if current_user.seller_available_for_withdraw_amount > 0 %>
-          <%= link_to "WithDraw Fund to PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
+          <%= link_to "Withdraw Fund to PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
         <% else %>
-          <%= link_to "WithDraw Fund to PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
+          <%= link_to "Withdraw Fund to PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No Earning To Withdraw"%>
         <% end %>
       <!-- </strong> -->
       <!-- <strong> --> 
