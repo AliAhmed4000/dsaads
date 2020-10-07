@@ -87,10 +87,16 @@
           Refunded
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#balance_requested" data-toggle="tab">
+          Balance Request
+        </a>
+      </li>
     </ul>
     <div class="tab-content">
       <%= render partial: 'balances/transactions/buyer_transaction'%>
       <%= render partial: 'balances/refunds/buyer_refund_requests'%>
+      <%= render 'balances/transactions/balance_request' %>
     </div>
   </div>
 </div>

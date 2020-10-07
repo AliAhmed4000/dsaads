@@ -1,0 +1,20 @@
+<div class="row bootstrap snippets py-3 tab-pane" id="balance_requested">
+	<table class="table responsive table-hover table-condensed mb25" data-sortable data-sortable-initialized="true">
+	  <thead>
+	    <tr>
+	      <th>Subject</th>
+	      <th>Amount</th>
+	      <th>Created at</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @balance_requests.each do |balance_request| %>
+	    	<tr>
+	        <td class="align-middle"><%= balance_request.subject %></td>
+	        <td class="align-middle"><%= balance_request.amount %></td>
+	        <td class="align-middle"><%= formatted_date(balance_request.created_at) %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+</div>

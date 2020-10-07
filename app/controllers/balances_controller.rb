@@ -11,6 +11,7 @@ class BalancesController < ApplicationController
 	
 	def my_shopping
 		@order_refunds = OrderRefund.where('order_refunds.user_id=?',current_user.id)
+		@balance_requests = Payment.for_user(current_user)
   	end
 
 	def show
