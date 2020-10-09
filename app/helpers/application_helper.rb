@@ -72,6 +72,12 @@ module ApplicationHelper
         id: "user-#{user.id}"
     end
   end
+
+  def formatted_date(date)
+    return if date.blank?
+
+    date.strftime("%d %B %Y")
+  end
 end
 
 

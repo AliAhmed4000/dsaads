@@ -3,8 +3,9 @@
     <% if @order.inactive? %>
       <div class="alert alert-info change-color" role="alert">WAITING FOR REQUIREMENT</div>
     <% else %>
-    <h6>Buyer Requirement</h6>
+    <h6>Services Requirement</h6>
     <hr>
+    <h6>Description</h6>
     <p><%= @order.package.service.requirements %></p>
     <% end %>
     <div class="review-header pt-3"> 

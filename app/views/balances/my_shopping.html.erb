@@ -9,25 +9,25 @@
   <div class="row">
     <div class="card" style="width: 20rem;">
       <div class="card-body text-center">
-        <h5 class="card-title">Purchase Amount</h5>
+        <h5 class="card-title">Balance</h5>
         <h5 class="card-text"><%= number_to_currency(current_user.buyer_total_balance) %></h5>
       </div>
     </div>
     <div class="card" style="width: 18rem;">
       <div class="card-body text-center">
-        <h5 class="card-title">Refunded</h5>
+        <h5 class="card-title">Refunded Orders</h5>
         <h5 class="card-text"><%= number_to_currency(current_user.buyer_refunded_amount) %></h5>
       </div>
     </div>
     <div class="card" style="width: 20rem;">
       <div class="card-body text-center">
-        <h5 class="card-title">Withdrawn</h5>
+        <h5 class="card-title">Balance Withdrawn</h5>
         <h5 class="card-text"><%= number_to_currency(current_user.buyer_withdrawn_amount) %></h5>
       </div>
     </div>
     <div class="card" style="width: 18rem;">
       <div class="card-body text-center">
-        <h5 class="card-title">Available for Withdraw</h5>
+        <h5 class="card-title">Balance Refund Request</h5>
         <h5 class="card-text"><%= number_to_currency(current_user.buyer_available_for_withdraw_amount) %></h5>
       </div>
     </div>
@@ -35,12 +35,13 @@
   <div class="row py-2">
     <div class="col">
       <!-- <strong>WithDraw:<strong> -->
-      <!-- <strong> --> 
-        <% if current_user.buyer_available_for_withdraw_amount > 0 %>
-          <%= link_to "Withdraw Refund to PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
-        <% else %>
-          <%= link_to "Withdraw Refund to PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No balance or refund To Withdraw"%>
-        <% end %>
+      <!-- <strong> -->
+      <!-- here is line for withdwar buyer ammount   -->
+        <%# if current_user.buyer_available_for_withdraw_amount > 0 %>
+          <%#= link_to "Withdraw Refund to PayPal Account",balance_path(current_user.id),:class=>"btn change-color" ,remote: true %>
+        <%# else %>
+          <%#= link_to "Withdraw Refund to PayPal Account",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No balance or refund To Withdraw"%>
+        <%# end %>
       <!-- </strong> -->
       <!-- <strong> --> 
         <%#= link_to "Request a Refund",refund_request_path,:class=>"btn change-color" ,remote: true %>
@@ -62,8 +63,13 @@
               </button>
             </div>
             <div class="modal-body">
-              <%= link_to 'Order',refund_request_path,:class=>"btn change-color" , 'data-dismiss' => "modal" ,remote: true %>
-              <%= link_to 'Balance', buyer_balance_path, :class=>"btn change-color" , 'data-dismiss' => "modal", remote: true%>
+              <%= link_to 'Order Refund',refund_request_path,:class=>"btn change-color" , 'data-dismiss' => "modal" ,remote: true %>
+              <%#= link_to 'Balance Refund', buyer_balance_path, :class=>"btn change-color" , 'data-dismiss' => "modal", remote: true%>
+              <% if current_user.buyer_available_for_withdraw_amount > 0 %>
+          <%= link_to "Balance Refund",balance_path(current_user.id),:class=>"btn ml-3 change-color" ,remote: true, 'data-dismiss' => "modal" %>
+          <% else %>
+          <%= link_to "Balance Refund",'javascript:void(0)',:class=>"btn change-color","data-toggle"=>"tooltip", "data-placement"=>"top", "title"=>"No balance or refund To Withdraw", 'data-dismiss' => "modal"%>
+        <% end %>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -79,18 +85,24 @@
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" href="#buyer_transaction" data-toggle="tab">
-          Balance
+          Transaction
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#buyers_refunds" data-toggle="tab">
-          Refunded
+          Order Refund Request
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#balance_requested" data-toggle="tab">
+          Balance Refund Request
         </a>
       </li>
     </ul>
     <div class="tab-content">
       <%= render partial: 'balances/transactions/buyer_transaction'%>
       <%= render partial: 'balances/refunds/buyer_refund_requests'%>
+      <%= render 'balances/transactions/balance_request' %>
     </div>
   </div>
 </div>

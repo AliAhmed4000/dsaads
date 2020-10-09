@@ -8,7 +8,9 @@
 #
 
 class Payment < ApplicationRecord
-	belongs_to :user
+  belongs_to :user
   has_many :order_items, dependent: :destroy
   enum status: [:withdraw,:refund,:purchase]
+
+  scope :for_user, -> (user) { where(user: user) }
 end
