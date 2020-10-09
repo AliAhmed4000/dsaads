@@ -2,31 +2,100 @@
   <div class="p-3 border border-light">
     <span>Reviews</span>
     <%# binding.pry %>
-    <span class="ml-2 yellow"><%= image_tag 'star-on.png' %> <%= @service.buyer_review_star %></span>
+    <!-- <span class="ml-2 yellow"><%#= image_tag 'star-on.png' %> <%= @service.buyer_review_star %></span> -->
+    <!-- <span class="mb-3" id="all-stars-<%#= @service.buyer_review_star.to_i %>"></span> -->
+    <% if  @service.buyer_review_star.to_i == 5 %>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+    <% elsif @service.buyer_review_star.to_i == 4 %>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star unchecked"></span>
+    <% elsif @service.buyer_review_star.to_i == 3 %>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star unchecked"></span>
+      <span class="fa fa-star unchecked"></span>
+    <% elsif @service.buyer_review_star.to_i == 2 %>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star unchecked"></span>
+      <span class="fa fa-star unchecked"></span>
+      <span class="fa fa-star unchecked"></span>
+    <% elsif @service.buyer_review_star.to_i == 1 %>
+      <span class="fa fa-star yellow"></span>
+      <span class="fa fa-star unchecked"></span>
+      <span class="fa fa-star unchecked"></span>
+      <span class="fa fa-star unchecked"></span>
+    <% end %>
     <span class="ml-2">(<%= pluralize(@service.buyer_review_count, "reivew") %>)</span>
-    <div class="underline"></div>
-    <% @packages.each do |package| %>
-      <%# binding.pry %>
+      <div class="underline"></div>
+        <% @packages.each do |package| %>
+    <%# binding.pry %>
+          <% package.buyer_reviews.each do |buyer_review| %>
+            <% if buyer_review.star.present? %>
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="mr-2 buyer_img pr-3">
+                    <%= image_tag buyer_review.buyer.check_avatar, class: 'img-fluid rounded-circle', height: 50, width: 50; %>
+                    <span class="px-3"><%= buyer_review.buyer.full_name %></span>
+                  </div>
+                </div>
+              <div class="col-md-3">
+                <!-- <span class="ml-2 yellow">
+                  <%#= image_tag 'star-on.png' %> 
+                  <%#= buyer_review.star %>
+                </span> -->
+                <div class="row ml-1">
+                  <% if  buyer_review.star == 5 %>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                  <% elsif buyer_review.star == 4 %>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                  <span class="fa fa-star unchecked"></span>
+                  <% elsif buyer_review.star == 3 %>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star unchecked"></span>
+                    <span class="fa fa-star unchecked"></span>
+                  <% elsif buyer_review.star == 2 %>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star unchecked"></span>
+                    <span class="fa fa-star unchecked"></span>
+                    <span class="fa fa-star unchecked"></span>
+                  <% elsif buyer_review.star == 1 %>
+                    <span class="fa fa-star yellow"></span>
+                    <span class="fa fa-star unchecked"></span>
+                    <span class="fa fa-star unchecked"></span>
+                    <span class="fa fa-star unchecked"></span>
+                    <span class="fa fa-star unchecked"></span>
+                  <% end %>
+                </div><br>
 
-      <% package.buyer_reviews.each do |buyer_review| %>
-      <% if buyer_review.star.present? %>
-          <div class="">
-            <div class="mr-2 buyer_img pr-3">
-              <%= image_tag buyer_review.buyer.check_avatar, class: 'img-fluid rounded-circle', height: 50, width: 50; %>
-              <span class="px-3"><%= buyer_review.buyer.full_name %>
-                <span class="ml-2 yellow">
-                  <%= image_tag 'star-on.png' %> 
-                  <%= buyer_review.star %>
-                </span>
-              </span>
+
+
+                <div class="buyer_msg">
+                  <div><%= buyer_review.comment %></div><br>
+                    <div class="text-muted"><%= time_ago_in_words(buyer_review.created_at) %></div>
+                </div>
+              </div>
             </div>
-            <div class="ml-4 align-self-center pl-5 buyer_msg">
-                <div><%= buyer_review.comment %></div><br>
-                <div class="float-right text-muted"><%= time_ago_in_words(buyer_review.created_at) %></div>
-            </div>
-          </div>
           <div class="underline py-2"></div>
-          <% end %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

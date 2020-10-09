@@ -85,6 +85,7 @@ class Package < ApplicationRecord
   end
 
   def buyer_reviews
-    BuyerReview.where(package: self)
+    review = BuyerReview.where(package: self)
+    review.order(star: :desc)
   end
 end
