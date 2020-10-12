@@ -44,7 +44,7 @@ class User < ApplicationRecord
   has_many :identities, class_name: "Identity", dependent: :destroy
   has_many :payments
   has_many :order_refunds
-  enum role: [:buyers,:sellers]
+  enum role: [:buyers, :sellers]
 
   accepts_nested_attributes_for :user_occupations
   accepts_nested_attributes_for :user_skills,allow_destroy: true
@@ -72,7 +72,7 @@ class User < ApplicationRecord
     ['CAD','CAD'],
     ['PKR','PKR']
   ]
-
+  
   # def set_username 
     # binding.pry 
     # self.update_column('user_name',self.email.split("@").first)
@@ -81,6 +81,14 @@ class User < ApplicationRecord
     UserMailer.send_seller_profile_completion_notifiction(self).deliver_now
   end
 
+  def check_avatar
+    if self.avatar.blank?
+      gravatar_id = Digest::MD5::hexdigest(email).downcase
+      "https://gravatar.com/avatar/#{gravatar_id}.png"
+    else
+      avatar_url(:circle)
+    end
+  end
   def check_avatar
     if self.avatar.blank?
       gravatar_id = Digest::MD5::hexdigest(email).downcase
@@ -270,5 +278,13 @@ class User < ApplicationRecord
   def country_name(country_code)
     country = ISO3166::Country[country_code]
     country.translations[I18n.locale.to_s] || country.name
+  end
+
+  def is_seller?
+    role == 'sellers'
+  end
+
+  def is_buyer?
+    role == 'buyers'
   end
 end
