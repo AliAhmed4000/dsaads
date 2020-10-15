@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
       @order_delivered = OrderItem.delivered.joins(:order).where('orders.user_id=?',current_user.id)
       @order_completed = OrderItem.completed.joins(:order).where('orders.user_id=?',current_user.id)
       @order_cancelled = OrderItem.cancelled.joins(:order).where('orders.user_id=?',current_user.id)
-      @order_disputed = OrderCancel.joins(order_item:[:order]).where('orders.user_id=?',current_user.id) 
+      @order_disputed = OrderCancel.joins(order_item:[:order]).where('orders.user_id=?',current_user.id).order(status: :asc)
       @order_review = @order_completed.select{|order| order.buyer_star_status.blank?}
       @order_late = OrderItem.active.joins(:order).where('orders.user_id=?',current_user.id).where('order_items.ending_at <?',DateTime.now)
       @order_revision = Revision.pending.joins(:order_item).where('revisions.buyer_id=?',current_user.id)
@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
       @order_delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:delivered])
       @order_completed = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:completed])
       @order_cancelled = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',current_user.id,OrderItem.statuses[:cancelled])
-      @order_disputed =  OrderCancel.joins(order_item:[package:[:service]]).where('services.user_id=?',current_user.id)
+      @order_disputed =  OrderCancel.joins(order_item:[package:[:service]]).where('services.user_id=?',current_user.id).order(status: :asc)
       @order_review = OrderItem.review.joins(package:[:service]).where('services.user_id=?',current_user.id)
       @order_priority = OrderItem.active.joins(package:[:service]).where('services.user_id=?',current_user.id).where('order_items.ending_at'=>DateTime.now..3.days.from_now)
       @order_late = OrderItem.active.joins(package:[:service]).where('services.user_id=?',current_user.id).where('order_items.ending_at <?',DateTime.now)

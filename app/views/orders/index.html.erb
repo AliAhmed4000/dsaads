@@ -12,9 +12,9 @@
         <ul class="nav nav-tabs">
           <% if current_user.sellers? %>
             <li class="active nav-item">
-              <a class="nav-link active" href="#priority_orders" data-toggle="tab">Priority
-                <span class="badge badge-light"><%= @order_priority.count %></span>
-              </a>
+              <!-- <a class="nav-link active" href="#priority_orders" data-toggle="tab">Priority
+                <span class="badge badge-light"><%#= @order_priority.count %></span>
+              </a> -->
             </li>
           <% end %>
           <li class="active nav-item">
@@ -105,3 +105,10 @@
   </div>
 </section>
 <div id="buyer-form-modal"></div>
+<script>
+  $(function(){
+    $('table').DataTable({
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]
+    });
+  });
+</script>
