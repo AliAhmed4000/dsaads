@@ -55,7 +55,7 @@ class BalancesController < ApplicationController
 	end 
 
 	def refund_request
-		@order_items = OrderItem.for_user(current_user)
+		# @order_items = OrderItem.for_user(current_user)
 		@payment = OrderRefund.new
 		@order_disputed = OrderCancel.rejected.buyer_ask_seller_to_cancel_order.joins(order_item:[:order]).where('orders.user_id=? and order_items.status!=?',current_user.id,OrderItem.statuses['cancelled'])
 	end

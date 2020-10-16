@@ -3,7 +3,7 @@
     <div class="">
       <% if current_user.buyers? %>
         <h4>
-          <span><%= online_status @conversation.sellers %></span>&nbsp;&nbsp;
+          <%= online_status @conversation.sellers %>
           <%= link_to @conversation.sellers.full_name,profile_path(@conversation.sellers) %>
           <span>
           <span class="chat_date">
@@ -27,8 +27,7 @@
         </span>
       <% else %>
         <h4>
-          <span><%= online_status @conversation.buyers %></span>
-          &nbsp;&nbsp;
+          <%= online_status @conversation.buyers %>
           <%= link_to @conversation.buyers.full_name,profile_path(@conversation.buyers) %>
           <span class="chat_date">
             <% if @conversation.buyer_starred? %>

@@ -19,6 +19,11 @@
   </p>
   <!-- <p>Please choose a video shorter than 75 seconds and smaller than 50MB</p> -->
   <p>Please add youtube embeded link.</p>
+  
+  <a class="btn change-color" data-toggle="collapse" href="#addLink" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Add Video Link
+  </a>
+  <div class="collapse" id="addLink">
   <% unless @service.video_link.blank? %>
     <div id="my-video">
       <!-- <video height="300" controls> -->
@@ -30,11 +35,14 @@
       <div><%= link_to "Remove Video",video_path(@service), method: 'delete' %></div>
     </div>
   <% else %>
+    <div class="mt-2">
     <%= simple_form_for @service, url: video_path,method: :put, remote: true do  |f|%>
       <%= f.error_notification %>
-      <%= f.input :video_link,required: true %>
+      <%= f.input :video_link, required: true %>
       <%= f.submit "Submit", class: "btn change-color" %>
+      </div>
     <% end %>
+  </div>
     <%#= link_to "Add Video Link",edit_video_path(@service),:class=>"btn change-color" ,remote: true, method: 'get' %>
   <% end %>
 

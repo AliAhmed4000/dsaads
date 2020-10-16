@@ -12,21 +12,22 @@
       <% end %>
         <div class="chat_people">
           <div class="chat_img">
-            <%= image_tag(conversation.sellers.check_avatar.present? ? conversation.sellers.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.sellers.full_name,class: "profile-img") %>
+            <%= image_tag(conversation.sellers.check_avatar, alt: conversation.sellers.first_name[0],class: "profile-img") %>
             <%= online_status_top conversation.sellers %>
           </div>
           <div class="chat_ib">
             <h5>
-              <%= conversation.sellers.full_name %>
-              <span class="chat_date" id="<%= conversation.sellers.id %>">
-                <% if conversation.seller_starred? %>
+              <strong class="mr-2"><%= conversation.sellers.full_name %></strong>
+              <i class="<%= chat_icon_klass_buyers(conversation)%>" aria-hidden="true"></i>
+              <!-- <span class="chat_date" id="<%#= conversation.sellers.id %>">
+                <%#+-f conversation.seller_starred? %>
                   <span class="fa fa-star"></span>
-                <% else %>
+                <%# else %>
                   <span class="fa fa-star-o"></span>
-                <% end %>
-              </span>
-              <!-- <span class="chat_date">&nbsp;|&nbsp;</span>
-              <span class="chat_date"><%#= time_ago_in_words(conversation.sellers.last_sign_in_at) %> ago</span> -->
+                <%# end %>
+              </span> -->
+              <span class="chat_date">&nbsp;&nbsp;</span>
+              <span class="chat_date"><%= time_ago_in_words(conversation.sellers.last_sign_in_at) %> ago</span>
             </h5>
             <p>
               <% if conversation.chat_last_message(current_user.id).blank? %>
@@ -66,20 +67,16 @@
       <% end %>
         <div class="chat_people">
           <div class="chat_img"> 
-            <%= image_tag(conversation.buyers.check_avatar.present? ? conversation.buyers.check_avatar : 'avatar-placeholder-extra-small.png', alt: conversation.buyers.full_name,class: "profile-img") %>
+            <%= image_tag(conversation.buyers.check_avatar, alt: conversation.buyers.user_name, class: "profile-img") %>
             <%= online_status_top conversation.buyers %>
           </div>
           <div class="chat_ib">
-            <h5><%= conversation.buyers.full_name %>
-              <span class="chat_date" id="<%= conversation.buyers.id %>">
-                <% if conversation.buyer_starred? %>
-                  <span class="fa fa-star"></span> 
-                <% else %>
-                  <span class="fa fa-star-o"></span> 
-                <% end %>
-              </span>
-              <!-- <span class="chat_date">&nbsp;|&nbsp;</span>
-              <span class="chat_date"><%#= time_ago_in_words(conversation.buyers.last_sign_in_at) %> ago</span> -->
+            <h5>
+              <strong class="mr-2"><%= conversation.buyers.full_name %></strong>
+              <%# byebug %>
+              <i class="<%= chat_icon_klass_sellers(conversation)%>" aria-hidden="true"></i>
+              <span class="chat_date">&nbsp;&nbsp;</span>
+              <span class="chat_date"><%= time_ago_in_words(conversation.buyers.last_sign_in_at) %> ago</span>
             </h5>
             <p>
               <% if conversation.chat_last_message(current_user.id).blank? %>

@@ -10,25 +10,54 @@
     <div class="card" style="width: 20rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Balance</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.buyer_total_balance) %></h5>
+        <h5 class="card-text">
+          <%#= number_to_currency(current_user.buyer_total_balance) %>
+          <%#= number_to_currency(current_user.buyer_refunded_amount) %>
+          <% if current_user.currency == "USD" %>
+              <%= number_to_currency(current_user.buyer_refunded_amount) %>
+            <% else %>
+              <%= number_to_currency((current_user.buyer_refunded_amount * current_user.currency_unit), unit: current_user.symbol) %>
+            <% end %>    
+        </h5>
       </div>
     </div>
     <div class="card" style="width: 18rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Refunded Orders</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.buyer_refunded_amount) %></h5>
+        <h5 class="card-text">
+          <%#= number_to_currency(current_user.buyer_refunded_amount) %>
+          <% if current_user.currency == "USD" %>
+              <%= number_to_currency(current_user.buyer_refunded_amount) %>
+            <% else %>
+              <%= number_to_currency((current_user.buyer_refunded_amount * current_user.currency_unit), unit: current_user.symbol) %>
+            <% end %>   
+        </h5>
       </div>
     </div>
     <div class="card" style="width: 20rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Balance Withdrawn</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.buyer_withdrawn_amount) %></h5>
+        <h5 class="card-text">
+          <%#= number_to_currency(current_user.buyer_withdrawn_amount) %>
+          <% if current_user.currency == "USD" %>
+              <%= number_to_currency(current_user.buyer_withdrawn_amount) %>
+            <% else %>
+              <%= number_to_currency((current_user.buyer_withdrawn_amount * current_user.currency_unit), unit: current_user.symbol) %>
+            <% end %>
+        </h5>
       </div>
     </div>
     <div class="card" style="width: 18rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Balance Refund Request</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.buyer_available_for_withdraw_amount) %></h5>
+        <h5 class="card-text">
+          <%#= number_to_currency(current_user.buyer_available_for_withdraw_amount) %>
+          <% if current_user.currency == "USD" %>
+              <%= number_to_currency(current_user.buyer_available_for_withdraw_amount) %>
+            <% else %>
+              <%= number_to_currency((current_user.buyer_available_for_withdraw_amount * current_user.currency_unit), unit: current_user.symbol) %>
+            <% end %> 
+        </h5>
       </div>
     </div>
   </div>
@@ -108,7 +137,9 @@
 </div>
 <script>
   $(function(){
-    $('table').DataTable();
+    $('table').DataTable({
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]
+    });
   });
 </script>
 <div id="paypal-form-modal"></div>

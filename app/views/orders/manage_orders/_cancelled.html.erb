@@ -43,7 +43,9 @@
               </td>
               <!-- <td class="align-middle"><%#= item.quantity %></td> -->
               <td class="align-middle">
+                <%= link_to order_path(item) do %>
                 <span class="badge badge-success">Cancelled</span>
+                <% end %>
               </td>
             </tr>
           <% end %>

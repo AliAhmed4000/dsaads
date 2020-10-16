@@ -12,9 +12,9 @@
         <ul class="nav nav-tabs">
           <% if current_user.sellers? %>
             <li class="active nav-item">
-              <a class="nav-link active" href="#priority_orders" data-toggle="tab">Priority
+              <!-- <a class="nav-link active" href="#priority_orders" data-toggle="tab">Priority
                 <span class="badge badge-light"><%= @order_priority.count %></span>
-              </a>
+              </a> -->
             </li>
           <% end %>
           <li class="active nav-item">
@@ -45,7 +45,7 @@
                 </a>
               <% end %>
             <% else %>
-              <a class="nav-link" href="#active_orders" data-toggle="tab">Active
+              <a class="nav-link active in" href="#active_orders" data-toggle="tab">Active
                 <span class="badge badge-light"><%= @order_active.count %></span>
               </a>
             <% end %>
@@ -81,7 +81,7 @@
         </ul>
         <div class="tab-content">
           <% if current_user.sellers? %>
-            <%= render partial: "/orders/manage_orders/priority" %>
+            <%#= render partial: "/orders/manage_orders/priority" %>
           <% end %>
           <% if current_user.buyers? && @order_start.count > 0 %>
             <%= render partial: "/orders/manage_orders/new_orders" %>
@@ -105,3 +105,10 @@
   </div>
 </section>
 <div id="buyer-form-modal"></div>
+<script>
+  $(function(){
+    $('table').DataTable({
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]
+    });
+  });
+</script>

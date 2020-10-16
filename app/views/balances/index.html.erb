@@ -3,7 +3,15 @@
     <div class="col-sm-12 col-md-12 col-lg-12">
       <div class="SortBlufLink">
         <h2>Earnings</h2>
-        <span> expected Income: <%= number_to_currency(current_user.seller_expected_income) %></span>
+        <span> expected Income: <%#= number_to_currency(current_user.seller_expected_income) %>
+          <strong>
+            <% if current_user.currency == "USD" %>
+              <%= number_to_currency(current_user.seller_expected_income) %>
+            <% else %>
+              <%= number_to_currency((current_user.seller_expected_income * current_user.currency_unit), unit: current_user.symbol) %>
+            <% end %>
+          </strong>  
+        </span>
       </div>
     </div>
   </div>
@@ -11,31 +19,63 @@
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Net Income</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.seller_net_income) %></h5>
+        <!-- <h5 class="card-text"><%#= number_to_currency(current_user.seller_net_income) %></h5> -->
+        <h5 class="card-text">
+          <% if current_user.currency == "USD" %>
+            <%= number_to_currency(current_user.seller_net_income) %>
+          <% else %>
+            <%= number_to_currency((current_user.seller_net_income * current_user.currency_unit), unit: current_user.symbol) %>
+          <% end %>
+        </h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Withdrawn</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.seller_withdrawn_money) %></h5>
+        <h5 class="card-text"><%#= number_to_currency(current_user.seller_withdrawn_money) %>
+          <% if current_user.currency == "USD" %>
+            <%= number_to_currency(current_user.seller_withdrawn_money) %>
+          <% else %>
+            <%= number_to_currency((current_user.seller_withdrawn_money * current_user.currency_unit), unit: current_user.symbol) %>
+          <% end %> 
+        </h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Used For Purchases</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.seller_used_for_purchases) %></h5>
+        <h5 class="card-text"><%#= number_to_currency(current_user.seller_used_for_purchases) %>
+          <% if current_user.currency == "USD" %>
+              <%= number_to_currency(current_user.seller_used_for_purchases) %>
+            <% else %>
+              <%= number_to_currency((current_user.seller_used_for_purchases * current_user.currency_unit), unit: current_user.symbol) %>
+            <% end %>
+        </h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Pending Clearance</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.seller_pending_clearance_amount) %></h5>
+        <h5 class="card-text">
+          <%#= number_to_currency(current_user.seller_pending_clearance_amount) %>
+          <% if current_user.currency == "USD" %>
+            <%= number_to_currency(current_user.seller_pending_clearance_amount) %>
+          <% else %>
+            <%= number_to_currency((current_user.seller_pending_clearance_amount * current_user.currency_unit), unit: current_user.symbol) %>
+          <% end %>
+        </h5>
       </div>
     </div>
     <div class="card" style="width: 15rem;">
       <div class="card-body text-center">
         <h5 class="card-title">Available for Withdraw</h5>
-        <h5 class="card-text"><%= number_to_currency(current_user.seller_available_for_withdraw_amount) %></h5>
+        <h5 class="card-text"><%#= number_to_currency(current_user.seller_available_for_withdraw_amount) %>
+          <% if current_user.currency == "USD" %>
+              <%= number_to_currency(current_user.seller_available_for_withdraw_amount) %>
+            <% else %>
+              <%= number_to_currency((current_user.seller_available_for_withdraw_amount * current_user.currency_unit), unit: current_user.symbol) %>
+            <% end %>
+        </h5>
       </div>
     </div>
   </div>
@@ -76,7 +116,9 @@
 </section>
 <script>
   $(function(){
-    $('table').DataTable();
+    $('table').DataTable({
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]
+    });
   });
 </script>
 <style type="text/css">

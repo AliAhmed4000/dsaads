@@ -15,22 +15,41 @@
 			      <%#= f.radio_button :level,'seller_modify_order',:value =>'seller_modify_order',:class => "form-check-input radio-input",checked: "checked" %>Modify Order
 			    </label>
 			  </div> -->
-			  <div class="form-check">
-			    <label class="form-check-label radio" for="radio2">
-			      <%= f.radio_button :level,'seller_extend_delivery_time', :value => 'seller_extend_delivery_time' ,:class => "form-check-input radio-input",checked: "checked" %>Extend Delivery Time
-			    </label>
-			  </div>
-			  <div class="form-check">
-			    <label class="form-check-label radio" for="radio3">
-			      <%= f.radio_button :level,'seller_ask_buyer_to_cancel_order', :value => 'seller_ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Ask buyer to Cancel Order
-			    </label>
-			  </div>
-				<div class="form-check">
-			    <label class="form-check-label radio" for="radio2">
-			      <%= f.radio_button :level,'seller_buyer_is_not_responding', :value => 'seller_buyer_is_not_responding' ,:class => "form-check-input radio-input" %>Buyer is not responding
-			    </label>
-			  </div>
-			</div>
+			  <% if @order.delivered? %>
+				  	<div class="form-check">
+				    <label class="form-check-label radio" for="radio2">
+				      <%= f.radio_button :level,'seller_extend_delivery_time', :value => 'seller_extend_delivery_time' ,:class => "form-check-input radio-input",checked: "checked" %>Extend Delivery Time
+				    </label>
+				  </div>
+				  <div class="form-check">
+				    <label class="form-check-label radio" for="radio3">
+				      <%= f.radio_button :level,'seller_ask_buyer_to_cancel_order', :value => 'seller_ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Cancel Order
+				    </label>
+				  </div>
+					<div class="form-check">
+				    <label class="form-check-label radio" for="radio2">
+				      <%= f.radio_button :level,'seller_buyer_is_not_responding', :value => 'seller_buyer_is_not_responding' ,:class => "form-check-input radio-input" %>Buyer is not responding
+				    </label>
+				  </div>
+				</div>
+			<% else %>
+				  <div class="form-check">
+				    <label class="form-check-label radio" for="radio2">
+				      <%= f.radio_button :level,'seller_extend_delivery_time', :value => 'seller_extend_delivery_time' ,:class => "form-check-input radio-input",checked: "checked" %>Extend Delivery Time
+				    </label>
+				  </div>
+				  <div class="form-check">
+				    <label class="form-check-label radio" for="radio3">
+				      <%= f.radio_button :level,'seller_ask_buyer_to_cancel_order', :value => 'seller_ask_buyer_to_cancel_order' ,:class => "form-check-input radio-input" %>Ask buyer to Cancel Order
+				    </label>
+				  </div>
+					<div class="form-check">
+				    <label class="form-check-label radio" for="radio2">
+				      <%= f.radio_button :level,'seller_buyer_is_not_responding', :value => 'seller_buyer_is_not_responding' ,:class => "form-check-input radio-input" %>Buyer is not responding
+				    </label>
+				  </div>
+				</div>
+			<% end %>
 			<!-- <div class="underline">
 			  <p class="h5 pb-2">Can you give us more detail on why?</p>
 			  <div class="form-check">
