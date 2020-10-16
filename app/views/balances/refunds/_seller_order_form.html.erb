@@ -12,7 +12,7 @@
           <div class="modal-body">
             <%= f.error_notification %>
             <%#= f.input :order_item_id,collection: @order_disputed.pluck(:order_item_id).uniq,required: true %>
-            <%= f.input :order_item_id,collection: @order_active.ids,required: true %>
+            <%= f.input :order_item_id,collection: @order_disputed.ids.uniq,required: true %>
             <%= f.input :user_reason,required: true,label: 'Reason', hint: 'Minimum 50 words required', placeholder: "Reason", input_html: {rows: "3"},as: :text  %>
             <%= f.hidden_field :user_id,value: current_user.id %>
             <%# if current_user.sellers? %>

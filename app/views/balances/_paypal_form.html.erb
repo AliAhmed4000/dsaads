@@ -11,12 +11,18 @@
           </div>
           <div class="modal-body">
             <%= f.error_notification %>
-            <%= f.input :subject, required: true %>
-            <%= f.input :amount, required: true, html: {min: "5"} %>
+            <label>Email:</label>
+            <input type="text" readonly="true" value="<%= current_user.paypal_email %>" class="form-control">
+            <br>
             <% if current_user.sellers? %>
-              <%= f.hidden_field :status,value: 'withdraw' %>
+              <%= f.input :amount, required: true, placeholder: "you can get maximum amount of #{current_user.seller_available_for_withdraw_amount.to_i}", input_html: { min:1, max: current_user.seller_available_for_withdraw_amount} %>
             <% else %>
-              <%= f.hidden_field :status,value: 'refund' %>
+              <%= f.input :amount, required: true, placeholder: "you can get maximum amount of #{current_user.buyer_available_for_withdraw_amount.to_i}", input_html: { min:1, max: current_user.buyer_available_for_withdraw_amount} %>
+            <% end %>
+            <% if current_user.sellers? %>
+              <%= f.hidden_field :status, value: 'withdraw' %>
+            <% else %>
+              <%= f.hidden_field :status, value: 'refund' %>
             <% end %>
           </div>
           <div class="modal-footer">

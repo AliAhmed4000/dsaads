@@ -82,17 +82,9 @@ class User < ApplicationRecord
   end
 
   def check_avatar
-    if self.avatar.blank?
-      gravatar_id = Digest::MD5::hexdigest(email).downcase
-      "https://gravatar.com/avatar/#{gravatar_id}.png"
-    else
-      avatar_url(:circle)
-    end
-  end
-  def check_avatar
-    if self.avatar.blank?
-      gravatar_id = Digest::MD5::hexdigest(email).downcase
-      "https://gravatar.com/avatar/#{gravatar_id}.png"
+    if avatar.blank?
+      initial = user_name.split('').first
+      'https://ui-avatars.com/api/?name=' + initial
     else
       avatar_url(:circle)
     end

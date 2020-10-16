@@ -52,7 +52,7 @@ $(document).on('turbolinks:load', function() {
 $(document).on('turbolinks:before-cache', function() {
   var dataTable = $($.fn.dataTable.tables(true)).DataTable();
   if (dataTable !== null) {
-    dataTable.clear();
+    // dataTable.clear();
     dataTable.destroy();
     return dataTable = null;
   }
