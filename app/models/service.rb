@@ -219,4 +219,28 @@ class Service < ApplicationRecord
       Service.joins(:seller).where(services_table[:search_title].matches("#{keyword}%")).where('services.publish=?',true).group("users.country").order('count_all desc').limit(10).count
     end 
   end
+
+  def is_video_link?
+    !video_link.nil?
+  end
+
+  def pricing_exists?
+    !title.blank? && !category.blank? && !packages.any?
+  end
+
+  def description_exists?
+    packages.any? && description.blank?
+  end
+
+  def requirement_exists?
+    !description.blank? && requirements.blank?
+  end
+
+  def gallery_exists? 
+    !requirements.blank? && !photos.any?
+  end
+
+  def publish_exists?
+    photos.any?
+  end
 end

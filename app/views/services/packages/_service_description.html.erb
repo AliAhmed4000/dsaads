@@ -1,2 +1,5 @@
 <h5 class="py-2">About This Service</h5>
-<p><%= @service.description %></p>
+<p style="width: 600px;"><%= @service.description %></p>
+<% if @service.is_video_link? %>
+	<a class="btn change-color" href="<%= @service.video_link %>" target = "_blank" >Service Video</a>
+<% end %>

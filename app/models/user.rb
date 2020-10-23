@@ -51,7 +51,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_educations
   accepts_nested_attributes_for :user_certificates
   accepts_nested_attributes_for :user_languages
-  validates :email,uniqueness: true, presence: true
+  validates :email,uniqueness: true
+   validates_length_of :user_name, within: 3..20, too_long: 'pick a shorter name', too_short: 'pick a longer name'
   validates :user_name, uniqueness: true, unless: lambda{|u| u.user_name.blank?}
   # validate :check_user_skill, on: :update
   has_secure_token :paypal_token
@@ -83,8 +84,8 @@ class User < ApplicationRecord
 
   def check_avatar
     if avatar.blank?
-      initial = user_name.split('').first
-      'https://ui-avatars.com/api/?name=' + initial
+      # initial = [first_name, last_name].compact.join('')
+      'https://ui-avatars.com/api/?name=' + user_name
     else
       avatar_url(:circle)
     end

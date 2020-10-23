@@ -51,7 +51,8 @@
       },
     })
   });
-  $('.my-select').change(function (e) {
+  $(function () {
+    $('.my-select').change(function (e) {
      var url_hit  = $(e.target).val();
      $.ajax({
       url:  url_hit,
@@ -63,6 +64,8 @@
       },
     })
   });
+  });
+  
 </script>
 <style type="text/css">
   .dropdown-item:hover, .dropdown-item:focus{

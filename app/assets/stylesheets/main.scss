@@ -507,6 +507,7 @@ a.SortBlufDescriptionLink:hover{
   margin-right: 15px;
   width: 30px;
   height: 30px;
+
 }
 .profile-img{
     border-radius: 50%;
@@ -622,4 +623,39 @@ ul.ui-autocomplete {
 
 .color-purple {
   color: purple !important;
+}
+@media (max-width: 991px){
+  ul.navbar-nav.ml-auto.profile-setting {
+    text-align: center;
+    width: 100%;
+}
+select#currency {
+    padding: 7px 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.inner-form.ui-widget {
+    padding: 10px !important;
+}
+.s003 form .inner-form .input-field.first-wrap {
+    width: 100% !important;
+    margin-bottom: 0px;
+}
+.input-field.second-wrap.ui-widget {
+    margin-bottom: 10px !important;
+}
+.inner-form.ui-widget {
+    width: 100%;
+}
+
+.p-img {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ul.dropdown-menu.show {
+    margin-top: 28px;
+    margin-left: 20px;
+}
+
 }
