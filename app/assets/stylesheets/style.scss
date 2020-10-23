@@ -276,4 +276,6 @@ p { margin: 0; }
 .buyer_msg{
   width: 300px;
 }
-
+.dropdown-toggle::after {
+  display: none !important;
+}

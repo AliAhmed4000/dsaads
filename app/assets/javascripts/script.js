@@ -219,7 +219,7 @@ function show_message(message) {
   if(message.user_id == current_user_id){
     html = '<div class="incoming_msg">';
     html += '<div class="incoming_msg_img">';
-    html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" class="profile-img"><span id="s_name">Me </span><span class="">' + message_date.toLocaleString() + '</span></div>';
+    html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" class="profile-img"><div class = "incoming_msg_name"><span id="s_name"> <a href="/profile/' + message.user_id + '">' + 'Me' + '</a></span><span class="">' + message_date.toLocaleString() + '</span></div></div>';
     html += '<div class="received_msg">';
     html += '<div class="received_withd_msg" id="' + message['id'] +'">';
     html += '<p>' + message_body + '</p>';
@@ -228,7 +228,7 @@ function show_message(message) {
   }else{
     html = '<div class="incoming_msg">';
     html += '<div class="incoming_msg_img">';
-    html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" class="profile-img"><span id="s_name">' + user_name  + '</span><span class="">' + message_date.toLocaleString() + '</span></div>';
+    html += '<img src="' + chats_recipients[message['user_id']]['image'] + '" class="profile-img"><div class = "incoming_msg_name"><span id="s_name"> <a href="/profile/' + message.user_id + '">' + user_name  + '</a></span><span class="">' + message_date.toLocaleString() + '</span></div></div>';
     html += '<div class="received_msg">';
     html += '<div class="received_withd_msg" id="' + message['id'] +'">';
     html += '<p>' + message_body + '</p>';

@@ -1,11 +1,11 @@
-<%= form_tag set_coookie_for_currency_path,:id => 'currencies', method: :get do %>
+<%= form_tag set_coookie_for_currency_path,:id => 'currencies', class: "mr-3", method: :get do %>
   <% if current_user.blank? %>
     <% if cookies['currency'].blank? %>
-      <%= select_tag "currency", options_for_select(User::CURRENCY_LIST) %>
+      <%= select_tag "currency", options_for_select(User::CURRENCY_LIST), class: "form-control", style: "width: auto;" %>
     <% else %>
-      <%= select_tag "currency", options_for_select(User::CURRENCY_LIST,cookies['currency']) %>
+      <%= select_tag "currency", options_for_select(User::CURRENCY_LIST,cookies['currency']), class: "form-control", style: "width: auto;" %>
     <% end %>
   <% else %>
-    <%= select_tag "currency", options_for_select(User::CURRENCY_LIST,current_user.currency) %>
+    <%= select_tag "currency", options_for_select(User::CURRENCY_LIST,current_user.currency), class: "form-control", style: "width: auto;" %>
   <% end %>
 <% end %>

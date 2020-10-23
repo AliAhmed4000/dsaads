@@ -32,7 +32,17 @@
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
-                    <li class="nav-item"><%= link_to "Edit", edit_service_path(gig),class: "nav-link" %></li>
+                    <% if gig.pricing_exists? %>
+                    <li class="nav-item"><%= link_to "Edit", services_pricing_path(gig),class: "nav-link" %></li>
+                    <% elsif gig.description_exists? %>
+                      <li class="nav-item"><%= link_to "Edit", services_description_path(gig),class: "nav-link" %></li>
+                    <% elsif gig.requirement_exists? %>
+                      <li class="nav-item"><%= link_to "Edit", services_requirement_path(gig),class: "nav-link" %></li>
+                    <% elsif gig.gallery_exists? %>
+                      <li class="nav-item"><%= link_to "Edit", services_gallery_path(gig),class: "nav-link" %></li>
+                      <% elsif gig.publish_exists? %>
+                      <li class="nav-item"><%= link_to "Edit", services_publish_path(gig),class: "nav-link" %></li>
+                    <% end %>
                     <!-- <li class="nav-item"><%= link_to "View", service_path(gig),class: "nav-link" %></li> -->
                   </ul>
                 </div>

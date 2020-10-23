@@ -5,11 +5,15 @@ class VideosController < ApplicationController
 	end
 
 	def update 
+
 		@service = Service.find_by_id(params[:id])
 		@video_link = params['service']['video_link']
 		if @service.update(video_link: @video_link)
 			flash[:notice] = "Video Link has been Successfully Added."
-    	redirect_back fallback_location: root_path	
+    	redirect_back fallback_location: root_path
+    	else
+    		flash[:alert] = "Video Link Format is not Matched!"	
+    		redirect_back fallback_location: root_path
 		end 
 	end
 
