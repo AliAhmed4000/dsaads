@@ -11,12 +11,16 @@
       <div class="box-tab justified">
         <ul class="nav nav-tabs">
           <% if current_user.sellers? %>
-            <li class="active nav-item">
+            <!-- <li class="active nav-item">
+              <a class="nav-link active" href="#priority_orders" data-toggle="tab">Priority
+                <span class="badge badge-light"><%#= @order_priority.count %></span>
+              </a>
+            </li> -->
+          <% end %><li class="active nav-item">
               <!-- <a class="nav-link active" href="#priority_orders" data-toggle="tab">Priority
-                <span class="badge badge-light"><%= @order_priority.count %></span>
-              </a> -->
-            </li>
-          <% end %>
+                <span class="badge badge-light"><%#= @order_priority.count %></span>
+              </a>
+            </li> -->
           <li class="active nav-item">
             <%# if current_user.sellers? %>
               <!-- <a class="nav-link" href="#new_orders" data-toggle="tab">New
@@ -105,6 +109,7 @@
   </div>
 </section>
 <div id="buyer-form-modal"></div>
+<% if current_user.sellers? %>
 <script>
   $(function(){
     $('table').DataTable({
@@ -112,3 +117,5 @@
     });
   });
 </script>
+
+<% end %>
