@@ -61,9 +61,9 @@ class User < ApplicationRecord
   # def check_user_skill
   #   if self.user_skill_ids.blank? || self.user_language_ids.blank?
   #     errors.add(:base, 'Select Atleast One Professional Body Type')
-  #   end  
+  #   end
   # end
-  
+
   # before_save :set_username
   enum currency: ['USD','EUR','GBP','CAD','PKR']
   CURRENCY_LIST = [
@@ -73,11 +73,11 @@ class User < ApplicationRecord
     ['CAD','CAD'],
     ['PKR','PKR']
   ]
-  
-  # def set_username 
-    # binding.pry 
+
+  # def set_username
+    # binding.pry
     # self.update_column('user_name',self.email.split("@").first)
-  # end 
+  # end
   def send_email_become_seller
     UserMailer.send_seller_profile_completion_notifiction(self).deliver_now
   end
@@ -98,7 +98,7 @@ class User < ApplicationRecord
   def seller_review_star
     SellerReview.where('buyer_id=?',self.id).average(:star)
   end
-  
+
   def buyer_review_star
     BuyerReview.where('seller_id=?',self.id).average(:star)
   end
@@ -110,14 +110,14 @@ class User < ApplicationRecord
   def unread_conversations_count
     self.chats_recipients.where('read=?',false).select(:conversation_id).distinct(:conversation_id).count
   end
-  
+
   def seller_unread_conversations_count
     self.chats_recipients.joins(:conversation).where('read=? and conversations.seller_id=?',false,self.id).select(:conversation_id).distinct(:conversation_id).count
   end
 
   def buyer_unread_conversations_count
     self.chats_recipients.joins(:conversation).where('read=? and conversations.buyer_id=?',false,self.id).select(:conversation_id).distinct(:conversation_id).count
-  end 
+  end
 
   def unread_conversation_count(conversation_id)
     self.chats_recipients.where('read = ? AND conversation_id = ?', false, conversation_id).count
@@ -177,18 +177,18 @@ class User < ApplicationRecord
     unless first_name.blank?
       first_name.to_s.capitalize + " " + last_name.to_s.capitalize
     else
-      user_name 
-    end 
+      user_name
+    end
   end
-  
+
   def seller_level(seller)
-    if seller.services.active.count >= 7 && seller.services.joins(:custom_packages).sum(:price) >= 5000 
+    if seller.services.active.count >= 7 && seller.services.joins(:custom_packages).sum(:price) >= 5000
       return "New Seller"
     elsif seller.services.active.count >= 10 && seller.order_items.completed.sum(:price) >= 1000 && seller.order_items.completed.count >= 25 && seller.services.joins(:custom_packages).sum(:price) >= 7000
       return "Top Seller"
-    elsif seller.order_items.completed.sum(:price) >= 15000 && seller.order_items.completed.count >= 80 
+    elsif seller.order_items.completed.sum(:price) >= 15000 && seller.order_items.completed.count >= 80
       return "Excellent Seller"
-    end 
+    end
   end
 
   def active_orders
@@ -196,13 +196,13 @@ class User < ApplicationRecord
     # delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:delivered])
     # active + delivered
   end
-  
+
   def currency_unit
-    if self.currency != "USD" 
+    if self.currency != "USD"
       current_currency = Currency.find_by_country("USD_#{self.currency}")
-      unit =  current_currency.currency
-      return unit
-    end 
+      #unit =  current_currency.currency
+      #return unit
+    end
   end
 
   def symbol
@@ -214,7 +214,7 @@ class User < ApplicationRecord
       return "C$"
     elsif self.currency == "PKR"
       return "Rs"
-    end 
+    end
   end
 
   def seller_withdrawn_money
@@ -228,7 +228,7 @@ class User < ApplicationRecord
   def seller_pending_clearance_amount
     OrderItem.completed.joins(package:[:service]).where('services.user_id=? and order_items.completed_at>?',self.id,DateTime.now).sum(:price)
   end
-  
+
   def seller_net_income
     OrderItem.completed.joins(package:[:service]).where('services.user_id=? and order_items.completed_at<?',self.id,DateTime.now).sum(:price)
   end
@@ -238,22 +238,22 @@ class User < ApplicationRecord
     delivered = OrderItem.joins(package:[:service]).where('services.user_id=? and order_items.status=?',self.id,OrderItem.statuses[:delivered]).sum(:price)
     active + delivered
   end
-  
+
   def seller_available_for_withdraw_amount
     self.seller_net_income - self.seller_withdrawn_money
   end
 
   def buyer_available_for_withdraw_amount
     self.buyer_refunded_amount - self.buyer_withdrawn_amount
-  end 
+  end
 
   def buyer_refunded_amount
     OrderItem.cancelled.joins(:order).where('orders.user_id=?',self.id).sum(:price)
-  end 
-  
+  end
+
   def buyer_withdrawn_amount
     self.payments.refund.sum(:amount)
-  end 
+  end
 
   def buyrer_purchase_amount
     fiver_service_fee = self.orders.joins(:order_items).sum(:price)*ENV['SERVICE_FEE'].to_i/100
@@ -261,7 +261,7 @@ class User < ApplicationRecord
   end
 
   def buyer_total_balance
-    self.buyrer_purchase_amount - self.payments.refund.sum(:amount) 
+    self.buyrer_purchase_amount - self.payments.refund.sum(:amount)
   end
 
   def buyer_purchases_services

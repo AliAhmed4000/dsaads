@@ -1,6 +1,6 @@
 
 
-/*! choices.js v3.0.4 | (c) 2018 Josh Johnson | https://github.com/jshjohnson/Choices#readme */ 
+/*! choices.js v3.0.4 | (c) 2018 Josh Johnson | https://github.com/jshjohnson/Choices#readme */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -220,11 +220,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    // Retrieve triggering element (i.e. element with 'data-choice' trigger)
 	    this.element = element;
-	    this.passedElement = (0, _utils.isType)('String', element) ? document.querySelector(element) : element;
+	    this.passedElement = (0, _utils.isType)('String', element) ?     document.querySelector(element) : element;
 
 	    if (!this.passedElement) {
 	      if (!this.config.silent) {
-	        console.error('Passed element not found');
+
 	      }
 	      return;
 	    }
@@ -1168,7 +1168,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      if (!this.isTextElement && this.config.searchEnabled) {
 	        this.isSearching = false;
-	        this.store.dispatch((0, _index3.activateChoices)(true));
+	        this.store.dispatch((0,
+						_index3.activateChoices)(true));
 	      }
 	      return this;
 	    }
@@ -6204,4 +6205,4 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-//# sourceMappingURL=choices.js.map
+ 

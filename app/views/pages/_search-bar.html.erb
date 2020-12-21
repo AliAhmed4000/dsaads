@@ -1,11 +1,5 @@
 <!--SHOWCASE SLIDER -->
-<script type="text/javascript">
-  const choices = new Choices('[data-trigger]',
-  {
-    searchEnabled: false,
-    itemSelectText: '',
-  });
-</script>
+
 <!-- <section id=""> -->
   <div class="s003 ml-4">
     <%= form_tag services_path,:id => 'elm_id',class: "form-inline my-2 my-lg-0", method: :get do %>
@@ -36,9 +30,8 @@
   $("#search-button").click(function() {
     $("#elm_id").submit();
   });
-</script>
-<script type="text/javascript">
-$(function(){
+
+  $(function(){
   const choices = new Choices('[data-trigger]',
   {
     searchEnabled: false,
